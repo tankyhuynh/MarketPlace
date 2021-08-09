@@ -3,7 +3,7 @@ import './App.css'
 import "@material-tailwind/react/tailwind.css";
 
 import React from "react";
-import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import history from "../history";
 import SignIn from "./Auth/SignIn/SignIn";
 import Header from "./Header";

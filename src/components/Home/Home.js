@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import CarouselCustom from '../Carousel/CarouselCustom'
 import CardCustom from '../CardCustom/CardCustom'
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const projects = [
     {

@@ -1,7 +1,6 @@
 import './Test.css'
 
 import React from 'react';
-import Input from '@material-tailwind/react/Input';
 
 const Test = () => {
     return (

@@ -21,7 +21,7 @@ class SignIn extends React.Component {
     }
 
     renderInput = ({ input, type, label, meta }) => {
-        const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+        // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
         return (
             <div>
                 <Input

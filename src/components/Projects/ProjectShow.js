@@ -20,7 +20,7 @@ class ProjectShow extends React.Component {
       return <div>Loading...</div>;
     }
 
-    const { title, description } = this.props.project;
+    // const { title, description } = this.props.project;
 
     return (
       <div>

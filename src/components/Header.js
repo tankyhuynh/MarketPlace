@@ -101,10 +101,9 @@ const Header = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const onSiginClick = () => {
-    handleMobileMenuOpen();
-    
-  };
+  // const onSiginClick = () => {
+  //   handleMobileMenuOpen();
+  // };
 
   
 

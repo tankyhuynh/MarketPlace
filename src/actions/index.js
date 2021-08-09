@@ -12,9 +12,6 @@ import {
   EDIT_STREAM,
   FETCH_PROJECTS,
   FETCH_PROJECT,
-  CREATE_PROJECT,
-  EDIT_PROJECT,
-  DELETE_PROJECT,
 } from './types';
 
 export const signIn = (userId, userProfile) => {
