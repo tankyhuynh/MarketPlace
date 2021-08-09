@@ -1,0 +1,13 @@
+@layer components {
+
+    .header--title {
+        @apply hidden sm:block uppercase mx-0 md:mx-6 text-sm md:text-2xl font-bold
+    }
+    .header--link {
+        @apply text-sm sm:text-base mx-1 sm:mx-3 md:mx-4 lg:mx-6 font-bold
+    }
+    .header--link:hover {
+        @apply text-gray-400
+    }
+
+}

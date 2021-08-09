@@ -1,0 +1,36 @@
+
+.btn-signin {
+    background-color: #0065C1;
+}
+
+.btn-cancel {
+    background-color: #D1D2D2;
+}
+
+.form_border {
+    border-radius: 40px;
+}
+
+
+@layer components {
+    
+    .auth--btn {
+        @apply relative flex justify-center w-full px-2 py-2 text-xl border border-transparent rounded-2xl group transition delay-75 duration-300 ease-in-out
+    }
+    .auth--btn:hover {
+        @apply hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+    }
+
+    .auth--link {
+        @apply text-link transition delay-75 duration-300 ease-in-out
+    }
+    .auth--link:hover {
+        @apply hover:text-red-500 hover:font-extrabold
+    }
+
+    .auth--input {
+        @apply relative w-full px-3 py-2 text-gray-900 placeholder-gray-500 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
+    }
+    
+}
+

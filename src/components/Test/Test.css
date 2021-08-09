@@ -1,0 +1,31 @@
+
+html {
+	scroll-snap-type: mandatory;
+	scroll-snap-points-y: 100vh;
+	height: 50%;
+	scroll-snap-type: y mandatory;
+}
+.section {
+	border-bottom: 1px solid white;
+	padding: 1rem;
+	scroll-snap-align: start;
+	height: 100vh;
+	text-align: center;
+	position: relative;
+}
+
+.section-1 {
+    background-color: aqua;
+}
+.section-2 {
+    background-color: blue;
+}
+.section-3 {
+    background-color: brown;
+}
+.section-4 {
+    background-color: darkgoldenrod;
+}
+.section-5 {
+    background-color: darkmagenta;
+}
