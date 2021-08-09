@@ -54,7 +54,7 @@ export const login = formValues => async (dispatch, getState) => {
 
 //Projects
 export const fetchProjects = () => async dispatch => {
-  const response = await streams.get('/projects');
+  const response = await projects.get('/projects');
 
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
 };
