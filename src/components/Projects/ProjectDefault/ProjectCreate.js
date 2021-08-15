@@ -15,7 +15,7 @@ const ProjectCreate = () => {
     // };
 
     // const onStepperFinished = () => {
-    //     axios.post(environment.url.dev + '/projects/createProject', variables)
+    //     axios.post(environment.url.node + '/projects/createProject', variables)
     //         .then(response => {
     //             if (response) {
 

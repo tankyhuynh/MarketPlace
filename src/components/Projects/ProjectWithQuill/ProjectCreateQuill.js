@@ -41,7 +41,7 @@ const ProjectCreateQuill = (props) => {
             // userID: user.userData._id
         }
 
-        axios.post(environment.url.dev + '/projects/createProject', variables)
+        axios.post(environment.url.node + '/projects/createProject', variables)
             .then(response => {
                 if (response) {
                    <Label>Successed</Label>

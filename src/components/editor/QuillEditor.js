@@ -267,7 +267,7 @@ class QuillEditor extends React.Component {
             }
             formData.append("file", file);
 
-            axios.post(environment.url.dev + '/projects/uploadfiles', formData, config)
+            axios.post(environment.url.node + '/projects/uploadfiles', formData, config)
                 .then(response => {
                     if (response.data.success) {
 
@@ -277,7 +277,7 @@ class QuillEditor extends React.Component {
                         let range = quill.getSelection();
                         let position = range ? range.index : 0;
 
-                        quill.insertEmbed(position, "image", { src: environment.url.dev + '/' + response.data.url, alt: response.data.fileName });
+                        quill.insertEmbed(position, "image", { src: environment.url.node + '/' + response.data.url, alt: response.data.fileName });
                         quill.setSelection(position + 1);
 
                         if (this._isMounted) {
@@ -305,7 +305,7 @@ class QuillEditor extends React.Component {
             }
             formData.append("file", file);
 
-            axios.post(environment.url.dev + '/projects/uploadfiles', formData, config)
+            axios.post(environment.url.node + '/projects/uploadfiles', formData, config)
                 .then(response => {
                     if (response.data.success) {
 
@@ -314,7 +314,7 @@ class QuillEditor extends React.Component {
 
                         let range = quill.getSelection();
                         let position = range ? range.index : 0;
-                        quill.insertEmbed(position, "video", { src: environment.url.dev + '/' + response.data.url, title: response.data.fileName });
+                        quill.insertEmbed(position, "video", { src: environment.url.node + '/' + response.data.url, title: response.data.fileName });
                         quill.setSelection(position + 1);
 
                         if (this._isMounted) {
@@ -343,7 +343,7 @@ class QuillEditor extends React.Component {
             }
             formData.append("file", file);
 
-            axios.post(environment.url.dev + '/projects/uploadfiles', formData, config)
+            axios.post(environment.url.node + '/projects/uploadfiles', formData, config)
                 .then(response => {
                     if (response.data.success) {
 

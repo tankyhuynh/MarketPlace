@@ -58,7 +58,7 @@ const HorizontalLinearStepper = (props) => {
     // props.createProject(variables);
 
     
-    axios.post(environment.url.dev + '/projects/createProject', variables)
+    axios.post(environment.url.node + '/projects/createProject', variables)
         .then(response => {
             if (response) {
               console.log('response:', response);
