@@ -54,15 +54,15 @@ const Slide = ({ slide }) => {
             <div className="grid lg:col-span-1 place-content-center">
                 <img
                     src={renderImage(renderImageSrc(slide))}
-                    alt={slide.title}
-                    className="self-center h-64"
+                    alt={slide.ten}
+                    className="self-center h-64 rounded-lg"
                 />
             </div>
 
             <div className="flex flex-col items-center mx-auto lg:col-span-2 justify-evenly">
                 <CardBody>
                     <div className="mb-4 text-xl font-bold">{ slide.ten }</div>
-                    <div className="flex flex-col justify-start">
+                    <div className="flex flex-col text-left">
                         { renderUuDiem(slide.uuDiem) }
                     </div>
                     

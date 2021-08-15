@@ -56,8 +56,8 @@ const CardCustom = ({ card }) => {
                 return uuDiemStr += uuDiem;
             })
 
-            if(uuDiemStr.length > 50){
-                var shortUuDiem = uuDiemStr.substring(0, 50) + "...";
+            if(uuDiemStr.length > 100){
+                var shortUuDiem = uuDiemStr.substring(0, 100) + "...";
                 return shortUuDiem;
             }
         }

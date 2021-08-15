@@ -86,15 +86,22 @@ class ProjectListQuill extends React.Component {
                                 <div className="md:col-span-8">
 
                                     <div className="grid grid-flow-col gap-8 sm:grid-cols-8">
-                                        <div className="self-center col-span-3 text-xl font-bold text-center">
-                                            {project.ten}
+                                        <div className="flex flex-col col-span-3">
+                                            <div className="self-center col-span-3 text-xl font-bold text-center">
+                                                {project.ten}
+                                            </div>
+                                            <div className="self-center w-32 col-span-1 mt-2">
+                                                <img 
+                                                    src={this.renderImages(this.renderImageSrc(project))} 
+                                                    alt={this.renderImageSrc(project)} 
+                                                    className="rounded-lg" 
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="self-center col-span-4 italic">
+                                        <div className="self-center col-span-5 pr-8 italic">
                                             { this.renderHightlight(project.hightlight) }
                                         </div>
-                                        <div className="self-center w-32 col-span-1">
-                                            <img src={this.renderImages(this.renderImageSrc(project))} alt={this.renderImageSrc(project)} className="" />
-                                        </div>
+                                        
                                         {/* <div className="space-y-10 leading-6">
                                             <div dangerouslySetInnerHTML={{ __html: project.content }} />
                                         </div> */}
