@@ -24,7 +24,7 @@ const HorizontalLinearStepper = (props) => {
   const [name, setName] = useState("")
   const [hightlight, setHightlight] = useState("")
   const [thumbnail, setThumbnail] = useState("")
-  const [files, setFiles] = useState([])
+  // const [files, setFiles] = useState([])
 
   const variables = {
     ten: name,
@@ -40,9 +40,9 @@ const HorizontalLinearStepper = (props) => {
       console.log(content)
   }
 
-  const onFilesChange = (files) => {
-      setFiles(files)
-  }
+  // const onFilesChange = (files) => {
+  //     setFiles(files)
+  // }
 
   const onSubmit = (event) => {
     // event.preventDefault();
@@ -122,7 +122,7 @@ const HorizontalLinearStepper = (props) => {
           <QuillEditor
               placeholder={"Start Posting Something"}
               onEditorChange={onEditorChange}
-              onFilesChange={onFilesChange}
+              // onFilesChange={onFilesChange}
               data={variables}
           />
         );

@@ -11,15 +11,15 @@ const ProjectCreateQuill = (props) => {
     const [name, setName] = useState("")
     const [hightlight, setHightlight] = useState("")
     // const [thumbnail, setThumbnail] = useState("")
-    const [files, setFiles] = useState([])
+    // const [files, setFiles] = useState([])
 
     const onEditorChange = (value) => {
         setContent(value)
     }
 
-    const onFilesChange = (files) => {
-        setFiles(files)
-    }
+    // const onFilesChange = (files) => {
+    //     setFiles(files)
+    // }
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -88,7 +88,7 @@ const ProjectCreateQuill = (props) => {
             <QuillEditor
                 placeholder={"Start Posting Something"}
                 onEditorChange={onEditorChange}
-                onFilesChange={onFilesChange}
+                // onFilesChange={onFilesChange}
             />
             
 
