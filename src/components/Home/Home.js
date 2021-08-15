@@ -6,45 +6,81 @@ import CarouselCustom from '../Carousel/CarouselCustom'
 import CardCustom from '../CardCustom/CardCustom'
 import { Link } from 'react-router-dom';
 
-const projects = [
-    {
-        title: 'Dự án 1',
-        url: 'https://images.unsplash.com/photo-1581285025904-e7f1a94c330b?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDV8NnNNVmpUTFNrZVF8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
-    },
-    {
-        title: 'Dự án 2',
-        url: 'https://images.unsplash.com/photo-1557995744-18c7f67f4307?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8NnNNVmpUTFNrZVF8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
-    },
-    {
-        title: 'Dự án 3',
-        url: 'https://images.unsplash.com/photo-1627735410064-b8ffd0adb155?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfDZzTVZqVExTa2VRfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
-    },
-];
+import { fetchProjects } from '../../actions';
+
+
+
+// const projects = [
+//     {
+//         title: 'Dự án 1',
+//         url: 'https://images.unsplash.com/photo-1581285025904-e7f1a94c330b?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDV8NnNNVmpUTFNrZVF8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
+//     },
+//     {
+//         title: 'Dự án 2',
+//         url: 'https://images.unsplash.com/photo-1557995744-18c7f67f4307?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8NnNNVmpUTFNrZVF8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
+//     },
+//     {
+//         title: 'Dự án 3',
+//         url: 'https://images.unsplash.com/photo-1627735410064-b8ffd0adb155?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfDZzTVZqVExTa2VRfHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
+//     },
+// ];
 
 const organizations = [
     {
-        title: 'Nhóm nghiên cứu 1',
-        url: 'https://images.unsplash.com/photo-1612222869049-d8ec83637a3c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
+        ten: 'Nhóm nghiên cứu 1',
+        hinhAnhTongThe: 'https://images.unsplash.com/photo-1612222869049-d8ec83637a3c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+        uuDiem: [
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+        ]
     },
     {
-        title: 'Nhóm nghiên cứu 2',
-        url: 'https://images.unsplash.com/photo-1496200186974-4293800e2c20?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjh8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
+        ten: 'Nhóm nghiên cứu 2',
+        hinhAnhTongThe: 'https://images.unsplash.com/photo-1496200186974-4293800e2c20?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjh8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+        uuDiem: [
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+        ]
     },
     {
-        title: 'Nhóm nghiên cứu 3',
-        url: 'https://images.unsplash.com/photo-1562783912-21ad31ee2a83?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60'
+        ten: 'Nhóm nghiên cứu 3',
+        hinhAnhTongThe: 'https://images.unsplash.com/photo-1562783912-21ad31ee2a83?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+        uuDiem: [
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+        ]
     },
 ];
 
+
+
 class Home extends React.Component {
+    componentDidMount(){
+        this.props.fetchProjects();
+    }
+
+    renderProjects = () =>{
+        return this.props.projectsQuill
+            .filter(item => item.id < 4)
+            .map(card => {
+                return (
+                    <Link to={`/projects/show/${card.id}`}>
+                        <CardCustom card={card} key={card.id} />
+                    </Link>
+                );
+    });
+    }
+
+
     render() {
-        const renderProjects = projects.map(card =>{
-            return (
-                <Link>
-                    <CardCustom card={card} key={card.title} />
-                </Link>
-            );
-        });
+        
+        // const renderProjects = projects.map(card =>{
+        //     return (
+        //         <Link>
+        //             <CardCustom card={card} key={card.title} />
+        //         </Link>
+        //     );
+        // });
+        
+        
+       
     
         const renderOrganizations = organizations.map(card =>{
             return (
@@ -53,23 +89,24 @@ class Home extends React.Component {
                 </Link>
             );
         });
-    
+
+
         return (
             <>
-               <div className="md:h-4/5">
-                    <CarouselCustom slides={projects}/>
+               <div className="">
+                    <CarouselCustom slides={this.props.projectsQuill}/>
                     
                     <div id="cards">
                         <h2 className="mx-4 text-3xl font-bold">Dự án</h2>
-                        <div className="projects_organizations">
-                            {renderProjects}
+                        <div className="gap-4 md:grid md:grid-cols-3">
+                            { this.renderProjects() }
                         </div>
                     </div>
     
-                    <div id="organizations">
+                    <div id="organizations" className="mt-4">
                         <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
                         <div className="projects_organizations">
-                            {renderOrganizations}
+                            { renderOrganizations }
                         </div>
                     </div>
                </div>
@@ -80,14 +117,15 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
     return {
-      streams: Object.values(state.streams),
-      currentUserId: state.auth.userId,
-      isSignedIn: state.auth.isSignedIn
+        projectsQuill:  Object.values(state.projects),
+        streams: Object.values(state.streams),
+        currentUserId: state.auth.userId,
+        isSignedIn: state.auth.isSignedIn
     };
   };
   
 export default connect(
     mapStateToProps,
-    {  }
+    { fetchProjects }
 )(Home);
 

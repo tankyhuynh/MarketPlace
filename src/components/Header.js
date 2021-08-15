@@ -21,8 +21,11 @@ import GoogleAuth from './GoogleAuth';
 import logo from '../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
+  header: {
+    padding: "6px 0",
+  },
   headerBackground: {
-    backgroundColor: '#0065C1'
+    backgroundColor: '#0065C1',
   },
   grow: {
     flexGrow: 1,
@@ -139,8 +142,8 @@ const Header = (props) => {
         <>
           {/* <GoogleAuth /> */}
           <div className="flex gap-1">
-              <Link to="/auth/signin" className="p-3 bg-green-500 rounded-lg ">Login</Link>
-              <Link to="/auth/signup" className="p-3 bg-gray-500 rounded-lg ">SignUp</Link>
+              <Link to="/auth/signin" className="px-4 py-2 bg-green-500 rounded-lg ">Đăng nhập</Link>
+              {/* <Link to="/auth/signup" className="p-3 bg-gray-500 rounded-lg ">SignUp</Link> */}
           </div>
         </>
       )
@@ -148,7 +151,7 @@ const Header = (props) => {
   }
 
   const renderAccountMenu = () => {
-    if(props.isSignedIn){
+    if(!props.isSignedIn){
       return (
         <div>
           <MenuItem>
@@ -157,7 +160,7 @@ const Header = (props) => {
                     <ExitToAppIcon />
                   </Badge>
                 </IconButton>
-                <p>Sign out</p>
+                <p>Đăng xuất</p>
           </MenuItem>
           <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -165,7 +168,7 @@ const Header = (props) => {
                     <AccountCircle />
                   </Badge>
                 </IconButton>
-                <p>Profile</p>
+                <p>Trang cá nhân</p>
           </MenuItem>
         </div>
       );
@@ -258,12 +261,12 @@ const Header = (props) => {
           {/* divide header with left and right  */}
           <div className={classes.grow} />
 
-          <div className={`${classes.search} space-x-16 mx-8 h-10 flex`}>
+          <div className={`${classes.search} space-x-16 h-10 md:mr-4 flex`}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Bạn muốn tìm kiếm gì...?"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -294,8 +297,8 @@ const Header = (props) => {
       </AppBar>
       
       <hr className="h-1" />
-      <section className={`${classes.headerBackground} px-4 md:px-8`}>
-        <div className={`flex text-white`}>
+      <section className={`${classes.headerBackground} ${classes.header}`}>
+        <div className={`flex text-white px-4 md:px-8`}>
           <Link to="/" className="header--link">Trang chủ</Link>
           <Link to="/projects" className="header--link">Dự án</Link>
           <Link to="/" className="header--link">Nhóm nghiên cứu</Link>
@@ -303,6 +306,7 @@ const Header = (props) => {
           <Link to="/" className="header--link">FAQ</Link>
           <Link to="/" className="header--link">Liên hệ</Link>
           <Link to="/" className="header--link">Giới thiệu</Link>
+          {/* <Link to="/projects/new" className="header--link">New Project</Link> */}
           {/* <Link to="/streams" className="header--link">Streams</Link> */}
         </div>
       </section>

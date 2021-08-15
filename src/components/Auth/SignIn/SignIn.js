@@ -69,37 +69,16 @@ class SignIn extends React.Component {
                         >
                             <input type="hidden" name="remember" value="true" />
                             <div className="space-y-4">
-                                {/* <div>
-                                    <Input
-                                        name="email"
-                                        type="text"
-                                        color="lightBlue"
-                                        size="regular"
-                                        outline={false}
-                                        placeholder="Email"
-                                    />
-                                </div>
-                                <div>
-                                    <Input
-                                        name="password"
-                                        type="text"
-                                        color="lightBlue"
-                                        size="regular"
-                                        outline={false}
-                                        placeholder="Password"
-                                    />
-                                </div> */}
-
                                 <Field 
                                     name="username" 
                                     component={this.renderInput} 
-                                    label="Enter username" 
+                                    label="Tên đăng nhập" 
                                     type="text"
                                     />
                                 <Field 
                                     name="password" 
                                     component={this.renderInput} 
-                                    label="Enter password" 
+                                    label="Mật khẩu" 
                                     type="password"
                                 />
                             </div>
@@ -108,13 +87,13 @@ class SignIn extends React.Component {
                                 <div className="flex items-center">
                                     <input id="remember-me" name="remember-me" type="checkbox" className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" />
                                     <label for="remember-me" className="block ml-2 text-sm text-gray-900">
-                                        Remember me
+                                        Ghi nhớ tôi
                                     </label>
                                 </div>
 
                                 <div className="text-sm">
                                     <Link href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                        Forgot your password?
+                                        Quên mật khẩu?
                                     </Link>
                                 </div>
                             </div>

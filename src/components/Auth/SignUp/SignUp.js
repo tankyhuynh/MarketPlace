@@ -69,67 +69,46 @@ class SignUp extends React.Component {
                         >
                             {/* <input type="hidden" name="remember" value="true" /> */}
                             <div className="space-y-4">
-                                {/* <div>
-                                    <Input
-                                        name="email"
-                                        type="text"
-                                        color="lightBlue"
-                                        size="regular"
-                                        outline={false}
-                                        placeholder="Email"
-                                    />
-                                </div>
-                                <div>
-                                    <Input
-                                        name="password"
-                                        type="text"
-                                        color="lightBlue"
-                                        size="regular"
-                                        outline={false}
-                                        placeholder="Password"
-                                    />
-                                </div> */}
-                                
                                 <Field 
                                     name="fullName" 
                                     component={this.renderInput} 
-                                    label="Enter full name" 
+                                    label="Họ tên" 
                                     type="text"
                                 />
                                 <Field 
                                     name="email" 
                                     component={this.renderInput} 
-                                    label="Enter email" 
+                                    label="Email" 
                                     type="email"
                                 />
                                 <Field 
                                     name="phoneNumber" 
                                     component={this.renderInput} 
-                                    label="Enter phone number" 
+                                    label="Số điện thoại" 
                                     type="number"
                                 />
                                 <Field 
                                     name="address" 
                                     component={this.renderInput} 
-                                    label="Enter address" 
+                                    label="Địa chỉ" 
                                     type="text"
                                 />
 
                                 <div className="flex gap-4">
-                                    <label><Field name="gender" component="input" type="radio" value="male"/> Male</label>
-                                    <label><Field name="gender" component="input" type="radio" value="female"/> Female</label>
+                                    <label><Field name="gender" component="input" type="radio" value="male"/> Nam</label>
+                                    <label><Field name="gender" component="input" type="radio" value="female"/> Nữ</label>
                                 </div>
                                 
                                 <Field 
                                     name="username" 
                                     component={this.renderInput} 
-                                    label="Enter username" 
+                                    label="Tên đăng nhập" 
                                     type="text"
                                 />
                                 <Field 
                                     name="password" 
                                     component={this.renderInput} 
-                                    label="Enter password" 
+                                    label="Mật khẩu" 
                                     type="password"
                                 />
                                 

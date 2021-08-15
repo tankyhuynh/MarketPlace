@@ -2,9 +2,9 @@ import './App.css'
 
 import "@material-tailwind/react/tailwind.css";
 
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import history from "../history";
+import React from 'react';
+import { withRouter, Switch, Route } from 'react-router-dom';
+// import history from "../history";
 import SignIn from "./Auth/SignIn/SignIn";
 import Header from "./Header";
 import Home from "./Home/Home";
@@ -15,59 +15,75 @@ import StreamList from "./streams/StreamList";
 import StreamShow from "./streams/StreamShow";
 import Test from "./Test/Test";
 import SignUp from './Auth/SignUp/SignUp';
-import { connect } from 'react-redux';
-import ProjectShow from './Projects/ProjectShow';
-import ProjectList from './Projects/ProjectList';
+
+import Researcher_Home from './Researcher/Researcher_Home/Researcher_Home';
+import ResearcherNavbar from './Researcher/ResearcherNavbar/ResearcherNavbar';
+// import ProjectCreateQuill from './Projects/ProjectWithQuill/ProjectCreateQuill';
+import ProjectCreate from './Projects/ProjectDefault/ProjectCreate';
+import ProjectListQuill from './Projects/ProjectWithQuill/ProjectListQuill';
+// import ProjectShowQuill from './Projects/ProjectWithQuill/ProjectShowQuill';
+import ProjectShow from './Projects/ProjectDefault/ProjectShow';
+// import ProjectShow from './Projects/ProjectDefault/ProjectShow';
 
 
-// Xài class + mapStateToProps thì mới ẩn đc header dựa trên pathname
-class App extends React.Component {
+export default withRouter(function App({ location }) {
+  // const [currentPath, setCurrentPath] = useState(location.pathname);
 
-  render() {
-    return (
-      <div className="font-Roboto">
-        <BrowserRouter history={history}>
-          <div>
-            {/* <Navbar /> */}
-          {/* <Header /> */}
-          { window.location.pathname !== '/auth/signin' && window.location.pathname !== '/auth/signup' ? <Header /> : null }
-  
-            <div className="md:mx-28">
-                <Switch>
-                    {/* <Route path="/" component={props => <Home {...props} />} />
-                    <Route path="/test" component={props => <Test {...props} />} />
-                    <Route path="/auth/signin" component={props => <SignIn {...props} />} /> */}
-  
-  
-                    <Route path="/" exact component={Home}></Route>
-  
-                    <Route path="/auth/signin" exact component={SignIn}></Route>
-                    <Route path="/auth/signup" exact component={SignUp}></Route>
-  
-                    <Route path="/projects" exact component={ProjectList}></Route>
-                    <Route path="/projects/:id" exact component={ProjectShow}></Route>
-  
-                    <Route path="/streams" exact component={StreamList}></Route>
-                    <Route path="/streams/new" exact component={StreamCreate}></Route>
-                    <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
-                    <Route path="/streams/delete/:id" exact component={StreamDelete}></Route>
-                    <Route path="/streams/:id" exact component={StreamShow}></Route>
-  
-                    <Route path="/test" exact component={Test}></Route>
-  
-                </Switch>
-            </div>
-  
-            {/* <Route path="/admin" exact component={AdminHome}></Route> */}
-  
-          </div>
-        </BrowserRouter>
-      </div>
-    );
-  }
-  
-};
+  const renderHeader = () =>{
+ 
+        if( window.location.pathname !== '/auth/signin' 
+            && window.location.pathname !== '/auth/signup'
+            && window.location.pathname !== '/researchers' ){
+              return <Header />
+        }
+        else if( window.location.pathname === '/researchers' ){
+          return <ResearcherNavbar />
+        }
+      };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps)(App);
+  // useEffect(() => {
+  //   const { pathname } = location;
+  //   // setCurrentPath(pathname);
 
+  // }, [location.pathname]);
+
+  return (
+    <div className="font-Roboto"> 
+       <div> { renderHeader() } </div>
+       
+       <div className="md:mx-28">
+            <Switch>
+              <Route path="/" exact component={Home}></Route>
+
+              <Route path="/auth/signin" exact component={SignIn}></Route>
+              <Route path="/auth/signup" exact component={SignUp}></Route>
+
+              <Route path="/projects" exact component={ProjectListQuill}></Route>
+
+              {/* Show with field */}
+              <Route path="/projects/show/:id" exact component={ProjectShow}></Route>
+
+              {/* Show only content of Quill */}
+              {/* <Route path="/projects/show/:id" exact component={ProjectShowQuill}></Route> */}
+
+              {/* create with default */}
+              {/* <Route path="/projects/new" exact component={ProjectCreateQuill}></Route> */}
+              
+              {/* create with stepper */}
+              <Route path="/projects/new" exact component={ProjectCreate}></Route>
+
+              <Route path="/researchers" exact component={Researcher_Home}></Route>
+
+              <Route path="/streams" exact component={StreamList}></Route>
+              <Route path="/streams/new" exact component={StreamCreate}></Route>
+              <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
+              <Route path="/streams/delete/:id" exact component={StreamDelete}></Route>
+              <Route path="/streams/:id" exact component={StreamShow}></Route>
+
+              <Route path="/test" exact component={Test}></Route>
+
+            </Switch>
+       </div>
+    </div>
+  );
+});

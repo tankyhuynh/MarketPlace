@@ -1,5 +1,6 @@
 import streams from '../apis/streams';
 import projects from '../apis/projects';
+import quill from '../apis/quill';
 import users from '../apis/users';
 import history from '../history';
 import {
@@ -31,6 +32,7 @@ export const signOut = () => {
 };
 
 
+// ------ Auth --------
 export const signup = formValues => async (dispatch, getState) => {
   // const response = await users.post('/signup', { ...formValues });
   // console.log(response);
@@ -41,31 +43,47 @@ export const signup = formValues => async (dispatch, getState) => {
 };
 
 export const login = formValues => async (dispatch, getState) => {
-  const response = await users.post('/login', { ...formValues });
+  const response = await users.post('/user/login', { ...formValues });
   console.log(response);
 
   dispatch({ type: SIGN_IN, payload: response.data });
   history.push('/');
  
 };
+// ------ End Auth --------
 
-//Projects
+
+
+//------ Projects --------
 export const fetchProjects = () => async dispatch => {
   const response = await projects.get('/projects');
+  console.log('fetchProjects:', response.data.projects);
 
+  // sửa chỗ response.data => response.data.projects
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
+};
+export const fetchProjectsWithQuill = () => async dispatch => {
+  const response = await quill.get('/api/projects/getProjects');
+  console.log(response.data);
+
+  dispatch({ type: FETCH_PROJECTS, payload: response.data.projects });
 };
 
 export const fetchProject = id => async dispatch => {
   const response = await projects.get(`/projects/${id}`);
+  console.log(response);
 
   dispatch({ type: FETCH_PROJECT, payload: response.data });
 };
 
 
+//------ End Projects --------
 
 
-// Streams
+
+
+
+// ------ Streams --------
 export const createStream = formValues => async (dispatch, getState) => {
   const { userId } = getState().auth;
   const response = await streams.post('/streams', { ...formValues, userId });
@@ -99,3 +117,4 @@ export const deleteStream = id => async dispatch => {
   dispatch({ type: DELETE_STREAM, payload: id });
   history.push('/');
 };
+// ------ End Streams --------

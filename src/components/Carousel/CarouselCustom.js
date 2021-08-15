@@ -7,7 +7,7 @@ const CarouselCustom = ({ slides }) => {
     const renderSlides = slides.map((slide) =>{
         return (
             <div className="-mt-5 text-center md:mt-10">
-                <Slide slide={slide} key={slide.title} />
+                <Slide slide={slide} key={slide.id} />
             </div>
         )
     })
