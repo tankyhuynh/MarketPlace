@@ -35,32 +35,36 @@ router.post("/uploadfiles", (req, res) => {
 });
 
 router.post("/createProject", (req, res) => {
-    let project = new Project({ name: req.body.name, hightlight: req.body.hightlight, content: req.body.content, writer: req.body.userID });
+    let project = new Project({ 
+        ten: req.body.ten, 
+        hightlight: req.body.hightlight, 
+        content: req.body.content, writer: req.body.userID 
+    });
 
-    project.save((err, postInfo) => {
+    project.save((err, project) => {
         if (err) return res.json({ success: false, err });
-        return res.status(200).json({ success: true, postInfo })
+        return res.status(200).json(project)
     })
 
 });
 
 
-router.get("/getProjects", (req, res) => {
+router.get("/", (req, res) => {
     Project.find()
         .populate("writer")
         .exec((err, projects) => {
             if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, projects });
+            res.status(200).json(projects);
         });
 });
 
-router.post("/getProject", (req, res) => {
-    console.log(req.body)
-    Project.findOne({ "_id": req.body.postId })
+router.get("/:id", (req, res) => {
+    const id = req.params.id;
+    Project.findOne({ "_id": id })
         .populate('writer')
-        .exec((err, post) => {
+        .exec((err, project) => {
             if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, post })
+            res.status(200).json({ success: true, project })
         })
 });
 

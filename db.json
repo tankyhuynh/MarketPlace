@@ -2,12 +2,196 @@
   "projects": [
     {
       "id": 1,
-      "name": "Chế phẩm vi sinh chịu mặn dùng cho cây trồng trên nền đất nhiễm mặn và quy trình sản xuất chế phẩm này",
-      "applyMajor": "Nông nghiệp",
-      "developLevel": "Sản xuất thử ngiệm",
-      "author": "Nguyễn Khởi Nghĩa",
-      "hightlightContent": [
-        "Đóng góp, hỗ trợ và bảo vệ cây trồng nhằm vào công tác giải quyết vấn đề canh tác cây trồng đất nhiễm mặn trong canh tác nông nghiệp do tự nhiên và do biến đổi khí hậu đang diễn biến một cách phức tạp."
+      "ten": "Chế phẩm vi sinh chịu mặn dùng cho cây trồng trên nền đất nhiễm mặn và quy trình sản xuất chế phẩm ",
+      "author": [
+        "Nguyễn Khởi Nghĩa"
+      ],
+      "address": "Bộ mon Khoa Học Đất, khoa Nông nghiệp, trường Đại học Cần Thơ",
+      "phone": "0932 801 727",
+      "email": "nknghia@ctu.edu.vn",
+      "website": "",
+      "hightlight": [
+        "Đóng góp, hỗ trợ và bảo vệ cây trồng nhằm vào công tác giải quyết vấn đề canh tác cây trồng đất nhiễm mặn trong canh tác nông nghiệp do tự nhiên và do biến đổi khí hậu đang diễn biến một cách phức tạp.",
+        "Việc sử dụng chế phẩm vi sinh kết hợp với công thức bón phân theo khuyến cáo (100N-60P2O5-30K2O) cho lúa trên nền đất nhiễm mặn ở điều kiện thực tế đồng ruộng có tác dụng làm tăng 13% năng suất lúa so với nghiệm thức bón phân NPK (100N-60P2O5-30K2O) vô cơ theo khuyến cáo, ngoài ra, việc sử dụng chế phẩm vi sinh này giúp giảm 20% lượng phân bón NPK theo khuyến cáo nhưng năng suất lúa vẫn cho tương đương với nghiệm thức bón phân NPK theo khuyến cáo."
+      ],
+      "quyTrinh": [
+        "Chế phẩm vi sinh chịu mặn dùng cho cây trồng trên nền đất nhiễm mặn, chế phẩm này bao gồm các thành phần hỗn hợp: cám gạo có hàm lượng từ 48% đến 54%, đường có hàm lượng từ 3,5% đến 4%; và chất nền có hàm lượng từ 2,5% đến 3% và nước có hàm lượng từ 40% đến 45%.  Chất nền là xỉ than tổ ong đã cố định sẵn các dòng vi khuẩn được chọn từ 5 nhóm vi khuẩn: vi khuẩn cố định đạm Bacillus aquymaris KG6-3, vi khuẩn hòa tan lân Burkholderia cepacia BL1-10 và vi khuẩn tiết hormon thực vật IAA Bacillus megaterium ST2-9, vi khuẩn hòa tan silic Ochrobactrum ciceri TCM_39 và vi khuẩn hòa tan kali Burkholderia vietnamiensis_L1.1."
+      ],
+      "lvApDung": "Nông nghiệp",
+      "uuDiem": [
+        "Đóng góp, hỗ trợ và bảo vệ cây trồng nhằm vào công tác giải quyết vấn đề canh tác cây trồng đất nhiễm mặn trong canh tác nông nghiệp do tự nhiên và do biến đổi khí hậu đang diễn biến một cách phức tạp.",
+        "Việc sử dụng chế phẩm vi sinh kết hợp với công thức bón phân theo khuyến cáo (100N-60P2O5-30K2O) cho lúa trên nền đất nhiễm mặn ở điều kiện thực tế đồng ruộng có tác dụng làm tăng 13% năng suất lúa so với nghiệm thức bón phân NPK (100N-60P2O5-30K2O) vô cơ theo khuyến cáo, ngoài ra, việc sử dụng chế phẩm vi sinh này giúp giảm 20% lượng phân bón NPK theo khuyến cáo nhưng năng suất lúa vẫn cho tương đương với nghiệm thức bón phân NPK theo khuyến cáo."
+      ],
+      "mucDoPhatTrien": "Sản xuất thử ngiệm",
+      "phuongThucChuyenGiao": [
+        "Chuyển giao con giống và quy trình sản xuất với hình thức không độc quyền"
+      ],
+      "phamViThuongMai": [
+        "Các Trung Tâm Khuyến Nông, Sở Nông Nghiệp và Phát Triển Nông Thôn ",
+        "Các cơ quan, tổ chức, công ty về phân bón vi sinh và chế phẩm sinh học."
+      ],
+      "chaoGiaThamKhao": "",
+      "hinhAnhTongThe": [
+        "img1_a",
+        "img1_b"
+      ]
+    },
+    {
+      "id": 2,
+      "ten": "QUI TRÌNH SẢN XUẤT CHẾ PHẨM PROBIOTIC",
+      "author": [
+        "Nguyễn Trọng Ngữ", 
+        "Trần Văn Bé Năm"
+      ],
+      "address": "Khu II, đường 3/2, phường Xuân Khánh, quận Ninh Kiều, Tp Cần Thơ",
+      "phone": "0989 828295",
+      "email": "ntngu@ctu.edu.vn",
+      "website": "https://www.ctu.edu.vn/",
+      "hightlight": [
+        "Tận dụng được nguồn nguyên liệu luôn sẵn có và rẻ tiền",
+        "Chủ động được nguồn vi khuẩn và nguyên liệu để sản xuất",
+        "Hạn chế sự thoái hóa giống",
+        "Có thể sản xuất chế phẩm theo yêu cầu của địa phương bằng cách dùng vi khuẩn tại địa phương phục vụ cho địa phương"
+      ],
+      "quyTrinh": [
+        "Phân lập và tuyển chọn Bacillus subtilis và Lactobacillus plantarum được phân lập từ ruột gà",
+        "Nhân giống, chuyển Bacillus subtilis và Lactobacillus plantarum sang môi trường nuôi cấy chuyên biệt (có bổ sung K2HPO4)",
+        "Lên men, chuyển những vi khuẩn đã ròng sang môi trường tương ứng (môi trường NA và MRS); sau khi vi khuẩn thật sự đã ròng, tiến hành tăng sinh khối trên môi trường lỏng (MRS; BHI; M17)",
+        "Ly tâm, thu sinh khối vi khuẩn với mật số cao nhất",
+        "Phối trộn, chất mang chính được sử dụng là bột gạo, bột mì và tá dược (vitamin A tạo mùi) sau khi được thanh trùng",
+        " Nghiền mịn và đóng gói"
+      ],
+      "lvApDung": "Sáng chế liên quan đến qui trình sản xuất chế phẩm probiotic, cụ thể là sáng chế đề cập đến qui trình sản xuất chế phẩm probiotic từ nguồn nguyên liệu chính là hai loại lợi khuẩn Bacillus subtilis (B. subtilis) và Lactobacillus plantarum (L. plantarum)",
+      "uuDiem": [
+        "Tận dụng được nguồn nguyên liệu luôn sẵn có và rẻ tiền",
+        "Chủ động được nguồn vi khuẩn và nguyên liệu để sản xuất",
+        "Hạn chế sự thoái hóa giống",
+        "Có thể sản xuất chế phẩm theo yêu cầu của địa phương bằng cách dùng vi khuẩn tại địa phương phục vụ cho địa phương"
+      ],
+      "mucDoPhatTrien": "Qui mô phòng thí nghiệm",
+      "phuongThucChuyenGiao": [],
+      "phamViThuongMai": [
+        "Có khả năng sử dụng trong các trang trại chăn nuôi gà ở phạm vi cả nước"
+      ],
+      "chaoGiaThamKhao": "",
+      "hinhAnhTongThe": [
+        "img2_a",
+        "img2_b"
+      ]
+    },
+    {
+      "id": 3,
+      "ten": "Bộ phận cắt vỏ của máy bóc vỏ hạt sen tươi",
+      "author": [
+        "Huỳnh Thanh Thưởng"
+      ],
+      "address": "BM Kỹ thuật Cơ khí, Khoa Công Nghệ, Đại học Cần Thơ",
+      "phone": "0988448116",
+      "email": "thanhthuong@ctu.edu.vn",
+      "website": "",
+      "hightlight": [
+        "Đây là thiết kế mới, mang lại hiệu quả cao trong việc cắt vỏ hạt sen tươi. Cụ thể, không dây dập nát hạt sen cũng như không cắt phạm vào phần cơm của hạt sen. Bên cạnh đó, nó là một bộ phận cấu thành tổ hợp máy tách bỏ hạt sen tươi. Hơn nữa, sản phẩm có kết cấu nhỏ gọn, chi tiết đơn giản, dễ dàng thay thế, chi phí chế tạo thấp và dễ vận hành"
+      ],
+      "quyTrinh": [
+        "Các chi tiết và kết cấu của bộ phận cắt vỏ hạt sen tươi được tối ưu hóa nhằm đảm bảo các yêu cầu đối với máy tách vỏ hạt sen tươi như sau: (1) định vị hạt sen đến đúng vị trí dao cắt và không gây dập nát hạt sen; (2) cắt vòng quanh chu vi hạt và không phạm vào phần cơm của hạt sen; (3) có thể cắt được hạt sen có kích thước khác nhau; (4) kết cấu đơn giản, dễ thay thế, chi phí chế tạo thấp và vận hành dễ dàng. Qua quá trình cải tiến, chế tạo và chạy thử nghiệm, bộ phận cắt vỏ của máy tách vỏ hạt sen tươi đã đáp ứng được các yêu cầu đã nêu trên. Tỷ lệ thành phẩm đạt trên 90%"
+      ],
+      "lvApDung": "Máy nông nghiệp",
+      "uuDiem": [
+        "Đây là thiết kế mới, mang lại hiệu quả cao trong việc cắt vỏ hạt sen tươi. Cụ thể, không dây dập nát hạt sen cũng như không cắt phạm vào phần cơm của hạt sen. Bên cạnh đó, nó là một bộ phận cấu thành tổ hợp máy tách bỏ hạt sen tươi. Hơn nữa, sản phẩm có kết cấu nhỏ gọn, chi tiết đơn giản, dễ dàng thay thế, chi phí chế tạo thấp và dễ vận hành"
+      ],
+      "mucDoPhatTrien": "Thương mại hóa",
+      "phuongThucChuyenGiao": [
+        "Theo đơn đặt hàng",
+        "Đào tạo"
+      ],
+      "phamViThuongMai": [
+        "Trên cả nước"
+      ],
+      "chaoGiaThamKhao": "75.000.000 vnđ",
+      "hinhAnhTongThe": [
+        "img3_a",
+        "img3_b"
+      ]
+    },
+    {
+      "id": 4,
+      "ten": "QUY TRÌNH XỬ LÝ RA HOA RÃI VỤ XOÀI ĐÀI LOAN VÀ XOÀI CÁT CHU",
+      "author": [
+        "TRẦN VĂN HẬU"
+      ],
+      "address": "Khu II, đường 3/2, phường Xuân Khánh, quận Ninh Kiều, Tp Cần Thơ",
+      "phone": "0918.240259",
+      "email": "thanhthuong@ctu.edu.vn",
+      "website": "",
+      "hightlight": [
+        "Sử dụng hóa chất thay thế cho hóa chất không còn trong danh mục sản xuất của Bộ Nông nghiệp"
+      ],
+      "quyTrinh": [
+        "Sáng chế đề cập đến quy trình xử lý ra hoa rải vụ xoài Đài Loan (Tượng da xanh) và xoài Cát Chu bằng cách kết hợp giữa phương pháp canh tác với phương pháp xử lý hóa chất Unuconazol (UCZ) để tạo mầm hoa thay thế cho hóa chất Paclobutrazol (PBZ) và Kali nitrat (KNO3) kích thích trổ hoa thay thế cho Thiourea nhằm mục đích điều chỉnh thời gian thu hoạch sớm hoặc muộn hơn so với thời gian thu hoạch chính vụ mà vẫn đảm bảo cho môi trường và con người, góp phần tăng thu nhập cho nhà vườn, đáp ứng được yêu cầu xuất khẩu."
+      ],
+      "lvApDung": "Sản xuất Nông Nghiệp",
+      "uuDiem": [
+        "Sử dụng hóa chất thay thế cho hóa chất không còn trong danh mục sản xuất của Bộ Nông nghiệp"
+      ],
+      "mucDoPhatTrien": "Quy mô công nghiệp",
+      "phuongThucChuyenGiao": [
+        "Đào tạo"
+      ],
+      "phamViThuongMai": [
+        "Sản xuất cây xoài"
+      ],
+      "chaoGiaThamKhao": "Tính chi phí đào tạo",
+      "hinhAnhTongThe": [
+        "img4_a",
+        "img4_b"
+      ]
+    },
+    {
+      "id": 5,
+      "ten": "QUI TRÌNH SẢN XUẤT MEO GIỐNG VÀ TRỒNG NẤM RƠM",
+      "author": [
+        "Trần Nhân Dũng",
+        "Đỗ Tấn Khang", 
+        "Trần Văn Bé Năm"
+      ],
+      "address": "Khu II, đường 3/2, phường Xuân Khánh, quận Ninh Kiều, Tp Cần Thơ",
+      "phone": "",
+      "email": "",
+      "website": "",
+      "hightlight": [
+        "Tạo ra giống meo nấm rơm thuần chủng",
+        "Chất lượng meo giống ổn đinh, đồng đều",
+        "Meo giống cho năng suất cao",
+        "Nguồn giống nấm đa dạng và luôn mới",
+        "Phù hợp với điều kiện môi trường của từng địa phương"
+      ],
+      "quyTrinh": [
+        "Phân lập và tuyển chọn: giống nấm rơm được phân lập từ quả thể nấm của các chủng nấm thuần",
+        "Tạo giống cấp 1: cấy chuyển khuẩn ty nấm sang môi trường PDA trên đĩa petri",
+        "Tạo giống cấp 2: cấy chuyển các mảnh giống cấp 1 vào các túi môi trường cấp 2 bao gồm lúa đã bổ sung dinh dưỡng cần thiết",
+        "Tạo giống cấp 3 (meo): cấy chuyển giống cấp 2 vào các túi môi trường cấp 3 gồm trấu được đã bổ sung dinh dưỡng cần thiết",
+        "Meo giống nấm rơm có hệ sợi tơ lan đều trắng khắp túi meo, bện chặt nguyên liệu trấu, không bị nhiễm. Sau cấy 7-10 ngày là có thể sử dụng. Không để meo quá già sẽ làm giảm sức sinh trưởng của tơ nấm và ảnh hưởng đến năng suất của nấm."
+      ],
+      "lvApDung": "Công nghệ sinh học và khoa học y sinh",
+      "uuDiem": [
+        "Tạo ra giống meo nấm rơm thuần chủng",
+        "Chất lượng meo giống ổn đinh, đồng đều",
+        "Meo giống cho năng suất cao",
+        "Nguồn giống nấm đa dạng và luôn mới",
+        "Phù hợp với điều kiện môi trường của từng địa phương"
+      ],
+      "mucDoPhatTrien": "Thương mại hóa",
+      "phuongThucChuyenGiao": [
+        "Theo đơn đặt hàng",
+        "Đào tạo"
+      ],
+      "phamViThuongMai": [
+        "Trong nước"
+      ],
+      "chaoGiaThamKhao": "Tính chi phí đào tạo",
+      "hinhAnhTongThe": [
+        "img5_a",
+        "img5_b"
       ]
     }
   ]

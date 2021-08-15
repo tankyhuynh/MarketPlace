@@ -8,7 +8,7 @@
     "npm": "6.9.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "json-server -p 3001 --watch db.json",
     "backend": "nodemon index.js",
     "frontend": "npm run front --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""

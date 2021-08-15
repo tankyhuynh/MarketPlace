@@ -2,20 +2,58 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const projectSchema = mongoose.Schema({
-    name: {
+    id: {
         type: String
     },
-    hightlight: {
+    ten: {
         type: String
-    }
-    ,content: {
+    },
+    author: [],
+    address: {
+        type: String
+    },
+    phone: {
+        type: String
+    },  
+    email: {
+        type: String
+    },
+    website: {
+        type: String
+    },
+    hightlight: [],
+    quyTrinh: [],
+    lvApDung: {
+        type: String
+    },
+    uuDiem: [],
+    mucDoPhatTrien: {
+        type: String
+    },
+    phuongThucChuyenGiao: [],
+    phamViThuongMai: [],
+    chaoGiaThamKhao: {
+        type:String,
+    },
+    hinhAnhTongThe: [],
+    content: {
         type:String,
     },
     writer: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
-}, { timestamps: true })
+}, { timestamps: true });
+
+projectSchema.pre('save', async function (next) {
+    const randomInteger = (min, max) => {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    this.id = Math.random()
+      .toString(36)
+      .substr(2, randomInteger(6, 10));
+    next();
+  });
 
 
 const Project = mongoose.model('Project', projectSchema);

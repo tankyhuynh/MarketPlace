@@ -18,8 +18,8 @@ app.use(cookieParser());
 var cors = require('cors')
 app.use(cors())
 
-app.use('/api/users', require('./routes/users'));
-app.use('/api/projects', require('./routes/projects'));
+app.use('/users', require('./routes/users'));
+app.use('/projects', require('./routes/projects'));
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
