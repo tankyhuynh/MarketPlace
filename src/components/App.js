@@ -59,11 +59,7 @@ export default withRouter(function App({ location }) {
               <Route path="/auth/signup" exact component={SignUp}></Route>
 
               <Route path="/projects" exact component={ProjectList}></Route>
-
-              {/* Show with field */}
               <Route path="/projects/show/:id" exact component={ProjectShow}></Route>
-
-              {/* create with stepper */}
               <Route path="/projects/new" exact component={ProjectCreate}></Route>
 
               <Route path="/researchers" exact component={Researcher_Home}></Route>
