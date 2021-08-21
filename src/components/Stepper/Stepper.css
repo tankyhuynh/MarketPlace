@@ -1,5 +1,15 @@
-
-
 .stepper--btn {
     @apply p-2 mx-4 
+}
+
+.stepper--field {
+    @apply flex justify-between my-4
+}   
+
+.stepper--label {
+    @apply self-center block mt-4 mb-2 mr-2 text-base font-bold text-gray-700;
+}
+
+.stepper-combobox { 
+    @apply ml-20 text-gray-700 border shadow w-full py-2 rounded
 }

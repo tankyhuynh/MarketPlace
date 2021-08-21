@@ -6,6 +6,8 @@ import CarouselCustom from '../Carousel/CarouselCustom'
 import CardCustom from '../CardCustom/CardCustom'
 import { Link } from 'react-router-dom';
 
+import video from '../../assets/growag-introduction.mp4';
+
 import { fetchProjects } from '../../actions';
 
 
@@ -93,11 +95,24 @@ class Home extends React.Component {
 
         return (
             <>
-               <div className="">
-                    <CarouselCustom slides={this.props.projectsQuill}/>
+               <div className="flex flex-col gap-12">
+                    <div className="">
+                        <video
+                            className="absolute md:-mx-28"
+                            autoPlay
+                            loop
+                            muted
+                        >
+                            <source src={video} type="video/mp4" />
+                            Your browser does not support the video tag
+                        </video>
+                        <div class="md:mt-32">
+                            <CarouselCustom slides={this.props.projectsQuill}/>
+                        </div>
+                    </div>
                     
-                    <div id="cards">
-                        <h2 className="mx-4 text-3xl font-bold">Dự án</h2>
+                    <div id="cards" className="z-10 md:mt-24">
+                        <h2 className="mx-4 mb-12 text-3xl font-bold">Dự án</h2>
                         <div className="gap-4 md:grid md:grid-cols-3">
                             { this.renderProjects() }
                         </div>

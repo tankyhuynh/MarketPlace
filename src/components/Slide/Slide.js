@@ -43,14 +43,23 @@ const Slide = ({ slide }) => {
 
     const renderUuDiem = (uuDiems) => {
         if(uuDiems){
-            return uuDiems.map(uuDiem => {
-                return <div>{uuDiem}</div>
+            let uuDiemStr = '';
+            uuDiems.map(uuDiem => {
+                return uuDiemStr += uuDiem;
             })
+
+            if(uuDiemStr.length > 100){
+                var shortUuDiem = uuDiemStr.substring(0, 100) + "...";
+                return shortUuDiem;
+            }
         }
-    }
+        
+    };
 
     return (
-        <Card className="grid my-16 place-content-between lg:grid-cols-3">
+        <Card 
+            className="grid my-16 place-content-between lg:grid-cols-3 slide-background"
+        >
             <div className="grid lg:col-span-1 place-content-center">
                 <img
                     src={renderImage(renderImageSrc(slide))}

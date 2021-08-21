@@ -1,3 +1,8 @@
+.slide-background {
+    /* background-color: #b7b8b8; */
+    opacity: .8;
+}   
+
 .slide--btn {
     background-color: #03A9F4;
 }

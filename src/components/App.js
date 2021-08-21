@@ -18,11 +18,11 @@ import SignUp from './Auth/SignUp/SignUp';
 
 import Researcher_Home from './Researcher/Researcher_Home/Researcher_Home';
 import ResearcherNavbar from './Researcher/ResearcherNavbar/ResearcherNavbar';
-// import ProjectCreateQuill from './Projects/ProjectWithQuill/ProjectCreateQuill';
-import ProjectCreate from './Projects/ProjectDefault/ProjectCreate';
-import ProjectListQuill from './Projects/ProjectWithQuill/ProjectListQuill';
-// import ProjectShowQuill from './Projects/ProjectWithQuill/ProjectShowQuill';
-import ProjectShow from './Projects/ProjectDefault/ProjectShow';
+import ProjectCreate from './Projects/ProjectCreate';
+import ProjectList from './Projects/ProjectList';
+import ProjectShow from './Projects/ProjectShow';
+import ReactSlickIntegration from './ImageHoverZoom/ReactSlickIntegration';
+// import GoogleAuth from './GoogleAuth';
 // import ProjectShow from './Projects/ProjectDefault/ProjectShow';
 
 
@@ -58,17 +58,11 @@ export default withRouter(function App({ location }) {
               <Route path="/auth/signin" exact component={SignIn}></Route>
               <Route path="/auth/signup" exact component={SignUp}></Route>
 
-              <Route path="/projects" exact component={ProjectListQuill}></Route>
+              <Route path="/projects" exact component={ProjectList}></Route>
 
               {/* Show with field */}
               <Route path="/projects/show/:id" exact component={ProjectShow}></Route>
 
-              {/* Show only content of Quill */}
-              {/* <Route path="/projects/show/:id" exact component={ProjectShowQuill}></Route> */}
-
-              {/* create with default */}
-              {/* <Route path="/projects/new" exact component={ProjectCreateQuill}></Route> */}
-              
               {/* create with stepper */}
               <Route path="/projects/new" exact component={ProjectCreate}></Route>
 
@@ -81,6 +75,7 @@ export default withRouter(function App({ location }) {
               <Route path="/streams/:id" exact component={StreamShow}></Route>
 
               <Route path="/test" exact component={Test}></Route>
+              <Route path="/example" exact component={ReactSlickIntegration}></Route>
 
             </Switch>
        </div>

@@ -207,8 +207,11 @@ class QuillEditor extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log('content init', props.data);
+
+        const data = props.data ? props.data : '';
         this.state = {
-            editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : props.data.content,
+            editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : data,
             files: [],
         };
 
@@ -370,7 +373,7 @@ class QuillEditor extends React.Component {
     render() {
         return (
             <div>
-                <div id="toolbar">
+                <div id={`toolbar${this.props.editorId}`}>
                     <select className="ql-font" defaultValue={""}>
                         <option selected>Sans Serif</option>
                         <option value="inconsolata">Inconsolata</option>
@@ -427,7 +430,7 @@ class QuillEditor extends React.Component {
     modules = {
         syntax: true,
         toolbar: {
-            container: "#toolbar",
+            container: "#toolbar" + this.props.editorId,
             handlers: {
                 insertImage: this.imageHandler,
                 insertVideo: this.videoHandler,

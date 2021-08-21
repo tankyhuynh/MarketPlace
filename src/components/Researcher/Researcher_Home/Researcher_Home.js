@@ -34,7 +34,7 @@ const Researcher_Home = () => {
                             <GroupIcon style={{ fontSize:"80px", color: "black"  }} />
                             Nhóm nghiên cứu
                         </Link >
-                        <Link className="flex flex-col gap-2 shadow-lg rounded-2xl content_center">
+                        <Link to="/projects/new" className="flex flex-col gap-2 shadow-lg rounded-2xl content_center">
                             <AddCircleIcon style={{ fontSize:"80px", color: "black"  }} />
                             Tạo dự án
                         </Link>
