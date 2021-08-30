@@ -3,21 +3,21 @@ import './Header.css'
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useCookies } from 'react-cookie';
+
+import { signOut } from '../actions';
 
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import GoogleAuth from './GoogleAuth';
 import logo from '../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,12 +80,51 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  console.log(props);
+  const [cookies, setCookie, removeCookie] = useCookies(['fullName']);
+  if(props.currentFullName){
+    setCookie('fullName', props.currentFullName, { path: '/' });
+  }
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const renderUserOptions = (className) => {
+    return (
+        <>
+          <Link to="/" className={`header--link ${className}`}>Trang chủ</Link>
+          <Link to="/projects" className={`header--link ${className}`}>Dự án</Link>
+          <Link to="/" className={`header--link ${className}`}>Nhóm nghiên cứu</Link>
+          <Link to="/" className={`header--link ${className}`}>Nổi bật</Link>
+          <Link to="/" className={`header--link ${className}`}>FAQ</Link>
+          <Link to="/" className={`header--link ${className}`}>Liên hệ</Link>
+          <Link to="/" className={`header--link ${className}`}>Giới thiệu</Link>
+          {/* <Link to="/streams" className="header--link">Streams</Link> */}
+        </>
+    )
+  }
+  const renderResearcherOptions = (className) => {
+    return (
+        <>
+            { renderUserOptions(className) }
+            <Link to="/projects/new" className={`header--link ${className}`}>Tạo dự án</Link>
+        </>
+    )
+  }
+
+  const renderOptions = (className) => {
+    if(!props.isSignedIn) return renderUserOptions(className); 
+    
+    const roleCode = props.userProfile.role.code;
+    console.log('roleCode', roleCode)
+    if(roleCode === 'NNC'){
+        return renderResearcherOptions(className)
+    }
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -118,7 +157,7 @@ const Header = (props) => {
           aria-label="account of current user"
           aria-controls={menuId}
           aria-haspopup="true"
-          onClick={handleProfileMenuOpen}
+          onClick={handleProfileMenuOpen} 
           color="inherit"
         >
           <AccountCircle fontSize="large" />
@@ -127,50 +166,58 @@ const Header = (props) => {
     }
   }
 
+  const onLogOut = () => {
+    removeCookie("fullName");
+    props.signOut();
+  }
+
   const renderUserProfile = () =>{
-    if(props.currentUserId){
-      return (
-        <div className="flex items-center gap-2">
-          {props.currentUsername}
-          <GoogleAuth />
-          
-        </div>
-      );
-    }
-    else {
-      return (
-        <>
-          {/* <GoogleAuth /> */}
-          <div className="flex gap-1">
-              <Link to="/auth/signin" className="px-4 py-2 bg-green-500 rounded-lg ">Đăng nhập</Link>
-              {/* <Link to="/auth/signup" className="p-3 bg-gray-500 rounded-lg ">SignUp</Link> */}
-          </div>
-        </>
-      )
-    }
+    // console.log('cookieFullName',props.cookieFullName)
+    return (
+      <>
+        {/* <GoogleAuth /> */}
+        {
+          cookies["fullName"]
+          ? (
+              <div className="flex flex-col items-center gap-2 lg:flex-row">
+                
+                <button 
+                  onClick={ () => onLogOut() }
+                  className="px-4 py-2 bg-red-500 rounded-lg"
+                >
+                    Đăng xuất
+                </button>
+              </div>
+            )
+          : <Link to="/auth/signin" className="px-4 py-2 bg-green-500 rounded-lg ">Đăng nhập</Link>
+        }
+      </>
+    )
   }
 
   const renderAccountMenu = () => {
-    if(!props.isSignedIn){
+    if(props.isSignedIn){
       return (
-        <div>
-          <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                  <Badge color="secondary">
-                    <ExitToAppIcon />
-                  </Badge>
-                </IconButton>
-                <p>Đăng xuất</p>
-          </MenuItem>
-          <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                  <Badge color="secondary">
-                    <AccountCircle />
-                  </Badge>
-                </IconButton>
-                <p>Trang cá nhân</p>
-          </MenuItem>
-        </div>
+        <>
+          <div className="flex flex-col gap-4 p-2">
+            { renderOptions('header--btn') }
+            <button 
+                className="header--btn"
+                onClick={() => onLogOut()}  
+              >
+                <ExitToAppIcon />
+                Đăng xuất
+            </button>
+            <button 
+                className="header--btn"
+                onClick={() => onLogOut()}  
+              >
+                <AccountCircle />
+                Profile
+            </button>
+
+          </div>
+        </>
       );
     }
   };
@@ -205,30 +252,13 @@ const Header = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem> */}
       
       {renderAccountMenu()}
 
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem> */}
     </Menu>
   );
+
+  
 
   
 
@@ -236,17 +266,9 @@ const Header = (props) => {
     <div className={`${classes.grow} debug-screens`}>
       <AppBar position="static" className={`${classes.headerBackground}`}>
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Link 
-              className="flex items-center"
               to="/"
+              className="flex items-center"
           >
             <img 
               className="w-16" 
@@ -276,11 +298,16 @@ const Header = (props) => {
           </div>
 
           <div className={`${classes.sectionDesktop} flex gap-2`}>
-            <div className="m-auto">
-                { renderUserProfile() }
-                {/* Hello Tran Van A */}
-            </div>
-                {renderAccount()}
+              <div className="m-auto">
+                  { cookies["fullName"] ? cookies["fullName"] : props.currentFullName } 
+              </div>
+              <div>
+                  {renderAccount()}
+              </div>
+              <div className="m-auto">
+                  { renderUserProfile() }
+              </div>
+             
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -297,19 +324,13 @@ const Header = (props) => {
       </AppBar>
       
       <hr className="h-1" />
-      <section className={`${classes.headerBackground} ${classes.header}`}>
-        <div className={`flex text-white px-4 md:px-8`}>
-          <Link to="/" className="header--link">Trang chủ</Link>
-          <Link to="/projects" className="header--link">Dự án</Link>
-          <Link to="/" className="header--link">Nhóm nghiên cứu</Link>
-          <Link to="/" className="header--link">Nổi bật</Link>
-          <Link to="/" className="header--link">FAQ</Link>
-          <Link to="/" className="header--link">Liên hệ</Link>
-          <Link to="/" className="header--link">Giới thiệu</Link>
-          {/* <Link to="/projects/new" className="header--link">New Project</Link> */}
-          {/* <Link to="/streams" className="header--link">Streams</Link> */}
-        </div>
-      </section>
+
+          <section className={`${classes.headerBackground} ${classes.header} invisible md:visible`}>
+              <div className={`flex gap-2 md:gap-6 text-white px-4 md:px-8`}>
+                  {renderOptions()}
+              </div>
+          </section>
+     
 
       {renderMobileMenu}
       {renderMenu}
@@ -323,9 +344,10 @@ const Header = (props) => {
 const mapStateToProps = (state) => {
   return { 
       currentUserId: state.auth.userId,
-      currentUsername: state.auth.username,
-      isSignedIn: state.auth.isSignedIn
+      currentFullName: state.auth.fullName,
+      isSignedIn: state.auth.isSignedIn,
+      userProfile: state.auth.userProfile
   };
 }
 
-export default connect(mapStateToProps, {})(Header)
+export default connect(mapStateToProps, { signOut })(Header)

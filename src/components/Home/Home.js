@@ -10,6 +10,10 @@ import video from '../../assets/growag-introduction.mp4';
 
 import { fetchProjects } from '../../actions';
 
+import img_demo_1 from '../../assets/iTRAK-contain-500x240.jpg';
+import img_demo_2 from '../../assets/KALYX-contain-500x240.jpg';
+import img_demo_3 from '../../assets/Onside_LOGO_Lime_RGB_POS-contain-500x240.jpg';
+
 
 
 // const projects = [
@@ -29,23 +33,23 @@ import { fetchProjects } from '../../actions';
 
 const organizations = [
     {
-        ten: 'Nhóm nghiên cứu 1',
-        hinhAnhTongThe: 'https://images.unsplash.com/photo-1612222869049-d8ec83637a3c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-        uuDiem: [
+        name: 'Nhóm nghiên cứu 1',
+        hinhAnhTongThe: img_demo_1
+        ,advantage: [
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
         ]
     },
     {
-        ten: 'Nhóm nghiên cứu 2',
-        hinhAnhTongThe: 'https://images.unsplash.com/photo-1496200186974-4293800e2c20?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjh8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-        uuDiem: [
+        name: 'Nhóm nghiên cứu 2',
+        hinhAnhTongThe: img_demo_2,
+        advantage: [
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
         ]
     },
     {
-        ten: 'Nhóm nghiên cứu 3',
-        hinhAnhTongThe: 'https://images.unsplash.com/photo-1562783912-21ad31ee2a83?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fG9yZ2FuaXphdGlvbiUyMGxvZ298ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-        uuDiem: [
+        name: 'Nhóm nghiên cứu 3',
+        hinhAnhTongThe: img_demo_3,
+        advantage: [
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
         ]
     },
@@ -59,40 +63,27 @@ class Home extends React.Component {
     }
 
     renderProjects = () =>{
-        return this.props.projectsQuill
-            .filter(item => item.id < 4)
+        return this.props.projects
+            .filter(project => project.status.id !== 2)
+            .slice(0,3)
             .map(card => {
                 return (
-                    <Link to={`/projects/show/${card.id}`}>
+                    <Link to={`/projects/show/${card.id}`} key={card.id}>
                         <CardCustom card={card} key={card.id} />
                     </Link>
                 );
-    });
+        });
     }
 
+    renderOrganizations = organizations.map(card =>{
+        return (
+            <Link to="/" key={card.ten}>
+                <CardCustom card={card} key={card.ten} />
+            </Link>
+        );
+    });
 
     render() {
-        
-        // const renderProjects = projects.map(card =>{
-        //     return (
-        //         <Link>
-        //             <CardCustom card={card} key={card.title} />
-        //         </Link>
-        //     );
-        // });
-        
-        
-       
-    
-        const renderOrganizations = organizations.map(card =>{
-            return (
-                <Link>
-                    <CardCustom card={card} key={card.title} />
-                </Link>
-            );
-        });
-
-
         return (
             <>
                <div className="flex flex-col gap-12">
@@ -106,8 +97,8 @@ class Home extends React.Component {
                             <source src={video} type="video/mp4" />
                             Your browser does not support the video tag
                         </video>
-                        <div class="md:mt-32">
-                            <CarouselCustom slides={this.props.projectsQuill}/>
+                        <div className="md:mt-32">
+                            <CarouselCustom slides={this.props.projects.filter(project => project.status.id !== 2)} organizations={organizations}/>
                         </div>
                     </div>
                     
@@ -121,7 +112,7 @@ class Home extends React.Component {
                     <div id="organizations" className="mt-4">
                         <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
                         <div className="projects_organizations">
-                            { renderOrganizations }
+                            { this.renderOrganizations }
                         </div>
                     </div>
                </div>
@@ -132,7 +123,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        projectsQuill:  Object.values(state.projects),
+        projects:  Object.values(state.projects),
         streams: Object.values(state.streams),
         currentUserId: state.auth.userId,
         isSignedIn: state.auth.isSignedIn

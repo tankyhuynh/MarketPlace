@@ -1,10 +1,13 @@
 import './Test.css'
-
 import React from 'react';
-import ReactSlickIntegration from '../ImageHoverZoom/ReactSlickIntegration';
+import Filter from '../Filter/Filter'
+import { useSelector } from 'react-redux';
 
 
 const Test = () => {
+
+    const projects = useSelector(state => state.projects)
+
     return (
         // <article classNameName="html">
         //     <section className="section large section-1"> Section One </section>
@@ -14,9 +17,13 @@ const Test = () => {
         //     <section className="section large section-5"> Section Five </section>
         // </article>
 
-        <div className="">
-            <ReactSlickIntegration />
-        </div>
+        // <div className="">
+        //     <ReactSlickIntegration />
+        // </div>
+
+        // <Pagination />
+
+        <Filter data={projects} />
     );
 };
 

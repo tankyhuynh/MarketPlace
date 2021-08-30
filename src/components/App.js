@@ -4,7 +4,9 @@ import "@material-tailwind/react/tailwind.css";
 
 import React from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
-// import history from "../history";
+
+import PrivateRoute from './PrivateRoute';
+
 import SignIn from "./Auth/SignIn/SignIn";
 import Header from "./Header";
 import Home from "./Home/Home";
@@ -18,10 +20,13 @@ import SignUp from './Auth/SignUp/SignUp';
 
 import Researcher_Home from './Researcher/Researcher_Home/Researcher_Home';
 import ResearcherNavbar from './Researcher/ResearcherNavbar/ResearcherNavbar';
+import ResearcherProject from './Researcher/Researcher_Project/ResearcherProject';
+
 import ProjectCreate from './Projects/ProjectCreate';
 import ProjectList from './Projects/ProjectList';
 import ProjectShow from './Projects/ProjectShow';
 import ReactSlickIntegration from './ImageHoverZoom/ReactSlickIntegration';
+import ProjectEdit from './Projects/ProjectEdit';
 // import GoogleAuth from './GoogleAuth';
 // import ProjectShow from './Projects/ProjectDefault/ProjectShow';
 
@@ -49,26 +54,28 @@ export default withRouter(function App({ location }) {
 
   return (
     <div className="font-Roboto"> 
-       <div> { renderHeader() } </div>
+       <div className=""> { renderHeader() } </div>
        
        <div className="md:mx-28">
             <Switch>
-              <Route path="/" exact component={Home}></Route>
+              <PrivateRoute path="/" exact component={Home}></PrivateRoute>
 
               <Route path="/auth/signin" exact component={SignIn}></Route>
               <Route path="/auth/signup" exact component={SignUp}></Route>
 
-              <Route path="/projects" exact component={ProjectList}></Route>
-              <Route path="/projects/show/:id" exact component={ProjectShow}></Route>
-              <Route path="/projects/new" exact component={ProjectCreate}></Route>
+              <PrivateRoute path="/projects" exact component={ProjectList}></PrivateRoute>
+              <PrivateRoute path="/projects/show/:id" exact component={ProjectShow}></PrivateRoute>
+              <PrivateRoute path="/projects/edit/:id" exact component={ProjectEdit}></PrivateRoute>
+              <PrivateRoute path="/projects/new" exact component={ProjectCreate}></PrivateRoute>
 
-              <Route path="/researchers" exact component={Researcher_Home}></Route>
+              <PrivateRoute path="/researchers" exact component={Researcher_Home}></PrivateRoute>
+              <PrivateRoute path="/researchers/projects" exact component={ResearcherProject}></PrivateRoute>
 
-              <Route path="/streams" exact component={StreamList}></Route>
-              <Route path="/streams/new" exact component={StreamCreate}></Route>
-              <Route path="/streams/edit/:id" exact component={StreamEdit}></Route>
-              <Route path="/streams/delete/:id" exact component={StreamDelete}></Route>
-              <Route path="/streams/:id" exact component={StreamShow}></Route>
+              <PrivateRoute path="/streams" exact component={StreamList}></PrivateRoute>
+              <PrivateRoute path="/streams/new" exact component={StreamCreate}></PrivateRoute>
+              <PrivateRoute path="/streams/edit/:id" exact component={StreamEdit}></PrivateRoute>
+              <PrivateRoute path="/streams/delete/:id" exact component={StreamDelete}></PrivateRoute>
+              <PrivateRoute path="/streams/:id" exact component={StreamShow}></PrivateRoute>
 
               <Route path="/test" exact component={Test}></Route>
               <Route path="/example" exact component={ReactSlickIntegration}></Route>
@@ -78,3 +85,7 @@ export default withRouter(function App({ location }) {
     </div>
   );
 });
+
+
+
+

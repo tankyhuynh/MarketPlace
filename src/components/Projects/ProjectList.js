@@ -1,9 +1,11 @@
 
+import dateFormat from 'dateformat';
+
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { fetchProjectsWithQuill, fetchProjects } from "../../actions";
+import { fetchProjects } from "../../actions";
 
 import img1_a from '../../assets/img1_a.png';
 import img1_b from '../../assets/img1_b.png';
@@ -13,7 +15,7 @@ import img3_a from '../../assets/img3_a.jpg';
 import img3_b from '../../assets/img3_b.png';
 import img5_a from '../../assets/img5_a.jpg';
 import img5_b from '../../assets/img5_b.png';
-
+import logo from '../../assets/logo.png';
 
 
 class ProjectList extends React.Component {
@@ -27,7 +29,7 @@ class ProjectList extends React.Component {
             //     return <div>{author}</div>;
             // })
 
-            return <div>{authors[0]}</div>;
+            return <div>{authors}</div>;
 
         }
     };
@@ -58,18 +60,21 @@ class ProjectList extends React.Component {
     };
 
     renderImage = (image) => {
-        switch(image){
-            case "img1_a": return img1_a;
-            case "img1_b": return img1_b;
-            case "img2_a": return img2_a;
-            case "img2_b": return img2_b;
-            case "img3_a": return img3_a;
-            case "img3_b": return img3_b;
-            case "img5_a": return img5_a;
-            case "img5_b": return img5_b;
-            default: return image;
+        if(image){
+             switch(image){
+                 case "img1_a": return img1_a;
+                 case "img1_b": return img1_b;
+                 case "img2_a": return img2_a;
+                 case "img2_b": return img2_b;
+                 case "img3_a": return img3_a;
+                 case "img3_b": return img3_b;
+                 case "img5_a": return img5_a;
+                 case "img5_b": return img5_b;
+                 default: return image;
+             }
         }
-    }
+        return logo;
+     }
 
     renderImageSrc = (card) => {
         const { hinhAnhTongThe } = card;
@@ -83,44 +88,49 @@ class ProjectList extends React.Component {
 
     renderList(){
         
-        return this.props.projectsQuill.map((project, index) => {
+        return this.props.projects
+            .filter(project => project.status.id !== 2)
+            .map((project, index) => {
             return (
                     <Link 
                         to={`/projects/show/${project.id}`} 
                         className="grid grid-cols-1 rounded-lg shadow-lg md:grid-cols-4"
+                        key={index}
                     >
                         <img 
                             src={this.renderImage(this.renderImageSrc(project))} 
                             alt=" random imgee" 
-                            className="object-cover object-center w-full h-64 col-span-1 rounded-lg shadow-md lg:h-full lg:w-full" 
+                            className="object-contain object-center w-full h-64 col-span-1 rounded-lg shadow-md lg:h-full lg:w-full" 
                         />    
                         
-                        <div className="grid grid-cols-1 col-span-3 grid-rows-5 p-6 ">
+                        <div className="grid grid-cols-1 col-span-3 grid-rows-4 p-6 ">
                                 <div className="">
                                     <div className="flex items-baseline gap-2">
                                         <span className="inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full">
                                             New
                                         </span>
                                         <span className="inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full">
-                                            {this.renderLinhVuc(project.lvApDung)}
+                                            {this.renderLinhVuc(project.field.name)}
                                         </span>
                                     </div>
                                     
                                     <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
-                                        {project.ten}
+                                        {project.name}
                                     </h4>
                                 </div>
                             
-                                <div className="row-span-3 mt-1">
-                                    {project.uuDiem}
+                                <div className="row-span-2 mt-1">
+                                    {/* <div dangerouslySetInnerHTML={{ __html: project.advantage }} /> */}
+                                    { project.shortDescription }
                                 </div>
                                 <div className="mt-4 b-0 place-content-end">
                                     <span className="flex flex-col italic text-teal-600">
                                         <span className="font-semibold">
-                                            {this.renderAuthors(project.author)}
+                                            {/* {this.renderAuthors(project.author)} */}
+                                            Huỳnh Tấn Kỷ
                                         </span>
                                         <span className="self-end">
-                                            1 tuần trước
+                                            { dateFormat(project.date, "HH:MM, dddd, mmmm dS, yyyy") }
                                         </span>
                                     </span>
                                 </div> 
@@ -144,9 +154,9 @@ class ProjectList extends React.Component {
 
 const mapStateToProps = (state) => {
     return { 
-        projectsQuill:  Object.values(state.projects),
+        projects:  Object.values(state.projects),
         isSignedIn: state.auth.isSignedIn
     };
 }
 
-export default connect(mapStateToProps, { fetchProjectsWithQuill, fetchProjects })(ProjectList);
+export default connect(mapStateToProps, { fetchProjects })(ProjectList);

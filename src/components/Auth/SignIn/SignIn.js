@@ -5,12 +5,17 @@ import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 
-import { login } from '../../../actions'
+import { login } from '../../../actions';
 
 import Input from '@material-tailwind/react/Input'
 
 
 class SignIn extends React.Component {
+
+    constructor(props) {
+        super(props);
+        console.log(this.props);
+    }
 
     renderError({ error, touched }){
         if (touched && error) {
@@ -38,7 +43,12 @@ class SignIn extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        this.props.login(formValues);
+        // console.log('formValue: ', formValues);
+        // return users.post('/user/login', formValues)
+        //     .then((response) => {
+        //         this.props.history.push('/');
+        //     });
+        this.props.login(formValues, this.props.history);
     }
 
     render() {
@@ -133,13 +143,19 @@ const validate = formValues => {
     const errors = {};
 
     if (!formValues.title) {
-        errors.title = 'You must enter a title'
+        errors.title = 'You must enter a username'
     }
     if (!formValues.description) {
-        errors.description = 'You must enter a description'
+        errors.description = 'You must enter a password'
     }
 
     return errors;
+}
+
+const mapStateToProps = (state) => {
+    return { 
+        isSignedIn: state.auth.isSignedIn,
+    };
 }
 
 const formWrapped = reduxForm({
@@ -147,4 +163,4 @@ const formWrapped = reduxForm({
     validate: validate
 })(SignIn);
 
-export default connect(null, { login })(formWrapped);
+export default connect(mapStateToProps, { login })(formWrapped);

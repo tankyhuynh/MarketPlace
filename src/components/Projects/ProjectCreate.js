@@ -1,42 +1,100 @@
-// import environment from '../../../environments/environment';
-// import axios from 'axios';
+
 import React from 'react';
-// import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+
+import { 
+    fetchProjects, 
+    fetchLevelDevelopments,
+    fetchTransmissionMethods 
+} from '../../actions';
+
 
 import Stepper from '../Stepper/Stepper';
 
 
-const ProjectCreate = () => {
-    // let history = useHistory();
-    // const variables = {
-    //     ten: "demo",
-    //     hightlight: "hightlight",
-    //     content: "test"
-    // };
+class ProjectCreate extends React.Component {
+ 
 
-    // const onStepperFinished = () => {
-    //     axios.post(environment.url.node + '/projects/createProject', variables)
-    //         .then(response => {
-    //             if (response) {
+    steps = [
+            'Thông tin chung', 
+            'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
+            'Xem kết quả'
+    ]; 
 
-    //                 setTimeout(() => {
-    //                     history.push('/projects')
-    //                 }, 500);
-    //             }
-    //         })
-    // };
+    // isModalOpen = (isOpenModal) => {
+    //     setOpenModal(isOpenModal);
+    // }
+    // isStartWithNewProject = (isStartWithNewProject) => {
+    //     setStartWithNewProject(isStartWithNewProject);
+    // }
 
-    const steps = [
-        'Thông tin chung', 
-        'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
-        'Xem kết quả'
-    ];
+    // renderActions = () => {
+    //     return (
+    //         <>
+    //             <button 
+    //                 type="button" 
+    //                 className="inline-flex justify-center w-full px-4 py-4 text-base font-medium text-white bg-green-500 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+    //                 onClick={() => props.isModalOpen(false)}
+    //             >
+    //                 Tiếp tục
+    //             </button>
+    //             <button 
+    //                 type="button" 
+    //                 className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+    //                 // onClick={() => onCancel(true)}
+    //             >
+    //                 Hủy
+    //             </button>
+    //         </>
+    //     );
+    // }
 
-    return (
-        <>
-            <Stepper steps={steps}  />
-        </>
-    );
+    // renderModal = () => {
+    //     if(openModal){
+    //         return (
+    //             <Modal 
+    //                 title="Title"
+    //                 content="content"
+    //                 actions={renderActions()}
+    //                 isModalOpen={isModalOpen}
+    //                 isStartWithNewProject={isStartWithNewProject}
+    //             />
+    //         )
+    //     }
+    //     return null;
+    // }
+
+    componentDidMount(){
+        this.props.fetchLevelDevelopments();
+        this.props.fetchTransmissionMethods();
+    }
+
+    
+    
+    render() {
+        console.log('props project create: ', this.props);
+        return (
+            <>
+                <Stepper 
+                    steps={this.steps} 
+                    levels={this.props.levels}
+                    transmissions={this.props.transmissions}
+                    project={this.props.project ? this.props.project : null }
+                    type='create'
+                />
+            </>
+        ); 
+    }
 };
 
-export default ProjectCreate;
+const mapStateToProps = (state, ownProps) => {
+    return { 
+        levels: Object.values(state.levels),
+        transmissions: Object.values(state.transmissions)
+    };
+};
+  
+export default connect(
+    mapStateToProps,
+    { fetchProjects, fetchLevelDevelopments, fetchTransmissionMethods }
+)(ProjectCreate);

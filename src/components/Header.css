@@ -1,13 +1,19 @@
+.header--btn {
+    @apply flex gap-2 px-4 py-2 bg-green-500 rounded-lg
+}
+
+
+
 @layer components {
 
     .header--title {
         @apply hidden sm:block uppercase mx-0 sm:mx-2 md:mx-6 sm:text-xl lg:text-2xl font-bold
     }
     .header--link {
-        @apply text-sm sm:text-base mx-1 sm:mx-2 md:mx-4 font-bold
+        @apply text-sm sm:text-base  font-bold
     }
     .header--link:hover {
-        @apply text-gray-400
+        @apply text-red-500
     }
 
 }

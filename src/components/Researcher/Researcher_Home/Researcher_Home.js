@@ -7,8 +7,12 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import GroupIcon from '@material-ui/icons/Group';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { useSelector } from 'react-redux';
 
 const Researcher_Home = () => {
+
+    const userProfile = useSelector(state => state.auth.userProfile)
+
     return (
         <>
             <div className="grid h-screen grid-rows-2 gap-2 mt-4"> 
@@ -18,15 +22,18 @@ const Researcher_Home = () => {
                             <AccountCircle style={{ fontSize:"80px", color: "black"  }} />
                         </section>
                         <section>
-                            Name
+                            { userProfile.fullName }
                         </section>
                         <section>
-                            name@gmail.com
+                            { userProfile.email }
                         </section>
                     </Link>
                     <div id="options" className="grid grid-cols-3 col-span-3 gap-2 p-2 border-2 shadow-lg rounded-2xl"
                     >
-                        <Link className="flex flex-col gap-2 shadow-lg rounded-2xl content_center">
+                        <Link 
+                            to="/researchers/projects"
+                            className="flex flex-col gap-2 shadow-lg r ounded-2xl content_center"
+                        >
                             <LibraryBooksIcon style={{ fontSize:"80px", color: "black"  }} />
                             Dự án
                         </Link>
@@ -46,11 +53,11 @@ const Researcher_Home = () => {
                         <div className="flex flex-col gap-4 px-12">
                             <section className="flex justify-between fullName">
                                 Họ tên: 
-                                <span>Nguyễn Văn A</span>
+                                <span>{ userProfile.fullName }</span>
                             </section> 
                             <section className="flex justify-between gender">
                                 Giới tính: 
-                                <span>Nam</span>
+                                <span>{ userProfile.gender ? 'Nữ' : 'Nam' }</span>
                             </section>
                             <section className="flex justify-between birthDate">
                                 Ngày sinh: 
@@ -58,15 +65,15 @@ const Researcher_Home = () => {
                             </section>
                             <section className="flex justify-between address">
                                 Địa chỉ: 
-                                <span>Hậu Giang</span>
+                                <span>{ userProfile.address }</span>
                              </section>
                             <section className="flex justify-between email">
                                 Email: 
-                                <span>email@gmail.com</span>
+                                <span>{ userProfile.email }</span>
                             </section>
                             <section className="flex justify-between mobilePhone">
                                 Số điện thoại: 
-                                <span>0123 456 789</span>
+                                <span>{ userProfile.phoneNumber }</span>
                             </section>
                         </div>
                     </div>

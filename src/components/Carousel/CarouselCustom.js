@@ -3,11 +3,11 @@ import Carousel from 'react-elastic-carousel'
 import Slide from '../Slide/Slide';
 
 
-const CarouselCustom = ({ slides }) => {
+const CarouselCustom = ({ slides, organizations }) => {
     const renderSlides = slides.map((slide) =>{
         return (
-            <div className="-mt-5 text-center text-black md:mt-10">
-                <Slide slide={slide} key={slide.id} />
+            <div className="-mt-5 text-center text-black md:mt-10" key={slide.id}>
+                <Slide slide={slide} organizations={organizations} key={slide.id} />
             </div>
         )
     })
@@ -25,11 +25,15 @@ const CarouselCustom = ({ slides }) => {
             enableAutoPlay 
             autoPlaySpeed={playSpeed}
             onNextEnd={({ index }) => {
-                clearTimeout(resetTimeout)
-                if (index + 1 === totalPages) {
-                   resetTimeout = setTimeout(() => {
-                      carouselRef.current.goTo(0)
-                  }, playSpeed) // same time
+                if(index){
+                    clearTimeout(resetTimeout)
+                    if (index + 1 === totalPages) {
+                    resetTimeout = setTimeout(() => {
+                        if(carouselRef){
+                            carouselRef.current.goTo(0)
+                        }
+                    }, playSpeed) // same time
+                    }
                 }
            }}
         >
