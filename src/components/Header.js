@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
-import { signOut } from '../actions';
+import { signOut } from '../actions/auth';
 
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,7 +16,16 @@ import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import HomeIcon from '@material-ui/icons/Home';
+import AndroidIcon from '@material-ui/icons/Android';
+import AppsIcon from '@material-ui/icons/Apps';
+import GroupIcon from '@material-ui/icons/Group';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
+import ForwardIcon from '@material-ui/icons/Forward';
+
 
 import logo from '../assets/logo.png';
 
@@ -93,42 +102,125 @@ const Header = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const renderUserOptions = (className) => {
+  const links = [
+    {
+      path: '/',
+      name: 'Trang chủ',
+      icon: <HomeIcon />
+    },
+    {
+      path: '/projects',
+      name: 'Dự án',
+      icon: <AndroidIcon />
+    },
+    {
+      path: '/organizations',
+      name: 'Nhóm nghiên cứu',
+      icon: <GroupIcon /> 
+    },
+    {
+      path: '/hightlights',
+      name: 'Nổi bật',
+      icon: <Brightness7Icon />
+    },
+    {
+      path: '/faq',
+      name: 'FAQ',
+      icon: <LiveHelpIcon />
+    },
+    {
+      path: '/contact',
+      name: 'Liên hệ',
+      icon: <PermContactCalendarIcon />
+    },
+    {
+      path: '/introduction',
+      name: 'Giới thiệu',
+      icon: <AnnouncementIcon />
+    },
+  ]
+
+  const renderLinks = (links, mode, className) => {
+    return links.map((link, index) => {
+      if(mode === 'web'){
+        return (
+          <Link to={link.path} className={`header--link ${className}`} key={index}>
+            {link.name}
+          </Link>
+        )
+      }
+      return (
+        <Link to={link.path} className={`header--link ${className}`} key={index}>
+          {link.icon}
+          {link.name}
+        </Link>
+      )
+    })
+  }
+
+  const renderUserOptionsWeb = (className) => {
     return (
         <>
-          <Link to="/" className={`header--link ${className}`}>Trang chủ</Link>
-          <Link to="/projects" className={`header--link ${className}`}>Dự án</Link>
-          <Link to="/" className={`header--link ${className}`}>Nhóm nghiên cứu</Link>
-          <Link to="/" className={`header--link ${className}`}>Nổi bật</Link>
-          <Link to="/" className={`header--link ${className}`}>FAQ</Link>
-          <Link to="/" className={`header--link ${className}`}>Liên hệ</Link>
-          <Link to="/" className={`header--link ${className}`}>Giới thiệu</Link>
-          {/* <Link to="/streams" className="header--link">Streams</Link> */}
+          {renderLinks(links, 'web', className)}
         </>
     )
   }
-  const renderResearcherOptions = (className) => {
+  const renderUserOptionsMobile = (className) => {
     return (
         <>
-            { renderUserOptions(className) }
-            <Link to="/projects/new" className={`header--link ${className}`}>Tạo dự án</Link>
+          {renderLinks(links, 'mobile', className)}
+        </>
+    )
+  }
+  const renderResearcherOptionsWeb = (className) => {
+    return (
+        <>
+            { renderUserOptionsWeb(className) }
+            <Link to="/researchers" className={`header--link ${className}`}>
+                Menu chức năng
+            </Link>
+        </>
+    )
+  }
+  const renderResearcherOptionsMobile = (className) => {
+    return (
+        <>
+            { renderUserOptionsMobile(className) }
+            <Link to="/researchers" className={`header--link ${className}`}>
+                <AppsIcon />
+                Menu chức năng
+            </Link>
         </>
     )
   }
 
-  const renderOptions = (className) => {
-    if(!props.isSignedIn) return renderUserOptions(className); 
+  const renderOptions = (mode, className) => {
+    if(!props.isSignedIn){
+      if(mode === 'web'){
+        return renderUserOptionsWeb(className);
+      }
+      return renderUserOptionsMobile(className);
+    } 
     
     const roleCode = props.userProfile.role.code;
     console.log('roleCode', roleCode)
     if(roleCode === 'NNC'){
-        return renderResearcherOptions(className)
+        if(mode === 'web'){
+          return renderResearcherOptionsWeb(className)
+        }
+        return renderResearcherOptionsMobile(className)
+    }
+    if(roleCode === 'USER'){
+        if(mode === 'web'){
+          return renderUserOptionsWeb(className)
+        }
+        return renderUserOptionsMobile(className)
     }
   }
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -152,16 +244,18 @@ const Header = (props) => {
   const renderAccount = () => {
     if(props.isSignedIn){
       return (
-        <IconButton
-          edge="start"
-          aria-label="account of current user"
-          aria-controls={menuId}
-          aria-haspopup="true"
-          onClick={handleProfileMenuOpen} 
-          color="inherit"
-        >
-          <AccountCircle fontSize="large" />
-        </IconButton>
+        <Link to="/researchers">
+          <IconButton
+            edge="start"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            // onClick={handleProfileMenuOpen} 
+            color="inherit"
+          >
+            <AccountCircle fontSize="large" />
+          </IconButton>
+        </Link>
       );
     }
   }
@@ -195,21 +289,47 @@ const Header = (props) => {
     )
   }
 
-  const renderAccountMenu = () => {
+  // const renderAccountMenu = () => {
+  //   if(props.isSignedIn){
+  //     return (
+  //       <>
+  //         <div className="flex flex-col gap-4 p-2">
+  //           { renderOptions('web', 'header--btn') }
+  //           <button 
+  //               className="header--link header--btn"
+  //               onClick={() => onLogOut()}  
+  //             >
+  //               <ForwardIcon />
+  //               Đăng xuất
+  //           </button>
+  //           <button 
+  //               className="header--link header--btn"
+  //               onClick={() => onLogOut()}  
+  //             >
+  //               <AccountCircle />
+  //               Profile
+  //           </button>
+
+  //         </div>
+  //       </>
+  //     );
+  //   }
+  // };
+  const renderAccountMenuMobile = () => {
     if(props.isSignedIn){
       return (
         <>
           <div className="flex flex-col gap-4 p-2">
-            { renderOptions('header--btn') }
+            { renderOptions('mobile', 'header--btn') }
             <button 
-                className="header--btn"
+                className="header--link header--btn"
                 onClick={() => onLogOut()}  
               >
-                <ExitToAppIcon />
+                <ForwardIcon />
                 Đăng xuất
             </button>
             <button 
-                className="header--btn"
+                className="header--link header--btn"
                 onClick={() => onLogOut()}  
               >
                 <AccountCircle />
@@ -237,7 +357,7 @@ const Header = (props) => {
       {/* <MenuItem onClick={handleMenuClose}>Sign In</MenuItem> */}
       {/* <Link className="mx-4" to="/auth/signin">Sign In</Link> */}
 
-      {renderAccountMenu()}
+      {renderAccountMenuMobile()}
     </Menu>
   );
 
@@ -253,7 +373,7 @@ const Header = (props) => {
       onClose={handleMobileMenuClose}
     >
       
-      {renderAccountMenu()}
+      {renderAccountMenuMobile()}
 
     </Menu>
   );
@@ -327,7 +447,7 @@ const Header = (props) => {
 
           <section className={`${classes.headerBackground} ${classes.header} invisible md:visible`}>
               <div className={`flex gap-2 md:gap-6 text-white px-4 md:px-8`}>
-                  {renderOptions()}
+                  {renderOptions('web')}
               </div>
           </section>
      

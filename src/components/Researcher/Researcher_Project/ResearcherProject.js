@@ -11,7 +11,7 @@ import Tab from '../../Tab/Tab'
 
 import CreateIcon from '@material-ui/icons/Create';
 
-import { fetchProjects } from '../../../actions';
+import { fetchProjects } from '../../../actions/project'
 
 
 

@@ -3,7 +3,7 @@ import './ProjectShow.css'
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { fetchProject } from '../../actions/';
+import { fetchProject } from '../../actions/project'
 
 // import ReactSlickIntegration from '../ImageHoverZoom/ReactSlickIntegration';
 

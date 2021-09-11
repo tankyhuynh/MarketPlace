@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStream } from '../../actions';
+import { fetchStream } from '../../actions/stream';
 
 class StreamShow extends React.Component {
   componentDidMount() {

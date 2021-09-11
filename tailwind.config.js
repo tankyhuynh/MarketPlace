@@ -29,6 +29,13 @@ module.exports = {
       purple: colors.violet,
       pink: colors.pink,
     },
+    extend: {
+      animation: {
+          bounce200: 'bounce 1s infinite 200ms',
+          bounce400: 'bounce 1s infinite 400ms',
+      },
+      cursor: ['hover', 'focus'],
+    },
     spacing: {
       px: '1px',
       0: '0px',
@@ -868,7 +875,7 @@ module.exports = {
     clear: ['responsive'],
     container: ['responsive'],
     contrast: ['responsive'],
-    cursor: ['responsive'],
+    cursor: ['responsive', 'hover'],
     display: ['responsive'],
     divideColor: ['responsive', 'dark'],
     divideOpacity: ['responsive', 'dark'],

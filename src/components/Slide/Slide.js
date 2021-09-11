@@ -9,6 +9,7 @@ import { red } from '@material-ui/core/colors';
 
 import CardOranization from '../CardCustom/CardOranization';
 import CardProjectInfo from '../CardCustom/CardProjectInfo';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,18 +42,20 @@ const Slide = ({ slide }) => {
     const classes = useStyles();
 
     return (
-        <Card className={`${classes.root} slide-background`}>
-            <Grid container spacing={3} >
-                <Grid item xs={6} >
-                    <CardOranization />
-                </Grid>
-                <Grid item xs={6} >
-                    <CardProjectInfo project={slide} />
-                </Grid>
-               
-            </Grid>
+        <Link to={`/projects/show/${slide.id}`}>
+            <Card className={`${classes.root} slide-background`}>
+              <Grid container spacing={3} >
+                  <Grid item xs={6} >
+                      <CardOranization />
+                  </Grid>
+                  <Grid item xs={6} >
+                      <CardProjectInfo project={slide} />
+                  </Grid>
+                
+              </Grid>
 
-        </Card>
+            </Card>
+        </Link>
     );
 }
 

@@ -2,11 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { 
-    fetchProjects, 
-    fetchLevelDevelopments,
-    fetchTransmissionMethods 
-} from '../../actions';
+import { fetchProjects } from '../../actions/project'
+import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
+import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
+import { fetchFields } from '../../actions/field'
 
 
 import Stepper from '../Stepper/Stepper';
@@ -67,6 +66,7 @@ class ProjectCreate extends React.Component {
     componentDidMount(){
         this.props.fetchLevelDevelopments();
         this.props.fetchTransmissionMethods();
+        this.props.fetchFields();
     }
 
     
@@ -79,6 +79,7 @@ class ProjectCreate extends React.Component {
                     steps={this.steps} 
                     levels={this.props.levels}
                     transmissions={this.props.transmissions}
+                    fields={this.props.fields}
                     project={this.props.project ? this.props.project : null }
                     type='create'
                 />
@@ -87,14 +88,20 @@ class ProjectCreate extends React.Component {
     }
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return { 
         levels: Object.values(state.levels),
-        transmissions: Object.values(state.transmissions)
+        transmissions: Object.values(state.transmissions),
+        fields: Object.values(state.fields),
     };
 };
   
 export default connect(
     mapStateToProps,
-    { fetchProjects, fetchLevelDevelopments, fetchTransmissionMethods }
+    { 
+        fetchProjects, 
+        fetchLevelDevelopments, 
+        fetchTransmissionMethods, 
+        fetchFields 
+    }
 )(ProjectCreate);

@@ -5,7 +5,8 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { fetchProjects } from "../../actions";
+import { fetchProjects } from '../../actions/project'
+
 
 import img1_a from '../../assets/img1_a.png';
 import img1_b from '../../assets/img1_b.png';

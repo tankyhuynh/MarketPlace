@@ -29,7 +29,7 @@ const CarouselCustom = ({ slides, organizations }) => {
                     clearTimeout(resetTimeout)
                     if (index + 1 === totalPages) {
                     resetTimeout = setTimeout(() => {
-                        if(carouselRef){
+                        if(carouselRef.current){
                             carouselRef.current.goTo(0)
                         }
                     }, playSpeed) // same time

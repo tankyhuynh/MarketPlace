@@ -2,11 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { 
-    fetchProject,
-    fetchLevelDevelopments,
-    fetchTransmissionMethods
-} from '../../actions';
+import { fetchProject } from '../../actions/project'
+import { fetchFields } from '../../actions/field'
+import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
+import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
 
 
 import Stepper from '../Stepper/Stepper';
@@ -77,6 +76,7 @@ class ProjectEdit extends React.Component {
                 <Stepper 
                     steps={this.steps} 
                     levels={this.props.levels}
+                    fields={this.props.fields}
                     transmissions={this.props.transmissions}
                     project={this.props.project}
                     type='edit'
@@ -90,11 +90,17 @@ const mapStateToProps = (state, ownProps) => {
     return { 
         project: state.projects[ownProps.match.params.id],
         levels: Object.values(state.levels),
+        fields: Object.values(state.fields),
         transmissions: Object.values(state.transmissions) 
     };
   };
   
   export default connect(
     mapStateToProps,
-    { fetchProject, fetchLevelDevelopments, fetchTransmissionMethods }
+    { 
+        fetchProject, 
+        fetchLevelDevelopments, 
+        fetchTransmissionMethods, 
+        fetchFields 
+    }
   )(ProjectEdit);

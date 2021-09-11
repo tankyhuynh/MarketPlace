@@ -2,15 +2,9 @@
 /* eslint-disable no-unused-vars */
 import './Stepper.css'
 
-import React, { useEffect, useState } from 'react'
-import { connect, useDispatch, useSelector } from 'react-redux';
-
-
-import { 
-    fetchProject,
-    fetchLevelDevelopments,
-    fetchTransmissionMethods 
-} from '../../actions';
+import _ from 'lodash';
+import React, { useEffect, useState, useRef } from 'react'
+import { useSelector } from 'react-redux';
 
 
 import Stepper from '@material-ui/core/Stepper';
@@ -18,15 +12,38 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import QuillEditor from '../editor/QuillEditor';
+
+import { CKEditor } from 'ckeditor4-react';
 
 import environment from '../../environments/environment';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Tab from '../Tab/Tab';
-import ProjectPreview from '../Projects/ProjectPreview';
+import ProjectPreview from '../Projects/ProjectPreviewWithEnableEdit';
+import DrapAndDrop from '../DragAndDropFile';
 
+const initData = {
+    user: 1,
+    status: 1,
+    companyName: '',
+    address: '',
+    phoneNumber: '',
+    fax: '',
+    email: '',
+    website: '',
+    name: '',
+    shortDescription: '',
+    process: '',
+    field: '',
+    advantage: '',
+    levelDevelopment: 1,
+    transmissionMethod: 1,
+    scope: '',
+    price: '',
+}
 
+const filebrowserUploadUrl = 'https://marketplace-demo-v1.herokuapp.com/api/v1/fileupload';
+const removeButtons = 'PasteFromWord'
 
 
 const HorizontalLinearStepper = (props) => {
@@ -34,129 +51,149 @@ const HorizontalLinearStepper = (props) => {
     const [skipped, setSkipped] = useState(new Set());
     const [openTab, setOpenTab] = useState(0);
 
-    const [tenDN, setTenDN] = useState('')
-    const [user, setUser] = useState('')
-    const [diaChi, setDiaChi] = useState('')
-    const [tacGia, setTacGia] = useState('')
-    const [soDienThoai, setSoDienThoai] = useState('')
-    const [fax, setFax] = useState("")
-    const [email, setEmail] = useState('')
-    const [website, setWebsite] = useState('')
     
-    // Thông tin chung của 2 dự án
-    const [tenGP, setTenGP] = useState('')
-    const [moTaNgan, setMoTaNgan] = useState('')
-    const [quyTrinh, setQuyTrinh] = useState('')
-    const [linhVuc, setLinhVuc] = useState('')
-    
-    // Dự án thương mại
-    const [uuDiem, setUuDiem] = useState('')
-    const [mucDoPhatTrien, setMucDoPhatTrien] = useState('')
-    const [phuongThucChuyenGiao, setPhuongThucChuyenGiao] = useState('');
-    const [phamViThuongMai, setPhamViThuongMai] = useState('');
-    const [chaoGiaThamKhao, setChaoGiaThamKhao] = useState('');
-    const [hinhAnhTongThe, setHinhAnhTongThe] = useState("");
-    
-    // Dự án nghiên cứu
-    const [thachThuc, setThachThuc] = useState("")
-    const [giaiPhap, setGiaiPhap] = useState("")
-    const [loiIch, setLoiIch] = useState("");
-    const [fileDuAn, setFileDuAn] = useState("");
-  
-    // Lưu nháp 0-ko lưu, 1-lưu nháp, 2-chờ duyệt, 3...
+    const [project, setProject] = useState(initData);
+    const [process, setProcess] = useState('');
+    const [advantage, setAdvantage] = useState('');
     const [status, setStatus] = useState(1);
-    const [files, setFiles] = useState([]);
+
 
     const userState = useSelector(state => state.auth.userProfile);
 
+    console.log('props stepper: ', props);
+    
 
     useEffect(() => {
-        console.log('props useeffect: ', props);
-        console.log('user useeffect: ', user);
+        console.log('render Stepper useEffect: ', project);
+        setProject({
+            user: userState,
+            status: status,
+            companyName: props.project ? props.project.companyName : '',
+            address: props.project ? props.project.address : '',
+            phoneNumber: props.project ? props.project.phoneNumber : '',
+            fax: props.project ? props.project.fax : '',
+            email: props.project ? props.project.email : '',
+            website: props.project ? props.project.website : '',
+            name: props.project ? props.project.name : '',
+            shortDescription: props.project ? props.project.shortDescription : '',
+            process: props.project ? props.project.process : '',
+            field: props.project ? props.project.field.name : '',
+            advantage: props.project ? props.project.advantage : '',
+            levelDevelopment: props.project ? props.project.levelDevelopment.id : 1,
+            transmissionMethod: props.project ? props.project.transmissionMethod.id : 1,
+            scope: props.project ? props.project.scope : '',
+            price: props.project ? props.project.price : '',
+            images: props.project ? props.project.images : []
+        })
 
-        setMucDoPhatTrien(1);
-        setPhuongThucChuyenGiao(1);
-        setUser(userState);
-
-        if(props.project){
-            // Cách set từng cái này đang work
-            setTenDN(props.project.companyName);
-            setDiaChi(props.project.address);
-            setSoDienThoai(props.project.phoneNumber);
-            setFax(props.project.fax);
-            setEmail(props.project.email);
-            setWebsite(props.project.website);
-            setTenGP(props.project.name);
-            setMoTaNgan(props.project.shortDescription);
-            setQuyTrinh(props.project.process);
-            setLinhVuc(props.project.field.name);
-            setUuDiem(props.project.advantage);
-            setMucDoPhatTrien(props.project.levelDevelopment.id);
-            setPhuongThucChuyenGiao(props.project.transmissionMethod.id);
-            setPhamViThuongMai(props.project.scope);
-            setChaoGiaThamKhao(props.project.price);
-            // setHinhAnhTongThe(props.project.images)
-        }
+        
      },[])
 
     useEffect(() => {
-        if(status === 2 ){
-            onSubmit();   
+        if(project){
+            if(status === 2 ){
+                onSubmit();   
+            }
         }
     },[status])
 
 
     const onFilesChange = (files) => {
-        setFiles(files)
+        // setFiles(files)
     }
 
-    const duAnNghienCuu = {
-        tenDN: tenDN,
-        diaChi: diaChi,
-        tacGia: tacGia,
-        soDienThoai: soDienThoai,
-        email: email,
-        website: website,
-        tenDA: tenGP,
-        linhVuc: linhVuc,
-        thachThuc: thachThuc,
-        giaiPhap: giaiPhap,
-        loiIch: loiIch,
-        fileDuAn: fileDuAn
-    }
+    // const duAnNghienCuu = {
+    //     tenDN: tenDN,
+    //     diaChi: diaChi,
+    //     tacGia: tacGia,
+    //     soDienThoai: soDienThoai,
+    //     email: email,
+    //     website: website,
+    //     tenDA: tenGP,
+    //     linhVuc: linhVuc,
+    //     thachThuc: thachThuc,
+    //     giaiPhap: giaiPhap,
+    //     loiIch: loiIch,
+    //     fileDuAn: fileDuAn
+    // }
 
     const duAnThuongMai = {
-        companyName: tenDN,
-        address: diaChi,
-        phoneNumber: soDienThoai,
-        email: email,
-        website: website,
-        name: tenGP,
-        shortDescription: moTaNgan,
-        user: 1,
+        companyName: project ? project.companyName : '',
+        address: project ? project.address : '',
+        phoneNumber: project ? project.phoneNumber : '',
+        email: project ? project.email : '',
+        website: project ? project.website : '',
+        name: project ? project.name : '',
+        shortDescription: project ? project.shortDescription : '',
+        user: project ? userState.id : '',
         author: 'authors',
         field: 1, // Lĩnh vực phát triển
-        status: status, // Lưu nháp 0-ko lưu, 1-lưu nháp, 2-chờ duyệt, 3...
-        process: quyTrinh,
-        advantage: uuDiem,
-        levelDevelopment: mucDoPhatTrien,
-        transmissionMethod: phuongThucChuyenGiao,
-        scope: phamViThuongMai,
-        price: chaoGiaThamKhao,
-        hinhAnhTongThe: hinhAnhTongThe
+        status: project ? project.status : '', // Lưu nháp 0-ko lưu, 1-lưu nháp, 2-chờ duyệt, 3...
+        process: project ? project.process : '',
+        advantage: project ? project.advantage : '',
+        levelDevelopment: project ? project.levelDevelopment : '',
+        transmissionMethod: project ? project.transmissionMethod : '',
+        scope: project ? project.scope : '',
+        price: project ? project.price : '',
+        // hinhAnhTongThe: hinhAnhTongThe
     }
 
 
   const history = useHistory();
 
-  // Onchange in duAnThuongMai
-    const onQuyTrinhChange = (value) => {
-        setQuyTrinh(value)
+
+
+    // Muốn copy object, thay = gtr mới thì xài 
+    // vd kiểu như này HsetProject( previousState => ({...previousState, advantage: data}))
+    // HỘ T CÁI, dm tốn biết bao nhiêu time để fix cái lỗi này
+    const onProcessChange = (evt) => {
+        const data = evt.editor.getData();
+        console.log(evt)
+        // setProcess(data)
+        setProject( previousState => ({...previousState, process: data}))
     }
-    const onUuDiemChange = (value) => {
-        setUuDiem(value)
+    const onAdvantageChange = (evt) => {
+        const data = evt.editor.getData();
+        console.log(evt)
+        // setAdvantage(data)
+        setProject( previousState => ({...previousState, advantage: data}))
     }
-    const onHinhAnhChange = (e) => {
+
+    const handleCKEditorChange = (event, editor) => {
+        console.log('handleCKEditorChange event', event)
+        console.log('handleCKEditorChange editor', editor)
+        const name = event.editor.name;
+        console.log('handleCKEditorChange name', name)
+
+        const data = event.editor.getData();
+        setProject( previousState => ({...previousState, [name]: data}))
+    }
+
+    const handleInstanceReady = ({ editor }) => {
+        console.log('handleInstanceReady editor: ', editor)
+    }
+
+    const renderImagePreview = (images) => {
+        console.log('images: ', images);
+        if(images){
+            if(Array.isArray(images)){
+                return images.map((image, index) => {
+                    return (
+                        <>
+                            <img src={image} alt={index} key={index}/>
+                        </>
+                    )
+                })
+            }
+            return (
+                <>
+                    <img src={images} alt={images} key={images}/>
+                </>
+            )
+        }
+    }
+
+    const onProjectImageChange = (e) => {
         if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
             const file = e.currentTarget.files[0];
 
@@ -164,14 +201,17 @@ const HorizontalLinearStepper = (props) => {
             const config = {
                 header: { 'content-type': 'multipart/form-data' }
             }
-            formData.append("files", file);
+            formData.append("upload", file);
 
             axios.post(environment.url.java + '/fileupload', formData, config)
                 .then(response => {
                     console.log('upload iamge: ', response);
                     console.log('reponse.data[0]: ', response.data[0]);
+                    const imgSrc = response.data['url'];
+                    const imgTitle = response.data['title'];
+
                     if (response.data) {
-                        setHinhAnhTongThe(e.target.files);
+                        setProject(previousState => ({...previousState, images: imgSrc}) )
                     } else {
                         return alert('failed to upload file')
                     }
@@ -181,33 +221,23 @@ const HorizontalLinearStepper = (props) => {
 
     // Onchange in duAnNghienCuu
     const onThachThucChange = (value) => {
-        setThachThuc(value)
+        // setThachThuc(value)
+        setProject({...project, process: value})
     }
     const onGiaiPhapChange = (value) => {
-        setGiaiPhap(value)
+        // setGiaiPhap(value)
+        setProject({...project, process: value})
     }
     const onLoiIchChange = (value) => {
-        setLoiIch(value)
+        // setLoiIch(value)
+        setProject({...project, process: value})
     }
     const onFileDuAnChange = (event) => {
-        setFileDuAn(event.target.files);
+        // setFileDuAn(event.target.files);
     }
 
     const resetAllField = () => {
-        setTenDN('');
-        setDiaChi('');
-        setTacGia('');
-        setSoDienThoai('');
-        setEmail('');
-        setWebsite('');
-        setTenGP('');
-        setQuyTrinh('');
-        setLinhVuc('');
-        setUuDiem('');
-        setMucDoPhatTrien('');
-        setPhuongThucChuyenGiao('');
-        setPhamViThuongMai('');
-        setChaoGiaThamKhao('');
+        setProject(null)
     }
 
 
@@ -215,6 +245,8 @@ const HorizontalLinearStepper = (props) => {
     // event.preventDefault();
 
     resetAllField();
+
+    console.log('client send:', duAnThuongMai);
 
 
     if(props.type === 'create'){
@@ -230,7 +262,7 @@ const HorizontalLinearStepper = (props) => {
         })
     }
     if(props.type === 'edit'){
-        axios.put(environment.url.java + '/project', {...duAnThuongMai, user: user})
+        axios.put(environment.url.java + '/project', {...duAnThuongMai, user: project.user})
         .then(response => {
             if (response) {
               console.log('client send:', duAnThuongMai);
@@ -241,6 +273,7 @@ const HorizontalLinearStepper = (props) => {
             }
         })
     }
+
   }
 
   // const getSteps = () => {
@@ -250,7 +283,6 @@ const HorizontalLinearStepper = (props) => {
   const renderLevelDevelopments = () => {
         if(props.levels){
             return props.levels.map((level, index) => {
-                console.log('index: ', index);
                 if(index === 0){
                     return (
                         <option selected value={level.id}>{ level.name }</option>
@@ -281,6 +313,23 @@ const HorizontalLinearStepper = (props) => {
             })
         }
   }
+  const renderFields = () => {
+    if(props.levels){
+        return props.fields.map((field, index) => {
+            if(index === 0){
+                return (
+                    <option selected value={field.id}>{ field.name }</option>
+                );
+            }
+            else {
+                return (
+                    <option value={field.id}>{ field.name }</option>
+                );
+            }
+        })
+    }
+
+}
 
   const renderStep1 = () => {
     return (
@@ -290,8 +339,8 @@ const HorizontalLinearStepper = (props) => {
                     Tên đơn vị/ doanh nghiệp
                 </label>
                 <input
-                    value={tenDN} 
-                    onChange={(e) => { setTenDN(e.target.value) }}
+                    value={project ? project.companyName : ''} 
+                    onChange={(e) => handleContentChange('companyName', e.target.value) }
                     className="justify-end w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="name" 
                     type="text" 
@@ -302,8 +351,8 @@ const HorizontalLinearStepper = (props) => {
                     Địa chỉ
                 </label>
                 <input
-                    value={diaChi}
-                    onChange={(e) => { setDiaChi(e.target.value) }}
+                    value={project.address}
+                    onChange={(e) => handleContentChange('address', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"  
                     id="address" 
                     type="text" 
@@ -314,8 +363,8 @@ const HorizontalLinearStepper = (props) => {
                     Số điện thoại
                 </label>
                 <input
-                    value={soDienThoai}
-                    onChange={(e) => { setSoDienThoai(e.target.value) }} 
+                    value={project.phoneNumber}
+                    onChange={(e) => handleContentChange('phoneNumber', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="phone" 
                     type="text" 
@@ -326,8 +375,8 @@ const HorizontalLinearStepper = (props) => {
                     Fax
                 </label>
                 <input
-                    value={fax}
-                    onChange={(e) => { setFax(e.target.value) }} 
+                    value={project.fax}
+                    onChange={(e) => handleContentChange('fax', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="fax" 
                     type="text" 
@@ -339,8 +388,8 @@ const HorizontalLinearStepper = (props) => {
                     Email
                 </label>
                 <input
-                    value={email}
-                    onChange={(e) => { setEmail(e.target.value) }} 
+                    value={project.email}
+                    onChange={(e) => handleContentChange('email', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="email" 
                     type="text" 
@@ -351,8 +400,8 @@ const HorizontalLinearStepper = (props) => {
                     Website
                 </label>
                 <input
-                    value={website}
-                    onChange={(e) => { setWebsite(e.target.value) }} 
+                    value={project.website}
+                    onChange={(e) => handleContentChange('website', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="website" 
                     type="text" 
@@ -362,16 +411,27 @@ const HorizontalLinearStepper = (props) => {
     );
   };
 
+  const handleContentChange = (field, content) => {
+    console.log('content : ', content);
+    setProject({
+        ...project,
+        [field]: content
+    })
+}
+
   const onLevelDevelopmentChange = (event) => {
-    setMucDoPhatTrien(event.target.value)
+    // setMucDoPhatTrien(event.target.value)
+    setProject({...project, levelDevelopment: event.target.value});
     console.log(event.target.value);
   }
   const onTransmissionMethodChange = (event) => {
-    setPhuongThucChuyenGiao(event.target.value)
+    // setPhuongThucChuyenGiao(event.target.value)
+    setProject({...project, transmissionMethod: event.target.value});
     console.log(event.target.value);
   }
 
   const renderDuAnThuongMai = () => {
+      console.log('renderDuAnThuongMai renderDuAnThuongMai ?', project);
     return (
         <>
             <div id="tenGP" className="stepper--field">
@@ -379,8 +439,8 @@ const HorizontalLinearStepper = (props) => {
                   Tên giải pháp, sản phẩm
               </label>
               <input
-                  value={tenGP}
-                  onChange={(e) => { setTenGP(e.target.value) }} 
+                  value={project ? project.name : ''}
+                  onChange={(e) => handleContentChange('name', e.target.value) }
                   className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                   id="solution_name" 
                   type="text" 
@@ -391,23 +451,27 @@ const HorizontalLinearStepper = (props) => {
                     Mô tả ngắn
                 </label>
                 <textarea 
-                    value={moTaNgan}
-                    onChange={(e) => { setMoTaNgan(e.target.value) }}
+                    value={project ? project.shortDescription : ''}
+                    onChange={(e) => handleContentChange('shortDescription', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="mo_ta_ngan" 
                 />
             </div>
-            <div id="linhVuc" className="stepper--field">
-                <label className="stepper--label" htmlFor="lvad">
+            <div id="linhVuc" className="stepper-combobox">
+                <label className="self-center stepper--label" htmlFor="lvad">
                     Lĩnh vực áp dụng
                 </label>
-                <input
-                    value={linhVuc}
-                    onChange={(e) => { setLinhVuc(e.target.value) }}
-                    className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                    id="lvad" 
-                    type="text" 
-                />
+                <div className="stepper-combobox--content">
+                    <select 
+                        value={project ? project.field : ''}
+                        onChange={(e) => handleContentChange('field', e.target.value) }
+                        className="stepper-combobox--content-select"
+                    >
+                        
+                        { renderFields() }
+                       
+                    </select>
+                </div>
             </div>
             <div id="mucDoPhatTrien" className="stepper-combobox">
                 <label className="self-center stepper--label" htmlFor="mucDoPhatTrien">
@@ -415,9 +479,8 @@ const HorizontalLinearStepper = (props) => {
                 </label>
                 <div className="stepper-combobox--content">
                     <select 
-                        value={mucDoPhatTrien}
-                        defaultValue={mucDoPhatTrien} 
-                        onChange={onLevelDevelopmentChange}
+                        value={project ? project.levelDevelopment : ''}
+                        onChange={(e) => handleContentChange('levelDevelopment', e.target.value) }
                         className="stepper-combobox--content-select"
                     >
                         
@@ -434,7 +497,7 @@ const HorizontalLinearStepper = (props) => {
                 <div className="stepper-combobox--content">
                     <select 
                         defaultValue={props.transmissions[1]}
-                        value={phuongThucChuyenGiao} 
+                        // value={phuongThucChuyenGiao} 
                         onChange={onTransmissionMethodChange}
                         className="stepper-combobox--content-select"
                     >
@@ -448,13 +511,26 @@ const HorizontalLinearStepper = (props) => {
                     Mô tả quy trình công nghệ
                 </label>
                 <div className="w-2/3">
-                    <QuillEditor
+                    {/* <QuillEditor
                         editorId="editor_qtcn"
                         placeholder={"Start Posting Something"}
                         onEditorChange={onQuyTrinhChange}
                         onFilesChange={onFilesChange}
-                        data={quyTrinh}
+                        data={project ? project.process : ''}
+                    /> */}
+                    <CKEditor 
+                        id="process"
+                        name="process"
+                        activeClass="process"
+                        initData={project ? project.process : ''}
+                        config={{
+                            filebrowserUploadUrl: filebrowserUploadUrl,
+                            removeButtons: removeButtons,
+                            isReadOnly: true,
+                        }}
+                        onChange={handleCKEditorChange}
                     />
+
                 </div>
             </div>
             <div id="uuDiem" className="stepper--field">
@@ -462,12 +538,23 @@ const HorizontalLinearStepper = (props) => {
                     Ưu điểm
                 </label>
                 <div className="w-2/3">
-                    <QuillEditor
+                    {/* <QuillEditor
                         editorId="editor_uuDiem"
                         placeholder={"Start Posting Something"}
                         onEditorChange={onUuDiemChange}
                         onFilesChange={onFilesChange}
-                        data={uuDiem}
+                        data={project ? project.advantage : ''}
+                    /> */}
+                    <CKEditor 
+                        id="advantage"
+                        name="advantage"
+                        initData={project ? project.advantage : ''}
+                        config={{
+                            filebrowserUploadUrl: filebrowserUploadUrl,
+                            removeButtons: removeButtons,
+                            isReadOnly: true,
+                        }}
+                        onChange={handleCKEditorChange}
                     />
                 </div>
             </div>
@@ -477,135 +564,146 @@ const HorizontalLinearStepper = (props) => {
                     Phạm vi thương mại hóa
                 </label>
                 <textarea 
-                    value={phamViThuongMai}
-                    onChange={(e) => { setPhamViThuongMai(e.target.value) }} 
+                    value={project ? project.scope : ''}
+                    onChange={(e) => handleContentChange('scope', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="pvi_thuong_mai" 
                 />
+
             </div>
             <div id="chaoGia" className="stepper--field">
                 <label className="stepper--label" htmlFor="chao_gia">
                     Chào giá tham khảo
                 </label>
                 <input
-                    value={chaoGiaThamKhao}
-                    onChange={(e) => { setChaoGiaThamKhao(e.target.value) }} 
+                    value={project ? project.price : ''}
+                    onChange={(e) => handleContentChange('price', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="chao_gia" 
                     type="text" 
                 />
             </div>
-            {/* <div id="hinhAnhTongThe" className="stepper--field">
+            <div id="hinhAnhTongThe" className="stepper--field">
               <label className="stepper--label" htmlFor="hinh_anh">
                   Hình ảnh tổng thể
               </label>
               <input
-                  onChange={onHinhAnhChange} 
+                  onChange={onProjectImageChange} 
                   className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                   id="hinh_anh" 
                   type="file" 
                   multiple
               />
-            </div> */}
+            </div>
+            <div className="w-32">
+                { renderImagePreview(project ? project.images : null) }
+            </div>
         </>
     );
   };
 
-  const renderDuAnNghienCuu = () => {
-    return (
-        <>
-            <div className="stepper--field">
-              <label className="stepper--label" htmlFor="solution_name">
-                  Tên giải pháp, sản phẩm
-              </label>
-              <input
-                  value={tenGP}
-                  onChange={(e) => { setTenGP(e.target.value) }} 
-                  className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                  id="solution_name" 
-                  type="text" 
-              />
-            </div>
+//   const renderDuAnNghienCuu = () => {
+//     return (
+//         <>
+//             <div className="stepper--field">
+//               <label className="stepper--label" htmlFor="solution_name">
+//                   Tên giải pháp, sản phẩm
+//               </label>
+//               <input
+//                   value={tenGP}
+//                   onChange={(e) => { setTenGP(e.target.value) }} 
+//                   className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+//                   id="solution_name" 
+//                   type="text" 
+//               />
+//             </div>
 
-            <div id="moTaNgan" className="stepper--field">
-                <label className="stepper--label" htmlFor="lvad">
-                    Mô tả ngắn
-                </label>    
-                <textarea 
-                    value={moTaNgan}
-                    onChange={(e) => { setMoTaNgan(e.target.value) }}
-                    className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                    id="mo_ta_ngan" 
-                />
-            </div>
+//             <div id="moTaNgan" className="stepper--field">
+//                 <label className="stepper--label" htmlFor="lvad">
+//                     Mô tả ngắn
+//                 </label>    
+//                 <textarea 
+//                     value={moTaNgan}
+//                     onChange={(e) => { setMoTaNgan(e.target.value) }}
+//                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+//                     id="mo_ta_ngan" 
+//                 />
+//             </div>
             
-            <div className="stepper--field">
-                <label className="stepper--label" htmlFor="lvad">
-                    Lĩnh vực áp dụng
-                </label>
-                <input
-                    value={linhVuc}
-                    onChange={(e) => { setLinhVuc(e.target.value) }}
-                    className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                    id="lvad" 
-                    type="text" 
-                />
-            </div>
-            <div className="stepper--field">
-                <label className="stepper--label" htmlFor="uu_diem">
-                    Thách thức
-                </label>
-                <div className="w-2/3">
-                    <QuillEditor
-                        editorId="thac_thuc"
-                        placeholder={"Start Posting Something"}
-                        onEditorChange={onThachThucChange}
-                        data={thachThuc}
-                    />
-                </div>
-            </div>
-            <div className="stepper--field">
-                <label className="stepper--label" htmlFor="uu_diem">
-                    Giải pháp
-                </label>
-                <div className="w-2/3">
-                    <QuillEditor
-                        editorId="giai_phap"
-                        placeholder={"Start Posting Something"}
-                        onEditorChange={onGiaiPhapChange}
-                        data={giaiPhap}
-                    />
-                </div>
-            </div>
-            <div className="stepper--field">
-                <label className="stepper--label" htmlFor="uu_diem">
-                    Lợi ích
-                </label>
-                <div className="w-2/3">
-                    <QuillEditor
-                        editorId="loi_ich"
-                        placeholder={"Start Posting Something"}
-                        onEditorChange={onLoiIchChange}
-                        data={loiIch}
-                    />
-                </div>
-            </div>
-            <div className="stepper--field">
-              <label className="stepper--label" htmlFor="hinh_anh">
-                  File dự án
-              </label>
-              <input
-                  onChange={onFileDuAnChange} 
-                  className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                  id="file_du_an" 
-                  type="file" 
-                  multiple
-              />
-            </div>
+//             <div className="stepper--field">
+//                 <label className="stepper--label" htmlFor="lvad">
+//                     Lĩnh vực áp dụng
+//                 </label>
+//                 <input
+//                     value={linhVuc}
+//                     onChange={(e) => { setLinhVuc(e.target.value) }}
+//                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+//                     id="lvad" 
+//                     type="text" 
+//                 />
+//             </div>
+//             <div className="stepper--field">
+//                 <label className="stepper--label" htmlFor="uu_diem">
+//                     Thách thức
+//                 </label>
+//                 <div className="w-2/3">
+//                     <QuillEditor
+//                         editorId="thac_thuc"
+//                         placeholder={"Start Posting Something"}
+//                         onEditorChange={onThachThucChange}
+//                         data={thachThuc}
+//                     />
+//                 </div>
+//             </div>
+//             <div className="stepper--field">
+//                 <label className="stepper--label" htmlFor="uu_diem">
+//                     Giải pháp
+//                 </label>
+//                 <div className="w-2/3">
+//                     <QuillEditor
+//                         editorId="giai_phap"
+//                         placeholder={"Start Posting Something"}
+//                         onEditorChange={onGiaiPhapChange}
+//                         data={giaiPhap}
+//                     />
+//                 </div>
+//             </div>
+//             <div className="stepper--field">
+//                 <label className="stepper--label" htmlFor="uu_diem">
+//                     Lợi ích
+//                 </label>
+//                 <div className="w-2/3">
+//                     <QuillEditor
+//                         editorId="loi_ich"
+//                         placeholder={"Start Posting Something"}
+//                         onEditorChange={onLoiIchChange}
+//                         data={loiIch}
+//                     />
+//                 </div>
+//             </div>
+//             <div className="stepper--field">
+//               <label className="stepper--label" htmlFor="hinh_anh">
+//                   File dự án
+//               </label>
+//               <input
+//                   onChange={onFileDuAnChange} 
+//                   className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+//                   id="file_du_an" 
+//                   type="file" 
+//                   multiple
+//               />
+//             </div>
             
-            </>
-    );
-  };
+//             </>
+//     );
+//   };
+  
+  const onSave = (field, newContent) => {
+      console.log('onSave newContent', newContent);
+      //   setQuyTrinh(newContent.process.text);
+      setProject({...project, [field]: newContent.text});
+      console.log('onSave project', project);
+  }
 
   const renderPreview = () => {
     let projectPreview = {};
@@ -613,12 +711,13 @@ const HorizontalLinearStepper = (props) => {
         console.log('PreviewduAnThuongMai: ', duAnThuongMai);
         projectPreview = duAnThuongMai; 
     }
-    if(openTab === 1){
-        console.log('PreviewduAnNghienCuu: ', duAnNghienCuu);
-        projectPreview = duAnNghienCuu; 
-    }
+    // if(openTab === 1){
+    //     console.log('PreviewduAnNghienCuu: ', duAnNghienCuu);
+    //     projectPreview = duAnNghienCuu; 
+    // }
     return (
-        <ProjectPreview project={projectPreview} type={openTab}/>
+        // <ProjectPreview project={projectPreview} type={openTab}/>
+        <ProjectPreview project={projectPreview} type={openTab} onSave={onSave}/>
     );
   };
 
@@ -655,17 +754,17 @@ const HorizontalLinearStepper = (props) => {
         if(openTab === 0){
             console.log('duAnThuongMai', duAnThuongMai); 
         }
-        if(openTab === 1){
-            console.log('duAnNghienCuu', duAnNghienCuu); 
-        }
+        // if(openTab === 1){
+        //     console.log('duAnNghienCuu', duAnNghienCuu); 
+        // }
         return renderStep2();
       case 2:
         if(openTab === 0){
             console.log('Complete with duAnThuongMai', duAnThuongMai); 
         }
-        if(openTab === 1){
-            console.log('Complete with duAnNghienCuu', duAnNghienCuu); 
-        }
+        // if(openTab === 1){
+        //     console.log('Complete with duAnNghienCuu', duAnNghienCuu); 
+        // }
         return renderPreview();
       default:
         return 'Unknown step';
@@ -724,7 +823,7 @@ const HorizontalLinearStepper = (props) => {
 
   // Save nháp
    const onSaveTemp = () => {
-    console.log('status', status);
+    console.log('status', project.status);
     // onSubmit();
   };
 

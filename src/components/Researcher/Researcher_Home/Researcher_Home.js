@@ -17,7 +17,7 @@ const Researcher_Home = () => {
         <>
             <div className="grid h-screen grid-rows-2 gap-2 mt-4"> 
                 <div className="grid grid-cols-4 gap-4">
-                    <Link id="name" className="flex flex-col col-span-1 shadow-lg rounded-2xl content_center">
+                    <Link id="name" className="flex flex-col col-span-1 shadow-lg menu rounded-2xl content_center">
                         <section>
                             <AccountCircle style={{ fontSize:"80px", color: "black"  }} />
                         </section>
@@ -32,16 +32,16 @@ const Researcher_Home = () => {
                     >
                         <Link 
                             to="/researchers/projects"
-                            className="flex flex-col gap-2 shadow-lg r ounded-2xl content_center"
+                            className="flex flex-col gap-2 shadow-lg rounded-2xl content_center menu"
                         >
                             <LibraryBooksIcon style={{ fontSize:"80px", color: "black"  }} />
                             Dự án
                         </Link>
-                        <Link className="flex flex-col gap-2 shadow-lg rounded-2xl content_center">
+                        <Link className="flex flex-col gap-2 shadow-lg rounded-2xl content_center menu">
                             <GroupIcon style={{ fontSize:"80px", color: "black"  }} />
                             Nhóm nghiên cứu
                         </Link >
-                        <Link to="/projects/new" className="flex flex-col gap-2 shadow-lg rounded-2xl content_center">
+                        <Link to="/projects/new" className="flex flex-col gap-2 shadow-lg rounded-2xl content_center menu">
                             <AddCircleIcon style={{ fontSize:"80px", color: "black"  }} />
                             Tạo dự án
                         </Link>
@@ -80,13 +80,13 @@ const Researcher_Home = () => {
                     <div id="groupResearch" className="flex flex-col shadow-lg rounded-2xl">
                         <section className="my-3 text-xl font-bold text-center">Nhóm nghiên cứu</section>
                         <div className="grid grid-cols-3 gap-4 px-4">
-                            <Link className="h-64 text-2xl font-bold shadow-lg rounded-xl content_center">
+                            <Link className="menu_organizations menu">
                                 Nhóm 1
                             </Link>
-                            <Link className="h-64 text-2xl font-bold shadow-lg rounded-xl content_center">
+                            <Link className="menu_organizations menu">
                                 Nhóm 2
                             </Link>
-                            <Link className="h-64 text-2xl font-bold shadow-lg rounded-xl content_center">
+                            <Link className="menu menu_organizations">
                                 Nhóm 3
                             </Link>
 

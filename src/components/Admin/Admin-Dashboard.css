@@ -1,0 +1,13 @@
+.admin-background {
+    background-color: #0065C1;
+}
+
+.nav-items {
+    @apply flex flex-row items-center px-4 py-1 space-x-2 transition duration-200 rounded-md hover:bg-blue-600 hover:shadow-lg
+}
+
+
+.nav-items--active {
+    @apply flex items-center px-4 py-1 space-x-2 transition duration-200 bg-blue-600 rounded-md shadow-lg
+}
+

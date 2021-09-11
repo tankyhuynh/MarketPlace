@@ -5,7 +5,7 @@ import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 
-import { login } from '../../../actions';
+import { login } from '../../../actions/auth';
 
 import Input from '@material-tailwind/react/Input'
 
@@ -48,7 +48,14 @@ class SignIn extends React.Component {
         //     .then((response) => {
         //         this.props.history.push('/');
         //     });
-        this.props.login(formValues, this.props.history);
+        this.props.login(formValues, this.props.history)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                alert(err.message);
+                this.props.history.push('/');
+            });
     }
 
     render() {

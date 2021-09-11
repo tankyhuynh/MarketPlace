@@ -266,12 +266,14 @@ class QuillEditor extends React.Component {
             const config = {
                 header: { 'content-type': 'multipart/form-data' }
             }
-            formData.append("files", file);
+            formData.append("upload", file);
 
             axios.post(environment.url.java + '/fileupload', formData, config)
                 .then(response => {
-                    console.log('upload iamge: ', response);
-                    console.log('reponse.data[0]: ', response.data[0]);
+
+                    const imgSrc = response.data['url'];
+                    const imgTitle = response.data['title'];
+
                     if (response.data) {
 
                         const quill = this.reactQuillRef.getEditor();
@@ -280,7 +282,7 @@ class QuillEditor extends React.Component {
                         let range = quill.getSelection();
                         let position = range ? range.index : 0;
 
-                        quill.insertEmbed(position, "image", { src: response.data[0], alt: response.data.fileName });
+                        quill.insertEmbed(position, "image", { src: imgSrc, alt: imgTitle });
                         quill.setSelection(position + 1);
 
                         if (this._isMounted) {
@@ -306,12 +308,12 @@ class QuillEditor extends React.Component {
             const config = {
                 header: { 'content-type': 'multipart/form-data' }
             }
-            formData.append("files", file);
+            formData.append("upload", file);
 
             axios.post(environment.url.java + '/fileupload', formData, config)
                 .then(response => {
-                    console.log('upload iamge: ', response);
-                    console.log('reponse.data[0]: ', response.data[0]);
+                    const videoSrc = response.data['url'];
+                    const videoTitle = response.data['title'];
                     if (response.data) {
 
                         const quill = this.reactQuillRef.getEditor();
@@ -319,7 +321,7 @@ class QuillEditor extends React.Component {
 
                         let range = quill.getSelection();
                         let position = range ? range.index : 0;
-                        quill.insertEmbed(position, "video", { src: response.data[0], title: response.data[0] });
+                        quill.insertEmbed(position, "video", { src: videoSrc, title: videoTitle });
                         quill.setSelection(position + 1);
 
                         if (this._isMounted) {
@@ -346,9 +348,9 @@ class QuillEditor extends React.Component {
             const config = {
                 header: { 'content-type': 'multipart/form-data' }
             }
-            formData.append("file", file);
+            formData.append("upload", file);
 
-            axios.post(environment.url.java + '/projects/uploadfiles', formData, config)
+            axios.post(environment.url.java + '/projects/fileupload', formData, config)
                 .then(response => {
                     if (response.data.success) {
 

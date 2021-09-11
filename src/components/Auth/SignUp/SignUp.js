@@ -5,12 +5,16 @@ import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 
-import { signup } from '../../../actions'
+import { signup } from '../../../actions/auth'
 
 import Input from '@material-tailwind/react/Input'
 
 
 class SignUp extends React.Component {
+
+    componentDidMount() {
+        console.log('props: ', this.props)
+    }
 
     renderError({ error, touched }){
         if (touched && error) {
@@ -38,7 +42,8 @@ class SignUp extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        this.props.signup(formValues);
+        console.log('Sign up');
+        this.props.signup(formValues, this.props.history);
     }
 
     render() {
@@ -68,6 +73,7 @@ class SignUp extends React.Component {
                             onSubmit={this.props.handleSubmit(this.onSubmit)}
                         >
                             {/* <input type="hidden" name="remember" value="true" /> */}
+                            
                             <div className="space-y-4">
                                 <Field 
                                     name="fullName" 
@@ -95,8 +101,26 @@ class SignUp extends React.Component {
                                 />
 
                                 <div className="flex gap-4">
-                                    <label><Field name="gender" component="input" type="radio" value="male"/> Nam</label>
-                                    <label><Field name="gender" component="input" type="radio" value="female"/> Nữ</label>
+                                    <label>
+                                        <Field 
+                                            name="gender" 
+                                            component="input" 
+                                            type="radio" 
+                                            value={true} 
+                                            normalize={value => value === 'true'}  
+                                        /> 
+                                            Nam
+                                        </label>
+                                    <label>
+                                        <Field 
+                                            name="gender" 
+                                            component="input" 
+                                            type="radio" 
+                                            value={false} 
+                                            normalize={value => value === 'true'}  
+                                        /> 
+                                            Nữ
+                                        </label>
                                 </div>
                                 
                                 <Field 
@@ -135,11 +159,11 @@ class SignUp extends React.Component {
                                         Hủy
                                     </button>
                                 </Link>
-                                <Link className="text-white auth--btn btn-signin hover:bg-green-700">
+                                <button className="text-white auth--btn btn-signin hover:bg-green-700">
                                     <button type="submit" className="font-bold">
                                         Đăng ký
                                     </button>
-                                </Link>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -163,15 +187,16 @@ class SignUp extends React.Component {
 const validate = formValues => {
     const errors = {};
 
-    if (!formValues.title) {
-        errors.title = 'You must enter a title'
+    if (!formValues.username) {
+        errors.title = 'You must enter a username'
     }
-    if (!formValues.description) {
-        errors.description = 'You must enter a description'
+    if (!formValues.password) {
+        errors.description = 'You must enter a password'
     }
 
     return errors;
 }
+
 
 const formWrapped = reduxForm({
     form: 'signUpForm',
