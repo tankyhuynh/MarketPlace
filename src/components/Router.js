@@ -67,7 +67,7 @@ const Router = () => {
             <PrivateRoute path="/streams/delete/:id" exact component={StreamDelete}></PrivateRoute>
             <PrivateRoute path="/streams/:id" exact component={StreamShow}></PrivateRoute>
 
-            <Route path="/adminPage" exact component={AdminDashboard}></Route>
+            <Route path="/admin" exact component={AdminDashboard}></Route>
 
 
             <Route path="/test" exact component={Test}></Route>
