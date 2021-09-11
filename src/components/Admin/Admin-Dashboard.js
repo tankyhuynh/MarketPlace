@@ -136,10 +136,10 @@ const AdminDashboard = () => {
                 return (
                     <button 
                         key={child.name}
-                        className="px-4 py-2 rounded-md hover:bg-green-600"
+                        className="px-4 py-2 text-xs text-left rounded-md hover:bg-green-600"
                         onClick={() => setChildActions(child)}
                     >
-                        { child.name }
+                       { child.name }
                     </button>
                 )
             })
@@ -151,10 +151,10 @@ const AdminDashboard = () => {
     const renderNavItems = (items) => {
         return items.map((item, index) => {
             return (
-                <Accordion>
+                <Accordion elevation={0} style={{ backgroundColor: '#0065C1', color: 'white' }}>
                     <AccordionSummary
                         expandIcon={item.children.length > 1 ? <ExpandMoreIcon /> : null}
-                        aria-controls="panel1a-content"
+                        // aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
                         <div className="flex items-center gap-2">
