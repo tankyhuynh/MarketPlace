@@ -17,7 +17,7 @@ import EditableText from '../editor/editables/EditableText';
 // import EditableEmbeddedIframe from "../editor/editables/EditableEmbeddedIframe";
 // import EditableLightboxImageUpload from "../editor/editables/EditableLightboxImageUpload";
 // import EditableCollection from "../editor/editables/EditableCollection";
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
     
 const initData = {
@@ -103,9 +103,11 @@ const initData = {
 
   
   const ProjectPreview = (props) => {
-      const fields = useSelector(state => state.fields);
-      const levels = useSelector(state => state.levels);
-      const transmissions = useSelector(state => state.transmissions);
+
+    console.log(props.project)
+    //   const fields = useSelector(state => state.fields);
+    //   const levels = useSelector(state => state.levels);
+    //   const transmissions = useSelector(state => state.transmissions);
 
     const renderInitData = {
         address: {
@@ -124,10 +126,10 @@ const initData = {
             text: props.project ? props.project.email: '' 
         },
         field: {
-            text: props.project ? fields[props.project.field].name: '' 
+            text: props.project ? props.project.field : '' 
         },
         levelDevelopment: {
-            text: props.project ? levels[props.project.levelDevelopment].name: '' 
+            text: props.project ? props.project.levelDevelopment : '' 
         },
         name: {
             text: props.project ? props.project.name: '' 
@@ -151,7 +153,7 @@ const initData = {
             text: props.project ? props.project.status: '' 
         },
         transmissionMethod: {
-            text: props.project ? transmissions[props.project.transmissionMethod].name: '' 
+            text: props.project ? props.project.transmissionMethod : '' 
         },
         user: {
             text: props.project ? props.project.user: '' 
@@ -277,6 +279,11 @@ const initData = {
             name: 'Chào giá tham khảo',
             value: pageContent ? pageContent.price: {},
             fieldName: 'price'
+        },
+        {
+            name: 'Hình ảnh sản phẩm',
+            value: pageContent ? pageContent.image: {},
+            fieldName: 'image'
         }
     ]
 

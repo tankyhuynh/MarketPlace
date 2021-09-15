@@ -8,6 +8,9 @@ import { red } from '@material-ui/core/colors';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import logoImg from '../../assets/logo.png';
+// import logo_dhktqd from '../../assets/logo_dhktqd.jpg';
+// import logo_dhvh from '../../assets/logo_dhvh.png';
+// import logo_hcmute from '../../assets/logo_hcmute.png';
 import productImg from '../../assets/iTRAK-contain-500x240.jpg';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +48,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard() {
   const classes = useStyles();
+
+  // const organizationsName = ["Đại học Cần Thơ", "Đại học Kinh tế quốc dân", "Đại học v"]
+  // const logoList = [logoImg, logo_dhktqd, logo_dhvh, logo_hcmute];
+
+  // const randomImage = () => {
+  //   const j = Math.floor(Math.random() * ((logoList.length -1)));
+  //   return logoList[j];
+  // }
 
   return (
     <div className={classes.root}>

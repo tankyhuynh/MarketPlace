@@ -7,11 +7,10 @@ import Router from './Router'
 
 import Header from "./Header";
 import ResearcherNavbar from './Researcher/ResearcherNavbar/ResearcherNavbar';
+import AdminHeader from './Admin/Admin-Header';
 import Loader from './Loader';
 
 import { useSelector } from "react-redux";
-
-import AdminDashboard from "./Admin/Admin-Dashboard"
 
 
 export default withRouter(function App() {
@@ -25,13 +24,16 @@ export default withRouter(function App() {
             && window.location.pathname !== '/researchers' ){
               return <Header />
         }
-        else if( window.location.pathname === '/researchers' ){
+        if( window.location.pathname === '/researchers' ){
           return <ResearcherNavbar />
+        }
+        if( window.location.pathname === '/admin' ){
+          return <AdminHeader />
         }
   };
 
   const renderApp = () => {
-    if( window.location.pathname === '/admin'){
+    if( window.location.pathname.startsWith('/admin')){
       return renderAppAdmin();
     }
     return renderAppUser();
@@ -48,7 +50,16 @@ export default withRouter(function App() {
   }
   const renderAppAdmin = () => {
     return (
-      <AdminDashboard />
+      <div className="flex h-screen" id="layout">
+        <AdminHeader />
+        <div 
+          className="w-full mx-6 sm:w-3/4 lg:w-5/6" 
+          id="mainContainer"
+        >
+              <Router />
+        </div>
+      </div>
+
     )
   }
 

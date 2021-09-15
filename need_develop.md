@@ -1,2 +1,6 @@
-- Show loading...
+- (OK) Show loading...
 - Alert if err
+- Search bar
+- Filter of table
+- Template of project
+- Smart editor

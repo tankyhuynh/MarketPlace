@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const Slide = ({ slide }) => {
+
+const Slide = ({ slide, index }) => {
     const classes = useStyles();
 
     return (

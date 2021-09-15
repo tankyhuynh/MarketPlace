@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './Header.css'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useCookies } from 'react-cookie';
@@ -101,6 +102,13 @@ const Header = (props) => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [roleCode, setRoleCode] = useState(null);
+
+  useEffect(() => {
+    if(props.userProfile){
+      setRoleCode(props.userProfile.role.code)
+    }
+  }, [roleCode])
 
   const links = [
     {
@@ -202,8 +210,6 @@ const Header = (props) => {
       return renderUserOptionsMobile(className);
     } 
     
-    const roleCode = props.userProfile.role.code;
-    console.log('roleCode', roleCode)
     if(roleCode === 'NNC'){
         if(mode === 'web'){
           return renderResearcherOptionsWeb(className)
@@ -243,8 +249,16 @@ const Header = (props) => {
 
   const renderAccount = () => {
     if(props.isSignedIn){
+      let link = '';
+      if(roleCode === 'NNC'){
+        link = '/researchers';
+      }
+      if(roleCode === 'ADMIN'){
+        link = '/admin';
+      }
+
       return (
-        <Link to="/researchers">
+        <Link to={link}>
           <IconButton
             edge="start"
             aria-label="account of current user"

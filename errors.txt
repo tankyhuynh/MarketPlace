@@ -1,0 +1,8 @@
+- Hình sản phẩm -- ProjectList
+- Thiếu (nhóm tác giả)
+- Lĩnh vực áp dụng + PTCGiao (if ko có lĩnh vực => có nút thêm)
+- Lvadung: nên có chỗ để nhập thay vì combobox
+- ptcgiao: checkbox thay vì combobox
+- Hình sp: chưa load
+
+Thêm : PTCGiao: Sản phẩm trọn gói, quy trinh công nghệ

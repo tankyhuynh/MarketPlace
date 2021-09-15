@@ -13,8 +13,6 @@ import CreateIcon from '@material-ui/icons/Create';
 
 import { fetchProjects } from '../../../actions/project'
 
-
-
 const ResearcherProject  = (props) => {
 
     const [openTab, setOpenTab] = useState(0);
@@ -23,20 +21,18 @@ const ResearcherProject  = (props) => {
 
 
     useEffect(() => {
-        // const fetchPosts = async () => {
-        //     console.log('props: ', props);
-        //     setLoading(true);
-        //     const response = await projectsAPI.get('/project');
-        //     console.log('response', response);
-        //     setProjects(response.data);
-        //     setLoading(false);
-        // };
-        
-            // fetchPosts();
-            console.log('props: ', props);
-            props.fetchProjects()
-      
+        props.fetchProjects()
     }, []);
+
+    const renderTen = (ten) => {
+        if(ten){
+            if (ten.length > 60) {
+                var shortname = ten.substring(0, 60) + " ...";
+                return shortname;
+            }
+        }
+        return ten;
+    }
 
 
     const renderProject = (projects) => {
@@ -72,7 +68,7 @@ const ResearcherProject  = (props) => {
                         content: (
                                 <>
                                     <div className="text-sm text-gray-500">
-                                        { project.name }
+                                        { renderTen(project.name) }
                                     </div>
                                 </>
                         )

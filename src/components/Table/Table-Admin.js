@@ -3,7 +3,8 @@ import { DataGrid } from '@material-ui/data-grid';
 
 
 
-export default function Test({columns, rows}) {
+export default function Test({columns, rows, editRowsModel, handleEditRowsModelChange, onCellEditStop}) {
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -12,7 +13,11 @@ export default function Test({columns, rows}) {
         pageSize={5}
         checkboxSelection
         disableSelectionOnClick
+        editRowsModel={editRowsModel}
+        onEditRowsModelChange={handleEditRowsModelChange}
+        onCellEditStop={onCellEditStop}
       />
+      {/* <code>editRowsModel: {JSON.stringify(editRowsModel)}</code> */}
     </div>
   );
 }

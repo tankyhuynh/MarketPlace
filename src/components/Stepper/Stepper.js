@@ -26,6 +26,7 @@ const initData = {
     user: 1,
     status: 1,
     companyName: '',
+    authors: '',
     address: '',
     phoneNumber: '',
     fax: '',
@@ -367,6 +368,18 @@ const HorizontalLinearStepper = (props) => {
                     onChange={(e) => handleContentChange('phoneNumber', e.target.value) }
                     className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                     id="phone" 
+                    type="text" 
+                />
+            </div>
+            <div className="stepper--field">
+                <label className="stepper--label" htmlFor="authors">
+                    Nhóm tác giả
+                </label>
+                <input
+                    value={project.authors}
+                    onChange={(e) => handleContentChange('authors', e.target.value) }
+                    className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+                    id="authors" 
                     type="text" 
                 />
             </div>

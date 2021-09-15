@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Table from '../Table/Table'
+import Modal from './TestModal'
 
 const Test = () => {
   return (
-    <Table />
+    <Modal />
   )
 }
 

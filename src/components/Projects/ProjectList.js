@@ -16,10 +16,13 @@ import img3_a from '../../assets/img3_a.jpg';
 import img3_b from '../../assets/img3_b.png';
 import img5_a from '../../assets/img5_a.jpg';
 import img5_b from '../../assets/img5_b.png';
-import logo from '../../assets/logo.png';
+// import logo from '../../assets/logo.png';
 
 
 class ProjectList extends React.Component {
+
+    randomImages = [img1_a, img1_b, img2_a, img2_b, img3_a, img3_b, img5_a, img5_b];
+
     componentDidMount(){
         this.props.fetchProjects();
     }
@@ -74,7 +77,8 @@ class ProjectList extends React.Component {
                  default: return image;
              }
         }
-        return logo;
+        const j = Math.floor(Math.random() * ((this.randomImages.length -1)));
+        return this.randomImages[j];
      }
 
     renderImageSrc = (card) => {
@@ -129,6 +133,7 @@ class ProjectList extends React.Component {
                                         <span className="font-semibold">
                                             {/* {this.renderAuthors(project.author)} */}
                                             Huỳnh Tấn Kỷ
+                                            {/* { project.user.fullName } */}
                                         </span>
                                         <span className="self-end">
                                             { dateFormat(project.date, "HH:MM, dddd, mmmm dS, yyyy") }

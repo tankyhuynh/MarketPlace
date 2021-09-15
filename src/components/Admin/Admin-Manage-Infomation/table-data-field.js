@@ -9,10 +9,9 @@ export const columns = [
     {
       field: 'name',
       headerName: 'Name',
-      width: 650,
+      width: 450,
       editable: true,
     },
- 
   ];
   
   export const rows = [

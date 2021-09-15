@@ -20,7 +20,7 @@ class SignIn extends React.Component {
     renderError({ error, touched }){
         if (touched && error) {
             return (
-                <div className="ui error message">{error}</div>
+                <div className="text-red-500">{error}</div>
             )
         }
     }
@@ -149,11 +149,11 @@ class SignIn extends React.Component {
 const validate = formValues => {
     const errors = {};
 
-    if (!formValues.title) {
-        errors.title = 'You must enter a username'
+    if (!formValues.username) {
+        errors.username = 'You must enter a username'
     }
-    if (!formValues.description) {
-        errors.description = 'You must enter a password'
+    if (!formValues.password) {
+        errors.password = 'You must enter a password'
     }
 
     return errors;

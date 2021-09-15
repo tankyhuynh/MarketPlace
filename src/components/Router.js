@@ -31,7 +31,10 @@ import HightLightList from './Hightlights/HightLightList';
 import Contact from './Contact/Contact';
 import Introduction from './Introduction/Introduction';
 
-import AdminDashboard from './Admin/Admin-Dashboard'
+import AdminDashboard from './Admin/Admin-Manage-Infomation';
+import AdminManageProject from './Admin/Admin-Manage-Project';
+import AdminManageUser from './Admin/Admin-Manage-User';
+
 // import GoogleAuth from './GoogleAuth';
 // import ProjectShow from './Projects/ProjectDefault/ProjectShow';
 
@@ -67,7 +70,9 @@ const Router = () => {
             <PrivateRoute path="/streams/delete/:id" exact component={StreamDelete}></PrivateRoute>
             <PrivateRoute path="/streams/:id" exact component={StreamShow}></PrivateRoute>
 
-            <Route path="/admin" exact component={AdminDashboard}></Route>
+            <PrivateRoute path="/admin" exact component={AdminDashboard}></PrivateRoute>
+            <PrivateRoute path="/admin/projects" exact component={AdminManageProject}></PrivateRoute>
+            <PrivateRoute path="/admin/users" exact component={AdminManageUser}></PrivateRoute>
 
 
             <Route path="/test" exact component={Test}></Route>
