@@ -1,110 +1,64 @@
-import { AppBar, Toolbar } from '@material-ui/core';
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom'
-import { alpha, makeStyles } from '@material-ui/core/styles';
-
 import logo from '../../../assets/logo.png'
-import HomeIcon from '../../../assets/home_icon.jpg'
-import LogoutIcon from '../../../assets/logout_icon.jpg'
 
-const ResearcherNavbar = () => {
-    const useStyles = makeStyles((theme) => ({
-        header: {
-          padding: "6px 0",
-        },
-        headerBackground: {
-          backgroundColor: '#0065C1',
-        },
-        grow: {
-          flexGrow: 1,
-        },
-        menuButton: {
-          marginRight: theme.spacing(2),
-        },
-        search: {
-          position: 'relative',
-          borderRadius: 50,
-          backgroundColor: alpha(theme.palette.common.white, 0.95),
-          '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.75),
-          },
-          color: 'black',
-      
-        },
-        searchIcon: {
-          padding: theme.spacing(0, 2),
-          height: '100%',
-          position: 'absolute',
-          pointerEvents: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        inputRoot: {
-          color: 'inherit',
-        },
-        inputInput: {
-          padding: theme.spacing(1, 1, 1, 0),
-          // vertical padding + font size from searchIcon
-          paddingLeft: 0,
-          transition: theme.transitions.create('width'),
-          width: '100%',
-          [theme.breakpoints.up('md')]: {
-            width: '30ch',
-          },
-        },
-        sectionDesktop: {
-          display: 'none',
-          [theme.breakpoints.up('md')]: {
-            display: 'flex',
-          },
-        },
-        sectionMobile: {
-          display: 'flex',
-          [theme.breakpoints.up('md')]: {
-            display: 'none',
-          },
-        },
-      }));
+import { signOut } from '../../../actions/auth';
+import { connect } from 'react-redux';
 
-    const classes = useStyles();
+const ResearcherNavbar = (props) => {
+    
+    const [cookies, setCookie, removeCookie] = useCookies(['fullName']);
+    const onLogOut = () => {
+      removeCookie("fullName");
+      props.signOut();
+    }
 
     return (
-        <>
-            <div className="flex items-center justify-center h-16 text-xl font-bold bg-blue-400">
-            <AppBar position="static" className={`${classes.headerBackground}`}>
-                <Toolbar>
 
-                  <Link 
-                      className="flex items-center"
-                      to="/"
-                  >
+      <nav 
+        className="relative flex flex-wrap items-center justify-between px-2 mb-3"
+        style={{ backgroundColor: '#0065C1' }}
+      >
+          <div className="container flex flex-wrap items-center justify-between px-4 mx-auto">
+            <div className="relative flex justify-between w-full px-4 lg:w-auto lg:static lg:block lg:justify-start">
+              <Link 
+                to={'/'}
+                className="inline-block py-2 mr-4 text-sm font-bold leading-relaxed text-white uppercase whitespace-nowrap" 
+              >
+                  <div className="flex">
                       <img 
-                        className="w-16" 
+                        className="h-16" 
                         src={logo}
                         alt="logo"
                       />
-                      <div className="header--title">
-                      ctu market place
+                      <div className="self-center header--title">
+                        ctu market place
                       </div>
-                  </Link>
-
-                  <button 
-                    // onClick={ () => onLogOut() }
-                    className="px-4 py-2 bg-red-500 rounded-lg"
-                  >
-                      Đăng xuất
-                  </button>
-
-                  <img src={HomeIcon} alt={HomeIcon} />
-                  <img src={LogoutIcon} alt={LogoutIcon} />
-
-                </Toolbar>
-               
-            </AppBar>
+                  </div>
+              </Link>
+              <button className="block px-3 py-1 text-xl leading-none bg-transparent border border-transparent border-solid rounded outline-none cursor-pointer lg:hidden focus:outline-none" type="button">
+                <span className="relative block w-6 h-px bg-white rounded-sm"></span>
+                <span className="relative block w-6 h-px mt-1 bg-white rounded-sm"></span>
+                <span className="relative block w-6 h-px mt-1 bg-white rounded-sm"></span>
+              </button>
             </div>
-        </>
+            <div className="items-center flex-grow lg:flex" id="example-navbar-warning">
+              <ul className="flex flex-col ml-auto list-none lg:flex-row">
+                  <li className="nav-item">
+                      <button 
+                        onClick={ () => onLogOut() }
+                        className="float-right px-4 py-2 text-white bg-red-500 rounded-lg"
+                      >
+                          Đăng xuất
+                      </button>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
     );
 }
 
-export default ResearcherNavbar;
+export default connect(null, { signOut })(ResearcherNavbar)
