@@ -13,8 +13,8 @@ const Tabs = ({ tabs, color, openTabChange }) => {
                         className={
                         "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                         (openTab === index
-                            ? "text-white bg-" + color + "-600"
-                            : "text-" + color + "-600 bg-white")
+                            ? "text-white bg-" + color + "-500"
+                            : "text-" + color + "-500 bg-white")
                         }
                         onClick={e => {
                             e.preventDefault();

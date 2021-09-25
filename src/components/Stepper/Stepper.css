@@ -3,11 +3,15 @@
 }
 
 .stepper--field {
-    @apply flex flex-col lg:flex-row justify-start lg:justify-between my-4 self-center items-center
+    @apply grid grid-rows-2 grid-cols-6 lg:justify-between my-4 self-center items-center
 }   
 
 .stepper--label {
     @apply block mt-4 mb-2 mr-2 text-base font-bold text-gray-700 lg:self-center;
+}
+
+.stepper--input {
+    @apply col-span-6
 }
 
 .stepper-combobox {

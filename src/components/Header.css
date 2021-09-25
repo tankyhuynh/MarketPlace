@@ -2,6 +2,9 @@
     @apply flex gap-2 px-4 py-2 bg-green-500 rounded-lg
 }
 
+.header--link:hover {
+    color: rgb(201, 201, 201)
+}
 
 
 @layer components {
@@ -12,8 +15,6 @@
     .header--link {
         @apply text-sm sm:text-base  font-bold
     }
-    .header--link:hover {
-        @apply text-red-500
-    }
+   
 
 }

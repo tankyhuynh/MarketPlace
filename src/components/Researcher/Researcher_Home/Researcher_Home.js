@@ -3,11 +3,16 @@ import './Researcher_Home.css'
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import GroupIcon from '@material-ui/icons/Group';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+// import AccountCircle from '@material-ui/icons/AccountCircle';
+// import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+// import GroupIcon from '@material-ui/icons/Group';
+// import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { useSelector } from 'react-redux';
+
+import UserIcon from '../../../assets/user.png';
+import GroupDemoIcon from '../../../assets/unnamed/group.png';
+import AddIcon from '../../../assets/unnamed/add.jpg';
+import ProjectIcon from '../../../assets/unnamed/project.jpg';
 
 const Researcher_Home = () => {
 
@@ -15,11 +20,16 @@ const Researcher_Home = () => {
 
     return (
         <>
-            <div className="grid h-screen grid-rows-2 gap-2 mt-4"> 
+            <div className="grid h-screen grid-rows-2 gap-2 mt-4 border-4 rounded-md"> 
                 <div className="grid grid-cols-4 gap-4">
-                    <Link id="name" className="flex flex-col col-span-1 shadow-lg menu rounded-2xl content_center">
+                    <Link id="name" className="flex flex-col col-span-1 menu rounded-2xl content_center">
                         <section>
-                            <AccountCircle style={{ fontSize:"80px", color: "black"  }} />
+                            {/* <AccountCircle style={{ fontSize:"80px", color: "black"  }} /> */}
+                            <img 
+                                src={UserIcon} 
+                                alt={UserIcon} 
+                                className="w-20"
+                            />
                         </section>
                         <section>
                             { userProfile.fullName }
@@ -28,27 +38,42 @@ const Researcher_Home = () => {
                             { userProfile.email }
                         </section>
                     </Link>
-                    <div id="options" className="grid grid-cols-3 col-span-3 gap-2 p-2 border-2 shadow-lg rounded-2xl"
+                    <div id="options" className="grid grid-cols-3 col-span-3 gap-2 p-2 rounded-2xl"
                     >
                         <Link 
                             to="/researchers/projects"
-                            className="flex flex-col gap-2 shadow-lg rounded-2xl content_center menu"
+                            className="flex flex-col gap-2 rounded-2xl content_center menu"
                         >
-                            <LibraryBooksIcon style={{ fontSize:"80px", color: "black"  }} />
+                            {/* <LibraryBooksIcon style={{ fontSize:"80px", color: "black"  }} /> */}
+                            <img 
+                                src={ProjectIcon} 
+                                alt={ProjectIcon} 
+                                className="w-20"
+                            />
                             Dự án
                         </Link>
-                        <Link className="flex flex-col gap-2 shadow-lg rounded-2xl content_center menu">
-                            <GroupIcon style={{ fontSize:"80px", color: "black"  }} />
+                        <Link className="flex flex-col gap-2 rounded-2xl content_center menu">
+                            {/* <GroupIcon style={{ fontSize:"80px", color: "black"  }} /> */}
+                            <img 
+                                src={GroupDemoIcon} 
+                                alt={GroupDemoIcon} 
+                                className="w-20"
+                            />
                             Nhóm nghiên cứu
                         </Link >
-                        <Link to="/projects/new" className="flex flex-col gap-2 shadow-lg rounded-2xl content_center menu">
-                            <AddCircleIcon style={{ fontSize:"80px", color: "black"  }} />
+                        <Link to="/projects/new" className="flex flex-col gap-2 rounded-2xl content_center menu">
+                            {/* <AddCircleIcon style={{ fontSize:"80px", color: "black"  }} /> */}
+                            <img 
+                                src={AddIcon} 
+                                alt={AddIcon} 
+                                className="w-20"
+                            />
                             Tạo dự án
                         </Link>
                     </div>
                 </div>
                 <div id="profile_groupResearch" className="grid grid-cols-2 gap-4">
-                    <div id="profile" className="flex flex-col shadow-lg rounded-2xl">
+                    <div id="profile" className="flex flex-col rounded-2xl">
                         <section className="my-3 text-xl font-bold text-center">Thông tin cá nhân</section>
                         <div className="flex flex-col gap-4 px-12">
                             <section className="flex justify-between fullName">
@@ -77,7 +102,7 @@ const Researcher_Home = () => {
                             </section>
                         </div>
                     </div>
-                    <div id="groupResearch" className="flex flex-col shadow-lg rounded-2xl">
+                    <div id="groupResearch" className="flex flex-col rounded-2xl">
                         <section className="my-3 text-xl font-bold text-center">Nhóm nghiên cứu</section>
                         <div className="grid grid-cols-3 gap-4 px-4">
                             <Link className="menu_organizations menu">

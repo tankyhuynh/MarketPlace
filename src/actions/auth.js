@@ -1,4 +1,12 @@
 import users from '../apis/users';
+import { 
+  ROLE_ADMIN, 
+  ROLE_NNC, 
+  ROLE_OTHER,
+  LOGIN_URL,
+  SIGNUP_URL 
+} 
+  from '../environments/constraints';
 
 import {
     SIGN_IN,
@@ -7,6 +15,8 @@ import {
     LOADED
     
   } from './types';
+
+  
 
 export const signIn = (userId, userProfile) => {
     return {
@@ -27,21 +37,22 @@ export const signIn = (userId, userProfile) => {
   // ------ Auth --------
 export const signup = (formValues, propsHistory) => async (dispatch, getState) => {
     dispatch({ type: LOADING });
-    // const formUpdate = { ...formValues, roleId: 5 }
-    // const response = await users.post('/user', { ...formUpdate });
+    const formUpdate = { ...formValues, roleId: 4 }
+    const response = await users.post(SIGNUP_URL, { ...formUpdate });
+    console.log(response)
     dispatch({ type: LOADED });
 
     propsHistory.push('/auth/signin');
   };
   
   const renderRedirectAfterLogin = (roleCode, propsHistory) => {
-    if(roleCode === 'NNC'){
+    if(roleCode === ROLE_NNC){
       propsHistory.push('/researchers');
     }
-    if(roleCode === 'USER'){
+    if(roleCode === ROLE_OTHER){
       propsHistory.push('/');
     }
-    if(roleCode === 'ADMIN'){
+    if(roleCode === ROLE_ADMIN){
       propsHistory.push('/admin');
     }
   }
@@ -49,7 +60,7 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
   // Xài history của props để push thì mới chịu đi
   export const login = (formValues, propsHistory) => async (dispatch, getState) => {
     dispatch({ type: LOADING });
-    const response = await users.post('/user/login', { ...formValues });
+    const response = await users.post(LOGIN_URL, { ...formValues });
 
 
     try {
@@ -63,7 +74,7 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
         renderRedirectAfterLogin(roleCode, propsHistory);
       }
     } catch (error) {
-      propsHistory.push('/auth/signin');
+      propsHistory.push(LOGIN_URL);
     }
     
   };

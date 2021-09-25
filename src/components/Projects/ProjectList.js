@@ -5,7 +5,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { fetchProjects } from '../../actions/project'
+import { fetchProjects_DaDuyet, fetchProjects_ChoDuyet } from '../../actions/project'
 
 
 import img1_a from '../../assets/img1_a.png';
@@ -24,17 +24,12 @@ class ProjectList extends React.Component {
     randomImages = [img1_a, img1_b, img2_a, img2_b, img3_a, img3_b, img5_a, img5_b];
 
     componentDidMount(){
-        this.props.fetchProjects();
+        this.props.fetchProjects_DaDuyet();
     }
 
     renderAuthors = (authors) => {
         if(authors){
-            // return authors.map(author => {
-            //     return <div>{author}</div>;
-            // })
-
             return <div>{authors}</div>;
-
         }
     };
 
@@ -52,13 +47,15 @@ class ProjectList extends React.Component {
         }
         
     };
-    renderLinhVuc = (linhVuc) => {
-        if(linhVuc){
-            if(linhVuc.length > 30){
-                var shortUuDiem = linhVuc.substring(0, 30) + "...";
-                return shortUuDiem;
-            }
-            return linhVuc;
+    renderLinhVuc = (projectFieldList) => {
+        if(projectFieldList){
+            return projectFieldList.map(field => {
+                if(field.field.name.length > 30){
+                    var shortUuDiem = field.field.name.substring(0, 30) + "...";
+                    return shortUuDiem;
+                }
+                return field.field.name;
+            })
         }
         
     };
@@ -94,54 +91,59 @@ class ProjectList extends React.Component {
     renderList(){
         
         return this.props.projects
-            .filter(project => project.status.id !== 2)
+            // .filter(project => project.status.id !== 2)
             .map((project, index) => {
             return (
-                    <Link 
-                        to={`/projects/show/${project.id}`} 
-                        className="grid grid-cols-1 rounded-lg shadow-lg md:grid-cols-4"
-                        key={index}
-                    >
-                        <img 
-                            src={this.renderImage(this.renderImageSrc(project))} 
-                            alt=" random imgee" 
-                            className="object-contain object-center w-full h-64 col-span-1 rounded-lg shadow-md lg:h-full lg:w-full" 
-                        />    
-                        
-                        <div className="grid grid-cols-1 col-span-3 grid-rows-4 p-6 ">
-                                <div className="">
-                                    <div className="flex items-baseline gap-2">
-                                        <span className="inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full">
-                                            New
-                                        </span>
-                                        <span className="inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full">
-                                            {this.renderLinhVuc(project.field.name)}
-                                        </span>
-                                    </div>
-                                    
-                                    <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
-                                        {project.name}
-                                    </h4>
-                                </div>
+                    <>
+                        <Link 
+                            to={`/projects/show/${project.id}`} 
+                            className="grid grid-cols-1 mx-6 border-b-2 border-gray-500 md:grid-cols-4"
+                            key={index}
+                        >
+                            <div className="items-center self-center col-span-1 my-4">
+                                <img 
+                                    // src={this.renderImage(this.renderImageSrc(project))} 
+                                    src={project.productImage} 
+                                    alt="random imgee" 
+                                    className="object-cover object-center w-full my-2 rounded-lg" 
+                                />     
+                            </div>  
                             
-                                <div className="row-span-2 mt-1">
-                                    {/* <div dangerouslySetInnerHTML={{ __html: project.advantage }} /> */}
-                                    { project.shortDescription }
-                                </div>
-                                <div className="mt-4 b-0 place-content-end">
-                                    <span className="flex flex-col italic text-teal-600">
-                                        <span className="font-semibold">
-                                            {/* {this.renderAuthors(project.author)} */}
-                                            Huỳnh Tấn Kỷ
-                                            {/* { project.user.fullName } */}
+                            <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
+                                    <div>
+                                        <div className="flex items-baseline gap-2">
+                                            <span className="inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full">
+                                                New
+                                            </span>
+                                            <span className="inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full">
+                                                {this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '')}
+                                            </span>
+                                        </div>
+                                        
+                                        <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
+                                            {project.name}
+                                        </h4>
+                                    </div>
+                                
+                                    <div className="row-span-2 mt-1">
+                                        {/* <div dangerouslySetInnerHTML={{ __html: project.advantage }} /> */}
+                                        { project.shortDescription }
+                                    </div>
+                                    <div className="mt-4 b-0">
+                                        <span className="flex flex-col italic text-teal-600">
+                                            <span className="font-semibold">
+                                                {/* {this.renderAuthors(project.author)} */}
+                                                {/* Huỳnh Tấn Kỷ */}
+                                                { project.user.fullName }
+                                            </span>
+                                            <span className="self-end">
+                                                { dateFormat(project.createdDate, "HH:MM, dddd, mmmm dS, yyyy") }
+                                            </span>
                                         </span>
-                                        <span className="self-end">
-                                            { dateFormat(project.date, "HH:MM, dddd, mmmm dS, yyyy") }
-                                        </span>
-                                    </span>
-                                </div> 
-                        </div>
-                    </Link>
+                                    </div> 
+                            </div>
+                        </Link>
+                    </>
             );
         })
     }
@@ -149,7 +151,7 @@ class ProjectList extends React.Component {
     render() {
         return (
             <>
-                <div className="grid grid-cols-1 gap-8 mt-20">
+                <div className="grid grid-cols-1">
                     {this.renderList()}
                 </div>
             </>
@@ -165,4 +167,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { fetchProjects })(ProjectList);
+export default connect(mapStateToProps, { fetchProjects_DaDuyet, fetchProjects_ChoDuyet })(ProjectList);

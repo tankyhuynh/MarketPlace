@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './Header.css'
+import { ROLE_ADMIN, ROLE_NNC, ROLE_OTHER } from '../environments/constraints';
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -210,13 +211,13 @@ const Header = (props) => {
       return renderUserOptionsMobile(className);
     } 
     
-    if(roleCode === 'NNC'){
+    if(roleCode === ROLE_NNC){
         if(mode === 'web'){
           return renderResearcherOptionsWeb(className)
         }
         return renderResearcherOptionsMobile(className)
     }
-    if(roleCode === 'USER'){
+    if(roleCode === ROLE_OTHER){
         if(mode === 'web'){
           return renderUserOptionsWeb(className)
         }
@@ -250,10 +251,10 @@ const Header = (props) => {
   const renderAccount = () => {
     if(props.isSignedIn){
       let link = '';
-      if(roleCode === 'NNC'){
+      if(roleCode === ROLE_NNC){
         link = '/researchers';
       }
-      if(roleCode === 'ADMIN'){
+      if(roleCode === ROLE_ADMIN){
         link = '/admin';
       }
 

@@ -1,4 +1,5 @@
 import field from '../apis/field';
+import { FIELD_URL } from '../environments/constraints';
 
 import {
   FETCH_FIELDS,
@@ -9,7 +10,7 @@ import {
 
 //------ Start Fields --------
 export const fetchFields = () => async dispatch => {
-  const response = await field.get('/field');
+  const response = await field.get(FIELD_URL);
   console.log('transmissionMethods:', response.data);
 
   // sửa chỗ response.data => response.data.projects
@@ -18,9 +19,14 @@ export const fetchFields = () => async dispatch => {
 
 
 export const fetchField = (id) => async dispatch => {
-  const response = await field.get(`/field/${id}`);
+  const response = await field.get(`${FIELD_URL}/${id}`);
   console.log(response);
 
   dispatch({ type: FETCH_FIELD, payload: response.data });
 };
+
+
+
+
+
 //------ End Fields --------

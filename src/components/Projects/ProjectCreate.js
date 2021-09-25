@@ -2,10 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchProjects } from '../../actions/project'
 import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
 import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
 import { fetchFields } from '../../actions/field'
+// import { fetchStatuses } from '../../actions/status'
 
 
 import Stepper from '../Stepper/Stepper';
@@ -99,9 +99,8 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     { 
-        fetchProjects, 
         fetchLevelDevelopments, 
         fetchTransmissionMethods, 
-        fetchFields 
+        fetchFields,
     }
 )(ProjectCreate);

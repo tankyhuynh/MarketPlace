@@ -4,6 +4,7 @@ import React from 'react'
 import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
+// import TextField from '@mui/material/TextField';
 
 import { login } from '../../../actions/auth';
 
@@ -37,6 +38,12 @@ class SignIn extends React.Component {
                     outline={false}
                     placeholder={label}
                 />
+                {/* <TextField 
+                    id={`standard-${label}`} 
+                    label={label}
+                    variant="standard" 
+                    className="w-full"
+                /> */}
                 {this.renderError(meta)}
             </div>
         );  

@@ -5,7 +5,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchProject } from '../../actions/project'
 
-import TemplateDefaults from '../Template/ProjectShow/Default';
+// import TemplateDefaults from '../Template/ProjectShow/Default';
+import Template1 from '../Template/ProjectShow/Template1';
 
 class ProjectShow extends React.Component {
 
@@ -66,7 +67,8 @@ class ProjectShow extends React.Component {
 
         
     return (
-         <TemplateDefaults project={this.props.project} />
+        //  <TemplateDefaults project={this.props.project} />
+        <Template1 project={this.props.project} />
     );
   }
 }

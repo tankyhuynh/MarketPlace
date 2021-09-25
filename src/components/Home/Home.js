@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import video from '../../assets/growag-introduction.mp4';
 
 import { loading, loaded } from '../../actions/loading';
-import { fetchProjects } from '../../actions/project';
+import { fetchProjects_DaDuyet } from '../../actions/project';
 
 import img_demo_1 from '../../assets/iTRAK-contain-500x240.jpg';
 import img_demo_2 from '../../assets/KALYX-contain-500x240.jpg';
@@ -45,12 +45,12 @@ const organizations = [
 
 class Home extends React.Component {
     componentDidMount(){
-        this.props.fetchProjects();
+        this.props.fetchProjects_DaDuyet();
     }
 
     renderProjects = () =>{
         return this.props.projects
-            .filter(project => project.status.id !== 2)
+            // .filter(project => project.statusId !== 2)
             .slice(0,3)
             .map(card => {
                 return (
@@ -75,7 +75,7 @@ class Home extends React.Component {
                <div className="flex flex-col gap-12">
                     <div className="">
                         <video
-                            className="absolute md:-mx-28"
+                            className="absolute -mx-28 2xl:mx-16"
                             autoPlay
                             loop
                             muted
@@ -84,7 +84,11 @@ class Home extends React.Component {
                             Your browser does not support the video tag
                         </video>
                         <div className="md:mt-32">
-                            <CarouselCustom slides={this.props.projects.filter(project => project.status.id !== 2)} organizations={organizations}/>
+                            <CarouselCustom 
+                                // slides={this.props.projects.filter(project => project.statusId !== 2)} 
+                                slides={this.props.projects} 
+                                organizations={organizations}
+                            />
                         </div>
                     </div>
                     
@@ -118,6 +122,6 @@ const mapStateToProps = state => {
   
 export default connect(
     mapStateToProps,
-    { fetchProjects, loading, loaded }
+    { fetchProjects_DaDuyet, loading, loaded }
 )(Home);
 

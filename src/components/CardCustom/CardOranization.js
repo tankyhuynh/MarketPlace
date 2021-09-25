@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
+// import CardContent from '@material-ui/core/CardContent';
 
 import { red } from '@material-ui/core/colors';
 
@@ -12,6 +12,9 @@ import logoImg from '../../assets/logo.png';
 // import logo_dhvh from '../../assets/logo_dhvh.png';
 // import logo_hcmute from '../../assets/logo_hcmute.png';
 import productImg from '../../assets/iTRAK-contain-500x240.jpg';
+
+import Grid from '@material-ui/core/Grid';
+// import Card from "@material-tailwind/react/Card";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,32 +61,68 @@ export default function RecipeReviewCard() {
   // }
 
   return (
-    <div className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={productImg}
-        title="Paella dish"
-      />
-      <CardContent>
-          <div className="flex items-start text-xl font-bold text-green-500">
-              Can Tho University
-          </div>
-          <div className="grid grid-cols-6 gap-4">
-            <div className="col-start-1 col-end-4 text-xs text-left">
-                This impressive paella is a perfect party dish and a fun meal to cook together with your
-                guests. Add 1 cup of frozen peas along with the mussels, if you like.
-            </div>
-            <ButtonBase 
-              className={`${classes.image} col-end-7 col-span-2`}
-            >
-              <img 
-                className={`${classes.img} `} 
-                alt="complex" 
-                src={logoImg}
+
+    // <Card className={`${classes.root} slide-background bg-red-500 `}>
+        <Grid container spacing={3} >
+            <Grid item xs={12}>
+              <CardMedia
+                className={classes.media}
+                image={productImg}
+                title="Paella dish"
               />
-            </ButtonBase>
-        </div>
-      </CardContent>
-    </div>
+            </Grid>
+            <Grid item xs={12}>
+                   <div className="flex items-start text-xl font-bold text-green-500">
+                       Can Tho University
+                   </div>
+                   <div className="grid grid-cols-6 gap-4">
+                     <div className="col-start-1 col-end-4 text-xs text-left">
+                         This impressive paella is a perfect party dish and a fun meal to cook together with your
+                         guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                     </div>
+                     <ButtonBase 
+                       className={`${classes.image} col-end-7 col-span-2`}
+                     >
+                       <img 
+                         className={`${classes.img} `} 
+                         alt="complex" 
+                         src={logoImg}
+                       />
+                     </ButtonBase>
+                 </div>
+            </Grid>
+          
+        </Grid>
+    // </Card>
+
+    
+
+    // <div className={classes.root}>
+    //   <CardMedia
+    //     className={classes.media}
+    //     image={productImg}
+    //     title="Paella dish"
+    //   />
+    //   <CardContent>
+    //       <div className="flex items-start text-xl font-bold text-green-500">
+    //           Can Tho University
+    //       </div>
+    //       <div className="grid grid-cols-6 gap-4">
+    //         <div className="col-start-1 col-end-4 text-xs text-left">
+    //             This impressive paella is a perfect party dish and a fun meal to cook together with your
+    //             guests. Add 1 cup of frozen peas along with the mussels, if you like.
+    //         </div>
+    //         <ButtonBase 
+    //           className={`${classes.image} col-end-7 col-span-2`}
+    //         >
+    //           <img 
+    //             className={`${classes.img} `} 
+    //             alt="complex" 
+    //             src={logoImg}
+    //           />
+    //         </ButtonBase>
+    //     </div>
+    //   </CardContent>
+    // </div>
   );
 }

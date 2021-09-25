@@ -80,6 +80,7 @@ class ProjectEdit extends React.Component {
                     transmissions={this.props.transmissions}
                     project={this.props.project}
                     type='edit'
+                    id={this.props.match.params.id}
                 />
             </>
         ); 

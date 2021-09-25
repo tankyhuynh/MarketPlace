@@ -55,7 +55,13 @@ export default function RecipeReviewCard({ project }) {
            { project.name }
         </div>
         <div className="flex gap-4 text-xs text-left">
-            <div dangerouslySetInnerHTML={{ __html: renderUuDiem(project.advantage) ? renderUuDiem(project.advantage).substring(0, 300) : '' }}  />
+            <div 
+              dangerouslySetInnerHTML={{ __html: 
+                renderUuDiem(project.shortDescription) 
+                  ? renderUuDiem(project.shortDescription).substring(0, 300) 
+                  : '' 
+                }}  
+            />
         </div>
       </CardContent>
     </div>

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { alpha, makeStyles } from '@material-ui/core/styles';
 
 import logo from '../../../assets/logo.png'
+import HomeIcon from '../../../assets/home_icon.jpg'
+import LogoutIcon from '../../../assets/logout_icon.jpg'
 
 const ResearcherNavbar = () => {
     const useStyles = makeStyles((theme) => ({
@@ -73,21 +75,32 @@ const ResearcherNavbar = () => {
             <AppBar position="static" className={`${classes.headerBackground}`}>
                 <Toolbar>
 
-                <Link 
-                    className="flex items-center"
-                    to="/"
-                >
-                    <img 
-                    className="w-16" 
-                    src={logo}
-                    alt="logo"
-                    />
-                    <div className="header--title">
-                    ctu market place
-                    </div>
-                </Link>
+                  <Link 
+                      className="flex items-center"
+                      to="/"
+                  >
+                      <img 
+                        className="w-16" 
+                        src={logo}
+                        alt="logo"
+                      />
+                      <div className="header--title">
+                      ctu market place
+                      </div>
+                  </Link>
+
+                  <button 
+                    // onClick={ () => onLogOut() }
+                    className="px-4 py-2 bg-red-500 rounded-lg"
+                  >
+                      Đăng xuất
+                  </button>
+
+                  <img src={HomeIcon} alt={HomeIcon} />
+                  <img src={LogoutIcon} alt={LogoutIcon} />
 
                 </Toolbar>
+               
             </AppBar>
             </div>
         </>

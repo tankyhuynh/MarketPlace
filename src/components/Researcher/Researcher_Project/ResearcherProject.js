@@ -11,7 +11,13 @@ import Tab from '../../Tab/Tab'
 
 import CreateIcon from '@material-ui/icons/Create';
 
-import { fetchProjects } from '../../../actions/project'
+import { 
+    fetchProjects_DaDuyet,
+    fetchProjects_ChoDuyet,
+    fetchProjects_TuChoi,
+    fetchProjects_Nhap 
+} 
+from '../../../actions/project'
 
 const ResearcherProject  = (props) => {
 
@@ -21,7 +27,10 @@ const ResearcherProject  = (props) => {
 
 
     useEffect(() => {
-        props.fetchProjects()
+        props.fetchProjects_DaDuyet()
+        props.fetchProjects_ChoDuyet()
+        props.fetchProjects_TuChoi()
+        props.fetchProjects_Nhap()
     }, []);
 
     const renderTen = (ten) => {
@@ -34,6 +43,13 @@ const ResearcherProject  = (props) => {
         return ten;
     }
 
+    const renderProjectFields = (projectFieldList) => {
+        return (
+            projectFieldList.map(field => {
+                return <span>{field.field.name}</span>
+            })
+        )
+    }
 
     const renderProject = (projects) => {
         console.log('projects: ', projects);
@@ -79,7 +95,7 @@ const ResearcherProject  = (props) => {
                         content: (
                                 <>
                                     <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                        { project.field.name }
+                                        { renderProjectFields(project.projectFieldList) }
                                     </span>
                                 </>
                         )
@@ -121,176 +137,191 @@ const ResearcherProject  = (props) => {
             );
     })
     }
-    const renderTempProject = (tempProjects) => {
-        return tempProjects
-        .map((project, index) => {
-            return (
-                {
-                    stt: {
-                        name: 'STT',
-                        className:'px-6 py-4 whitespace-nowrap',
-                        content: (
-                                <div className="flex items-center">
-                                    {/* <div className="flex-shrink-0 w-10 h-10">
-                                        <img 
-                                            className="w-10 h-10 rounded-full" 
-                                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                                            alt="" 
-                                        />
-                                    </div> */}
-                                    <div className="ml-4">
-                                        <div className="text-sm font-medium text-gray-900">
-                                            { project.id }
-                                        </div>
-                                    </div>
-                                </div>
-                        )
-                    },
-                    name: {
-                        name: 'Tên dự án',
-                        className: 'px-6 py-4 whitespace-nowrap',
-                        content: (
-                                <>
-                                    <div className="text-sm text-gray-500">
-                                        { project.name }
-                                    </div>
-                                </>
-                        )
-                    },
-                    field: {
-                        name: 'Lĩnh vực ',
-                        className: 'px-6 py-4 whitespace-nowrap',
-                        content: (
-                                <>
-                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                        { project.field.name }
-                                    </span>
-                                </>
-                        )
-                    },
-                    sentDate: {
-                        name: 'Ngày gửi',
-                        className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-                        content: (
-                                <>
-                                    { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
-                                </>
-                        )
-                    },
-                    confirmDate: {
-                        name: 'Ngày duyệt',
-                        className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-                        content: (
-                                <>
-                                    { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
-                                </>
-                        )
-                    },
-                    actions: {
-                        name: 'Hành động',
-                        className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
-                        content: (
-                                <div className="flex justify-center mx-auto">
-                                    <Link 
-                                        to={`/projects/edit/${project.id}`} 
-                                        className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
-                                        alt="test"
-                                    >
-                                        <CreateIcon />
-                                    </Link>
-                                </div>
-                        )
-                    }
-                }
-            );
-    })
-    }
+    // const renderTempProject = (tempProjects) => {
+    //     return tempProjects
+    //     .map((project, index) => {
+    //         return (
+    //             {
+    //                 stt: {
+    //                     name: 'STT',
+    //                     className:'px-6 py-4 whitespace-nowrap',
+    //                     content: (
+    //                             <div className="flex items-center">
+    //                                 {/* <div className="flex-shrink-0 w-10 h-10">
+    //                                     <img 
+    //                                         className="w-10 h-10 rounded-full" 
+    //                                         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+    //                                         alt="" 
+    //                                     />
+    //                                 </div> */}
+    //                                 <div className="ml-4">
+    //                                     <div className="text-sm font-medium text-gray-900">
+    //                                         { project.id }
+    //                                     </div>
+    //                                 </div>
+    //                             </div>
+    //                     )
+    //                 },
+    //                 name: {
+    //                     name: 'Tên dự án',
+    //                     className: 'px-6 py-4 whitespace-nowrap',
+    //                     content: (
+    //                             <>
+    //                                 <div className="text-sm text-gray-500">
+    //                                     { project.name }
+    //                                 </div>
+    //                             </>
+    //                     )
+    //                 },
+    //                 field: {
+    //                     name: 'Lĩnh vực ',
+    //                     className: 'px-6 py-4 whitespace-nowrap',
+    //                     content: (
+    //                             <>
+    //                                 <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+    //                                     { renderProjectFields(project.projectFieldList) }
+    //                                 </span>
+    //                             </>
+    //                     )
+    //                 },
+    //                 sentDate: {
+    //                     name: 'Ngày gửi',
+    //                     className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+    //                     content: (
+    //                             <>
+    //                                 { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
+    //                             </>
+    //                     )
+    //                 },
+    //                 confirmDate: {
+    //                     name: 'Ngày duyệt',
+    //                     className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+    //                     content: (
+    //                             <>
+    //                                 { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
+    //                             </>
+    //                     )
+    //                 },
+    //                 actions: {
+    //                     name: 'Hành động',
+    //                     className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
+    //                     content: (
+    //                             <div className="flex justify-center mx-auto">
+    //                                 <Link 
+    //                                     to={`/projects/edit/${project.id}`} 
+    //                                     className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
+    //                                     alt="test"
+    //                                 >
+    //                                     <CreateIcon />
+    //                                 </Link>
+    //                             </div>
+    //                     )
+    //                 }
+    //             }
+    //         );
+    // })
+    // }
+
+    const DD_PROJECT_ID = 1;
+    const CD_PROJECT_ID = 2;
+    const TC_PROJECT_ID = 3;
+    const TEMP_PROJECT_ID = 4;
 
     const indexOfLastPost = currentPage * projectsPerPage;
     const indexOfFirstPost = indexOfLastPost - projectsPerPage;
     const currentProjects = props.projects.slice(indexOfFirstPost, indexOfLastPost);
-    const tempProjects = props.projects.filter(project => project.status.id === 2);
+    const DDProjects = props.projects.filter(project => project.status.id === DD_PROJECT_ID);
+    const CDProjects = props.projects.filter(project => project.status.id === CD_PROJECT_ID);
+    const TCProjects = props.projects.filter(project => project.status.id === TC_PROJECT_ID);
+    const tempProjects = props.projects.filter(project => project.status.id === TEMP_PROJECT_ID);
 
-    const projectsData = {
-        head: [
-            {
-                name: 'STT',
-                fieldId: 'stt',
-                className:'px-6 py-4 whitespace-nowrap',
-            },
-            {
-                name: 'Tên dự án',
-                fieldId: 'name',
-                className: 'px-6 py-4 whitespace-nowrap',
-            },
-            {
-                name: 'Lĩnh vực ',
-                fieldId: 'field',
-                className: 'px-6 py-4 whitespace-nowrap',
-            },
-            {
-                name: 'Ngày gửi',
-                fieldId: 'sentDate',
-                className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-            },
-            {
-                name: 'Ngày duyệt',
-                fieldId: 'confirmDate',
-                className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-                content: (
-                        <>
-                            26-08-20201 21:12
-                        </>
-                )
-            },
-            {
-                name: 'Hành động',
-                fieldId: 'actions',
-                className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
-            }
-        ],
-        body: renderProject(currentProjects)
-    }
-    const tempProjectsData = {
-        head: [
-            {
-                name: 'STT',
-                fieldId: 'stt',
-                className:'px-6 py-4 whitespace-nowrap',
-            },
-            {
-                name: 'Tên dự án',
-                fieldId: 'name',
-                className: 'px-6 py-4 whitespace-nowrap',
-            },
-            {
-                name: 'Lĩnh vực ',
-                fieldId: 'field',
-                className: 'px-6 py-4 whitespace-nowrap',
-            },
-            {
-                name: 'Ngày gửi',
-                fieldId: 'sentDate',
-                className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-            },
-            {
-                name: 'Ngày duyệt',
-                fieldId: 'confirmDate',
-                className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-                content: (
-                        <>
-                            26-08-20201 21:12
-                        </>
-                )
-            },
-            {
-                name: 'Hành động',
-                fieldId: 'actions',
-                className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
-            }
-        ],
-        body: renderTempProject(tempProjects)
-    }
+    console.log('DDProjects', DDProjects.length);
+    console.log('CDProjects', CDProjects.length);
+    console.log('CDProjects', TCProjects.length);
+    console.log('tempProjects', tempProjects.length);
+
+    const tableHead = [
+        {
+            name: 'STT',
+            fieldId: 'stt',
+            className:'px-6 py-4 whitespace-nowrap',
+        },
+        {
+            name: 'Tên dự án',
+            fieldId: 'name',
+            className: 'px-6 py-4 whitespace-nowrap',
+        },
+        {
+            name: 'Lĩnh vực ',
+            fieldId: 'field',
+            className: 'px-6 py-4 whitespace-nowrap',
+        },
+        {
+            name: 'Ngày gửi',
+            fieldId: 'sentDate',
+            className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+        },
+        {
+            name: 'Ngày duyệt',
+            fieldId: 'confirmDate',
+            className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+            content: (
+                    <>
+                        26-08-20201 21:12
+                    </>
+            )
+        },
+        {
+            name: 'Hành động',
+            fieldId: 'actions',
+            className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
+        }
+    ]
+
+    // const projects = {
+        
+    //     body: renderProject(currentProjects)
+    // }
+    // const tempProjectsData = {
+    //     head: [
+    //         {
+    //             name: 'STT',
+    //             fieldId: 'stt',
+    //             className:'px-6 py-4 whitespace-nowrap',
+    //         },
+    //         {
+    //             name: 'Tên dự án',
+    //             fieldId: 'name',
+    //             className: 'px-6 py-4 whitespace-nowrap',
+    //         },
+    //         {
+    //             name: 'Lĩnh vực ',
+    //             fieldId: 'field',
+    //             className: 'px-6 py-4 whitespace-nowrap',
+    //         },
+    //         {
+    //             name: 'Ngày gửi',
+    //             fieldId: 'sentDate',
+    //             className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+    //         },
+    //         {
+    //             name: 'Ngày duyệt',
+    //             fieldId: 'confirmDate',
+    //             className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+    //             content: (
+    //                     <>
+    //                         26-08-20201 21:12
+    //                     </>
+    //             )
+    //         },
+    //         {
+    //             name: 'Hành động',
+    //             fieldId: 'actions',
+    //             className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
+    //         }
+    //     ],
+    //     body: renderTempProject(tempProjects)
+    // }
 
     // Change page
     const paginateFront = () => setCurrentPage(currentPage + 1);
@@ -301,7 +332,7 @@ const ResearcherProject  = (props) => {
             title: 'Tất cả',
             content: (
                 <>
-                    <Table tableData={projectsData}/>
+                    <Table head={tableHead} body={renderProject(currentProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
                         totalPosts={currentProjects.length}
@@ -314,21 +345,54 @@ const ResearcherProject  = (props) => {
         },
         {
             title: 'Đã duyệt',
-            content: 'Dự án đã duyệt'
+            content: (
+                <>
+                    <Table head={tableHead} body={renderProject(DDProjects)}/>
+                    <Pagination
+                        projectsPerPage={projectsPerPage}
+                        totalPosts={currentProjects.length}
+                        paginateBack={paginateBack}
+                        paginateFront={paginateFront}
+                        currentPage={currentPage}
+                    />
+                </>
+            )
         },
         {
             title: 'Chờ duyệt',
-            content: 'Dự án chờ duyệt'
+            content: (
+                <>
+                    <Table head={tableHead} body={renderProject(CDProjects)}/>
+                    <Pagination
+                        projectsPerPage={projectsPerPage}
+                        totalPosts={currentProjects.length}
+                        paginateBack={paginateBack}
+                        paginateFront={paginateFront}
+                        currentPage={currentPage}
+                    />
+                </>
+            )
         },
         {
             title: 'Từ chối',
-            content: 'Dự án từ chối'
+            content: (
+                <>
+                    <Table head={tableHead} body={renderProject(TCProjects)}/>
+                    <Pagination
+                        projectsPerPage={projectsPerPage}
+                        totalPosts={currentProjects.length}
+                        paginateBack={paginateBack}
+                        paginateFront={paginateFront}
+                        currentPage={currentPage}
+                    />
+                </>
+            )
         },
         {
             title: 'Nháp',
             content: (
                 <>
-                    <Table tableData={tempProjectsData}/>
+                    <Table head={tableHead} body={renderProject(tempProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
                         totalPosts={currentProjects.length}
@@ -349,7 +413,11 @@ const ResearcherProject  = (props) => {
 
     return (
         <>
-            <Tab tabs={tabs} color="red" openTabChange={onOpenedTabChange} />
+            <Tab 
+                tabs={tabs} 
+                color="red" 
+                openTabChange={onOpenedTabChange} 
+            />
         </>
     );
 }
@@ -362,5 +430,10 @@ const mapStateToProps = (state) => {
   
 export default connect(
     mapStateToProps,
-    { fetchProjects }
+    { 
+        fetchProjects_DaDuyet,
+        fetchProjects_ChoDuyet,
+        fetchProjects_TuChoi,
+        fetchProjects_Nhap  
+    }
 )(ResearcherProject);

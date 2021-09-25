@@ -1,8 +1,7 @@
 import React from 'react';
 
 
-const Table = ({ tableData }) => {
-    const { head, body } = tableData
+const Table = ({ head, body }) => {
 
     const renderHead = head.map(col => {
         return (
@@ -13,7 +12,7 @@ const Table = ({ tableData }) => {
     });
 
     const renderBody = () => {
-        if(tableData){
+        if(body){
             return body.map(row => {
                 const colData = head.map(col => {
                     return (

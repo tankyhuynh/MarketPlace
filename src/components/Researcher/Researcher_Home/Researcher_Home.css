@@ -3,7 +3,8 @@
 }
 
 .menu:hover {
-    border: 2px solid red;
+    /* border: 2px solid red; */
+    @apply -translate-y-1 scale-110 transform duration-700
 }
 
 .menu_organizations {

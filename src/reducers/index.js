@@ -8,6 +8,8 @@ import levelDevelopmentReducer from './levelDevelopmentReducer';
 import transmissionMethodReducer from './transmissionMethodReducer'
 import fieldReducer from './fieldReducer'
 import loadReducer from './loadReducer'
+import statusReducer from './statusReducer'
+import functionReducer from './functionReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -18,4 +20,6 @@ export default combineReducers({
     streams: streamsReducer,
     transmissions: transmissionMethodReducer,
     load: loadReducer,
+    status: statusReducer,
+    functions: functionReducer
 });

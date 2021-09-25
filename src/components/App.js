@@ -40,9 +40,9 @@ export default withRouter(function App() {
   }
   const renderAppUser = () => {
     return (
-      <div className="font-Roboto"> 
+      <div className="xl:w-full font-Roboto"> 
           <div className="">{ renderHeader() }</div>
-          <div className="md:mx-28">
+          <div className="md:mx-28 2xl:mx-auto">
               <Router />
           </div>
       </div>
@@ -53,7 +53,7 @@ export default withRouter(function App() {
       <div className="flex h-screen" id="layout">
         <AdminHeader />
         <div 
-          className="w-full mx-6 sm:w-3/4 lg:w-5/6" 
+          className="w-full mx-6 sm:w-3/4 lg:w-5/6 xl:w-full" 
           id="mainContainer"
         >
               <Router />
