@@ -35,6 +35,7 @@ module.exports = {
           bounce400: 'bounce 1s infinite 400ms',
       },
       cursor: ['hover', 'focus'],
+      
     },
     spacing: {
       px: '1px',

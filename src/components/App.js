@@ -42,7 +42,7 @@ export default withRouter(function App() {
     return (
       <div className="xl:w-full font-Roboto"> 
           <div className="">{ renderHeader() }</div>
-          <div className="md:mx-28 2xl:mx-auto">
+          <div className="md:mx-28">
               <Router />
           </div>
       </div>

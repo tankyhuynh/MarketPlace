@@ -22,9 +22,24 @@ import img5_b from '../../assets/img5_b.png';
 class ProjectList extends React.Component {
 
     randomImages = [img1_a, img1_b, img2_a, img2_b, img3_a, img3_b, img5_a, img5_b];
+    
+    state = {
+        randomNumber: 0
+    }
 
     componentDidMount(){
         this.props.fetchProjects_DaDuyet();
+
+        const interval = setInterval(
+            // set number every 5s
+            () => this.setState({ randomNumber: Math.floor(Math.random() * 100 + 1) }),
+            500
+          );
+
+        return () => {
+            clearInterval(interval);
+        }; 
+      
     }
 
     renderAuthors = (authors) => {
@@ -47,14 +62,26 @@ class ProjectList extends React.Component {
         }
         
     };
+
+    randomColors = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink', 'black']
     renderLinhVuc = (projectFieldList) => {
         if(projectFieldList){
             return projectFieldList.map(field => {
+                const randomIndex = Math.floor(Math.random() * this.randomColors.length);
                 if(field.field.name.length > 30){
                     var shortUuDiem = field.field.name.substring(0, 30) + "...";
-                    return shortUuDiem;
+                    return (
+                        <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase rounded-full bg-${this.randomColors[randomIndex]}-400`}>
+                            { shortUuDiem }
+                        </span>
+                    )
                 }
-                return field.field.name;
+                
+                return (
+                    <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-400`}>
+                        {  field.field.name }
+                    </span>
+                ) 
             })
         }
         
@@ -105,19 +132,17 @@ class ProjectList extends React.Component {
                                     // src={this.renderImage(this.renderImageSrc(project))} 
                                     src={project.productImage} 
                                     alt="random imgee" 
-                                    className="object-cover object-center w-full my-2 rounded-lg" 
+                                    className="object-cover object-center w-full my-2 rounded-lg max-h-64" 
                                 />     
                             </div>  
                             
                             <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
                                     <div>
                                         <div className="flex items-baseline gap-2">
-                                            <span className="inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full">
+                                            <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
                                                 New
                                             </span>
-                                            <span className="inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full">
-                                                {this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '')}
-                                            </span>
+                                            { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
                                         </div>
                                         
                                         <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">

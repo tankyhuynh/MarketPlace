@@ -6,6 +6,7 @@ import { fetchProject } from '../../actions/project'
 import { fetchFields } from '../../actions/field'
 import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
 import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
+import { fetchCategories } from '../../actions/category'
 
 
 import Stepper from '../Stepper/Stepper';
@@ -64,9 +65,12 @@ class ProjectEdit extends React.Component {
     // }
 
     componentDidMount(){
+        // this.props.fetchProjectDetail(this.props.match.params.id);
         this.props.fetchProject(this.props.match.params.id);
         this.props.fetchLevelDevelopments();
         this.props.fetchTransmissionMethods();
+        this.props.fetchFields();
+        this.props.fetchCategories();
     }
     
     render() {
@@ -77,6 +81,7 @@ class ProjectEdit extends React.Component {
                     steps={this.steps} 
                     levels={this.props.levels}
                     fields={this.props.fields}
+                    categories={this.props.categories}
                     transmissions={this.props.transmissions}
                     project={this.props.project}
                     type='edit'
@@ -92,7 +97,8 @@ const mapStateToProps = (state, ownProps) => {
         project: state.projects[ownProps.match.params.id],
         levels: Object.values(state.levels),
         fields: Object.values(state.fields),
-        transmissions: Object.values(state.transmissions) 
+        transmissions: Object.values(state.transmissions), 
+        categories: Object.values(state.categories),
     };
   };
   
@@ -102,6 +108,7 @@ const mapStateToProps = (state, ownProps) => {
         fetchProject, 
         fetchLevelDevelopments, 
         fetchTransmissionMethods, 
-        fetchFields 
+        fetchFields,
+        fetchCategories 
     }
   )(ProjectEdit);

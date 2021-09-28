@@ -6,7 +6,7 @@ import Slide from '../Slide/Slide';
 const CarouselCustom = ({ slides, organizations }) => {
     const renderSlides = slides.map((slide) =>{
         return (
-            <div className="-mt-5 text-center text-black md:mt-10" key={slide.id}>
+            <div className="text-center text-black" key={slide.id}>
                 <Slide slide={slide} organizations={organizations} key={slide.id} />
             </div>
         )

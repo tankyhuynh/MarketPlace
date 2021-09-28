@@ -65,8 +65,8 @@ const ProjectShow = ({ project }) => {
     const renderContent = (items) => {
         return items.map(item => {
             return (
-                <div id={item.name} className="flex flex-col font-serif">
-                    <span className="mt-4 text-lg font-medium">{`${item.name} `}</span>
+                <div id={item.name} className="flex flex-col font-Roboto">
+                    <span className="mt-4 text-xl font-medium">{`${item.name} `}</span>
                         { item.isUseEditor 
                             ? <span dangerouslySetInnerHTML={{ __html: item.value }}  /> 
                             : item.value  

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import '../editor/editables.css'
 
@@ -38,9 +39,7 @@ const initData = {
     email: {
         text: '' 
     },
-    field: {
-        text: '' 
-    },
+    fieldIdList: [],
     comDevLevel: [],
     name: {
         text: '' 
@@ -104,15 +103,17 @@ const initData = {
 //     })
 //   }
 
-    const OTHER_LEVELDEVELOP_ID = 'Other'
-    const OTHER_TRANSMISSION_ID = 'Other'
+    const OTHER_LEVELDEVELOP_ID = 4
+    const OTHER_TRANSMISSION_ID = 4
 
   
   const ProjectPreview = (props) => {
 
     const levels = useSelector(state => state.levels);
     const transmissions = useSelector(state => state.transmissions);
+    const fields = useSelector(state => state.fields);
     console.log('levels Selector: ', levels)
+    console.log('fields Selector: ', levels)
 
     console.log(props.project)
     //   const fields = useSelector(state => state.fields);
@@ -135,8 +136,21 @@ const initData = {
         email: {
             text: props.project ? props.project.email: '' 
         },
-        field: {
-            text: props.project ? props.project.field : '' 
+        fieldIdList: {
+            text: props.project.fieldIdList ? (
+                (
+                    props.project.fieldIdList.length
+                    ?   props.project.fieldIdList.map(fieldId => {
+                            return Object.values(fields).map(field => {
+                                if(field.id == fieldId){
+                                    return <div>{ field.name }</div>
+                                }
+                                return null
+                            })
+                        })
+                    : ''
+                ) 
+            ) : '' 
         },
         comDevLevel: {
             text: props.project.comDevLevel
@@ -233,8 +247,8 @@ const initData = {
         email: {
             text: props.project ? props.project.email: '' 
         },
-        field: {
-            text: props.project ? props.project.field : '' 
+        fieldIdList: {
+            text: props.project ? props.project.fieldIdList : '' 
         },
         name: {
             text: props.project ? props.project.name: '' 
@@ -295,10 +309,10 @@ const initData = {
         props.onSave(field, content);
     }
     
-    const toggleEditingControls = event => {
-        event.stopPropagation()
-        setState({ showEditingControls: !state.showEditingControls, theme: theme });
-    }
+    // const toggleEditingControls = event => {
+    //     event.stopPropagation()
+    //     setState({ showEditingControls: !state.showEditingControls, theme: theme });
+    // }
 
     const uploadImage = image => {
         return new Promise(resolve => {
@@ -368,8 +382,8 @@ const initData = {
         },
         {
             name: 'Lĩnh vực áp dụng',
-            value: pageContent ? pageContent.field: {},
-            fieldName: 'field', 
+            value: pageContent ? pageContent.fieldIdList: {},
+            fieldName: 'fieldIdList', 
             isUseEditor: false
         },
         {
@@ -439,8 +453,8 @@ const initData = {
         },
         {
             name: 'Lĩnh vực áp dụng',
-            value: pageContent ? pageContent.field: {},
-            fieldName: 'field',
+            value: pageContent ? pageContent.fieldIdList: {},
+            fieldName: 'fieldIdList',
             isUseEditor: false
         },
         {
@@ -586,12 +600,12 @@ const initData = {
         <>
             <EditablesContext.Provider value={ {...state} }>
                 <div className="flex gap-2">
-                    <button 
+                    {/* <button 
                             className={`btn my-4 ${state.showEditingControls ? 'active' : 'inactive'}`} 
                             onClick={toggleEditingControls}
                     >
                             {`${state.showEditingControls ? 'Dừng chỉnh sửa' : 'Chỉnh sửa'}`}
-                    </button>
+                    </button> */}
 
                     <button
                         onClick={() => setTemplate(!template)}

@@ -6,10 +6,10 @@ export const fields = {
             fieldName: 'companyName',
             type: 'text'
         },
-        authors: {
-            id: 'authors',
+        author: {
+            id: 'author',
             label: 'Nhóm tác giả',
-            fieldName: 'authors',
+            fieldName: 'author',
             type: 'text'
         },
         address: {
@@ -67,7 +67,7 @@ export const fields = {
                 id: 'fieldIdList',
                 label: 'Lĩnh vực',
                 fieldName: 'fieldIdList',
-                type: 'checkbox'
+                type: 'checkboxTreeView'
             },
             advantage: {
                 id: 'advantage',

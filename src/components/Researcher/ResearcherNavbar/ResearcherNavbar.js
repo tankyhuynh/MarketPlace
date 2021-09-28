@@ -47,9 +47,9 @@ const ResearcherNavbar = (props) => {
             <div className="items-center flex-grow lg:flex" id="example-navbar-warning">
               <ul className="flex flex-col ml-auto list-none lg:flex-row">
                   <li className="nav-item">
-                      <button 
+                      <button  
                         onClick={ () => onLogOut() }
-                        className="float-right px-4 py-2 text-white bg-red-500 rounded-lg"
+                        className="hidden float-right px-4 py-2 text-white bg-red-500 rounded-lg lg:block"
                       >
                           Đăng xuất
                       </button>

@@ -191,6 +191,18 @@ const Header = (props) => {
         </>
     )
   }
+
+  const renderAdminOptionsWeb = (className) => {
+    return (
+        <>
+            { renderUserOptionsWeb(className) }
+            <Link to="/admin" className={`header--link ${className}`}>
+                Menu chức năng
+            </Link>
+        </>
+    )
+  }
+
   const renderResearcherOptionsMobile = (className) => {
     return (
         <>
@@ -211,9 +223,12 @@ const Header = (props) => {
       return renderUserOptionsMobile(className);
     } 
     
-    if(roleCode === ROLE_NNC){
+    if(roleCode === ROLE_NNC || roleCode === ROLE_ADMIN){
         if(mode === 'web'){
-          return renderResearcherOptionsWeb(className)
+          if(roleCode === ROLE_NNC){
+            return renderResearcherOptionsWeb(className)
+          }
+          return renderAdminOptionsWeb(className)
         }
         return renderResearcherOptionsMobile(className)
     }
@@ -249,7 +264,7 @@ const Header = (props) => {
   
 
   const renderAccount = () => {
-    if(props.isSignedIn){
+    if(props.isSignedIn || cookies["fullName"]){
       let link = '';
       if(roleCode === ROLE_NNC){
         link = '/researchers';

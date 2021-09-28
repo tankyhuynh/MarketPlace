@@ -4,11 +4,11 @@ import React from 'react'
 import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
-// import TextField from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 
 import { login } from '../../../actions/auth';
 
-import Input from '@material-tailwind/react/Input'
+// import Input from '@material-tailwind/react/Input'
 
 
 class SignIn extends React.Component {
@@ -30,20 +30,22 @@ class SignIn extends React.Component {
         // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
         return (
             <div>
-                <Input
+                {/* <Input
                     { ...input }
                     type={type}
                     color="lightBlue"
                     size="regular"
                     outline={false}
                     placeholder={label}
-                />
-                {/* <TextField 
+                /> */}
+                <TextField 
+                    {...input}
+                    type={type}
                     id={`standard-${label}`} 
                     label={label}
                     variant="standard" 
                     className="w-full"
-                /> */}
+                />
                 {this.renderError(meta)}
             </div>
         );  

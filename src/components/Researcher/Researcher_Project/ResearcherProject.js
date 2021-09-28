@@ -15,7 +15,8 @@ import {
     fetchProjects_DaDuyet,
     fetchProjects_ChoDuyet,
     fetchProjects_TuChoi,
-    fetchProjects_Nhap 
+    fetchProjects_Nhap,
+    fetchProjects_Commercial 
 } 
 from '../../../actions/project'
 
@@ -27,10 +28,12 @@ const ResearcherProject  = (props) => {
 
 
     useEffect(() => {
-        props.fetchProjects_DaDuyet()
-        props.fetchProjects_ChoDuyet()
-        props.fetchProjects_TuChoi()
-        props.fetchProjects_Nhap()
+        // props.fetchProjects_DaDuyet()
+        // props.fetchProjects_ChoDuyet()
+        // props.fetchProjects_TuChoi()
+        // props.fetchProjects_Nhap()
+        props.fetchProjects_Commercial()
+
     }, []);
 
     const renderTen = (ten) => {
@@ -43,13 +46,34 @@ const ResearcherProject  = (props) => {
         return ten;
     }
 
+    // const renderProjectFields = (projectFieldList) => {
+    //     return (
+    //         projectFieldList.map(field => {
+    //             return <span>{field.field.name}</span>
+    //         })
+    //     )
+    // }
+
     const renderProjectFields = (projectFieldList) => {
-        return (
-            projectFieldList.map(field => {
-                return <span>{field.field.name}</span>
+        if(projectFieldList){
+            return projectFieldList.map(field => {
+                if(field.field.name.length > 30){
+                    var shortUuDiem = field.field.name.substring(0, 30) + "...";
+                    return (
+                        <span className="content-center px-2 mx-auto text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full">
+                            { shortUuDiem }
+                        </span>
+                    )
+                }
+                return (
+                    <span className="content-center px-2 mx-auto text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full">
+                        {  field.field.name }
+                    </span>
+                ) 
             })
-        )
-    }
+        }
+        
+    };
 
     const renderProject = (projects) => {
         console.log('projects: ', projects);
@@ -93,11 +117,9 @@ const ResearcherProject  = (props) => {
                         name: 'Lĩnh vực ',
                         className: 'px-6 py-4 whitespace-nowrap',
                         content: (
-                                <>
-                                    <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                        { renderProjectFields(project.projectFieldList) }
-                                    </span>
-                                </>
+                                <div className="flex flex-col gap-1">
+                                    { renderProjectFields(project.projectFieldList) }
+                                </div>
                         )
                     },
                     sentDate: {
@@ -434,6 +456,7 @@ export default connect(
         fetchProjects_DaDuyet,
         fetchProjects_ChoDuyet,
         fetchProjects_TuChoi,
-        fetchProjects_Nhap  
+        fetchProjects_Nhap,
+        fetchProjects_Commercial  
     }
 )(ResearcherProject);

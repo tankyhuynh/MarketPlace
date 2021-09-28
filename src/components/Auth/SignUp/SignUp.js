@@ -7,7 +7,8 @@ import { Field, reduxForm } from 'redux-form'
 
 import { signup } from '../../../actions/auth'
 
-import Input from '@material-tailwind/react/Input'
+// import Input from '@material-tailwind/react/Input'
+import TextField from '@mui/material/TextField';
 
 
 class SignUp extends React.Component {
@@ -28,13 +29,21 @@ class SignUp extends React.Component {
         // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
         return (
             <div>
-                <Input
+                {/* <Input
                     { ...input }
                     type={type}
                     color="lightBlue"
                     size="regular"
                     outline={false}
                     placeholder={label}
+                /> */}
+                <TextField 
+                    {...input}
+                    type={type}
+                    id={`standard-${label}`} 
+                    label={label}
+                    variant="standard" 
+                    className="w-full"
                 />
                 {this.renderError(meta)}
             </div>

@@ -1,6 +1,6 @@
 import projects from '../apis/projects';
 import history from '../history'
-import { PROJECTS_URL,  PROJECTS_COMMERCIAL_URL } from '../environments/constraints';
+import { PROJECTS_URL,  PROJECTS_COMMERCIAL_URL, PROJECTS_RESEARCHING_URL } from '../environments/constraints';
 
 import {
   FETCH_PROJECTS,
@@ -15,6 +15,23 @@ const STATUS_TC_ID = 3 // Từ chối
 const STATUS_TMP_ID = 4 // Nháp
 
 //------ Projects --------
+export const fetchProjects_Commercial = () => async dispatch => {
+  const response = await projects.get(`${PROJECTS_COMMERCIAL_URL}`);
+  console.log('fetchProjects PROJECTS_COMMERCIAL_URL:', response.data);
+
+  // sửa chỗ response.data => response.data.projects
+  dispatch({ type: FETCH_PROJECTS, payload: response.data });
+};
+export const fetchProjects_Researching = () => async dispatch => {
+  const response = await projects.get(`${PROJECTS_RESEARCHING_URL}`);
+  console.log('fetchProjects PROJECTS_RESEARCHING_URL:', response.data);
+
+  // sửa chỗ response.data => response.data.projects
+  dispatch({ type: FETCH_PROJECTS, payload: response.data });
+};
+
+
+
 export const fetchProjects_DaDuyet = () => async dispatch => {
   const response = await projects.get(`${PROJECTS_URL}/${STATUS_DD_ID}`);
   console.log('fetchProjects:', response.data);

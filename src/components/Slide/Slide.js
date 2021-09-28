@@ -43,13 +43,13 @@ const Slide = ({ slide, index }) => {
     const classes = useStyles();
 
     return (
-        <Link to={`/projects/show/${slide.id}`}>
-            <Card className={`${classes.root} slide-background`}>
+        <Link to={`/projects/show/${slide.id}`} className="bg-green-500">
+            <Card className={`${classes.root} slide-background md:w-full`}>
               <Grid container spacing={3} >
-                  <Grid item xs={6} className="border-2">
+                  <Grid item xs={6} className="">
                       <CardOranization />
                   </Grid>
-                  <Grid item xs={6} className="border-2">
+                  <Grid item xs={6} className="">
                       <CardProjectInfo project={slide} />
                   </Grid>
                 

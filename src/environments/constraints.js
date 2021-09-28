@@ -8,6 +8,7 @@ module.exports = {
    SIGNUP_URL : '/users',
    FIELD_URL: '/fields',
    LEVEL_URL : '/developmentLevels',
+   CATEGORY_URL : '/categories',
    PROJECTS_URL : '/projects/status',
    PROJECTS_COMMERCIAL_URL : '/projects/commercial',
    PROJECTS_RESEARCHING_URL : '/projects/researching',

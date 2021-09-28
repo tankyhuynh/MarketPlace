@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 const API_KEY = 'syuqwfs5tbdh646gel0tn1dgss75z5hqguv5n3aydee2zkhs';
-const initialValues = "<p>This is the initial content of the editor.</p>"
+// const initialValues = "<p>This is the initial content of the editor.</p>"
 
 const TinyMCEEditor = ({ name, value, onChange }) => {
   const editorRef = useRef(null);
@@ -20,8 +20,9 @@ const TinyMCEEditor = ({ name, value, onChange }) => {
     <>
       <Editor
         apiKey= {API_KEY}
+        // key={key}
         onInit={(evt, editor) => editorRef.current = editor}
-        initialValue={ value ? value : initialValues }
+        // initialValue={ value ? value : initialValues }
         value={value}
         tagName={name}
         init={{
@@ -40,34 +41,6 @@ const TinyMCEEditor = ({ name, value, onChange }) => {
                 'media |' +
                 'removeformat | help',
             images_upload_url: 'https://marketplace-v2-main.herokuapp.com/api/v2/fileUploads/tinymce',
-
-            file_picker_callback: function(callback, value, meta) {
-              console.log(callback)
-              console.log(value)
-              console.log(meta)
-              if (meta.filetype === 'file') {
-                  //callback('mypage.html', {text: 'My text'});
-              }
-              if (meta.filetype === 'image') {
-
-              }
-              if (meta.filetype === 'media') {
-                    // var input = document.getElementById('my-file');
-                    // input.click();
-                    // input.onchange = function () {
-                    //     var file = input.files[0];
-                    //     var reader = new FileReader();
-                    //     reader.onload = function (e) {
-                    //         console.log('name',e.target.result);
-                    //         callback(e.target.result, {
-                    //             alt: file.name
-                    //         });
-                    //     };
-                    //     reader.readAsDataURL(file);
-                    // };
-                }
-              },
-              
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         }}  
         // onChange={handleEditorChange}

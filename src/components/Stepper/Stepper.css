@@ -11,7 +11,7 @@
 }
 
 .stepper--input {
-    @apply col-span-6
+    @apply col-span-6  
 }
 
 .stepper-combobox {

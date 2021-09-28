@@ -72,10 +72,10 @@ class Home extends React.Component {
     render() {
         return (
             <>
-               <div className="flex flex-col gap-12">
-                    <div className="">
+               <div className="flex flex-col gap-12 2xl:gap-64">
+                    <div className="grid justify-self-center">
                         <video
-                            className="absolute -mx-28 2xl:mx-16"
+                            className="absolute w-full 2xl:relative -mx-28 xl:-mx-32"
                             autoPlay
                             loop
                             muted
@@ -83,7 +83,7 @@ class Home extends React.Component {
                             <source src={video} type="video/mp4" />
                             Your browser does not support the video tag
                         </video>
-                        <div className="md:mt-32">
+                        <div className="relative md:mt-32">
                             <CarouselCustom 
                                 // slides={this.props.projects.filter(project => project.statusId !== 2)} 
                                 slides={this.props.projects} 
@@ -92,7 +92,7 @@ class Home extends React.Component {
                         </div>
                     </div>
                     
-                    <div id="cards" className="z-10 md:mt-24">
+                    <div id="cards" className="z-10 md:mt-24 xl:my-36 2xl:mt-0">
                         <h2 className="mx-4 mb-12 text-3xl font-bold">Dự án</h2>
                         <div className="gap-4 md:grid md:grid-cols-3">
                             { this.renderProjects() }

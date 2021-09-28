@@ -118,11 +118,11 @@ class BasicExample extends React.Component {
                     checked={checked}
                     expanded={expanded}
                     iconsClass="fa5"
-                    nodes={this.props.nodes}
+                    nodes={this.props.nodes ? this.props.nodes : []}
                     onCheck={this.onCheck}
                     onExpand={this.onExpand}
                 />
-                { this.state.checked.length } items checked
+                {/* { this.state.checked.length } items checked */}
             </>
         );
     }
