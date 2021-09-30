@@ -11,7 +11,7 @@ import logoImg from '../../assets/logo.png';
 // import logo_dhktqd from '../../assets/logo_dhktqd.jpg';
 // import logo_dhvh from '../../assets/logo_dhvh.png';
 // import logo_hcmute from '../../assets/logo_hcmute.png';
-import productImg from '../../assets/iTRAK-contain-500x240.jpg';
+// import productImg from '../../assets/iTRAK-contain-500x240.jpg';
 
 import Grid from '@material-ui/core/Grid';
 // import Card from "@material-tailwind/react/Card";
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({ image }) {
   const classes = useStyles();
 
   // const organizationsName = ["Đại học Cần Thơ", "Đại học Kinh tế quốc dân", "Đại học v"]
@@ -67,7 +67,7 @@ export default function RecipeReviewCard() {
             <Grid item xs={12}>
               <CardMedia
                 className={classes.media}
-                image={productImg}
+                image={image}
                 title="Paella dish"
               />
             </Grid>

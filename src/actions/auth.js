@@ -67,6 +67,7 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
       if(response.status === 200){
         const roleCode = response.data.role.code;
         console.log(response)
+        localStorage.setItem('userData', JSON.stringify(response.data));
       
         dispatch({ type: SIGN_IN, payload: response.data });
         dispatch({ type: LOADED });

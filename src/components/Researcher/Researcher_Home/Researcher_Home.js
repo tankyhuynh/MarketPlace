@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './Researcher_Home.css'
 
 import React from 'react';
@@ -8,6 +9,8 @@ import { Link } from 'react-router-dom';
 // import GroupIcon from '@material-ui/icons/Group';
 // import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
+
 
 import UserIcon from '../../../assets/user.png';
 import GroupDemoIcon from '../../../assets/unnamed/group.png';
@@ -16,8 +19,13 @@ import ProjectIcon from '../../../assets/unnamed/project.jpg';
 
 const Researcher_Home = () => {
 
-    const userProfile = useSelector(state => state.auth.userProfile)
+    const userProfile = useSelector(state => state.auth.userProfile);
+    const userDataLocalStorage = localStorage.getItem("userData");
+    const user = JSON.parse(userDataLocalStorage);
 
+    console.log('userDataLocalStorage', userDataLocalStorage)
+    console.log('userDataLocalStorage user', user)
+    
     return (
         <>
             <div className="grid h-screen grid-rows-2 gap-2 mt-4 border-4 rounded-md"> 
@@ -32,10 +40,11 @@ const Researcher_Home = () => {
                             />
                         </section>
                         <section>
-                            { userProfile.fullName }
+                            { userProfile ? userProfile.fullName : user.fullName }
                         </section>
                         <section>
-                            { userProfile.email }
+                            
+                            { userProfile ? userProfile.email : user.email }
                         </section>
                     </Link>
                     <div id="options" className="grid grid-cols-3 col-span-3 gap-2 p-2 rounded-2xl"
@@ -78,11 +87,12 @@ const Researcher_Home = () => {
                         <div className="flex flex-col gap-4 px-12">
                             <section className="flex justify-between fullName">
                                 Họ tên: 
-                                <span>{ userProfile.fullName }</span>
+                                <span>{ userProfile ? userProfile.fullName : user.fullName }</span>
+                                
                             </section> 
                             <section className="flex justify-between gender">
                                 Giới tính: 
-                                <span>{ userProfile.gender ? 'Nữ' : 'Nam' }</span>
+                                <span>{ userProfile ? (userProfile.gender ? 'Nữ' : 'Nam') : (user.gender ? 'Nữ' : 'Nam') }</span>
                             </section>
                             <section className="flex justify-between birthDate">
                                 Ngày sinh: 
@@ -90,15 +100,15 @@ const Researcher_Home = () => {
                             </section>
                             <section className="flex justify-between address">
                                 Địa chỉ: 
-                                <span>{ userProfile.address }</span>
+                                <span>{ userProfile ? userProfile.address : user.address }</span>
                              </section>
                             <section className="flex justify-between email">
                                 Email: 
-                                <span>{ userProfile.email }</span>
+                                <span>{ userProfile ? userProfile.email : user.email }</span>
                             </section>
                             <section className="flex justify-between mobilePhone">
                                 Số điện thoại: 
-                                <span>{ userProfile.phoneNumber }</span>
+                                <span>{ userProfile ? userProfile.phoneNumber : user.phoneNumber }</span>
                             </section>
                         </div>
                     </div>

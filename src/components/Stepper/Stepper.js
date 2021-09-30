@@ -9,7 +9,8 @@ import _ from 'lodash';
 import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { useAlert } from 'react-alert'
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { TextField, TextareaAutosize } from '@mui/material';
 import Button from '@material-ui/core/Button';
@@ -23,8 +24,12 @@ import Tab from '../Tab/Tab';
 import ProjectPreview from '../Projects/ProjectPreviewWithEnableEdit';
 import CheckboxView from '../Projects/CheckboxTreeView'
 
+import logo from '../../assets/logo.png'
+
 import environment from '../../environments/environment';
 import { createLevel } from '../../actions/levelDevelopment';
+import { loading, loaded } from '../../actions/loading';
+import { LOADED, LOADING } from '../../actions/types';
 
 const OTHER_ID = 4
 
@@ -62,6 +67,9 @@ const HorizontalLinearStepper = (props) => {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
     const [openTab, setOpenTab] = useState(0);
+    const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch()
+    const alertUseAlert = useAlert()
 
     console.log('HorizontalLinearStepper props.project: ', props.project);
 
@@ -484,11 +492,12 @@ const HorizontalLinearStepper = (props) => {
             axios.post(environment.url.java + URL, submitProject)
             .then(response => {
                 if (response) {
-                console.log('client send:', submitProject);
-                console.log('response:', response);
-                    setTimeout(() => {
-                        history.push('/projects')
-                    }, 500);
+                    dispatch({ type: LOADED})
+                    console.log('client send:', submitProject);
+                    console.log('response:', response);
+                        setTimeout(() => {
+                            history.push('/projects')
+                        }, 500);
                 }
             })
         }
@@ -613,7 +622,7 @@ const HorizontalLinearStepper = (props) => {
                                 id={`standard-${field}`} 
                                 label={otherInputs[field].label} // Lỗi chỗ này là do cái lĩnh vực chưa phải là checkbox bên backend
                                 variant="standard"
-                                value={otherInputs[field].value}
+                                value={props.project ? otherInputs[field].value : duAnThuongMai[field] }
                                 onChange={(e) => handleOtherInputChange(field, e.target.value)} 
                             />
                         
@@ -660,7 +669,7 @@ const HorizontalLinearStepper = (props) => {
                                 initialFiles={
                                    [ props.project 
                                     ? props.project.productImage 
-                                    : ''
+                                    : logo
                                 ]}
                             />
                         </div>
@@ -901,8 +910,9 @@ const HorizontalLinearStepper = (props) => {
                             value={project ? project[field.fieldName] : ''}
                             onChange={(e) => handleContentChange(field.fieldName, e.target.value) }
                             // className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                            className="w-full border-2 border-gray-500"
-                            minRows={3}
+                            className="w-full border-2 border-gray-300 rounded-md"
+                            error={project ? field.isRequired : ''} 
+                            minRows={2}
                         />
                      </div>
                 )
@@ -913,22 +923,28 @@ const HorizontalLinearStepper = (props) => {
 
     const renderInput = (fields) => {
         return Object.values(fields).map(field => {
-            if(field.type === 'text'){
+            if(field.type === 'text' || field.type === 'email'){
                 return (
-                    <div id={field.id} className="stepper--field" key={field.id}>
-                        <label className="col-span-2 stepper--label" htmlFor={field.id}>
-                            {field.label}
-                        </label>
-                        <TextField
-                            value={project ? project[field.fieldName] : ''} 
-                            onChange={(e) => handleContentChange(field.fieldName, e.target.value) }
-                            // className="justify-end w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
-                            className="stepper--input" 
-                            id={field.id} 
-                            type="text"
-                            error={project ? !project[field.fieldName] : ''} 
-                        />
-                    </div>
+                    <>
+                        <div id={field.id} className="stepper--field" key={field.id}>
+                            <label className="col-span-2 stepper--label" htmlFor={field.id}>
+                                {field.label}
+                            </label>
+                            <TextField
+                                value={project ? project[field.fieldName] : ''} 
+                                onChange={(e) => handleContentChange(field.fieldName, e.target.value) }
+                                // className="justify-end w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
+                                className="stepper--input" 
+                                id={field.id} 
+                                type={field.type}
+                                error={project ? field.isRequired : ''} 
+                            />
+                            <span className="col-span-2 text-sm font-bold text-red-500">
+                            {errors[field.fieldName]}
+                        </span>
+                        </div>
+                        
+                    </>
                 )
             }
             return null
@@ -983,16 +999,23 @@ const HorizontalLinearStepper = (props) => {
         return (
             <>
                 <section>
-                { renderInput(fields.productInfo.researching) }
+                    { renderInput(fields.productInfo.researching) }
                 </section>
                 <section>
                     { renderTextArea(fields.productInfo.researching)}
+                </section>
+                <section>
+                    { renderCheckboxTreeView(fields.productInfo.researching)}
                 </section>
                 <section>
                     { renderCheckbox(fields.productInfo.researching)}
                 </section>
                 <section>
                     { renderEditor(fields.productInfo.researching)}
+                </section>
+                
+                <section>
+                    { renderInputImage(fields.productInfo.researching)}
                 </section>
             </>
         );
@@ -1081,20 +1104,121 @@ const HorizontalLinearStepper = (props) => {
         return skipped.has(step);
     };
 
+    const handleValidationGeneralInfo = (project) => {
+        // let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+    
+        //Name
+        if (!project["companyName"]) {
+          formIsValid = false;
+          errors["companyName"] = "Tên doanh nghiệp không được để trống";
+        }
+        if (!project["author"]) {
+          formIsValid = false;
+          errors["author"] = "Nhóm tác giả không được để trống";
+        }
+        if (!project["address"]) {
+          formIsValid = false;
+          errors["address"] = "Địa chỉ không được để trống";
+        }
+        if (!project["phoneNumber"]) {
+          formIsValid = false;
+          errors["phoneNumber"] = "Số điện thoại không được để trống";
+        }
+        if (!project["address"]) {
+          formIsValid = false;
+          errors["address"] = "Địa chỉ không được để trống";
+        }
+
+        // if (typeof project["author"] !== "undefined") {
+        //   if (!project["author"].match(/^[a-zA-Z]+$/)) {
+        //     formIsValid = false;
+        //     errors["author"] = "author Only letters";
+        //   }
+        // }
+    
+        //Email
+        if (!project["email"]) {
+          formIsValid = false;
+          errors["email"] = "Email không được để trống";
+        }
+    
+        if (typeof project["email"] !== "undefined") {
+          let lastAtPos = project["email"].lastIndexOf("@");
+          let lastDotPos = project["email"].lastIndexOf(".");
+    
+          if (
+            !(
+              lastAtPos < lastDotPos &&
+              lastAtPos > 0 &&
+              project["email"].indexOf("@@") == -1 &&
+              lastDotPos > 2 &&
+              project["email"].length - lastDotPos > 2
+            )
+          ) {
+            formIsValid = false;
+            errors["email"] = "Email không hợp lệ";
+          }
+        }
+    
+        setErrors(errors)
+        return formIsValid;
+    }
+
+     const handleValidationSolution = (project) => {
+        // let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+    
+        if (!project["name"]) {
+            formIsValid = false;
+            errors["name"] = "Tên sản phẩm không được để trống";
+        }
+        if (!project["shortDescription"]) {
+            formIsValid = false;
+            errors["shortDescription"] = "Mô tả ngắn không được để trống";
+        }
+
+        if(openTab === 0){
+            if (!project["scope"]) {
+                formIsValid = false;
+                errors["scope"] = "Phạm vi không được để trống";
+            }
+        }
+
+        if(openTab === 1){
+            
+        }
+
+        // if (typeof project["author"] !== "undefined") {
+        //   if (!project["author"].match(/^[a-zA-Z]+$/)) {
+        //     formIsValid = false;
+        //     errors["author"] = "author Only letters";
+        //   }
+        // }
+    
+        setErrors(errors)
+        return formIsValid;
+    }
+
     const handleNext = () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-        newSkipped = new Set(newSkipped.values());
-        newSkipped.delete(activeStep);
-        }
+        if(activeStep === 0 ? handleValidationGeneralInfo(project) : handleValidationSolution(project)){
+            let newSkipped = skipped;
+            if (isStepSkipped(activeStep)) {
+            newSkipped = new Set(newSkipped.values());
+            newSkipped.delete(activeStep);
+            }
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setSkipped(newSkipped);
 
-        if(activeStep === steps.length - 1){
-        // props.onStepperFinished();
-        onSubmit();
+            if(activeStep === steps.length - 1){
+                // props.onStepperFinished();
+                onSubmit();
+            }
         }
+        alertUseAlert.error('Hãy kiểm tra lại các thông tin nhập !!!')
     };
 
 
@@ -1151,9 +1275,13 @@ const HorizontalLinearStepper = (props) => {
     };
 
     const renderStepContent = () => {
+        if(activeStep === steps.length){
+            dispatch({ type: LOADING})
+        }
         return (
             <div className="">
-                {activeStep === steps.length ? (
+                {activeStep === steps.length ? 
+                (
                         <div>
                             <Typography>
                                 All steps completed - you&apos;re finished
@@ -1162,7 +1290,9 @@ const HorizontalLinearStepper = (props) => {
                                 Reset
                             </Button>
                         </div>
-                ) : (
+                       
+                ) 
+                : (
                         <div className="flex flex-col justify-between">
                             <div>
                                 {getStepContent(activeStep)}
@@ -1193,7 +1323,7 @@ const HorizontalLinearStepper = (props) => {
                     onClick={handleBack} 
                     className="stepper--btn"
                 >
-                    Back
+                    Trở lại
                 </Button>
                 {isStepOptional(activeStep) && (
                     <Button
@@ -1201,21 +1331,21 @@ const HorizontalLinearStepper = (props) => {
                         color="primary"
                         onClick={handleSkip}
                     >
-                        Skip
+                        Bỏ qua
                     </Button>
                 )}
                 <button
                     className="text-white bg-blue-500 stepper--btn"
                     onClick={handleNext}
                 >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Kết thúc' : 'Tiếp theo'}
                 </button>
 
                 <button 
                     className="text-white bg-gray-500 stepper--btn"
                     onClick={() => setStatusId(2)}
                 >
-                    Save
+                    Lưu nháp
                 </button>
 
                 

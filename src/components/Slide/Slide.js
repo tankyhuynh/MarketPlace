@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const Slide = ({ slide, index }) => {
+const Slide = ({ slide, index, projectImage }) => {
     const classes = useStyles();
 
     return (
@@ -47,7 +47,7 @@ const Slide = ({ slide, index }) => {
             <Card className={`${classes.root} slide-background md:w-full`}>
               <Grid container spacing={3} >
                   <Grid item xs={6} className="">
-                      <CardOranization />
+                      <CardOranization image={slide.productImage} />
                   </Grid>
                   <Grid item xs={6} className="">
                       <CardProjectInfo project={slide} />

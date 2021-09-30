@@ -92,9 +92,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   console.log(props);
-  const [cookies, setCookie, removeCookie] = useCookies(['fullName']);
+  const [cookies, setCookie, removeCookie] = useCookies(['fullName', 'roleCode']);
   if(props.currentFullName){
     setCookie('fullName', props.currentFullName, { path: '/' });
+  }
+  if(props.currentRoleCode){
+    setCookie('roleCode', props.currentRoleCode, { path: '/' });
   }
 
   const classes = useStyles();
@@ -264,12 +267,14 @@ const Header = (props) => {
   
 
   const renderAccount = () => {
-    if(props.isSignedIn || cookies["fullName"]){
+    const roleCookie = cookies ? cookies.roleCode : 'null';
+    console.log('roleCookie', roleCookie)
+    if(props.isSignedIn || roleCookie){
       let link = '';
-      if(roleCode === ROLE_NNC){
+      if(roleCode === ROLE_NNC || cookies["roleCode"] === ROLE_NNC){
         link = '/researchers';
       }
-      if(roleCode === ROLE_ADMIN){
+      if(roleCode === ROLE_ADMIN || cookies["roleCode"] === ROLE_ADMIN ){
         link = '/admin';
       }
 
@@ -495,6 +500,7 @@ const mapStateToProps = (state) => {
   return { 
       currentUserId: state.auth.userId,
       currentFullName: state.auth.fullName,
+      currentRoleCode: state.auth.userProfile ? state.auth.userProfile.role.code : undefined,
       isSignedIn: state.auth.isSignedIn,
       userProfile: state.auth.userProfile
   };

@@ -5,7 +5,12 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { fetchProjects_DaDuyet, fetchProjects_ChoDuyet } from '../../actions/project'
+import { 
+    fetchProjects_DaDuyet, 
+    fetchProjects_ChoDuyet,
+    fetchProjects_Commercial,
+    fetchProjects_Researching 
+} from '../../actions/project'
 
 
 import img1_a from '../../assets/img1_a.png';
@@ -28,7 +33,9 @@ class ProjectList extends React.Component {
     }
 
     componentDidMount(){
-        this.props.fetchProjects_DaDuyet();
+        // this.props.fetchProjects_DaDuyet();
+        this.props.fetchProjects_Commercial();
+        this.props.fetchProjects_Researching();
 
         const interval = setInterval(
             // set number every 5s
@@ -192,4 +199,12 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { fetchProjects_DaDuyet, fetchProjects_ChoDuyet })(ProjectList);
+export default connect(
+    mapStateToProps, 
+    { 
+        fetchProjects_DaDuyet, 
+        fetchProjects_ChoDuyet,
+        fetchProjects_Commercial,
+        fetchProjects_Researching 
+    }
+)(ProjectList);

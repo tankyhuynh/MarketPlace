@@ -1,10 +1,15 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { SIGN_IN, SIGN_OUT } from '../actions/types';
 
+const userDataLocalStorage = localStorage.getItem("userData");
+const user = JSON.parse(userDataLocalStorage);
+console.log('SIGN_IN', user)
+
 const INITIAL_STATE = {
-    isSignedIn: null,
-    userId: null,
-    username: null
+    isSignedIn: user ? true : false,
+    userId: user ? user.id : null,
+    fullName: user ? user.fullName : null,
+    userProfile: user ? user : null
 };
 
 

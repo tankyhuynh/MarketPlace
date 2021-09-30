@@ -75,7 +75,7 @@ class Home extends React.Component {
                <div className="flex flex-col gap-12 2xl:gap-64">
                     <div className="grid justify-self-center">
                         <video
-                            className="absolute w-full 2xl:relative -mx-28 xl:-mx-32"
+                            className="absolute w-full mx-0 2xl:relative md:-mx-28 xl:-mx-28"
                             autoPlay
                             loop
                             muted
@@ -83,23 +83,31 @@ class Home extends React.Component {
                             <source src={video} type="video/mp4" />
                             Your browser does not support the video tag
                         </video>
-                        <div className="relative md:mt-32">
-                            <CarouselCustom 
-                                // slides={this.props.projects.filter(project => project.statusId !== 2)} 
-                                slides={this.props.projects} 
-                                organizations={organizations}
-                            />
+                        <div className="relative md:my-16 xl:my-32 2xl:my-48">
+                            {
+                                this.props.projects.length        
+                                ? (<CarouselCustom 
+                                    // slides={this.props.projects.filter(project => project.statusId !== 2)} 
+                                    slides={this.props.projects} 
+                                    organizations={organizations}
+                                />)
+                                : null
+                            }
                         </div>
                     </div>
                     
-                    <div id="cards" className="z-10 md:mt-24 xl:my-36 2xl:mt-0">
-                        <h2 className="mx-4 mb-12 text-3xl font-bold">Dự án</h2>
-                        <div className="gap-4 md:grid md:grid-cols-3">
-                            { this.renderProjects() }
-                        </div>
-                    </div>
+                    {
+                        this.props.projects.length
+                        ? (<div id="cards" className="z-10 md:mt-24 xl:my-36 2xl:mt-0">
+                            <h2 className="mx-4 mb-12 text-3xl font-bold">Dự án</h2>
+                            <div className="gap-4 md:grid md:grid-cols-3">
+                                { this.renderProjects() }
+                            </div>
+                        </div>)
+                        : null
+                    }
     
-                    <div id="organizations" className="mt-4">
+                    <div id="organizations" className={`${this.props.projects.length ? 'mt-4' : 'z-10 md:mt-24 xl:-my-40 2xl:mt-0' }`}>
                         <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
                         <div className="projects_organizations">
                             { this.renderOrganizations }

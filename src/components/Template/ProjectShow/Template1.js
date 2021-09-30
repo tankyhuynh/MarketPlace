@@ -15,10 +15,14 @@ import React from 'react';
 // import Test1 from '../../../assets/Grapes_Red.jpg';
 // import Test2 from '../../../assets/sugarcane-sugar-200611.jpg';
 
-// import MainBackgroundImage from '../../../assets/Grapes_Red.jpg'
+// import MainBackgroundImage from '../../../assets/Grapes_Red.jpg' 
 
+const TYPE_COMMERCIAL = 'CP'
+// const TYPE_RESEARCHING = 'RP'
 
 const ProjectShow = ({ project }) => {
+
+    console.log('ProjectShow', project)
 
     // const renderImage = (image) => {
     //     if(image){
@@ -94,108 +98,170 @@ const ProjectShow = ({ project }) => {
         commercialTransmissionMethodList,
         scope,
         price,
-        productImage 
+        productImage,
+        challenge,
+        solution,
+        benefit 
     } = project;
 
     const templateViewProject = {
-        generalInfo: {
-            root: {
-                name: 'Thông tin chung ',
-                value: ''
+        commercial: {
+            generalInfo: {
+                children: [
+                    {
+                        name: 'Tên đơn vị',
+                        value: companyName,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Địa chỉ',
+                        value: address,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Số điện thoại',
+                        value: phoneNumber,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Email',
+                        value: email,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Website',
+                        value: website,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Lĩnh vực áp dụng',
+                        value: (
+                            projectFieldList.map(field => {
+                                return <span>{field.field.name}</span>
+                            })
+                        )
+                    },
+                    {
+                        name: 'Mức độ phát triển',
+                        value: commercialDevelopmentLevelList ? (
+                            commercialDevelopmentLevelList.map(level => {
+                                return <span>{level.developmentLevel.name}</span> 
+                            })
+                        ) : 1
+                    },
+                    {
+                        name: 'Phương thức chuyển giao',
+                        value: commercialTransmissionMethodList ? (
+                            commercialTransmissionMethodList.map(transmission => {
+                                return <span>{transmission.transmissionMethod.name}</span> 
+                            })
+                        ) : 1
+                    },
+                    {
+                        name: 'Phạm vi thương mại hóa',
+                        value: scope
+                    },
+                    {
+                        name: 'Chào giá tham khảo',
+                        value: price
+                    }
+                ]
             },
-            children: [
-                {
-                    name: 'Tên đơn vị',
-                    value: companyName,
-                    isUseEditor: false
-                },
-                {
-                    name: 'Địa chỉ',
-                    value: address,
-                    isUseEditor: false
-                },
-                {
-                    name: 'Số điện thoại',
-                    value: phoneNumber,
-                    isUseEditor: false
-                },
-                {
-                    name: 'Email',
-                    value: email,
-                    isUseEditor: false
-                },
-                {
-                    name: 'Website',
-                    value: website,
-                    isUseEditor: false
-                },
-                {
-                    name: 'Lĩnh vực áp dụng',
-                    value: (
-                        projectFieldList.map(field => {
-                            return <span>{field.field.name}</span>
-                        })
-                    )
-                },
-                {
-                    name: 'Mức độ phát triển',
-                    value: commercialDevelopmentLevelList ? (
-                        commercialDevelopmentLevelList.map(level => {
-                            return <span>{level.developmentLevel.name}</span> 
-                        })
-                    ) : 1
-                },
-                {
-                    name: 'Phương thức chuyển giao',
-                    value: commercialTransmissionMethodList ? (
-                        commercialTransmissionMethodList.map(transmission => {
-                            return <span>{transmission.transmissionMethod.name}</span> 
-                        })
-                    ) : 1
-                },
-                {
-                    name: 'Phạm vi thương mại hóa',
-                    value: scope
-                },
-                {
-                    name: 'Chào giá tham khảo',
-                    value: price
-                }
-            ]
+            solutionInfo: {
+                children: [
+                    {
+                        name: 'Mô tả quy trình công nghệ',
+                        value: process,
+                        isUseEditor: true
+                        
+                    },
+                    {
+                        name: 'Ưu điểm',
+                        value: advantage,
+                        isUseEditor: true
+                    },
+                    {
+                        name: '',
+                        value: (
+                            <>
+                                <img src={productImage} alt={productImage} className="object-cover w-full h-64" />
+                                <section className="italic text-center">Hình ảnh sản phẩm</section>
+                            </>
+                        ),
+                        isUseEditor: false
+                    },
+                    // {
+                    //     name: 'Hình ảnh tổng thể',
+                    //     value: (
+                    //         <div className="flex items-center gap-16 mt-2">
+                    //             <img src={productImage} alt={productImage} />
+                    //         </div>
+                    //     )
+                    // }
+                ]
+            }
         },
-        solutionInfo: {
-            children: [
-                {
-                    name: 'Mô tả quy trình công nghệ',
-                    value: process,
-                    isUseEditor: true
+        researching: {
+            generalInfo: {
+                children: [
+                    {
+                        name: 'Tên đơn vị',
+                        value: companyName,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Địa chỉ',
+                        value: address,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Số điện thoại',
+                        value: phoneNumber,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Email',
+                        value: email,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Website',
+                        value: website,
+                        isUseEditor: false
+                    },
+                    {
+                        name: 'Lĩnh vực áp dụng',
+                        value: (
+                            projectFieldList.map(field => {
+                                return <span>{field.field.name}</span>
+                            })
+                        )
+                    }
+                ]
+            },
+            solutionInfo: {
+                children: [
+                    {
+                        name: 'Mô tả thách thức',
+                        value: challenge,
+                        isUseEditor: true
+                        
+                    },
+                    {
+                        name: 'Mô tả giải pháp',
+                        value: solution,
+                        isUseEditor: true
+                    },
+                    {
+                        name: 'Mô tả lợi ích',
+                        value: benefit,
+                        isUseEditor: true
+                    },
                     
-                },
-                {
-                    name: 'Ưu điểm',
-                    value: advantage,
-                    isUseEditor: true
-                },
-                {
-                    name: '',
-                    value: (
-                        <>
-                            <img src={productImage} alt={productImage} className="object-cover w-full h-64" />
-                            <section className="italic text-center">Hình ảnh sản phẩm</section>
-                        </>
-                    ),
-                    isUseEditor: false
-                },
-                // {
-                //     name: 'Hình ảnh tổng thể',
-                //     value: (
-                //         <div className="flex items-center gap-16 mt-2">
-                //             <img src={productImage} alt={productImage} />
-                //         </div>
-                //     )
-                // }
-            ]
-        }
+                ]
+            }
+        },
+        
     }
 
     const renderBody = (items) => {
@@ -231,10 +297,20 @@ const ProjectShow = ({ project }) => {
             </div>
             <div className="grid h-screen grid-cols-4 gap-4 p-4">
                 <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
-                    { renderBody(templateViewProject.generalInfo) }
+                    { renderBody(
+                        project 
+                        ?(project.type === TYPE_COMMERCIAL 
+                            ? templateViewProject.commercial.generalInfo 
+                            : templateViewProject.researching.generalInfo) 
+                        : null) }
                 </div>
                 <div id="project_content" className="col-span-3 ml-6">
-                    { renderBody(templateViewProject.solutionInfo) }
+                    { renderBody(
+                        project 
+                        ? (project.type === TYPE_COMMERCIAL 
+                            ? templateViewProject.commercial.solutionInfo 
+                            : templateViewProject.researching.solutionInfo) 
+                        : null) }
                 </div>
             </div>
         </div>
