@@ -1218,7 +1218,7 @@ const HorizontalLinearStepper = (props) => {
                 onSubmit();
             }
         }
-        alertUseAlert.error('Hãy kiểm tra lại các thông tin nhập !!!')
+        else alertUseAlert.error('Hãy kiểm tra lại các thông tin nhập !!!')
     };
 
 

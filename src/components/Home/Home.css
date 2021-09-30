@@ -2,3 +2,38 @@
 .projects_organizations {
 	@apply flex flex-col gap-12 my-10 md:gap-4 md:flex-row md:px-4;
 }
+
+.hero {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+}
+    
+.heroVideoBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    /* display: none; */
+    
+}
+.heroImgBg {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    @media (min-width: 768px) {
+      display: none;
+    }
+}
+.heroContent {
+    text-align: center;
+    /* padding-top: 100px; */
+}
