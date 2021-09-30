@@ -111,7 +111,7 @@ class Home extends React.Component {
                     
                     {
                         this.props.projects.length
-                        ? (<div id="cards" className="z-10 block xl:hidden 2xl:mt-0">
+                        ? (<div id="cards" className="z-10 2xl:mt-0">
                             <h2 className="mx-4 mb-12 text-3xl font-bold">Dự án</h2>
                             <div className="gap-4 md:grid md:grid-cols-3">
                                 { this.renderProjects() }
