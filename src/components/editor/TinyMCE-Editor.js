@@ -7,11 +7,11 @@ const API_KEY = '6n4fi31o2yc4c5pu6nd2a6cvzzy0td26ju6yiftndwd9ngdo';
 
 const TinyMCEEditor = ({ name, value, onChange }) => {
   const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log('editorRef.current.getContent()', editorRef.current.getContent());
-    }
-  };
+  // const log = () => {
+  //   if (editorRef.current) {
+  //     console.log('editorRef.current.getContent()', editorRef.current.getContent());
+  //   }
+  // };
 
   const handleEditorChange = (editorContent) => {
     onChange({ target: { name, value: editorContent } });

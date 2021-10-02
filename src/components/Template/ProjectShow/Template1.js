@@ -147,6 +147,7 @@ const ProjectShow = ({ project }) => {
                         name: 'Mức độ phát triển',
                         value: commercialDevelopmentLevelList ? (
                             commercialDevelopmentLevelList.map(level => {
+                                // eslint-disable-next-line eqeqeq
                                 if(level.developmentLevel.id != OTHER_ID ){
                                     return <span>{level.developmentLevel.name}</span> 
                                 }
