@@ -73,7 +73,7 @@ class ProjectShow extends React.Component {
           <div className="">
               <Template1 project={this.props.project} />
           </div>
-          <section className="p-4 ">
+          <section className="p-4 -mx-32 bg-white">
                 <Footer />
                 {/* Footer */}
           </section>

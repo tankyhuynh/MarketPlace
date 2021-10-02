@@ -23,8 +23,8 @@ const TinyMCEEditor = ({ name, value, onChange }) => {
         apiKey= {API_KEY}
         // key={key}
         onInit={(evt, editor) => editorRef.current = editor}
-        // initialValue={ value ? value : initialValues }
-        // value={value}
+        // initialValue={ value ? value : "initialValue" }
+        value={value}
         tagName={name}
         init={{
             height: 500,

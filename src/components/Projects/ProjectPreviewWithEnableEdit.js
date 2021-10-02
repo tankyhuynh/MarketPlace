@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import '../editor/editables.css'
@@ -589,9 +590,9 @@ const initData = {
     }
 
     const renderTemplate = () => {
-        if(template){
-            return renderTemplate1()
-        }
+        // if(template){
+        //     return renderTemplate1()
+        // }
         return renderTemplate2()
         
     }
@@ -607,12 +608,12 @@ const initData = {
                             {`${state.showEditingControls ? 'Dừng chỉnh sửa' : 'Chỉnh sửa'}`}
                     </button> */}
 
-                    <button
+                    {/* <button
                         onClick={() => setTemplate(!template)}
                         className={`btn__changeTemplate my-4 bg-green-500`} 
                     >
                         Đổi mẫu
-                    </button>
+                    </button> */}
                 </div>
                 
             { renderTemplate() }
