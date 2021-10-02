@@ -10,10 +10,10 @@
     - options function (vs admin - dont load anything) => Must load all 
 
 ## Home
-    - Carousel (if dont have project - UI fail)
+    - (OK) Carousel (if dont have project - UI fail)
 
 ## Projectlist
-    - show user or show author ????
+    - (OK) show user or show author ????
 
 ## Project Preview
     - Realtime edit
@@ -23,8 +23,12 @@
     - Home:
         - 2xl: fail
 
+## Auth
+    - Login:
+        - When login fail - show error and clear form
+
 ## NEED FIX IMMEDIATELY
-    - trang chu
-    - validate nhap form
-    - dang nhap
+    - (OK) trang chu
+    - (OK) validate nhap form
+    - (OK) dang nhap
     - (OK) click vao nguoi dung ko dc

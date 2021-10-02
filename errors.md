@@ -16,5 +16,5 @@ Thêm : PTCGiao: Sản phẩm trọn gói, quy trinh công nghệ
 
 
 ## Fix
-- Field: backend nên có thêm 1 data là other 
+- (OK) Field: backend nên có thêm 1 data là other 
     + để khi nhập vào field "Khác" thì lấy name trong đó ra là đc r, ko cần phải là Object

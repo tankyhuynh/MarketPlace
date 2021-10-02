@@ -5,6 +5,7 @@ import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import validator from 'validator' 
+import { withAlert } from 'react-alert'
 
 import { signup } from '../../../actions/auth'
 
@@ -53,7 +54,13 @@ class SignUp extends React.Component {
 
     onSubmit = (formValues) => {
         console.log('Sign up');
-        this.props.signup(formValues, this.props.history);
+        this.props.signup(formValues, this.props.history)
+            .then(response => {
+                this.props.alert.show('Đăng ký thành công !!!')  
+            })
+            .catch(error => {
+                this.props.alert.error('Đăng ký thất bại, vui lòng kiểm tra lại thông tin nhập !!!')  
+            });
     }
 
     render() {
@@ -101,7 +108,7 @@ class SignUp extends React.Component {
                                     name="phoneNumber" 
                                     component={this.renderInput} 
                                     label="Số điện thoại" 
-                                    type="number"
+                                    type="tel"
                                 />
                                 <Field 
                                     name="address" 
@@ -170,10 +177,8 @@ class SignUp extends React.Component {
                             </div> */}
 
                             <div className="relative flex justify-center gap-2">
-                                <Link to="/" className="auth--btn btn-cancel hover:bg-red-700">
-                                    <button type="submit" className="font-bold" >
+                                <Link to="/" className="font-bold auth--btn btn-cancel hover:bg-red-700">
                                         Hủy
-                                    </button>
                                 </Link>
                                 <button className="text-white auth--btn btn-signin hover:bg-green-700">
                                     <button type="submit" className="font-bold">
@@ -216,7 +221,7 @@ const validate = formValues => {
         errors.phoneNumber = 'Số điện thoại không được để trống'
     }
     if (formValues.phoneNumber ? !validator.isMobilePhone(formValues.phoneNumber) : false) {
-        errors.phoneNumber = 'Số điện thoại không được để trống'
+        errors.phoneNumber = 'Số điện thoại không hợp lệ'
     } 
     if (!formValues.address) {
         errors.address = 'Địa chỉ không được để trống'
@@ -243,6 +248,6 @@ const validate = formValues => {
 const formWrapped = reduxForm({
     form: 'signUpForm',
     validate: validate
-})(SignUp);
+})(withAlert()(SignUp));
 
 export default connect(null, { signup })(formWrapped);

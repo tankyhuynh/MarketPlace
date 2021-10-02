@@ -5,11 +5,9 @@ import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import TextField from '@mui/material/TextField';
+import { withAlert } from 'react-alert'
 
 import { login } from '../../../actions/auth';
-
-// import Input from '@material-tailwind/react/Input'
-
 
 class SignIn extends React.Component {
 
@@ -27,17 +25,8 @@ class SignIn extends React.Component {
     }
 
     renderInput = ({ input, type, label, meta }) => {
-        // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
         return (
             <div>
-                {/* <Input
-                    { ...input }
-                    type={type}
-                    color="lightBlue"
-                    size="regular"
-                    outline={false}
-                    placeholder={label}
-                /> */}
                 <TextField 
                     {...input}
                     type={type}
@@ -52,16 +41,14 @@ class SignIn extends React.Component {
     }
 
     onSubmit = (formValues) => {
-        // console.log('formValue: ', formValues);
-        // return users.post('/user/login', formValues)
-        //     .then((response) => {
-        //         this.props.history.push('/');
-        //     });
         this.props.login(formValues, this.props.history)
             .then((response) => {
                 console.log(response);
             })
             .catch((err) => {
+                // alert('')
+                this.props.alert.error('Tên đăng nhập hoặc mật khẩu không chính xác !!!')
+                this.props.reset();
                 this.props.history.push('/auth/signin');
             });
     }
@@ -176,6 +163,6 @@ const mapStateToProps = (state) => {
 const formWrapped = reduxForm({
     form: 'loginForm',
     validate: validate
-})(SignIn);
+})(withAlert()(SignIn));
 
 export default connect(mapStateToProps, { login })(formWrapped);

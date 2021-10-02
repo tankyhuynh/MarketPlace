@@ -7,6 +7,7 @@ import { fetchProject } from '../../actions/project'
 
 // import TemplateDefaults from '../Template/ProjectShow/Default';
 import Template1 from '../Template/ProjectShow/Template1';
+import Footer from '../Footer'
 
 class ProjectShow extends React.Component {
 
@@ -68,7 +69,15 @@ class ProjectShow extends React.Component {
         
     return (
         //  <TemplateDefaults project={this.props.project} />
-        <Template1 project={this.props.project} />
+        <div className="flex flex-col gap-2">
+          <div className="">
+              <Template1 project={this.props.project} />
+          </div>
+          <section className="p-4 ">
+                <Footer />
+                {/* Footer */}
+          </section>
+        </div>
     );
   }
 }

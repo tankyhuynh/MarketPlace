@@ -40,9 +40,9 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
     const formUpdate = { ...formValues, roleId: 4 }
     const response = await users.post(SIGNUP_URL, { ...formUpdate });
     console.log(response)
-    dispatch({ type: LOADED });
 
     propsHistory.push('/auth/signin');
+    dispatch({ type: LOADED });
   };
   
   const renderRedirectAfterLogin = (roleCode, propsHistory) => {
@@ -59,9 +59,8 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
   
   // Xài history của props để push thì mới chịu đi
   export const login = (formValues, propsHistory) => async (dispatch, getState) => {
-    // dispatch({ type: LOADING });
+    dispatch({ type: LOADING });
     const response = await users.post(LOGIN_URL, { ...formValues });
-
 
     try {
       if(response.status === 200){

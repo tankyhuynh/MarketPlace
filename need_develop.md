@@ -4,3 +4,4 @@
 - Filter of table
 - Template of project
 - Smart editor
+- Footer

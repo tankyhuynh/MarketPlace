@@ -282,44 +282,47 @@ const ProjectShow = ({ project }) => {
     }
     
     return (
-        <div >
-            <div className="my-3 text-center md:text-left">
-                <div 
-                    className="grid grid-cols-1 p-8 -mt-3 -mx-28"
-                    style={{ backgroundImage: `linear-gradient(rgba(194, 179, 199, 0.9), rgba(123, 121, 123, 0.9)), url(${productImage})` }}
-                >
-                    <section className="z-10 flex flex-col items-center w-2/3 gap-4 mx-auto text-center">
-                        <div className="text-3xl font-bold">
-                            { name } <br />
-                        </div>
-                        <div className="text-base">
-                            { shortDescription }
-                        </div>
-                    </section>
-                    {/* <section className="relative z-0 opacity-50 bg-opacity-10 ">
-                        <img src={Test2} alt={Test2} className="object-cover w-full h-64" />
-                    </section> */}
+        <>
+            <div className="">
+                <div className="my-3 text-center md:text-left">
+                    <div 
+                        className="grid grid-cols-1 p-8 -mt-3 -mx-28"
+                        style={{ backgroundImage: `linear-gradient(rgba(194, 179, 199, 0.9), rgba(123, 121, 123, 0.9)), url(${productImage})` }}
+                    >
+                        <section className="z-10 flex flex-col items-center w-2/3 gap-4 mx-auto text-center">
+                            <div className="text-3xl font-bold">
+                                { name } <br />
+                            </div>
+                            <div className="text-base">
+                                { shortDescription }
+                            </div>
+                        </section>
+                        {/* <section className="relative z-0 opacity-50 bg-opacity-10 ">
+                            <img src={Test2} alt={Test2} className="object-cover w-full h-64" />
+                        </section> */}
+                    </div>
                 </div>
+                <div className="grid grid-cols-4 gap-4 p-4">
+                    <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
+                        { renderBody(
+                            project 
+                            ?(project.type === TYPE_COMMERCIAL 
+                                ? templateViewProject.commercial.generalInfo 
+                                : templateViewProject.researching.generalInfo) 
+                            : null) }
+                    </div>
+                    <div id="project_content" className="col-span-3 ml-6">
+                        { renderBody(
+                            project 
+                            ? (project.type === TYPE_COMMERCIAL 
+                                ? templateViewProject.commercial.solutionInfo 
+                                : templateViewProject.researching.solutionInfo) 
+                            : null) }
+                    </div>
+                </div>
+               
             </div>
-            <div className="grid h-screen grid-cols-4 gap-4 p-4">
-                <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
-                    { renderBody(
-                        project 
-                        ?(project.type === TYPE_COMMERCIAL 
-                            ? templateViewProject.commercial.generalInfo 
-                            : templateViewProject.researching.generalInfo) 
-                        : null) }
-                </div>
-                <div id="project_content" className="col-span-3 ml-6">
-                    { renderBody(
-                        project 
-                        ? (project.type === TYPE_COMMERCIAL 
-                            ? templateViewProject.commercial.solutionInfo 
-                            : templateViewProject.researching.solutionInfo) 
-                        : null) }
-                </div>
-            </div>
-        </div>
+        </>
         
     )
 }
