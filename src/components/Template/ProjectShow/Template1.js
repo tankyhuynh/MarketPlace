@@ -104,6 +104,8 @@ const ProjectShow = ({ project }) => {
         benefit 
     } = project;
 
+    const OTHER_ID = 4;
+
     const templateViewProject = {
         commercial: {
             generalInfo: {
@@ -145,7 +147,10 @@ const ProjectShow = ({ project }) => {
                         name: 'Mức độ phát triển',
                         value: commercialDevelopmentLevelList ? (
                             commercialDevelopmentLevelList.map(level => {
-                                return <span>{level.developmentLevel.name}</span> 
+                                if(level.developmentLevel.id != OTHER_ID ){
+                                    return <span>{level.developmentLevel.name}</span> 
+                                }
+                                return <span>{level.note}</span> 
                             })
                         ) : 1
                     },

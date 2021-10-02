@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-const API_KEY = 'syuqwfs5tbdh646gel0tn1dgss75z5hqguv5n3aydee2zkhs';
+// const API_KEY = 'syuqwfs5tbdh646gel0tn1dgss75z5hqguv5n3aydee2zkhs';
+const API_KEY = '6n4fi31o2yc4c5pu6nd2a6cvzzy0td26ju6yiftndwd9ngdo';
 // const initialValues = "<p>This is the initial content of the editor.</p>"
 
 const TinyMCEEditor = ({ name, value, onChange }) => {
@@ -46,7 +47,7 @@ const TinyMCEEditor = ({ name, value, onChange }) => {
         // onChange={handleEditorChange}
         onChange={handleEditorChange}
       />
-      <button onClick={log}>Log editor content</button>
+      {/* <button onClick={log}>Log editor content</button> */}
       <input id="my-file" type="file" name="my-file" style={{display:"none"}} onChange="" />
     </>
   );

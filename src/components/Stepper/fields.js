@@ -166,6 +166,13 @@ export const fields = {
                 type: 'editor',
                 isRequired: true
             },
+            productImage: {
+                id: 'productImage',
+                label: 'Hình ảnh tổng thể',
+                fieldName: 'productImage',
+                type: 'image',
+                isRequired: true
+            },
         }
     }
 }

@@ -23,7 +23,7 @@ class ProjectCreate extends React.Component {
             'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
             'Xem kết quả'
     ]; 
-    shouldBlockNavigation = true
+    shouldBlockNavigation = false
 
     componentDidUpdate = () => {
         if(this.props.location.projectTemp){

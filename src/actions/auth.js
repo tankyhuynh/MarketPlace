@@ -59,7 +59,7 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
   
   // Xài history của props để push thì mới chịu đi
   export const login = (formValues, propsHistory) => async (dispatch, getState) => {
-    dispatch({ type: LOADING });
+    // dispatch({ type: LOADING });
     const response = await users.post(LOGIN_URL, { ...formValues });
 
 
@@ -77,6 +77,7 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
     } catch (error) {
       propsHistory.push(LOGIN_URL);
     }
+    dispatch({ type: LOADED });
     
   };
   // ------ End Auth --------

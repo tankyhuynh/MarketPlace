@@ -32,6 +32,9 @@ class ProjectList extends React.Component {
         randomNumber: 0
     }
 
+    TYPE_COMMERCIAL = 'CP'
+    TYPE_RESEARCHING = 'RP'
+
     componentDidMount(){
         // this.props.fetchProjects_DaDuyet();
         this.props.fetchProjects_Commercial();
@@ -122,6 +125,15 @@ class ProjectList extends React.Component {
         }
     };
 
+    renderTypeOfProject = (projectType) => {
+        if(projectType === this.TYPE_COMMERCIAL){
+            return 'Dự án thương mại'
+        }
+        if(projectType === this.TYPE_RESEARCHING){
+            return 'Dự án nghiên cứu'
+        }
+    }
+
     renderList(){
         
         return this.props.projects
@@ -145,16 +157,22 @@ class ProjectList extends React.Component {
                             
                             <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
                                     <div>
-                                        <div className="flex items-baseline gap-2">
-                                            <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
-                                                New
-                                            </span>
-                                            { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
+                                        <div className="grid grid-cols-5">
+                                            <div className="flex items-baseline col-span-4 gap-2">
+                                                <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
+                                                    New
+                                                </span>
+                                                { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
+                                            </div>
+                                            <div className="italic font-medium"> 
+                                                { this.renderTypeOfProject(project.type) }
+                                            </div>
                                         </div>
                                         
                                         <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
                                             {project.name}
                                         </h4>
+                                            
                                     </div>
                                 
                                     <div className="row-span-2 mt-1">

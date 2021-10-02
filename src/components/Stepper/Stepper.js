@@ -178,7 +178,7 @@ const HorizontalLinearStepper = (props) => {
                             setOtherInputs(previousState => ({...previousState, comDevLevel: {
                                 name: 'Phương thức chuyển giao',
                                 label: 'Nhập tên phương thức',
-                                value: comDevLevel.developmentLevel.name
+                                value: comDevLevel.note
                             }}))
                             return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
                         })

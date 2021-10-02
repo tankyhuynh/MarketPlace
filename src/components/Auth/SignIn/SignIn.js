@@ -62,8 +62,7 @@ class SignIn extends React.Component {
                 console.log(response);
             })
             .catch((err) => {
-                alert(err.message);
-                this.props.history.push('/');
+                this.props.history.push('/auth/signin');
             });
     }
 

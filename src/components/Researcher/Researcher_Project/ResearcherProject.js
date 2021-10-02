@@ -357,7 +357,7 @@ const ResearcherProject  = (props) => {
                     <Table head={tableHead} body={renderProject(currentProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
-                        totalPosts={currentProjects.length}
+                        totalProjects={currentProjects.length}
                         paginateBack={paginateBack}
                         paginateFront={paginateFront}
                         currentPage={currentPage}
@@ -372,7 +372,7 @@ const ResearcherProject  = (props) => {
                     <Table head={tableHead} body={renderProject(DDProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
-                        totalPosts={currentProjects.length}
+                        totalPosts={DDProjects ? DDProjects.length : 0}
                         paginateBack={paginateBack}
                         paginateFront={paginateFront}
                         currentPage={currentPage}
@@ -387,7 +387,7 @@ const ResearcherProject  = (props) => {
                     <Table head={tableHead} body={renderProject(CDProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
-                        totalPosts={currentProjects.length}
+                        totalPosts={CDProjects.length}
                         paginateBack={paginateBack}
                         paginateFront={paginateFront}
                         currentPage={currentPage}
@@ -402,7 +402,7 @@ const ResearcherProject  = (props) => {
                     <Table head={tableHead} body={renderProject(TCProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
-                        totalPosts={currentProjects.length}
+                        totalPosts={TCProjects.length}
                         paginateBack={paginateBack}
                         paginateFront={paginateFront}
                         currentPage={currentPage}
@@ -417,7 +417,7 @@ const ResearcherProject  = (props) => {
                     <Table head={tableHead} body={renderProject(tempProjects)}/>
                     <Pagination
                         projectsPerPage={projectsPerPage}
-                        totalPosts={currentProjects.length}
+                        totalPosts={tempProjects.length}
                         paginateBack={paginateBack}
                         paginateFront={paginateFront}
                         currentPage={currentPage}

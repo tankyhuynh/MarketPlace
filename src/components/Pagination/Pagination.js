@@ -8,6 +8,7 @@ export default function Pagination({
   currentPage,
 }) {
 
+  console.log('currentPage', currentPage, ' projectsPerPage', projectsPerPage)
 
   return (
     <div className='py-2'>
@@ -18,7 +19,7 @@ export default function Pagination({
             {` to `}
           <span className='font-medium'> {currentPage * projectsPerPage} </span>
             {` of `}
-          <span className='font-medium'> {totalProjects} </span>
+          <span className='font-medium'> {totalProjects ? totalProjects : 0} </span>
             {` results `}
         </p>
       </div>
