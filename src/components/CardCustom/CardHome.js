@@ -81,7 +81,8 @@ const CardCustom = ({ card }) => {
         // <Card className="flex flex-col justify-between card">
         <Card className="grid justify-between grid-flow-row card">
             <img
-                src={ renderImage(renderImageSrc(card)) }
+                // src={ renderImage(renderImageSrc(card)) }
+                src={ card.productImage ? card.productImage : renderImage(renderImageSrc(card)) } 
                 alt={ card.ten }
                 // className="self-center h-64"
                 className="object-cover object-center w-full my-2 rounded-lg max-h-64"

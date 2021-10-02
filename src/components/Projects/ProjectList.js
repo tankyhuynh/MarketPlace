@@ -81,14 +81,14 @@ class ProjectList extends React.Component {
                 if(field.field.name.length > 30){
                     var shortUuDiem = field.field.name.substring(0, 30) + "...";
                     return (
-                        <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase rounded-full bg-${this.randomColors[randomIndex]}-400`}>
+                        <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase rounded-full bg-${this.randomColors[randomIndex]}-500`}>
                             { shortUuDiem }
                         </span>
                     )
                 }
                 
                 return (
-                    <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-400`}>
+                    <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-500`}>
                         {  field.field.name }
                     </span>
                 ) 
