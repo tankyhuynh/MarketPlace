@@ -4,6 +4,7 @@ import React from 'react'
 import {connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
+import validator from 'validator' 
 
 import { signup } from '../../../actions/auth'
 
@@ -20,7 +21,7 @@ class SignUp extends React.Component {
     renderError({ error, touched }){
         if (touched && error) {
             return (
-                <div className="ui error message">{error}</div>
+                <div className="text-red-500">{error}</div>
             )
         }
     }
@@ -144,6 +145,12 @@ class SignUp extends React.Component {
                                     label="Mật khẩu" 
                                     type="password"
                                 />
+                                <Field 
+                                    name="repassword" 
+                                    component={this.renderInput} 
+                                    label="Nhập lại mật khẩu" 
+                                    type="password"
+                                />
                                 
                             </div>
 
@@ -196,11 +203,37 @@ class SignUp extends React.Component {
 const validate = formValues => {
     const errors = {};
 
+    if (!formValues.fullName) {
+        errors.fullName = 'Họ tên không được để trống'
+    }
+    if(formValues.email ? validator.isEmpty(formValues.email) : true){
+        errors.email = 'Email không được để trống'
+    }
+    if (formValues.email ? !validator.isEmail(formValues.email) : false) {
+        errors.email = 'Email không hợp lệ'
+    }
+    if(formValues.phoneNumber ? validator.isEmpty(formValues.phoneNumber) : true){
+        errors.phoneNumber = 'Số điện thoại không được để trống'
+    }
+    if (formValues.phoneNumber ? !validator.isMobilePhone(formValues.phoneNumber) : false) {
+        errors.phoneNumber = 'Số điện thoại không được để trống'
+    } 
+    if (!formValues.address) {
+        errors.address = 'Địa chỉ không được để trống'
+    }
     if (!formValues.username) {
-        errors.title = 'You must enter a username'
+        errors.username = 'Tên đăng nhập không được để trống'
     }
     if (!formValues.password) {
-        errors.description = 'You must enter a password'
+        errors.password = 'Mật khẩu không được để trống'
+    }
+    if (!formValues.repassword) {
+        errors.repassword = 'Vui lòng nhập lại mật khẩu'
+    }
+    if (formValues.password && formValues.repassword) {
+        if(formValues.password !== formValues.repassword){
+            errors.repassword = 'Mật khẩu nhập lại chưa đúng'
+        }
     }
 
     return errors;

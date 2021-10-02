@@ -26,11 +26,13 @@ export default (state = INITIAL_STATE, action) => {
                 userProfile: action.payload 
             };
         case SIGN_OUT:
+            localStorage.clear();
             return { 
                 ...state, 
                 isSignedIn: false, 
                 userId: null,
                 fullName: null,
+                userProfile: null
             };
         default:
             return state;

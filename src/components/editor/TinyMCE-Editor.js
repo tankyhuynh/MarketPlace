@@ -8,7 +8,7 @@ const TinyMCEEditor = ({ name, value, onChange }) => {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+      console.log('editorRef.current.getContent()', editorRef.current.getContent());
     }
   };
 
@@ -23,7 +23,7 @@ const TinyMCEEditor = ({ name, value, onChange }) => {
         // key={key}
         onInit={(evt, editor) => editorRef.current = editor}
         // initialValue={ value ? value : initialValues }
-        value={value}
+        // value={value}
         tagName={name}
         init={{
             height: 500,

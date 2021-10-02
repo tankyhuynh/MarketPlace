@@ -11,13 +11,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const isLoggedIn = useSelector(state => state.auth.isSignedIn);
   const userDataLocalStorage = localStorage.getItem("userData");
   const user = JSON.parse(userDataLocalStorage);
-  const roleCode = user ? user.role.code : undefined
+  const userProfile = user ? user.role.code : undefined
 
   return (
     <Route
       {...rest}
       render={props =>
-        (isLoggedIn || roleCode) ? (
+        (isLoggedIn || userProfile) ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: '/auth/signin', state: { from: props.location } }} />

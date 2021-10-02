@@ -1,6 +1,9 @@
+import environment from '../../environments/environment';
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { Prompt } from 'react-router-dom'
+import axios from 'axios';
 
 import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
 import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
@@ -20,6 +23,20 @@ class ProjectCreate extends React.Component {
             'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
             'Xem kết quả'
     ]; 
+    shouldBlockNavigation = true
+
+    componentDidUpdate = () => {
+        if(this.props.location.projectTemp){
+            this.onSaveTemp(this.props.location.projectTemp)
+        }
+        if (this.shouldBlockNavigation) {
+            console.log('this.shouldBlockNavigation')
+            window.onbeforeunload = () => true
+        } else {
+            console.log('!== this.shouldBlockNavigation')
+          window.onbeforeunload = undefined
+        }
+    }
 
     // isModalOpen = (isOpenModal) => {
     //     setOpenModal(isOpenModal);
@@ -27,6 +44,9 @@ class ProjectCreate extends React.Component {
     // isStartWithNewProject = (isStartWithNewProject) => {
     //     setStartWithNewProject(isStartWithNewProject);
     // }
+
+
+    
 
     // renderActions = () => {
     //     return (
@@ -71,12 +91,33 @@ class ProjectCreate extends React.Component {
         this.props.fetchCategories();
     }
 
-    
+    onSaveTemp = (project) => {
+        console.log('Save temp project', project);
+        axios.post(environment.url.java + URL, project)
+        .then(response => {
+            if (response) {
+                // dispatch({ type: LOADED})
+                console.log('client send:', project);
+                console.log('response:', response);
+                    setTimeout(() => {
+                        this.props.history.push('/projects')
+                    }, 500);
+            }
+        })
+    }
+
     
     render() {
-        console.log('props project create: ', this.props);
+        console.log('props project create: ', this.props, ' this.props.location.search', this.props.location.search);
         return (
             <>
+                <Prompt
+                    when={this.shouldBlockNavigation}
+                    message='You have unsaved changes, are you sure you want to leave?'
+                />
+
+                { this.props.location.search }
+
                 <Stepper 
                     steps={this.steps} 
                     levels={this.props.levels}
@@ -85,6 +126,7 @@ class ProjectCreate extends React.Component {
                     fields={this.props.fields}
                     project={this.props.project ? this.props.project : null }
                     type='create'
+                    onSaveTemp={this.onSaveTemp}
                 />
             </>
         ); 

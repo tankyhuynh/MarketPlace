@@ -23,9 +23,6 @@ const Researcher_Home = () => {
     const userDataLocalStorage = localStorage.getItem("userData");
     const user = JSON.parse(userDataLocalStorage);
 
-    console.log('userDataLocalStorage', userDataLocalStorage)
-    console.log('userDataLocalStorage user', user)
-    
     return (
         <>
             <div className="grid h-screen grid-rows-2 gap-2 mt-4 border-4 rounded-md"> 

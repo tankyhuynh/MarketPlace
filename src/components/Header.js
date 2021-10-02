@@ -5,7 +5,7 @@ import { ROLE_ADMIN, ROLE_NNC, ROLE_OTHER } from '../environments/constraints';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 
 import { signOut } from '../actions/auth';
 
@@ -92,13 +92,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   console.log(props);
-  const [cookies, setCookie, removeCookie] = useCookies(['fullName', 'roleCode']);
-  if(props.currentFullName){
-    setCookie('fullName', props.currentFullName, { path: '/' });
-  }
-  if(props.currentRoleCode){
-    setCookie('roleCode', props.currentRoleCode, { path: '/' });
-  }
+  // const [cookies, setCookie, removeCookie] = useCookies(['fullName', 'roleCode']);
+  // if(props.currentFullName){
+  //   setCookie('fullName', props.currentFullName, { path: '/' });
+  // }
+  // if(props.currentRoleCode){
+  //   setCookie('roleCode', props.currentRoleCode, { path: '/' });
+  // }
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -107,12 +107,18 @@ const Header = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [roleCode, setRoleCode] = useState(null);
+  let userDataLocalStorage = localStorage.getItem("userData");
+  let user = JSON.parse(userDataLocalStorage);
+  let userProfile = user ? user : undefined
 
   useEffect(() => {
     if(props.userProfile){
       setRoleCode(props.userProfile.role.code)
     }
-  }, [roleCode])
+    userDataLocalStorage = localStorage.getItem("userData");
+    user = JSON.parse(userDataLocalStorage);
+    userProfile = user ? user : undefined
+  }, [userDataLocalStorage])
 
   const links = [
     {
@@ -267,14 +273,16 @@ const Header = (props) => {
   
 
   const renderAccount = () => {
-    const roleCookie = cookies ? cookies.roleCode : 'null';
-    console.log('roleCookie', roleCookie)
-    if(props.isSignedIn || roleCookie){
+    // const roleCookie = cookies ? cookies.roleCode : 'null';
+    // console.log('roleCookie', roleCookie)
+    
+
+    if(props.isSignedIn || userProfile){
       let link = '';
-      if(roleCode === ROLE_NNC || cookies["roleCode"] === ROLE_NNC){
+      if(userProfile.role.code === ROLE_NNC){
         link = '/researchers';
       }
-      if(roleCode === ROLE_ADMIN || cookies["roleCode"] === ROLE_ADMIN ){
+      if(userProfile.role.code === ROLE_ADMIN ){
         link = '/admin';
       }
 
@@ -296,7 +304,7 @@ const Header = (props) => {
   }
 
   const onLogOut = () => {
-    removeCookie("fullName");
+    // removeCookie("fullName");
     props.signOut();
   }
 
@@ -306,7 +314,8 @@ const Header = (props) => {
       <>
         {/* <GoogleAuth /> */}
         {
-          cookies["fullName"]
+          // cookies["fullName"]
+          userProfile
           ? (
               <div className="flex flex-col items-center gap-2 lg:flex-row">
                 
@@ -454,7 +463,8 @@ const Header = (props) => {
 
           <div className={`${classes.sectionDesktop} flex gap-2`}>
               <div className="m-auto">
-                  { cookies["fullName"] ? cookies["fullName"] : props.currentFullName } 
+                  {/* { cookies["fullName"] ? cookies["fullName"] : props.currentFullName }  */}
+                  { userProfile ? userProfile.fullName : props.currentFullName}
               </div>
               <div>
                   {renderAccount()}

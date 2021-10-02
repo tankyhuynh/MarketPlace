@@ -8,7 +8,7 @@ import { PROJECTS_COMMERCIAL_URL, PROJECTS_RESEARCHING_URL } from '../../environ
 import _ from 'lodash';
 import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useAlert } from 'react-alert'
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { DropzoneArea } from 'material-ui-dropzone';
@@ -18,6 +18,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
+import validator from 'validator' 
 
 import TinyMCEEditor from '../editor/TinyMCE-Editor'
 import Tab from '../Tab/Tab';
@@ -114,7 +115,32 @@ const HorizontalLinearStepper = (props) => {
         setProject(previousState => ({...previousState, fieldIdList: stateFieldsChecked.checked}))
     }, [stateFieldsChecked.checked])
 
+
+    
+    // const usePrevious = (value) => {
+    //     const ref = React.useRef()
+    //     React.useEffect(() => { ref.current = value })
+        
+    //     return ref.current
+    // }
+    
+    // const useLocationChange = (action) => {
+    //     const location = useLocation()
+    //     const prevLocation = usePrevious(location)
+    //     React.useEffect(() => { 
+    //         action(location, prevLocation) 
+    //     }, [location])
+    // }
+
+    // useLocationChange((location, prevLocation) => { 
+    //     console.log('changed from', prevLocation, 'to', location) 
+    // })
+    
+
+
+    let isProjectDontSaved = true;
     useEffect(() => {
+        
         if(props.project){
             console.log('HorizontalLinearStepper props.project useEffect: ', props.project);
             console.log('HorizontalLinearStepper props.project useEffect: ', props.project.commercialDevelopmentLevelList);
@@ -204,15 +230,18 @@ const HorizontalLinearStepper = (props) => {
         console.log('render Stepper useEffect after: ', project);
 
         // setupBeforeUnloadListener()
-        const unloadCallback = (event) => {
-            event.preventDefault();
-            doSomethingBeforeUnload()
-            event.returnValue = "";
-            return "";
-        };  
-
-        window.addEventListener("beforeunload", unloadCallback);
-        return () => window.removeEventListener("beforeunload", unloadCallback);
+        if(isProjectDontSaved){
+            const unloadCallback = (event) => {
+                event.preventDefault();
+                event.returnValue = "";
+                doSomethingBeforeUnload()
+                
+                return "";
+            };  
+    
+            window.addEventListener("beforeunload", unloadCallback);
+            return () => window.removeEventListener("beforeunload", unloadCallback);
+        }
         
     },[])
 
@@ -229,7 +258,15 @@ const HorizontalLinearStepper = (props) => {
 
     //Event này đang ko có tác dụng trong window.addEventListener("beforeunload", unloadCallback);
     const doSomethingBeforeUnload = () => {
-        alert('Are you want to close this tab doSomethingBeforeUnload?');
+        console.log('doSomethingBeforeUnload')
+        //Chưa chạy được chỗ này
+        history.push({
+            pathname: '/projects/new',
+            search: '?query=abc',
+            state: { projectTemp: project }
+        })
+        // onSubmit();
+        props.onSaveTemp(project);
     }
     
 
@@ -493,6 +530,7 @@ const HorizontalLinearStepper = (props) => {
             .then(response => {
                 if (response) {
                     dispatch({ type: LOADED})
+                    isProjectDontSaved = false
                     console.log('client send:', submitProject);
                     console.log('response:', response);
                         setTimeout(() => {
@@ -507,8 +545,9 @@ const HorizontalLinearStepper = (props) => {
             axios.put(environment.url.java + PROJECTS_COMMERCIAL_URL + `/${props.id}`, {...submitProject, userId: project.userId})
             .then(response => {
                 if (response) {
-                console.log('client send:', submitProject);
-                console.log('response:', response);
+                    dispatch({ type: LOADED})
+                    console.log('client send:', submitProject);
+                    console.log('response:', response);
                     setTimeout(() => {
                         history.push('/projects')
                     }, 500);
@@ -519,9 +558,7 @@ const HorizontalLinearStepper = (props) => {
     }
 
     const handleOtherInputStatusChange = (field) => {
-        console.log('handleOtherInputStatusChange', isOtherInputOpen[field], field)
         setOtherInputOpen(previousState => ({...previousState, [field]: !previousState[field]}))
-        console.log('handleOtherInputStatusChange after', isOtherInputOpen[field] , field)
     }
     const handleOtherInputChange = (field, content) => {
         
@@ -607,7 +644,7 @@ const HorizontalLinearStepper = (props) => {
 
     const renderOtherInputField = (field) => {
         return (
-                <section className="flex gap-4">
+                <section className="flex items-center gap-4">
                     <input 
                         type="checkbox" 
                         id={field} 
@@ -709,7 +746,8 @@ const HorizontalLinearStepper = (props) => {
                     else {
                         return (
                             <>
-                                <input 
+                                { !isOtherInputOpen[field.fieldName] && (
+                                    <input 
                                     key={`${field.fieldName}-${index}`} 
                                     type="checkbox" 
                                     // id={field.fieldName}
@@ -738,7 +776,9 @@ const HorizontalLinearStepper = (props) => {
                                             // : handleMultipleCheckboxFieldListChange('fieldIdList', propsData.id)
                                     }
                                 />
-                                {propsData.name}
+                                ) }
+                                
+                                { !isOtherInputOpen[field.fieldName] ? propsData.name : null}
                             </>
                         )
                     }
@@ -1161,6 +1201,14 @@ const HorizontalLinearStepper = (props) => {
             errors["email"] = "Email không hợp lệ";
           }
         }
+
+        if(project.phoneNumber){
+            if(!validator.isMobilePhone(project.phoneNumber)){
+                formIsValid = false;
+                errors["phoneNumber"] = "Số điện thoại không hợp lệ";
+            }
+        }
+        
     
         setErrors(errors)
         return formIsValid;
