@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import { withAlert } from 'react-alert'
 
 import { login } from '../../../actions/auth';
+import { loaded } from '../../../actions/loading';
 
 class SignIn extends React.Component {
 
@@ -46,8 +47,8 @@ class SignIn extends React.Component {
                 console.log(response);
             })
             .catch((err) => {
-                // alert('')
                 this.props.alert.error('Tên đăng nhập hoặc mật khẩu không chính xác !!!')
+                this.props.loaded();
                 this.props.reset();
                 this.props.history.push('/auth/signin');
             });
@@ -165,4 +166,4 @@ const formWrapped = reduxForm({
     validate: validate
 })(withAlert()(SignIn));
 
-export default connect(mapStateToProps, { login })(formWrapped);
+export default connect(mapStateToProps, { login, loaded })(formWrapped);

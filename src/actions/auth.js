@@ -76,7 +76,6 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
     } catch (error) {
       propsHistory.push(LOGIN_URL);
     }
-    dispatch({ type: LOADED });
     
   };
   // ------ End Auth --------
