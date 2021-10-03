@@ -70,7 +70,7 @@ const ProjectShow = ({ project }) => {
         return items.map(item => {
             return (
                 <div id={item.name} className="flex flex-col">
-                    <span className="mt-4 text-2xl font-medium font-NotoSans">{`${item.name} `}</span>
+                    <span className="mt-4 text-xl font-medium font-NotoSans">{`${item.name} `}</span>
                         { item.isUseEditor 
                             ? <span dangerouslySetInnerHTML={{ __html: item.value }}  /> 
                             : item.value  

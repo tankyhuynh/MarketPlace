@@ -280,6 +280,7 @@ const HorizontalLinearStepper = (props) => {
         website: project ? project.website : '',
         name: project ? project.name : '',
         shortDescription: project ? project.shortDescription : '',
+        inspectorId: 1,
         userId: project ? userIdState : '',
         author: project ? project.author : '',
         fieldIdList: project ? project.fieldIdList : [], // Lĩnh vực phát triển

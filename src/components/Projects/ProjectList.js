@@ -43,7 +43,7 @@ class ProjectList extends React.Component {
         const interval = setInterval(
             // set number every 5s
             () => this.setState({ randomNumber: Math.floor(Math.random() * 100 + 1) }),
-            500
+            1000
           );
 
         return () => {
@@ -134,6 +134,17 @@ class ProjectList extends React.Component {
         }
     }
 
+    isGreaterThanOneDayBetweenNowAnd = (createdDate, conditionDate) => {
+        const newStartDate= new Date(createdDate);
+        const now=new Date();
+        const conditionTime = 1000*60*60*24 * conditionDate;
+        let result
+        result = (now.getTime()-newStartDate.getTime()) < conditionTime;
+        // console.log('date Converter result', result)
+        if (result) {return 1}
+        return 0
+    }
+
     renderList(){
         
         return this.props.projects
@@ -159,9 +170,15 @@ class ProjectList extends React.Component {
                                     <div>
                                         <div className="grid grid-cols-5">
                                             <div className="flex items-baseline col-span-4 gap-2">
-                                                <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
-                                                    New
-                                                </span>
+                                            { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 0.5) 
+                                                ? (
+                                                    <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
+                                                        New
+                                                    </span>
+                                                )
+                                                : null
+                                            }
+                                                
                                                 { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
                                             </div>
                                             <div className="italic font-medium"> 
@@ -187,7 +204,8 @@ class ProjectList extends React.Component {
                                                 { project.user.fullName }
                                             </span>
                                             <span className="self-end">
-                                                { dateFormat(project.createdDate, "HH:MM, dddd, mmmm dS, yyyy") }
+                                                { dateFormat(project.createdDate, "HH:MM, dddd, mmmm dS, yyyy") } <br />
+                                                
                                             </span>
                                         </span>
                                     </div> 
