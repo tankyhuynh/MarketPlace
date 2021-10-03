@@ -809,6 +809,7 @@ const HorizontalLinearStepper = (props) => {
                                     filebrowserUploadUrl: filebrowserUploadUrl,
                                     removeButtons: removeButtons,
                                     isReadOnly: true,
+                                    height: 600
                                 }}
                                 onChange={handleCKEditorChange}
                             />
