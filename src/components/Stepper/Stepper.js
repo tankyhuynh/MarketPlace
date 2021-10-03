@@ -21,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import validator from 'validator' 
 
 import TinyMCEEditor from '../editor/TinyMCE-Editor'
+import { CKEditor } from 'ckeditor4-react';
 import Tab from '../Tab/Tab';
 import ProjectPreview from '../Projects/ProjectPreviewWithEnableEdit';
 import CheckboxView from '../Projects/CheckboxTreeView'
@@ -34,8 +35,8 @@ import { LOADED, LOADING } from '../../actions/types';
 
 const OTHER_ID = 4
 
-// const filebrowserUploadUrl = 'https://marketplace-demo-v1.herokuapp.com/api/v1/fileupload';
-// const removeButtons = 'PasteFromWord'
+const filebrowserUploadUrl = 'https://marketplace-demo-v1.herokuapp.com/api/v1/fileupload';
+const removeButtons = 'PasteFromWord'
 
 
 const HorizontalLinearStepper = (props) => {
@@ -798,30 +799,31 @@ const HorizontalLinearStepper = (props) => {
                             { field.label }
                         </label>
                         <div className="">
-                            {/* <CKEditor 
+                            <CKEditor 
                                 id={field.id}
                                 name={field.fieldName}
                                 activeClass={field.fieldName}
                                 initData={project ? project[field.fieldName] : ''}
+                                editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"
                                 config={{
                                     filebrowserUploadUrl: filebrowserUploadUrl,
                                     removeButtons: removeButtons,
                                     isReadOnly: true,
                                 }}
                                 onChange={handleCKEditorChange}
-                            /> */}
+                            />
 
                             {/* 
                                 Chỗ này chưa biết có chạy đc ko
                                 Mới bỏ vô thử thôi
                             */}
-                            <TinyMCEEditor 
+                            {/* <TinyMCEEditor 
                                 // key={ (Math.random() + 1).toString(36).substring(7) }
                                 // projectId={project ? project.id : ''}
                                 name={field.fieldName}
                                 value={project ? project[field.fieldName] : '????'}
                                 onChange={handleTinyMCEEditorChange} 
-                            />
+                            /> */}
                         </div>
                     </div>
                 )

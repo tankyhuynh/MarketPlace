@@ -2,8 +2,8 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer className="bg-white border-t-2">
-            <div className="flex flex-col max-w-lg px-4 mx-auto italic">    
+        <footer className="text-base bg-white border-t-2">
+            <div className="flex flex-col max-w-lg mx-auto italic">    
                 <div className="font-bold">
                     Thông tin vui lòng gửi về Trường Đại học Cần Thơ:
                 </div>

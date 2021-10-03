@@ -69,8 +69,8 @@ const ProjectShow = ({ project }) => {
     const renderContent = (items) => {
         return items.map(item => {
             return (
-                <div id={item.name} className="flex flex-col font-Roboto">
-                    <span className="mt-4 text-xl font-medium">{`${item.name} `}</span>
+                <div id={item.name} className="flex flex-col">
+                    <span className="mt-4 text-2xl font-medium font-NotoSans">{`${item.name} `}</span>
                         { item.isUseEditor 
                             ? <span dangerouslySetInnerHTML={{ __html: item.value }}  /> 
                             : item.value  
@@ -186,24 +186,20 @@ const ProjectShow = ({ project }) => {
                         value: advantage,
                         isUseEditor: true
                     },
-                    {
-                        name: '',
-                        value: (
-                            <>
-                                <img src={productImage} alt={productImage} className="object-cover w-full h-64" />
-                                <section className="italic text-center">Hình ảnh sản phẩm</section>
-                            </>
-                        ),
-                        isUseEditor: false
-                    },
                     // {
-                    //     name: 'Hình ảnh tổng thể',
+                    //     name: '',
                     //     value: (
-                    //         <div className="flex items-center gap-16 mt-2">
-                    //             <img src={productImage} alt={productImage} />
-                    //         </div>
-                    //     )
-                    // }
+                    //         <>
+                    //             <img 
+                    //                 src={productImage} 
+                    //                 alt={productImage} 
+                    //                 className="float-left object-cover w-full h-64 border-2" 
+                    //             />
+                    //             <section className="italic text-center">Hình ảnh sản phẩm</section>
+                    //         </>
+                    //     ),
+                    //     isUseEditor: false
+                    // },
                 ]
             }
         },
@@ -302,7 +298,8 @@ const ProjectShow = ({ project }) => {
                         </section> */}
                     </div>
                 </div>
-                <div className="grid grid-cols-4 gap-4 p-4">
+                {/* <div className="grid grid-cols-4 gap-4 p-4"> */}
+                <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
                     <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
                         { renderBody(
                             project 

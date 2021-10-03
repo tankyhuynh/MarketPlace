@@ -251,6 +251,7 @@ module.exports = {
     fontFamily: {
       // Custom fontFamily
       'Roboto': ['"Roboto"', 'serif'],
+      'NotoSans': ['"Noto Sans"', 'serif'],
       
       sans: [
         'ui-sans-serif',
