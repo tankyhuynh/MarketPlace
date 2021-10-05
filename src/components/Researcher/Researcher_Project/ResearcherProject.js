@@ -26,6 +26,9 @@ const ResearcherProject  = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [projectsPerPage] = useState(10);
 
+    let userDataLocalStorage = localStorage.getItem("userData");
+    let user = JSON.parse(userDataLocalStorage);
+
 
     useEffect(() => {
         // props.fetchProjects_DaDuyet()
@@ -85,6 +88,7 @@ const ResearcherProject  = (props) => {
                     stt: {
                         name: 'STT',
                         className:'px-6 py-4 whitespace-nowrap',
+                        projectId: project.id,
                         content: (
                                 <div className="flex items-center">
                                     {/* <div className="flex-shrink-0 w-10 h-10">
@@ -143,17 +147,19 @@ const ResearcherProject  = (props) => {
                     actions: {
                         name: 'Hành động',
                         className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
-                        content: (
-                                <div className="flex justify-center mx-auto">
-                                    <Link 
-                                        to={`/projects/edit/${project.id}`} 
-                                        className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
-                                        alt="test"
-                                    >
-                                        <CreateIcon />
-                                    </Link>
-                                </div>
-                        )
+                        content: user.id === project.user.id
+                                    ? (
+                                        <div className="flex justify-center mx-auto">
+                                            <Link 
+                                                to={`/projects/edit/${project.id}`} 
+                                                className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
+                                                alt="test"
+                                            >
+                                                <CreateIcon />
+                                            </Link>
+                                        </div>
+                                    )
+                                    : null
                     }
                 }
             );

@@ -30,6 +30,7 @@ import logo from '../../assets/logo.png'
 
 import environment from '../../environments/environment';
 import { createTempProject } from '../../actions/project';
+import { block_navigation, unblock_navigation } from '../../actions/blockNavigation';
 import { loading, loaded } from '../../actions/loading';
 import { LOADED, LOADING } from '../../actions/types';
 
@@ -291,10 +292,11 @@ const HorizontalLinearStepper = (props) => {
             search: '?query=abc',
             state: { 
                 projectTemp: duAnThuongMai,
-                shouldBlockNavigation: true 
+                shouldBlockNavigation: false 
             }
         })
         // onSubmit();
+        props.block_navigation();
         props.createTempProject(duAnThuongMai);
     }
     
@@ -554,6 +556,7 @@ const HorizontalLinearStepper = (props) => {
             URL = PROJECTS_RESEARCHING_URL
         }
 
+        props.unblock_navigation();
 
         if(props.type === 'create'){
             axios.post(environment.url.java + URL, submitProject)
@@ -1433,5 +1436,9 @@ const HorizontalLinearStepper = (props) => {
 
 export default connect(
     null,
-    { createTempProject }
+    { 
+        createTempProject,
+        block_navigation,
+        unblock_navigation 
+    }
   )(HorizontalLinearStepper);

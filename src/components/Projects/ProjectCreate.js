@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Prompt } from 'react-router-dom'
+import { Prompt } from 'react-router-dom'
 // import axios from 'axios';
 
 import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
@@ -23,7 +23,8 @@ class ProjectCreate extends React.Component {
             'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
             'Xem kết quả'
     ]; 
-    shouldBlockNavigation = this.props.location.state ? this.props.location.state.shouldBlockNavigation : false;
+    // shouldBlockNavigation = this.props.location.state ? this.props.location.state.shouldBlockNavigation : true;
+    shouldBlockNavigation = this.props.isBlockNavigation;
 
     componentDidMount(){
         this.props.fetchLevelDevelopments();
@@ -43,19 +44,16 @@ class ProjectCreate extends React.Component {
         // return () => window.removeEventListener("beforeunload", unloadCallback);
     }
 
-    // componentDidUpdate = () => {
-    //     if(this.props.location.projectTemp){
-    //         // this.onSaveTemp(this.props.location.projectTemp)
-    //     }
-    //     if (this.shouldBlockNavigation) {
-    //         console.log('this.shouldBlockNavigation')
-    //         window.onbeforeunload = () => true
-    //     } else {
-    //         console.log('!== this.shouldBlockNavigation')
-    //         this.onSaveTemp(this.props.location.projectTemp)
-    //         window.onbeforeunload = undefined
-    //     }
-    // }
+    componentDidUpdate = () => {
+        if (this.shouldBlockNavigation) {
+            console.log('this.shouldBlockNavigation')
+            window.onbeforeunload = () => true
+        } else {
+            console.log('!== this.shouldBlockNavigation')
+            this.onSaveTemp(this.props.location.projectTemp)
+            window.onbeforeunload = undefined
+        }
+    }
 
     // isModalOpen = (isOpenModal) => {
     //     setOpenModal(isOpenModal);
@@ -144,12 +142,10 @@ class ProjectCreate extends React.Component {
 
         return (
             <>
-                {/* <Prompt
+                <Prompt
                     when={this.shouldBlockNavigation}
                     message='You have unsaved changes, are you sure you want to leave?'
-                /> */}
-
-                { this.props.location.search }
+                />
 
                 <Stepper 
                     steps={this.steps} 
@@ -172,6 +168,7 @@ const mapStateToProps = (state) => {
         transmissions: Object.values(state.transmissions),
         fields: Object.values(state.fields),
         categories: Object.values(state.categories),
+        isBlockNavigation: state.blockNavigation.isBlock,
     };
 };
   

@@ -74,7 +74,7 @@ class Home extends React.Component {
             <>
                <div className="flex flex-col">
                     {/* <div className="grid justify-self-center"> */}
-                    <div className={`${this.props.projects.length ? 'hero -my-10' : ''} flex flex-col self-center justify-center md:-mx-28`}>
+                    <div className={`${this.props.projects.length ? 'hero my-10 xl:my-16 2xl:my-20' : 'border-2'} flex flex-col self-center md:-mx-28`}>
                         <video
                             // className="absolute w-full mx-0 2xl:relative md:-mx-28 xl:-mx-28"
                             className={`w-full mx-0 heroVideoBg ${this.props.projects.length ? 'absolute' : 'relative'}`}

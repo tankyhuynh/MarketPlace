@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Table = ({ head, body }) => {
@@ -21,7 +22,11 @@ const Table = ({ head, body }) => {
                         </td>
                     );
                 })
-                return <tr>{ colData }</tr> 
+                return (
+                    <Link to={`/projects/show/${row.stt.projectId}`}>
+                        <tr>{ colData }</tr>
+                    </Link>
+                ) 
             })
         }
     }
