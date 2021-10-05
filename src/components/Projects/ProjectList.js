@@ -170,7 +170,7 @@ class ProjectList extends React.Component {
                                     <div>
                                         <div className="grid grid-cols-5">
                                             <div className="flex items-baseline col-span-4 gap-2">
-                                            { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 0.5) 
+                                            { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
                                                 ? (
                                                     <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
                                                         New

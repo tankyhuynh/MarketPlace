@@ -4,7 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
 import streamsReducer from './streamsReducer';
 import projectsReducer from './projectsReducer';
-import projectsDetailReducer from './projectsDetailReducer';
+import tempProjectsDetailReducer from './tempProjectsDetailReducer';
 import levelDevelopmentReducer from './levelDevelopmentReducer';
 import transmissionMethodReducer from './transmissionMethodReducer'
 import fieldReducer from './fieldReducer'
@@ -19,7 +19,7 @@ export default combineReducers({
     levels: levelDevelopmentReducer,
     fields: fieldReducer,
     projects: projectsReducer,
-    projectDetail: projectsDetailReducer,
+    tempProject: tempProjectsDetailReducer,
     streams: streamsReducer,
     transmissions: transmissionMethodReducer,
     load: loadReducer,

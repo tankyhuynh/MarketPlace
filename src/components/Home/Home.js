@@ -74,10 +74,10 @@ class Home extends React.Component {
             <>
                <div className="flex flex-col">
                     {/* <div className="grid justify-self-center"> */}
-                    <div className="flex flex-col self-center justify-center hero md:-mx-28">
+                    <div className={`${this.props.projects.length ? 'hero -my-10' : ''} flex flex-col self-center justify-center md:-mx-28`}>
                         <video
                             // className="absolute w-full mx-0 2xl:relative md:-mx-28 xl:-mx-28"
-                            className="w-full mx-0 heroVideoBg"
+                            className={`w-full mx-0 heroVideoBg ${this.props.projects.length ? 'absolute' : 'relative'}`}
                             autoPlay
                             loop
                             muted
@@ -108,7 +108,7 @@ class Home extends React.Component {
                             : null
                         } */}
                     </div>
-                    
+
                     {
                         this.props.projects.length
                         ? (<div id="cards" className="z-10 2xl:mt-0">
@@ -120,7 +120,7 @@ class Home extends React.Component {
                         : null
                     }
     
-                    <div id="organizations" className={`${this.props.projects.length ? 'mt-4' : 'z-10 md:mt-24 xl:-my-40 2xl:mt-0' }`}>
+                    <div id="organizations" className={`${this.props.projects.length ? 'mt-4' : 'z-10 md:mt-24 xl:my-0 2xl:mt-0' }`}>
                         <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
                         <div className="projects_organizations">
                             { this.renderOrganizations }

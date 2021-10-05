@@ -1,14 +1,14 @@
 // import _ from 'lodash';
 
 import { 
-    FETCH_PROJECT_DETAIL,
+    CREATE_PROJECT_TEMP,
 } from '../actions/types';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = {}, action) => {
     switch (action.type){
-        case FETCH_PROJECT_DETAIL:
-            return { ...state, [action.payload.id]: action.payload } ;
+        case CREATE_PROJECT_TEMP:
+            return { ...state, 1: action.payload } ;
         default:
             return state;
     }

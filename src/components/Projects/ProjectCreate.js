@@ -1,9 +1,9 @@
-import environment from '../../environments/environment';
+// import environment from '../../environments/environment';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Prompt } from 'react-router-dom'
-import axios from 'axios';
+// import { Prompt } from 'react-router-dom'
+// import axios from 'axios';
 
 import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
 import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
@@ -23,20 +23,39 @@ class ProjectCreate extends React.Component {
             'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
             'Xem kết quả'
     ]; 
-    shouldBlockNavigation = false
+    shouldBlockNavigation = this.props.location.state ? this.props.location.state.shouldBlockNavigation : false;
 
-    componentDidUpdate = () => {
-        if(this.props.location.projectTemp){
-            this.onSaveTemp(this.props.location.projectTemp)
-        }
-        if (this.shouldBlockNavigation) {
-            console.log('this.shouldBlockNavigation')
-            window.onbeforeunload = () => true
-        } else {
-            console.log('!== this.shouldBlockNavigation')
-          window.onbeforeunload = undefined
-        }
+    componentDidMount(){
+        this.props.fetchLevelDevelopments();
+        this.props.fetchTransmissionMethods();
+        this.props.fetchFields();
+        this.props.fetchCategories();
+
+        // const unloadCallback = (event) => {
+        //     event.preventDefault();
+        //     event.returnValue = "";
+        //     this.doSomethingBeforeUnload()
+            
+        //     return "";
+        // };  
+
+        // window.addEventListener("beforeunload", unloadCallback);
+        // return () => window.removeEventListener("beforeunload", unloadCallback);
     }
+
+    // componentDidUpdate = () => {
+    //     if(this.props.location.projectTemp){
+    //         // this.onSaveTemp(this.props.location.projectTemp)
+    //     }
+    //     if (this.shouldBlockNavigation) {
+    //         console.log('this.shouldBlockNavigation')
+    //         window.onbeforeunload = () => true
+    //     } else {
+    //         console.log('!== this.shouldBlockNavigation')
+    //         this.onSaveTemp(this.props.location.projectTemp)
+    //         window.onbeforeunload = undefined
+    //     }
+    // }
 
     // isModalOpen = (isOpenModal) => {
     //     setOpenModal(isOpenModal);
@@ -84,37 +103,51 @@ class ProjectCreate extends React.Component {
     //     return null;
     // }
 
-    componentDidMount(){
-        this.props.fetchLevelDevelopments();
-        this.props.fetchTransmissionMethods();
-        this.props.fetchFields();
-        this.props.fetchCategories();
+    doSomethingBeforeUnload = () => {
+        const projectTemp = this.props.location.state ? this.props.location.state.projectTemp : null
+        console.log('doSomethingBeforeUnload ProjectCreate: ', projectTemp)
+        //Chưa chạy được chỗ này
+        
+        // onSubmit();
+        this.onSaveTemp(projectTemp)
     }
+    
 
     onSaveTemp = (project) => {
-        console.log('Save temp project', project);
-        axios.post(environment.url.java + URL, project)
-        .then(response => {
-            if (response) {
-                // dispatch({ type: LOADED})
-                console.log('client send:', project);
-                console.log('response:', response);
-                    setTimeout(() => {
-                        this.props.history.push('/projects')
-                    }, 500);
-            }
-        })
+        console.log('Save temp project ProjectCreate: ', project);
+        // axios.post(environment.url.java + URL, project)
+        // .then(response => {
+        //     if (response) {
+        //         // dispatch({ type: LOADED})
+        //         console.log('client send:', project);
+        //         console.log('response:', response);
+        //             setTimeout(() => {
+        //                 this.props.history.push('/projects')
+        //             }, 500);
+        //     }
+        // })
     }
 
     
     render() {
-        console.log('props project create: ', this.props, ' this.props.location.search', this.props.location.search);
+        console.log('props project create: ', this.props, ' this.props.location', this.props.location.state);
+        const projectTemp = this.props.location.state ? this.props.location.state.projectTemp : null
+        
+        if (this.shouldBlockNavigation) {
+            console.log('this.shouldBlockNavigation')
+            this.onSaveTemp(projectTemp)
+            window.onbeforeunload = () => true
+        } else {
+            console.log('!== this.shouldBlockNavigation')
+            window.onbeforeunload = undefined
+        }
+
         return (
             <>
-                <Prompt
+                {/* <Prompt
                     when={this.shouldBlockNavigation}
                     message='You have unsaved changes, are you sure you want to leave?'
-                />
+                /> */}
 
                 { this.props.location.search }
 

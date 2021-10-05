@@ -6,6 +6,7 @@ import {
   FETCH_PROJECTS,
   FETCH_PROJECT,
   EDIT_PROJECT,
+  CREATE_PROJECT_TEMP
     
 } from './types';
 
@@ -75,4 +76,12 @@ export const editProject = (id, formValues) => async dispatch => {
   dispatch({ type: EDIT_PROJECT, payload: response.data });
   history.push('/');
 };
+
+export const createTempProject = (formValues) => async dispatch => {
+  // const response = await projects.patch(`${PROJECTS_COMMERCIAL_URL}`, formValues);
+
+  dispatch({ type: CREATE_PROJECT_TEMP, payload: formValues });
+  history.push('/');
+};
+
 //------ End Projects --------

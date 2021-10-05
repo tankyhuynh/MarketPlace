@@ -29,7 +29,7 @@ import CheckboxView from '../Projects/CheckboxTreeView'
 import logo from '../../assets/logo.png'
 
 import environment from '../../environments/environment';
-import { createLevel } from '../../actions/levelDevelopment';
+import { createTempProject } from '../../actions/project';
 import { loading, loaded } from '../../actions/loading';
 import { LOADED, LOADING } from '../../actions/types';
 
@@ -176,6 +176,16 @@ const HorizontalLinearStepper = (props) => {
                                     }
                                 ))
                             }
+                            setSelectedTransmissionMethodAndLevel(previousState => (
+                                { ...previousState,
+                                    'comDevLevel': [
+                                        {
+                                            'developmentLevelId': comDevLevel.developmentLevel.id,
+                                            note: comDevLevel.note
+                                        }
+                                    ]
+                                }
+                            ))
                             setOtherInputs(previousState => ({...previousState, comDevLevel: {
                                 name: 'Phương thức chuyển giao',
                                 label: 'Nhập tên phương thức',
@@ -231,6 +241,30 @@ const HorizontalLinearStepper = (props) => {
         console.log('render Stepper useEffect after: ', project);
 
         // setupBeforeUnloadListener()
+        // if(isProjectDontSaved){
+        //     const unloadCallback = (event) => {
+        //         event.preventDefault();
+        //         event.returnValue = "";
+        //         doSomethingBeforeUnload()
+                
+        //         return "";
+        //     };  
+    
+        //     window.addEventListener("beforeunload", unloadCallback);
+        //     return () => window.removeEventListener("beforeunload", unloadCallback);
+        // }
+        
+    },[])
+
+    useEffect(() => {
+        if(project){
+            if(statusId === 4 ){
+                onSubmit();   
+            }
+        }
+    },[statusId])
+
+    useEffect(() => {
         if(isProjectDontSaved){
             const unloadCallback = (event) => {
                 event.preventDefault();
@@ -243,31 +277,25 @@ const HorizontalLinearStepper = (props) => {
             window.addEventListener("beforeunload", unloadCallback);
             return () => window.removeEventListener("beforeunload", unloadCallback);
         }
-        
-    },[])
-
-    useEffect(() => {
-        if(project){
-            if(statusId === 4 ){
-                onSubmit();   
-            }
-        }
-    },[statusId])
+    })
 
    
     
 
     //Event này đang ko có tác dụng trong window.addEventListener("beforeunload", unloadCallback);
     const doSomethingBeforeUnload = () => {
-        console.log('doSomethingBeforeUnload')
+        console.log('doSomethingBeforeUnload', duAnThuongMai)
         //Chưa chạy được chỗ này
         history.push({
             pathname: '/projects/new',
             search: '?query=abc',
-            state: { projectTemp: project }
+            state: { 
+                projectTemp: duAnThuongMai,
+                shouldBlockNavigation: true 
+            }
         })
         // onSubmit();
-        props.onSaveTemp(project);
+        props.createTempProject(duAnThuongMai);
     }
     
 
@@ -275,7 +303,7 @@ const HorizontalLinearStepper = (props) => {
         companyName: project ? project.companyName : '',
         address: project ? project.address : '',
         phoneNumber: project ? project.phoneNumber : '',
-        fax: project ? project.fax : '',
+        fax: project ? project.fax : 'fax duAnThuongMai',
         email: project ? project.email : '',
         website: project ? project.website : '',
         name: project ? project.name : '',
@@ -615,15 +643,10 @@ const HorizontalLinearStepper = (props) => {
         
         if(find) { 
             selected = selected.filter(item => item[field_ID] !== id)
-            console.log('Check with some: find', find)
         } else {
-            console.log('Check with some: Not Equal')
             if(id === OTHER_ID){
-                console.log('ID CLICKED EQUAL: ', field, id);
                 handleOtherInputStatusChange(field)
             }
-            console.log('ID CLICKED DONTTTTTT EQUAL: ', field, id);
-
             selected.push({
                 [field_ID]: id,
                 note: ''
@@ -636,10 +659,6 @@ const HorizontalLinearStepper = (props) => {
             }
         ))
         
-        console.log('selectedTransmissionMethod value: ', id )
-        console.log('selectedTransmissionMethod value[id]: ', selectedTransmissionMethodAndLevel[field][id] )
-        console.log('selectedTransmissionMethod', selectedTransmissionMethodAndLevel)
-
     }
   
     
@@ -661,7 +680,7 @@ const HorizontalLinearStepper = (props) => {
                                 id={`standard-${field}`} 
                                 label={otherInputs[field].label} // Lỗi chỗ này là do cái lĩnh vực chưa phải là checkbox bên backend
                                 variant="standard"
-                                value={props.project ? otherInputs[field].value : duAnThuongMai[field] }
+                                value={ selectedTransmissionMethodAndLevel[field][0] ? selectedTransmissionMethodAndLevel[field][0].note : '' }
                                 onChange={(e) => handleOtherInputChange(field, e.target.value)} 
                             />
                         
@@ -911,7 +930,6 @@ const HorizontalLinearStepper = (props) => {
     
     
     const onCheckboxTreeViewChecked = (checked) => {
-        console.log('onCheckboxTreeViewChecked', checked)
         // setStateFieldsChecked({ checked }) prevMovies => ([...prevMovies, ...result])
         setFieldsChecked(previousState => ({...previousState, checked}))
         
@@ -949,14 +967,17 @@ const HorizontalLinearStepper = (props) => {
                         <label className="stepper--label" htmlFor={field.id}>
                             { field.label }
                         </label>
-                        <TextareaAutosize 
+                        <TextField 
                             id={field.id} 
                             value={project ? project[field.fieldName] : ''}
                             onChange={(e) => handleContentChange(field.fieldName, e.target.value) }
                             // className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" 
                             className="w-full border-2 border-gray-300 rounded-md"
                             error={project ? field.isRequired : ''} 
-                            minRows={2}
+                            // minRows={2}
+                            multiline
+                            rows={2}
+                            rowsMax={4}
                         />
                      </div>
                 )
@@ -1395,7 +1416,8 @@ const HorizontalLinearStepper = (props) => {
 
                 <button 
                     className="text-white bg-gray-500 stepper--btn"
-                    onClick={() => setStatusId(2)}
+                    // onClick={() => setStatusId(2)}
+                    onClick={() =>  props.onSaveTemp(duAnThuongMai)}
                 >
                     Lưu nháp
                 </button>
@@ -1411,5 +1433,5 @@ const HorizontalLinearStepper = (props) => {
 
 export default connect(
     null,
-    { createLevel }
+    { createTempProject }
   )(HorizontalLinearStepper);

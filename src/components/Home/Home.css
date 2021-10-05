@@ -4,13 +4,13 @@
 }
 
 .hero {
-    position: relative;
-    width: 100vw;
+    /* position: relative; */
+    width: 98vw;
     min-height: 100vh;
 }
     
 .heroVideoBg {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     width: 100vw;
