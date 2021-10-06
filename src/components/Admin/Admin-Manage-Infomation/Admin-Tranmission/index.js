@@ -1,16 +1,27 @@
-import React, { useCallback, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect, useState } from 'react';
 import { Confirm } from 'react-st-modal';
 
 import Table from '../../../Table/Table-Admin';
-import { columns, rows } from '../table-data-tranmission';
+import { columns } from '../table-definition';
 
-const AdminTranmission = () => {
+import { fetchTransmissionMethods } from '../../../../actions/transmissionMethod';
+import { connect } from 'react-redux';
 
+
+const AdminCategory = (props) => {
+
+    // const [levels, setLevels] = useState({});
     const [editRowsModel, setEditRowsModel] = useState({});
 
+    useEffect(() => {
+        props.fetchTransmissionMethods()
+    }, [])
+    
     const handleEditRowsModelChange = useCallback((model) => {
         console.log(model);
         setEditRowsModel(model);
+        // setLevels(previousState => ({...previousState, editRowsModel}))
     }, []);
 
     const onCellEditStop = async() => {
@@ -29,10 +40,11 @@ const AdminTranmission = () => {
     }
 
     return (
+        
         <div className="mt-4">
             <Table 
                 columns={columns} 
-                rows={rows}
+                rows={props.transmissions}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
                 onCellEditStop={onCellEditStop}
@@ -41,4 +53,13 @@ const AdminTranmission = () => {
     )
 }
 
-export default AdminTranmission;
+const mapStateToProps = (state) => {
+    return { 
+        transmissions:  Object.values(state.transmissions),
+    };
+}
+
+export default connect(
+    mapStateToProps, 
+    { fetchTransmissionMethods }
+)(AdminCategory);

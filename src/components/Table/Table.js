@@ -18,15 +18,13 @@ const Table = ({ head, body }) => {
                 const colData = head.map(col => {
                     return (
                         <td className={row[col.fieldId].className}>
-                            { row[col.fieldId].content }
+                            <Link to={`/projects/show/${row.stt.projectId}`}>
+                                { row[col.fieldId].content }
+                            </Link>
                         </td>
                     );
                 })
-                return (
-                    <Link to={`/projects/show/${row.stt.projectId}`}>
-                        <tr>{ colData }</tr>
-                    </Link>
-                ) 
+                return <tr>{ colData }</tr>
             })
         }
     }

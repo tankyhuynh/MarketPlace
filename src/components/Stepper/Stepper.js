@@ -322,7 +322,8 @@ const HorizontalLinearStepper = (props) => {
         
         scope: project ? project.scope : 'scope duanTHuongMai',
         price: project ? project.price : '',
-        productImage: project ? project.productImage : ''
+        productImage: project ? project.productImage : '',
+        template: project ? project.template : 1
     }
 
     const duAnNghienCuu = {
@@ -339,7 +340,8 @@ const HorizontalLinearStepper = (props) => {
         statusId: project ? project.statusId : '', // Lưu nháp 0-ko lưu, 1-lưu nháp, 2-chờ duyệt, 3...
         challenge: project ? project.challenge : '',
         solution: project ? project.solution : '',
-        benefit: project ? project.benefit : ''
+        benefit: project ? project.benefit : '',
+        template: project ? project.template : 1
     }
 
 
@@ -1096,6 +1098,12 @@ const HorizontalLinearStepper = (props) => {
         console.log('onSave project', project);
     }
 
+    const onTemplateChange = (templateNumber) => {
+        console.log('onTemplateChange', templateNumber);
+        // setProject({...project, template: templateNumber});
+        setProject(previousState => ({...previousState, template: templateNumber}))
+    }
+
     const renderPreview = () => {
         let projectPreview = {};
         if(openTab === 0){
@@ -1108,7 +1116,7 @@ const HorizontalLinearStepper = (props) => {
         }
         return (
             // <ProjectPreview project={projectPreview} type={openTab}/>
-            <ProjectPreview project={projectPreview} type={openTab} onSave={onSave}/>
+            <ProjectPreview project={projectPreview} type={openTab} onSave={onSave} onTemplateChange={onTemplateChange}/>
         );
     };
 

@@ -9,14 +9,14 @@ export const columns = [
   {
     field: 'name',
     headerName: 'Name',
-    width: 650,
+    width: 450,
+    editable: true,
+  },
+  {
+    field: 'actions',
+    headerName: 'Hành động',
+    width: 150,
     editable: true,
   },
 
-];
-
-export const rows = [
-  { id: 1, code: 'THEO_DON_DAT_HANG', name: 'Theo đơn đặt hàng' },
-  { id: 2, code: 'BAN_TRUC_TIEP', name: 'Bán trực tiếp' },
-  { id: 3, code: 'DAO_TAO', name: 'Đào tạo' }
 ];

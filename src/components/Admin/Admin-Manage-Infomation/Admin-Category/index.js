@@ -5,19 +5,19 @@ import { Confirm } from 'react-st-modal';
 import Table from '../../../Table/Table-Admin';
 import { columns } from '../table-definition';
 
-import { fetchFields } from '../../../../actions/field'
+import { fetchCategories } from '../../../../actions/category';
 import { connect } from 'react-redux';
 
 
-const AdminField = (props) => {
+const AdminCategory = (props) => {
 
     // const [levels, setLevels] = useState({});
     const [editRowsModel, setEditRowsModel] = useState({});
 
     useEffect(() => {
-        props.fetchFields()
+        props.fetchCategories()
     }, [])
-
+    
     const handleEditRowsModelChange = useCallback((model) => {
         console.log(model);
         setEditRowsModel(model);
@@ -44,7 +44,7 @@ const AdminField = (props) => {
         <div className="mt-4">
             <Table 
                 columns={columns} 
-                rows={props.fields}
+                rows={props.categories}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
                 onCellEditStop={onCellEditStop}
@@ -55,11 +55,11 @@ const AdminField = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        fields:  Object.values(state.fields),
+        categories:  Object.values(state.categories),
     };
 }
 
 export default connect(
     mapStateToProps, 
-    { fetchFields }
-)(AdminField);
+    { fetchCategories }
+)(AdminCategory);

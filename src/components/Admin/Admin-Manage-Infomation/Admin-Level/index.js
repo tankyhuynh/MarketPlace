@@ -1,16 +1,27 @@
-import React, { useCallback, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect, useState } from 'react';
 import { Confirm } from 'react-st-modal';
 
 import Table from '../../../Table/Table-Admin';
-import { columns, rows } from '../table-data-level';
+import { columns } from '../table-definition';
 
-const AdminLevel = () => {
+import { fetchLevelDevelopments } from '../../../../actions/levelDevelopment'
+import { connect } from 'react-redux';
 
+
+const AdminLevel = (props) => {
+
+    // const [levels, setLevels] = useState({});
     const [editRowsModel, setEditRowsModel] = useState({});
+
+    useEffect(() => {
+        props.fetchLevelDevelopments()
+    }, [])
 
     const handleEditRowsModelChange = useCallback((model) => {
         console.log(model);
         setEditRowsModel(model);
+        // setLevels(previousState => ({...previousState, editRowsModel}))
     }, []);
 
     const onCellEditStop = async() => {
@@ -29,16 +40,26 @@ const AdminLevel = () => {
     }
 
     return (
+        
         <div className="mt-4">
             <Table 
                 columns={columns} 
-                rows={rows}
+                rows={props.levels}
                 editRowsModel={editRowsModel}
-                handleEditRowsModelChange={handleEditRowsModelChange}
-                onCellEditStop={onCellEditStop} 
+                handleEditRowsModelChange={handleEditRowsModelChange} 
+                onCellEditStop={onCellEditStop}
             />
         </div>
     )
 }
 
-export default AdminLevel;
+const mapStateToProps = (state) => {
+    return { 
+        levels:  Object.values(state.levels),
+    };
+}
+
+export default connect(
+    mapStateToProps, 
+    { fetchLevelDevelopments }
+)(AdminLevel);

@@ -1,6 +1,7 @@
 import './template.css'
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 
 // import img1_a from '../../../assets/img1_a.png';
@@ -19,10 +20,17 @@ import React from 'react';
 
 const TYPE_COMMERCIAL = 'CP'
 // const TYPE_RESEARCHING = 'RP'
+const TYPE_TEMPLATE_PREVIEW = 'preview'
+// const TYPE_TEMPLATE_SHOW = 'show'
+const OTHER_LEVELDEVELOP_ID = 4
+// const OTHER_TRANSMISSION_ID = 4
 
-const ProjectShow = ({ project }) => {
+
+
+const ProjectShow = ({ project , type, projectType, fields, levels, transmissions}) => {
 
     console.log('ProjectShow', project)
+    console.log('ProjectShow projectType: ', projectType)
 
     // const renderImage = (image) => {
     //     if(image){
@@ -70,11 +78,13 @@ const ProjectShow = ({ project }) => {
         return items.map(item => {
             return (
                 <div id={item.name} className="flex flex-col">
-                    <span className="mt-4 text-xl font-medium font-NotoSans">{`${item.name} `}</span>
-                        { item.isUseEditor 
-                            ? <span dangerouslySetInnerHTML={{ __html: item.value }}  /> 
-                            : item.value  
-                        }
+                    <span className="mt-4 text-2xl font-medium ">
+                        {`${item.name} `}
+                    </span>
+                    { item.isUseEditor 
+                        ? <span dangerouslySetInnerHTML={{ __html: item.value }}  /> 
+                        : item.value  
+                    }
                 </div>
             );
         })
@@ -137,31 +147,61 @@ const ProjectShow = ({ project }) => {
                     },
                     {
                         name: 'Lĩnh vực áp dụng',
-                        value: (
-                            projectFieldList.map(field => {
+                        value: type === TYPE_TEMPLATE_PREVIEW 
+                            ? project.fieldIdList.map(fieldId => {
+                                return <span>{fields[fieldId].name}</span>
+                            })
+                            : projectFieldList.map(field => {
                                 return <span>{field.field.name}</span>
                             })
-                        )
+                        
                     },
                     {
                         name: 'Mức độ phát triển',
-                        value: commercialDevelopmentLevelList ? (
-                            commercialDevelopmentLevelList.map(level => {
-                                // eslint-disable-next-line eqeqeq
-                                if(level.developmentLevel.id != OTHER_ID ){
-                                    return <span>{level.developmentLevel.name}</span> 
-                                }
-                                return <span>{level.note}</span> 
-                            })
-                        ) : 1
+                        // type === TYPE_TEMPLATE_PREVIEW 
+                        value: type === TYPE_TEMPLATE_PREVIEW 
+                            ? (
+                                project.comDevLevel.length
+                                ?   project.comDevLevel.map(projectLevel => {
+                                        if(projectLevel.developmentLevelId === OTHER_LEVELDEVELOP_ID){
+                                            return <div>{ projectLevel.note }</div>
+                                        }
+                                        else return levels[projectLevel.developmentLevelId].name
+                                    })
+                                : ''
+                            ) 
+                            : (
+                                commercialDevelopmentLevelList ? (
+                                    commercialDevelopmentLevelList.map(level => {
+                                        // eslint-disable-next-line eqeqeq
+                                        if(level.developmentLevel.id != OTHER_ID ){
+                                            return <span>{level.developmentLevel.name}</span> 
+                                        }
+                                        return <span>{level.note}</span> 
+                                    })
+                                ) : 1
+                            )
                     },
                     {
                         name: 'Phương thức chuyển giao',
-                        value: commercialTransmissionMethodList ? (
-                            commercialTransmissionMethodList.map(transmission => {
-                                return <span>{transmission.transmissionMethod.name}</span> 
-                            })
-                        ) : 1
+                        value: type === TYPE_TEMPLATE_PREVIEW  
+                            ? (
+                                project.comTransMethod.length
+                                ?   project.comTransMethod.map(projectTransmission => {
+                                        if(projectTransmission.transmissionMethodId === OTHER_LEVELDEVELOP_ID){
+                                            return <div>{ projectTransmission.note }</div>
+                                        }
+                                        else return transmissions[projectTransmission.transmissionMethodId].name
+                                    })
+                                : ''
+                            ) 
+                            : (
+                                commercialTransmissionMethodList ? (
+                                        commercialTransmissionMethodList.map(transmission => {
+                                            return <span>{transmission.transmissionMethod.name}</span> 
+                                        })
+                                ) : 1
+                            )
                     },
                     {
                         name: 'Phạm vi thương mại hóa',
@@ -233,11 +273,13 @@ const ProjectShow = ({ project }) => {
                     },
                     {
                         name: 'Lĩnh vực áp dụng',
-                        value: (
-                            projectFieldList.map(field => {
+                        value: type === TYPE_TEMPLATE_PREVIEW 
+                            ? project.fieldIdList.map(fieldId => {
+                                return <span>{fields[fieldId].name}</span>
+                            })
+                            : projectFieldList.map(field => {
                                 return <span>{field.field.name}</span>
                             })
-                        )
                     }
                 ]
             },
@@ -299,24 +341,48 @@ const ProjectShow = ({ project }) => {
                     </div>
                 </div>
                 {/* <div className="grid grid-cols-4 gap-4 p-4"> */}
-                <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
-                    <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
-                        { renderBody(
-                            project 
-                            ?(project.type === TYPE_COMMERCIAL 
-                                ? templateViewProject.commercial.generalInfo 
-                                : templateViewProject.researching.generalInfo) 
-                            : null) }
+                
+                {type === TYPE_TEMPLATE_PREVIEW
+                    ?(
+                        <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
+                        <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
+                            { renderBody(
+                                project 
+                                ?(projectType === TYPE_COMMERCIAL 
+                                    ? templateViewProject.commercial.generalInfo 
+                                    : templateViewProject.researching.generalInfo) 
+                                : null) }
+                        </div>
+                        <div id="project_content" className="col-span-3 ml-6">
+                            { renderBody(
+                                project 
+                                ? (projectType === TYPE_COMMERCIAL 
+                                    ? templateViewProject.commercial.solutionInfo 
+                                    : templateViewProject.researching.solutionInfo) 
+                                : null) }
+                        </div>
                     </div>
-                    <div id="project_content" className="col-span-3 ml-6">
-                        { renderBody(
-                            project 
-                            ? (project.type === TYPE_COMMERCIAL 
-                                ? templateViewProject.commercial.solutionInfo 
-                                : templateViewProject.researching.solutionInfo) 
-                            : null) }
-                    </div>
-                </div>
+                    ): (
+                        <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
+                            <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
+                                { renderBody(
+                                    project 
+                                    ?(project.type === TYPE_COMMERCIAL 
+                                        ? templateViewProject.commercial.generalInfo 
+                                        : templateViewProject.researching.generalInfo) 
+                                    : null) }
+                            </div>
+                            <div id="project_content" className="col-span-3 ml-6">
+                                { renderBody(
+                                    project 
+                                    ? (project.type === TYPE_COMMERCIAL 
+                                        ? templateViewProject.commercial.solutionInfo 
+                                        : templateViewProject.researching.solutionInfo) 
+                                    : null) }
+                            </div>
+                        </div>
+                    )
+                }
                
             </div>
         </>
@@ -324,4 +390,14 @@ const ProjectShow = ({ project }) => {
     )
 }
 
-export default ProjectShow;
+const mapStateToProps = (state, ownProps) => {
+    return { 
+        fields: state.fields,
+        levels: state.levels,
+        transmissions: state.transmissions, 
+    };
+};
+export default connect(
+    mapStateToProps,
+    {  }
+  )(ProjectShow);

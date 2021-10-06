@@ -9,6 +9,7 @@ import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
 import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
 import { fetchFields } from '../../actions/field'
 import { fetchCategories } from '../../actions/category'
+import { block_navigation } from '../../actions/blockNavigation'
 // import { fetchStatuses } from '../../actions/status'
 
 
@@ -31,6 +32,7 @@ class ProjectCreate extends React.Component {
         this.props.fetchTransmissionMethods();
         this.props.fetchFields();
         this.props.fetchCategories();
+        this.props.block_navigation();
 
         // const unloadCallback = (event) => {
         //     event.preventDefault();
@@ -178,6 +180,7 @@ export default connect(
         fetchLevelDevelopments, 
         fetchTransmissionMethods, 
         fetchFields,
-        fetchCategories
+        fetchCategories,
+        block_navigation
     }
 )(ProjectCreate);

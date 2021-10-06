@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux'
 // import { render } from 'react-dom';
 import { EditablesContext, theme } from '../editor/editables/EditablesContext';
 
+import Template1 from '../Template/ProjectShow/Template1'
+import Template2 from '../Template/ProjectShow/Template2'
+
 import EditableParagraph from '../editor/editables/EditableParagraph';
 import EditableText from '../editor/editables/EditableText';
 import EditableImageUpload from '../editor/editables/EditableImageUpload'
@@ -77,6 +80,8 @@ const initData = {
     }
 }
 
+const NUMBER_OF_TEMPLATES = 2;
+
 //   const collectionItemDefaultContent = {
 //     content: {
 //       text: "I'm a new item!"
@@ -106,6 +111,8 @@ const initData = {
 
     const OTHER_LEVELDEVELOP_ID = 4
     const OTHER_TRANSMISSION_ID = 4
+    const TYPE_TEMPLATE_PREVIEW = 'preview'
+    const TYPE_TEMPLATE_SHOW = 'show'
 
   
   const ProjectPreview = (props) => {
@@ -282,7 +289,11 @@ const initData = {
 
     const [pageContent, setPageContent] = useState(initData);
     const [state, setState] = useState({ theme: theme });
-    const [template, setTemplate] = useState(1);
+    const [templateNumber, setTemplateNumber] = useState(1);
+    const [template, setTemplate] = useState({
+        1: <Template1 project={props.project} type={TYPE_TEMPLATE_PREVIEW} projectType={props.type === 0 ? 'CP' : 'RP'} />,
+        2: <Template2 project={props.project} type={TYPE_TEMPLATE_PREVIEW} projectType={props.type === 0 ? 'CP' : 'RP'} />,
+    })
 
     useEffect(() => {
         if(props.project){
@@ -591,10 +602,23 @@ const initData = {
 
     const renderTemplate = () => {
         // if(template){
-        //     return renderTemplate1()
+        //     // return renderTemplate1()
+        //     return <Template1 project={props.project} type={TYPE_TEMPLATE_PREVIEW} projectType={props.type === 0 ? 'CP' : 'RP'} />
         // }
-        return renderTemplate2()
+        // return renderTemplate2()
+        return template[templateNumber]
         
+    }
+
+    const onTemplateChange = () => {
+        let templateIndex = templateNumber
+        if(templateNumber === NUMBER_OF_TEMPLATES) {
+            templateIndex = 1
+        }
+        else templateIndex++
+
+        setTemplateNumber(templateIndex)
+        props.onTemplateChange(templateIndex)
     }
 
     return (
@@ -608,12 +632,12 @@ const initData = {
                             {`${state.showEditingControls ? 'Dừng chỉnh sửa' : 'Chỉnh sửa'}`}
                     </button> */}
 
-                    {/* <button
-                        onClick={() => setTemplate(!template)}
+                    <button
+                        onClick={() => onTemplateChange()}
                         className={`btn__changeTemplate my-4 bg-green-500`} 
                     >
                         Đổi mẫu
-                    </button> */}
+                    </button>
                 </div>
                 
             { renderTemplate() }

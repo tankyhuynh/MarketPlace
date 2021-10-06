@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import Tab from '../../Tab/Tab';
 import TableField from './Admin-Field';
+import TableCategory from './Admin-Category';
 import TableLevel from './Admin-Level';
 import TableStatus from './Admin-Status';
 import TableTranmission from './Admin-Tranmission';
@@ -15,6 +16,12 @@ const AdminDashboard = () => {
     const [openTab, setOpenTab] = useState(0);
 
     const tabs = [
+        {
+            title: 'Thông tin danh mục lĩnh vực',
+            content: (
+               <TableCategory />
+            )
+        },
         {
             title: 'Thông tin lĩnh vực',
             content: (
@@ -84,7 +91,7 @@ const AdminDashboard = () => {
                             />
                         </svg>
                         <input 
-                            type="text" 
+                            type="text"  
                             placeholder="Search Components" 
                             className="focus:outline-none" 
                         />
