@@ -14,11 +14,26 @@ const AdminUsers = (props) => {
         props.fetchFunctions();
     }, [])
 
+    const renderCheckboxUserChildren = (user) => {
+        const children = []
+        // props.fields.filter(field => field.category.id === domain.id)
+        //     .map(item => {
+        //         return children.push({
+        //             value: `${item.id}`,
+        //             label: item.name,
+        //         })
+        //     })
+        if(children.length){
+            return children
+        }
+        return null
+    }
+
     const nodes = props.functions.map(userFunction => {
         return {
             value: userFunction.name,
             label: userFunction.description,
-            children: []
+            children: renderCheckboxUserChildren(userFunction)
         }
     });
 

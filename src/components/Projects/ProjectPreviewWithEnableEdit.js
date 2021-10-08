@@ -123,6 +123,8 @@ const NUMBER_OF_TEMPLATES = 2;
     console.log('levels Selector: ', levels)
     console.log('fields Selector: ', levels)
 
+    console.log('ProjectPreview Selector projectType: ', props.type)
+
     console.log(props.project)
     //   const fields = useSelector(state => state.fields);
     //   const levels = useSelector(state => state.levels);
@@ -632,12 +634,12 @@ const NUMBER_OF_TEMPLATES = 2;
                             {`${state.showEditingControls ? 'Dừng chỉnh sửa' : 'Chỉnh sửa'}`}
                     </button> */}
 
-                    <button
+                    {/* <button
                         onClick={() => onTemplateChange()}
                         className={`btn__changeTemplate my-4 bg-green-500`} 
                     >
                         Đổi mẫu
-                    </button>
+                    </button> */}
                 </div>
                 
             { renderTemplate() }

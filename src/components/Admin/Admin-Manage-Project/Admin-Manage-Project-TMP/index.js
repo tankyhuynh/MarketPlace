@@ -13,6 +13,8 @@ import Table from '../../../Table/Table-Admin';
 import { columns } from '../table-cols';
 import { Link } from 'react-router-dom';
 
+const TMP_PROJECT_ID = 4;
+
 
 const AdminProjectAll = (props) => {
 
@@ -49,7 +51,7 @@ const AdminProjectAll = (props) => {
         <div className="mt-4">
             <Table 
                 columns={columns} 
-                rows={renderRows(props.projects)}
+                rows={renderRows(props.projects.filter(project => project.status.id === TMP_PROJECT_ID))}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange}
             />

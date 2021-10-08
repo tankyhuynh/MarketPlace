@@ -193,9 +193,9 @@ const Header = (props) => {
     return (
         <>
             { renderUserOptionsWeb(className) }
-            <Link to="/researchers" className={`header--link ${className}`}>
+            {/* <Link to="/researchers" className={`header--link ${className}`}>
                 Menu chức năng
-            </Link>
+            </Link> */}
         </>
     )
   }

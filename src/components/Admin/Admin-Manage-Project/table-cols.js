@@ -1,38 +1,47 @@
 const fieldFormatter = ({ value }) => { 
-  return <span style={{textTransform: 'uppercase'}}>{value ? value.name : ''}</span> 
+  const levelsFormated =  value.map(level => {
+      return level.developmentLevel.name 
+    })
+
+    return levelsFormated.join(', ')
 };
 const actionFormatter = ({ value }) => { 
-  return (
-    <div>{ value }</div>
-  )
+    return (
+      <div>{ value }</div>
+    )
 };
 
+
 export const columns = [
-    { field: 'id', headerName: 'ID', width: 10 }, 
+    { 
+      field: 'id', 
+      headerName: 'ID', 
+      width: 10 
+    }, 
     {
       field: 'name',
       headerName: 'Tên dự án',
       width: 350,
-      editable: true,
+      editable: false,
     },
     {
-      field: 'field',
+      field: 'commercialDevelopmentLevelList',
       headerName: 'Lĩnh vực',
       width: 150,
-      editable: true,
+      editable: false,
       renderCell: fieldFormatter
     },
     {
-      field: 'date',
+      field: 'createdDate',
       headerName: 'Ngày gửi',
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: 'action',
       headerName: 'Action',
       width: 130,
-      editable: true,
+      editable: false,
       renderCell: actionFormatter
     },
  

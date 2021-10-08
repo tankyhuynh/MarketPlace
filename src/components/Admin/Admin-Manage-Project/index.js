@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import Tab from '../../Tab/Tab';
 import AdminManageProjectAll from './Admin-Manage-Project-All'
+import AdminManageProjectDD from './Admin-Manage-Project-DD'
+import AdminManageProjectCD from './Admin-Manage-Project-CD'
 
 
 const tabs = [
@@ -15,21 +17,33 @@ const tabs = [
     },
     {
         title: 'Đã duyệt',
-        content: 'Dự án đã duyệt'
+        content: (
+            <>
+                <AdminManageProjectDD />
+            </>
+        )
     },
     {
         title: 'Chờ duyệt',
-        content: 'Dự án chờ duyệt'
+        content: (
+            <>
+                <AdminManageProjectCD />
+            </>
+        )
     },
     {
         title: 'Từ chối',
-        content: 'Dự án từ chối'
+        content: (
+            <>
+                <AdminManageProjectCD />
+            </>
+        )
     },
     {
         title: 'Nháp',
         content: (
             <>
-               {'Dự án nháp'}
+                <AdminManageProjectCD />
             </>
         )
     }

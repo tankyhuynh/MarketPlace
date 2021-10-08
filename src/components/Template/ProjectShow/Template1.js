@@ -30,7 +30,6 @@ const OTHER_LEVELDEVELOP_ID = 4
 const ProjectShow = ({ project , type, projectType, fields, levels, transmissions}) => {
 
     console.log('ProjectShow', project)
-    console.log('ProjectShow projectType: ', projectType)
 
     // const renderImage = (image) => {
     //     if(image){
@@ -99,7 +98,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
         name,
         shortDescription,
         // user,
-        // author,
+        author,
         projectFieldList,
         // status,
         process,
@@ -146,6 +145,11 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                         isUseEditor: false
                     },
                     {
+                        name: 'Nhóm tác giả',
+                        value: author,
+                        isUseEditor: false
+                    },
+                    {
                         name: 'Lĩnh vực áp dụng',
                         value: type === TYPE_TEMPLATE_PREVIEW 
                             ? project.fieldIdList.map(fieldId => {
@@ -159,49 +163,57 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     {
                         name: 'Mức độ phát triển',
                         // type === TYPE_TEMPLATE_PREVIEW 
-                        value: type === TYPE_TEMPLATE_PREVIEW 
+                        value: projectType === TYPE_COMMERCIAL
                             ? (
-                                project.comDevLevel.length
-                                ?   project.comDevLevel.map(projectLevel => {
-                                        if(projectLevel.developmentLevelId === OTHER_LEVELDEVELOP_ID){
-                                            return <div>{ projectLevel.note }</div>
-                                        }
-                                        else return levels[projectLevel.developmentLevelId].name
-                                    })
-                                : ''
-                            ) 
-                            : (
-                                commercialDevelopmentLevelList ? (
-                                    commercialDevelopmentLevelList.map(level => {
-                                        // eslint-disable-next-line eqeqeq
-                                        if(level.developmentLevel.id != OTHER_ID ){
-                                            return <span>{level.developmentLevel.name}</span> 
-                                        }
-                                        return <span>{level.note}</span> 
-                                    })
-                                ) : 1
+                                type === TYPE_TEMPLATE_PREVIEW 
+                                ? (
+                                    project.comDevLevel.length
+                                    ?   project.comDevLevel.map(projectLevel => {
+                                            if(projectLevel.developmentLevelId === OTHER_LEVELDEVELOP_ID){
+                                                return <div>{ projectLevel.note }</div>
+                                            }
+                                            else return levels[projectLevel.developmentLevelId].name
+                                        })
+                                    : ''
+                                ) 
+                                : (
+                                    commercialDevelopmentLevelList ? (
+                                        commercialDevelopmentLevelList.map(level => {
+                                            // eslint-disable-next-line eqeqeq
+                                            if(level.developmentLevel.id != OTHER_ID ){
+                                                return <span>{level.developmentLevel.name}</span> 
+                                            }
+                                            return <span>{level.note}</span> 
+                                        })
+                                    ) : 1
+                                )
                             )
+                            : null
                     },
                     {
                         name: 'Phương thức chuyển giao',
-                        value: type === TYPE_TEMPLATE_PREVIEW  
-                            ? (
-                                project.comTransMethod.length
-                                ?   project.comTransMethod.map(projectTransmission => {
-                                        if(projectTransmission.transmissionMethodId === OTHER_LEVELDEVELOP_ID){
-                                            return <div>{ projectTransmission.note }</div>
-                                        }
-                                        else return transmissions[projectTransmission.transmissionMethodId].name
-                                    })
-                                : ''
-                            ) 
-                            : (
-                                commercialTransmissionMethodList ? (
-                                        commercialTransmissionMethodList.map(transmission => {
-                                            return <span>{transmission.transmissionMethod.name}</span> 
-                                        })
-                                ) : 1
-                            )
+                        value: projectType === TYPE_COMMERCIAL
+                                ? (
+                                    type === TYPE_TEMPLATE_PREVIEW  
+                                        ? (
+                                            project.comTransMethod.length
+                                            ?   project.comTransMethod.map(projectTransmission => {
+                                                    if(projectTransmission.transmissionMethodId === OTHER_LEVELDEVELOP_ID){
+                                                        return <div>{ projectTransmission.note }</div>
+                                                    }
+                                                    else return transmissions[projectTransmission.transmissionMethodId].name
+                                                })
+                                            : ''
+                                        ) 
+                                        : (
+                                            commercialTransmissionMethodList ? (
+                                                    commercialTransmissionMethodList.map(transmission => {
+                                                        return <span>{transmission.transmissionMethod.name}</span> 
+                                                    })
+                                            ) : 1
+                                        )
+                                )
+                                : null
                     },
                     {
                         name: 'Phạm vi thương mại hóa',

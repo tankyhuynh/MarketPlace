@@ -336,7 +336,7 @@ const HorizontalLinearStepper = (props) => {
         shortDescription: project ? project.shortDescription : '',
         userId: project ? userIdState : '',
         author: 'authors duAnNghienCuu',
-        fieldId: project ? project.fieldIdList : [], // Lĩnh vực phát triển
+        fieldIdList: project ? project.fieldIdList : [], // Lĩnh vực phát triển
         statusId: project ? project.statusId : '', // Lưu nháp 0-ko lưu, 1-lưu nháp, 2-chờ duyệt, 3...
         challenge: project ? project.challenge : '',
         solution: project ? project.solution : '',
