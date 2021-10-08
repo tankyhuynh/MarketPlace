@@ -12,10 +12,6 @@ import Tab from '../../Tab/Tab'
 import CreateIcon from '@material-ui/icons/Create';
 
 import { 
-    fetchProjects_DaDuyet,
-    fetchProjects_ChoDuyet,
-    fetchProjects_TuChoi,
-    fetchProjects_Nhap,
     fetchProjects_Commercial 
 } 
 from '../../../actions/project'
@@ -31,10 +27,6 @@ const ResearcherProject  = (props) => {
 
 
     useEffect(() => {
-        // props.fetchProjects_DaDuyet()
-        // props.fetchProjects_ChoDuyet()
-        // props.fetchProjects_TuChoi()
-        // props.fetchProjects_Nhap()
         props.fetchProjects_Commercial()
 
     }, []);
@@ -81,88 +73,90 @@ const ResearcherProject  = (props) => {
     const renderProject = (projects) => {
         console.log('projects: ', projects);
         return projects
-        .map((project, index) => {
-            console.log('renderProjects', projects, 'id:', project.id);
-            return (
-                {
-                    stt: {
-                        name: 'STT',
-                        className:'px-6 py-4 whitespace-nowrap',
-                        projectId: project.id,
-                        content: (
-                                <div className="flex items-center">
-                                    {/* <div className="flex-shrink-0 w-10 h-10">
-                                        <img 
-                                            className="w-10 h-10 rounded-full" 
-                                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
-                                            alt="" 
-                                        />
-                                    </div> */}
-                                    <div className="ml-4">
-                                        <div className="text-sm font-medium text-gray-900">
-                                            { project.id }
+            .filter(project => user.id === project.user.id)
+            .map((project, index) => {
+                console.log('renderProjects', projects, 'id:', project.id);
+                // user.id === project.user.id
+                return (
+                    {
+                        stt: {
+                            name: 'STT',
+                            className:'px-6 py-4 whitespace-nowrap',
+                            projectId: project.id,
+                            content: (
+                                    <div className="flex items-center">
+                                        {/* <div className="flex-shrink-0 w-10 h-10">
+                                            <img 
+                                                className="w-10 h-10 rounded-full" 
+                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+                                                alt="" 
+                                            />
+                                        </div> */}
+                                        <div className="ml-4">
+                                            <div className="text-sm font-medium text-gray-900">
+                                                { project.id }
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                        )
-                    },
-                    name: {
-                        name: 'Tên dự án',
-                        className: 'px-6 py-4 whitespace-nowrap',
-                        content: (
-                                <>
-                                    <div className="text-sm text-gray-500">
-                                        { renderTen(project.name) }
-                                    </div>
-                                </>
-                        )
-                    },
-                    field: {
-                        name: 'Lĩnh vực ',
-                        className: 'px-6 py-4 whitespace-nowrap',
-                        content: (
-                                <div className="flex flex-col gap-1">
-                                    { renderProjectFields(project.projectFieldList) }
-                                </div>
-                        )
-                    },
-                    sentDate: {
-                        name: 'Ngày gửi',
-                        className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-                        content: (
-                                <>
-                                    { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
-                                </>
-                        )
-                    },
-                    confirmDate: {
-                        name: 'Ngày duyệt',
-                        className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
-                        content: (
-                                <>
-                                    { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
-                                </>
-                        )
-                    },
-                    actions: {
-                        name: 'Hành động',
-                        className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
-                        content: user.id === project.user.id
-                                    ? (
-                                        <div className="flex justify-center mx-auto">
-                                            <Link 
-                                                to={`/projects/edit/${project.id}`} 
-                                                className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
-                                                alt="test"
-                                            >
-                                                <CreateIcon />
-                                            </Link>
+                            )
+                        },
+                        name: {
+                            name: 'Tên dự án',
+                            className: 'px-6 py-4 whitespace-nowrap',
+                            content: (
+                                    <>
+                                        <div className="text-sm text-gray-500">
+                                            { renderTen(project.name) }
                                         </div>
-                                    )
-                                    : null
+                                    </>
+                            )
+                        },
+                        field: {
+                            name: 'Lĩnh vực ',
+                            className: 'px-6 py-4 whitespace-nowrap',
+                            content: (
+                                    <div className="flex flex-col gap-1">
+                                        { renderProjectFields(project.projectFieldList) }
+                                    </div>
+                            )
+                        },
+                        sentDate: {
+                            name: 'Ngày gửi',
+                            className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+                            content: (
+                                    <>
+                                        { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
+                                    </>
+                            )
+                        },
+                        confirmDate: {
+                            name: 'Ngày duyệt',
+                            className: 'px-6 py-4 text-sm text-gray-500 whitespace-nowrap',
+                            content: (
+                                    <>
+                                        { dateFormat(project.date, "hh:mm, dddd, mmmm dS, yyyy") }
+                                    </>
+                            )
+                        },
+                        actions: {
+                            name: 'Hành động',
+                            className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
+                            content: user.id === project.user.id
+                                        ? (
+                                            <div className="flex justify-center mx-auto">
+                                                <Link 
+                                                    to={`/projects/edit/${project.id}`} 
+                                                    className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
+                                                    alt="test"
+                                                >
+                                                    <CreateIcon />
+                                                </Link>
+                                            </div>
+                                        )
+                                        : null
+                        }
                     }
-                }
-            );
+                );
     })
     }
     // const renderTempProject = (tempProjects) => {
@@ -459,10 +453,6 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     { 
-        fetchProjects_DaDuyet,
-        fetchProjects_ChoDuyet,
-        fetchProjects_TuChoi,
-        fetchProjects_Nhap,
         fetchProjects_Commercial  
     }
 )(ResearcherProject);

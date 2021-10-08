@@ -13,6 +13,8 @@ import AppsIcon from '@material-ui/icons/Apps';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import DnsIcon from '@mui/icons-material/Dns';
+import FunctionsIcon from '@mui/icons-material/Functions';
 
 const navItems = [
     {
@@ -33,6 +35,18 @@ const navItems = [
         icon: <InfoIcon />,
         name: 'Quản lý người dùng',
         path: '/users',
+    },
+    {
+        className: 'nav-items',
+        icon: <DnsIcon />,
+        name: 'Quản lý domain',
+        path: '/domains',
+    },
+    {
+        className: 'nav-items',
+        icon: <FunctionsIcon />,
+        name: 'Quản lý chức năng',
+        path: '/functions',
     },
     {
         className: 'nav-items',

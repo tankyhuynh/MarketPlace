@@ -1,4 +1,4 @@
-import field from '../apis/field';
+import function_api from '../apis/function';
 import { FUNCTIONS_URL } from '../environments/constraints';
 
 import {
@@ -9,7 +9,7 @@ import {
 
 //------ Start Functions --------
 export const fetchFunctions = () => async dispatch => {
-  const response = await field.get(FUNCTIONS_URL);
+  const response = await function_api.get(FUNCTIONS_URL);
   console.log('fetch funtions:', response.data);
 
   // sửa chỗ response.data => response.data.projects

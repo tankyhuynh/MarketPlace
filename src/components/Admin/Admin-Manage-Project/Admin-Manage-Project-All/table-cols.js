@@ -1,5 +1,5 @@
 const fieldFormatter = ({ value }) => { 
-  return <span style={{textTransform: 'uppercase'}}>{value.name}</span> 
+  return <span style={{textTransform: 'uppercase'}}>{value ? value.name : ''}</span> 
 };
 const actionFormatter = ({ value }) => { 
   return (
@@ -8,11 +8,11 @@ const actionFormatter = ({ value }) => {
 };
 
 export const columns = [
-    { field: 'id', headerName: 'ID', width: 90 }, 
+    { field: 'id', headerName: 'ID', width: 10 }, 
     {
       field: 'name',
       headerName: 'Tên dự án',
-      width: 400,
+      width: 350,
       editable: true,
     },
     {
@@ -31,7 +31,7 @@ export const columns = [
     {
       field: 'action',
       headerName: 'Action',
-      width: 150,
+      width: 130,
       editable: true,
       renderCell: actionFormatter
     },

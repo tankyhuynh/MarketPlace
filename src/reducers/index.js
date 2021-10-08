@@ -13,6 +13,7 @@ import blockNavigationReducer from './blockNavigationReducer'
 import statusReducer from './statusReducer'
 import functionReducer from './functionReducer'
 import categoryReducer from './categoryReducer'
+import domainReducer from './domainReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -27,5 +28,6 @@ export default combineReducers({
     blockNavigation: blockNavigationReducer,
     status: statusReducer,
     functions: functionReducer,
-    categories: categoryReducer
+    categories: categoryReducer,
+    domains: domainReducer
 });

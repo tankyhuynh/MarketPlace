@@ -104,7 +104,12 @@ const AdminDashboard = () => {
                         />
                     </div>
                 </div>
-                <Tab tabs={tabs} color="red" openTabChange={onOpenedTabChange} />
+                <Tab 
+                    tabs={tabs} 
+                    color="red" 
+                    openTabChange={onOpenedTabChange}
+                    isAdminPage={true} 
+                />
             </div>
     )
 }

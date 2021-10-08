@@ -50,7 +50,7 @@ export default withRouter(function App() {
   }
   const renderAppAdmin = () => {
     return (
-      <div className="flex h-screen" id="layout">
+      <div className="flex" id="layout">
         <AdminHeader />
         <div 
           className="w-full mx-6 sm:w-3/4 lg:w-5/6 xl:w-full" 

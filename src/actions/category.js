@@ -3,6 +3,7 @@ import { CATEGORY_URL } from '../environments/constraints';
 
 import {
   FETCH_CATEGORIES,
+  EDIT_CATEGORY
     
 } from './types';
 
@@ -10,9 +11,24 @@ import {
 //------ LevelDevelopments --------
 export const fetchCategories = () => async dispatch => {
   const response = await categories.get(CATEGORY_URL);
-  console.log('levelDevelopments:', response.data);
+  console.log('fetchCategories:', response.data);
 
   dispatch({ type: FETCH_CATEGORIES, payload: response.data });
+};
+
+export const createCategory = (value) => async dispatch => {
+  const response = await categories.post(CATEGORY_URL, value);
+  console.log('createCategory:', response.data);
+
+  dispatch({ type: FETCH_CATEGORIES, payload: response.data });
+};
+
+
+export const editCategory = (value) => async dispatch => {
+  const response = await categories.put(`${CATEGORY_URL}/${value.id}`, value);
+  console.log('editCategory:', response.data);
+
+  dispatch({ type: EDIT_CATEGORY, payload: response.data });
 };
 
 

@@ -905,7 +905,7 @@ const HorizontalLinearStepper = (props) => {
 
     const renderCheckboxCategoryChildren = (category) => {
         const children = []
-        props.fields.filter(field => field.category.id === category.id)
+        props.fields.filter(field => field.category ? field.category.id === category.id : null)
             .map(item => {
                 return children.push({
                     value: `${item.id}`,

@@ -34,6 +34,8 @@ import Introduction from './Introduction/Introduction';
 import AdminDashboard from './Admin/Admin-Manage-Infomation';
 import AdminManageProject from './Admin/Admin-Manage-Project';
 import AdminManageUser from './Admin/Admin-Manage-User';
+import AdminManageDomain from './Admin/Admin-Manage-Domain';
+import AdminManageFunction from './Admin/Admin-Manage-Function';
 
 // import GoogleAuth from './GoogleAuth';
 // import ProjectShow from './Projects/ProjectDefault/ProjectShow';
@@ -73,6 +75,8 @@ const Router = () => {
             <PrivateRoute path="/admin" exact component={AdminDashboard}></PrivateRoute>
             <PrivateRoute path="/admin/projects" exact component={AdminManageProject}></PrivateRoute>
             <PrivateRoute path="/admin/users" exact component={AdminManageUser}></PrivateRoute>
+            <PrivateRoute path="/admin/domains" exact component={AdminManageDomain}></PrivateRoute>
+            <PrivateRoute path="/admin/functions" exact component={AdminManageFunction}></PrivateRoute>
 
 
             <Route path="/test" exact component={Test}></Route>

@@ -21,7 +21,6 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import HomeIcon from '@material-ui/icons/Home';
 import AndroidIcon from '@material-ui/icons/Android';
-import AppsIcon from '@material-ui/icons/Apps';
 import GroupIcon from '@material-ui/icons/Group';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
@@ -205,9 +204,9 @@ const Header = (props) => {
     return (
         <>
             { renderUserOptionsWeb(className) }
-            <Link to="/admin" className={`header--link ${className}`}>
+            {/* <Link to="/admin" className={`header--link ${className}`}>
                 Menu chức năng
-            </Link>
+            </Link> */}
         </>
     )
   }
@@ -216,10 +215,10 @@ const Header = (props) => {
     return (
         <>
             { renderUserOptionsMobile(className) }
-            <Link to="/researchers" className={`header--link ${className}`}>
+            {/* <Link to="/researchers" className={`header--link ${className}`}>
                 <AppsIcon />
                 Menu chức năng
-            </Link>
+            </Link> */}
         </>
     )
   }

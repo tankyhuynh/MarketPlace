@@ -1,17 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Confirm } from 'react-st-modal';
+import { CustomDialog } from 'react-st-modal';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import Table from '../../../Table/Table-Admin';
 import { columns } from '../table-definition';
 
-import { fetchCategories } from '../../../../actions/category';
+import { fetchCategories, createCategory } from '../../../../actions/category';
 import { connect } from 'react-redux';
 
+import FormEdit from '../FormEdit'
 
-const AdminCategory = (props) => {
+const formConfig_Add = {
+    title: "Thêm danh mục",
+    button_text_ok: 'Thêm',
+    button_text_cancel: 'Hủy'
+}
 
-    // const [levels, setLevels] = useState({});
+const formConfig_Edit = {
+    title: "Sửa danh mục",
+    button_text_ok: 'Sửa',
+    button_text_cancel: 'Hủy'
+}
+
+const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
 
     useEffect(() => {
@@ -21,33 +33,78 @@ const AdminCategory = (props) => {
     const handleEditRowsModelChange = useCallback((model) => {
         console.log(model);
         setEditRowsModel(model);
-        // setLevels(previousState => ({...previousState, editRowsModel}))
     }, []);
 
-    const onCellEditStop = async() => {
-        const modal = {
-            title: 'Are you sure?',
-            content: 'Confirm'
-        }
-        const result = await Confirm(modal.title, modal.content);
 
-        if(result){
-            // alert('confirm')            
-        }
-        else  {
-            // alert('cancel')
-        }            
+    
+    const onEdit = (value) => {
+        console.log('FormEdit onEdit category: ', value);
+    }
+
+    const onAdd = (value) => {
+        console.log('FormEdit onAdd  category: ', value);
+        props.createField(value)
+    }
+
+    const onBtnEditClick = async (category) => {
+        await CustomDialog(
+            <FormEdit 
+                formConfig={formConfig_Edit}
+                initialValue={category}
+                fields={columns} 
+                onSubmit={onEdit}
+            />, {
+            title: formConfig_Edit.title,
+            showCloseIcon: true,
+        });
+
+    }
+
+    const onBtnAddClick = async (category) => {
+        await CustomDialog(
+            <FormEdit 
+                formConfig={formConfig_Add}
+                initialValue={category}
+                fields={columns} 
+                onSubmit={onAdd}
+            />, {
+            title: formConfig_Add.title,
+            showCloseIcon: true,
+        });
+
+    }
+
+
+    const renderRows = (rows) => {
+        return rows.map(row => {
+            const action = (
+                <div className="">
+                    <button 
+                        onClick={() => onBtnEditClick(row)}
+                        className="px-2 text-white bg-green-500 rounded-lg"    
+                    >
+                        Edit
+                    </button>
+                </div>
+            )
+            return {...row, action: action}
+        })
     }
 
     return (
         
         <div className="mt-4">
+            <button 
+                className="px-4 py-2 text-white bg-green-500 rounded-lg"
+                onClick={() => onBtnAddClick()}
+            >
+                <ControlPointIcon />
+            </button>
             <Table 
                 columns={columns} 
-                rows={props.categories}
+                rows={renderRows(props.categories)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
-                onCellEditStop={onCellEditStop}
             />
         </div>
     )
@@ -61,5 +118,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchCategories }
-)(AdminCategory);
+    { fetchCategories, createCategory }
+)(AdminField);

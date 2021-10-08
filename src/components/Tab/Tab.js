@@ -1,6 +1,4 @@
 import React from "react";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
-
 
 const Tabs = ({ tabs, color, openTabChange }) => {
     const [openTab, setOpenTab] = React.useState(0);
@@ -39,32 +37,29 @@ const Tabs = ({ tabs, color, openTabChange }) => {
         );
     });
 
-  return (
-    <>
-        <div className="flex flex-wrap">
-            <div className="w-full">
-                <ul
-                    className="flex flex-row flex-wrap pt-3 pb-4 mb-0 list-none"
-                    role="tablist"
-                >
-                    { renderTabsTitle }
-                </ul>
 
-                <button className="px-4 py-2 text-white bg-green-500 rounded-lg">
-                    <ControlPointIcon />
-                </button>
+    return (
+        <>
+            <div className="flex flex-wrap">
+                <div className="w-full">
+                    <ul
+                        className="flex flex-row flex-wrap pt-3 pb-4 mb-0 list-none"
+                        role="tablist"
+                    >
+                        { renderTabsTitle }
+                    </ul>
 
-                <div className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
-                    <div className="flex-auto px-4 py-5">
-                        <div className="tab-content tab-space">
-                            { renderTabsContent }
+                    <div className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
+                        <div className="flex-auto px-4 py-5">
+                            <div className="tab-content tab-space">
+                                { renderTabsContent }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default Tabs;

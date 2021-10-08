@@ -4,10 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { 
-    fetchProjects_DaDuyet,
-    fetchProjects_ChoDuyet,
-    fetchProjects_TuChoi,
-    fetchProjects_Nhap
+    fetchProjects_Commercial,
+    fetchProjects_Researching
 } 
 from '../../../../actions/project';
 
@@ -39,10 +37,8 @@ const fields = [
 const AdminProjectAll = (props) => {
 
     useEffect(() => {
-        props.fetchProjects_DaDuyet();
-        props.fetchProjects_ChoDuyet();
-        props.fetchProjects_TuChoi();
-        props.fetchProjects_Nhap();
+        props.fetchProjects_Commercial();
+        props.fetchProjects_Researching();
     }, [])
 
     // const [levels, setLevels] = useState({});
@@ -73,15 +69,13 @@ const AdminProjectAll = (props) => {
     const onCellEditStop = async(event, row) => {
         event.preventDefault();
 
-        
+        const modal = {
+            title: 'Confirm',
+            // body: renderFormEdit(row)
+            body: <FormEdit fields={fields} />
+        }
 
-        // const modal = {
-        //     title: 'Confirm',
-        //     // body: renderFormEdit(row)
-        //     body: <FormEdit fields={fields} />
-        // }
-
-        // const result = await Confirm(modal.body, modal.title);
+        const result = await Confirm(modal.body, modal.title);
 
         // if(result){
         //     alert(name)            
@@ -94,15 +88,20 @@ const AdminProjectAll = (props) => {
     const renderRows = (rows) => {
         return rows.map(row => {
             const action = (
-                <>
+                <div className="flex">
                     <Link
-                        // onClick={(event) => onCellEditStop(event, row)}
                         to={`/projects/edit/${row.id}`}
-                        className="px-4 py-2 text-white bg-green-500 rounded-2xl"
-                    >
+                        className="px-2 text-white bg-green-500 rounded-lg"
+                        >
                         Edit
                     </Link>
-                </>
+                    <button 
+                        onClick={(event) => onCellEditStop(event, row)}
+                        className="px-2 text-white bg-green-500 rounded-lg"    
+                    >
+                        Test
+                    </button>
+                </div>
             )
             return {...row, action: action}
         })
@@ -130,5 +129,8 @@ const mapStateToProps = (state) => {
   
 export default connect(
     mapStateToProps,
-    { fetchProjects_DaDuyet, fetchProjects_ChoDuyet, fetchProjects_TuChoi, fetchProjects_Nhap }
+    { 
+        fetchProjects_Commercial,
+        fetchProjects_Researching 
+    }
 )(AdminProjectAll);
