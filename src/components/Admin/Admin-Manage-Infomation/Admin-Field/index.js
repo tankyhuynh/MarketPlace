@@ -4,12 +4,13 @@ import { CustomDialog } from 'react-st-modal';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import Table from '../../../Table/Table-Admin';
-import { columns } from '../table-definition';
+import { columns } from './table-definition';
 
 import { fetchFields, createField } from '../../../../actions/field';
+import { fetchCategories } from '../../../../actions/category';
 import { connect } from 'react-redux';
 
-import FormEdit from '../FormEdit'
+import FormEdit from './FormEdit'
 
 const formConfig_Add = {
     title: "Thêm lĩnh vực",
@@ -28,6 +29,7 @@ const AdminField = (props) => {
 
     useEffect(() => {
         props.fetchFields()
+        props.fetchCategories()
     }, [])
     
     const handleEditRowsModelChange = useCallback((model) => {
@@ -52,7 +54,8 @@ const AdminField = (props) => {
             <FormEdit 
                 formConfig={formConfig_Edit}
                 initialValue={field}
-                fields={columns} 
+                fields={columns}
+                categories={props.categories}
                 onSubmit={onEdit}
             />, {
             title: formConfig_Edit.title,
@@ -67,6 +70,7 @@ const AdminField = (props) => {
                 formConfig={formConfig_Add}
                 initialValue={field}
                 fields={columns} 
+                categories={props.categories}
                 onSubmit={onAdd}
             />, {
             title: formConfig_Add.title,
@@ -114,10 +118,14 @@ const AdminField = (props) => {
 const mapStateToProps = (state) => {
     return { 
         fields:  Object.values(state.fields),
+        categories:  Object.values(state.categories),
     };
 }
 
 export default connect(
     mapStateToProps, 
-    { fetchFields, createField }
+    { 
+        fetchFields, createField,
+        fetchCategories 
+    }
 )(AdminField);

@@ -3,31 +3,34 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog } from 'react-st-modal';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
-import Table from '../../../Table/Table-Admin';
-import { columns } from '../table-definition';
+import Table from '../../Table/Table-Admin';
+import { columns } from './table-definition';
 
-import { fetchCategories, createCategory } from '../../../../actions/category';
+import { fetchRoles, createRole, editRole } from '../../../actions/role';
 import { connect } from 'react-redux';
+import { useAlert } from 'react-alert'
 
-import FormEdit from '../FormEdit'
+
+import FormEdit from './FormEdit'
 
 const formConfig_Add = {
-    title: "Thêm danh mục",
+    title: "Thêm vai trò",
     button_text_ok: 'Thêm',
     button_text_cancel: 'Hủy'
 }
 
 const formConfig_Edit = {
-    title: "Sửa danh mục",
+    title: "Sửa vai trò",
     button_text_ok: 'Sửa',
     button_text_cancel: 'Hủy'
 }
 
-const AdminCategory = (props) => {
+const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
+    const alertUseAlert = useAlert()
 
     useEffect(() => {
-        props.fetchCategories()
+        props.fetchRoles()
     }, [])
     
     const handleEditRowsModelChange = useCallback((model) => {
@@ -38,22 +41,24 @@ const AdminCategory = (props) => {
 
     
     const onEdit = (value) => {
-        console.log('FormEdit onEdit category: ', value);
-        props.editCategory(value)
+        console.log('FormEdit onEdit role: ', value);
+        props.editRole(value)
+        alertUseAlert.show('Chỉnh sửa hoàn tất')
     }
 
     const onAdd = (value) => {
-        console.log('FormEdit onAdd  category: ', value);
-        props.createCategory(value)
-        props.fetchCategories()
+        console.log('FormEdit onAdd role: ', value);
+        props.createRole(value)
+        alertUseAlert.show('Thêm hoàn tất')
+        props.fetchRoles()
     }
 
-    const onBtnEditClick = async (category) => {
+    const onBtnEditClick = async (role) => {
         await CustomDialog(
             <FormEdit 
                 formConfig={formConfig_Edit}
-                initialValue={category}
-                fields={columns} 
+                initialValue={role}
+                roles={columns} 
                 onSubmit={onEdit}
             />, {
             title: formConfig_Edit.title,
@@ -62,12 +67,12 @@ const AdminCategory = (props) => {
 
     }
 
-    const onBtnAddClick = async (category) => {
+    const onBtnAddClick = async (role) => {
         await CustomDialog(
             <FormEdit 
                 formConfig={formConfig_Add}
-                initialValue={category}
-                fields={columns} 
+                initialValue={role}
+                roles={columns} 
                 onSubmit={onAdd}
             />, {
             title: formConfig_Add.title,
@@ -80,7 +85,7 @@ const AdminCategory = (props) => {
     const renderRows = (rows) => {
         return rows.map(row => {
             const action = (
-                <div className="my-4">
+                <div className="">
                     <button 
                         onClick={() => onBtnEditClick(row)}
                         className="px-2 text-white bg-green-500 rounded-lg"    
@@ -104,7 +109,7 @@ const AdminCategory = (props) => {
             </button>
             <Table 
                 columns={columns} 
-                rows={renderRows(props.categories)}
+                rows={renderRows(props.roles)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
             />
@@ -114,11 +119,11 @@ const AdminCategory = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        categories:  Object.values(state.categories),
+        roles:  Object.values(state.roles),
     };
 }
 
 export default connect(
     mapStateToProps, 
-    { fetchCategories, createCategory }
-)(AdminCategory);
+    { fetchRoles, createRole, editRole }
+)(AdminField);

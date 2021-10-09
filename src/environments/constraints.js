@@ -11,6 +11,7 @@ module.exports = {
    LEVEL_URL : '/developmentLevels',
    LEVEL_ADMIN_URL : '/admin/developmentLevels',
    CATEGORY_URL : '/categories',
+   CATEGORY_ADMIN_URL : '/admin/categories',
    PROJECTS_URL : '/projects/status',
    PROJECTS_COMMERCIAL_URL : '/projects/commercial',
    PROJECTS_RESEARCHING_URL : '/projects/researching',
@@ -20,4 +21,6 @@ module.exports = {
    STATUS_ADMIN_URL : '/admin/statuses',
    FUNCTIONS_URL : '/admin/functions',
    DOMAINS_URL : '/admin/domains',
+   ROLES_URL : '/roles',
+   ROLES_ADMIN_URL : '/admin/roles',
 } 

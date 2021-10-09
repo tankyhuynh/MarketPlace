@@ -163,7 +163,9 @@ const HorizontalLinearStepper = (props) => {
                 fieldIdList: stateFieldsChecked ? stateFieldsChecked.checked : [],
                 advantage: props.project ? props.project.advantage : '',
                 comDevLevel: props.project ? (
-                    props.project.commercialDevelopmentLevelList
+                    props.project.commercialDevelopmentLevelList.length
+                    ? (
+                        props.project.commercialDevelopmentLevelList
                         .map(comDevLevel => {
                             if(comDevLevel.developmentLevel.id != OTHER_ID){
                                 return setSelectedTransmissionMethodAndLevel(previousState => (
@@ -194,6 +196,8 @@ const HorizontalLinearStepper = (props) => {
                             }}))
                             return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
                         })
+                    )
+                    : null
                 ) : (
                     selectedTransmissionMethodAndLevel['comDevLevel']
                         .map(comDevLevel => {

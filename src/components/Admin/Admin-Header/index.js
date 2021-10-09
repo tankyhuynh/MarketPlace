@@ -15,6 +15,7 @@ import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import DnsIcon from '@mui/icons-material/Dns';
 import FunctionsIcon from '@mui/icons-material/Functions';
+import ImagesearchRollerIcon from '@mui/icons-material/ImagesearchRoller';
 
 const navItems = [
     {
@@ -35,6 +36,12 @@ const navItems = [
         icon: <InfoIcon />,
         name: 'Quản lý người dùng',
         path: '/users',
+    },
+    {
+        className: 'nav-items',
+        icon: <ImagesearchRollerIcon />,
+        name: 'Quản lý vai trò',
+        path: '/roles',
     },
     {
         className: 'nav-items',

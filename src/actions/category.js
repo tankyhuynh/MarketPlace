@@ -1,5 +1,6 @@
 import categories from '../apis/category';
-import { CATEGORY_URL } from '../environments/constraints';
+import categories_Admin from '../apis/category_Admin';
+import { CATEGORY_URL, CATEGORY_ADMIN_URL } from '../environments/constraints';
 
 import {
   FETCH_CATEGORIES,
@@ -17,7 +18,7 @@ export const fetchCategories = () => async dispatch => {
 };
 
 export const createCategory = (value) => async dispatch => {
-  const response = await categories.post(CATEGORY_URL, value);
+  const response = await categories_Admin.post(CATEGORY_ADMIN_URL, value);
   console.log('createCategory:', response.data);
 
   dispatch({ type: FETCH_CATEGORIES, payload: response.data });
@@ -25,7 +26,7 @@ export const createCategory = (value) => async dispatch => {
 
 
 export const editCategory = (value) => async dispatch => {
-  const response = await categories.put(`${CATEGORY_URL}/${value.id}`, value);
+  const response = await categories_Admin.put(`${CATEGORY_ADMIN_URL}/${value.id}`, value);
   console.log('editCategory:', response.data);
 
   dispatch({ type: EDIT_CATEGORY, payload: response.data });

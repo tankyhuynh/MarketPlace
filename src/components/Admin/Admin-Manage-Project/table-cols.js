@@ -1,9 +1,15 @@
-const fieldFormatter = ({ value }) => { 
-  const levelsFormated =  value.map(level => {
-      return level.developmentLevel.name 
-    })
+import dateFormat from 'dateformat';
 
-    return levelsFormated.join(', ')
+// const fieldFormatter = ({ value }) => { 
+//   const levelsFormated = value.length ? value.map(level => {
+//       return level.developmentLevel.name 
+//     })
+//     : null
+
+//     return levelsFormated.join(', ')
+// };
+const dateFormatter = ({ value }) => { 
+    return  dateFormat(value, "HH:MM, dddd, mmmm dS, yyyy") 
 };
 const actionFormatter = ({ value }) => { 
     return (
@@ -16,7 +22,7 @@ export const columns = [
     { 
       field: 'id', 
       headerName: 'ID', 
-      width: 10 
+      width: 90 
     }, 
     {
       field: 'name',
@@ -25,22 +31,29 @@ export const columns = [
       editable: false,
     },
     {
-      field: 'commercialDevelopmentLevelList',
-      headerName: 'Lĩnh vực',
-      width: 150,
+      field: 'author',
+      headerName: 'Tác giả',
+      width: 250,
       editable: false,
-      renderCell: fieldFormatter
     },
+    // {
+    //   field: 'commercialDevelopmentLevelList',
+    //   headerName: 'Lĩnh vực',
+    //   width: 250,
+    //   editable: false,
+    //   renderCell: fieldFormatter
+    // },
     {
       field: 'createdDate',
       headerName: 'Ngày gửi',
-      width: 150,
+      width: 250,
       editable: false,
+      renderCell: dateFormatter
     },
     {
       field: 'action',
       headerName: 'Action',
-      width: 130,
+      width: 120,
       editable: false,
       renderCell: actionFormatter
     },
