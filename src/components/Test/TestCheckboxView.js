@@ -84,7 +84,7 @@ const nodes = [
 class BasicExample extends React.Component {
     state = {
         checked: [
-            // '/app/Http/Controllers/WelcomeController.js',
+            '/app/Http/Controllers/WelcomeController.js',
             // '/app/Http/routes.js',
             // '/public/assets/style.css',
             // '/public/index.html',

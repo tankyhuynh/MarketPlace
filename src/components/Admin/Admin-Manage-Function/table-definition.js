@@ -22,7 +22,7 @@ export const columns = [
   {
     field: 'description',
     headerName: 'Description',
-    width: 400,
+    width: 350,
     editable: true,
   },
   {
