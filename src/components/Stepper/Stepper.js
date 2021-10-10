@@ -592,7 +592,7 @@ const HorizontalLinearStepper = (props) => {
 
         // Làm sao để xác định được nó là project gì???????????
         if(props.type === 'edit'){
-            axios.put(environment.url.java + PROJECTS_COMMERCIAL_URL + `/${props.id}`, {...submitProject, userId: project.userId})
+            axios.put(environment.url.java + URL + `/${props.id}`, {...submitProject, userId: project.userId})
             .then(response => {
                 if (response) {
                     dispatch({ type: LOADED})
