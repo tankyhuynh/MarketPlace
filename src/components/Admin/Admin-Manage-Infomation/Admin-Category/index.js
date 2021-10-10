@@ -6,7 +6,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Table from '../../../Table/Table-Admin';
 import { columns } from '../table-definition';
 
-import { fetchCategories, createCategory } from '../../../../actions/category';
+import { fetchCategories, createCategory, editCategory } from '../../../../actions/category';
 import { connect } from 'react-redux';
 
 import FormEdit from '../FormEdit'
@@ -120,5 +120,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchCategories, createCategory }
+    { fetchCategories, createCategory, editCategory }
 )(AdminCategory);

@@ -61,7 +61,7 @@ class Home extends React.Component {
         });
     }
 
-    renderOrganizations = organizations.map(card =>{
+    renderOrganizations = organizations.map((card) =>{
         return (
             <Link to="/" key={card.ten}>
                 <Card card={card} key={card.ten} />

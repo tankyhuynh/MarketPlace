@@ -11,7 +11,7 @@ export const columns = [
   { 
     field: 'id', 
     headerName: 'ID', 
-    width: 50,
+    width: 100,
     type: 'text'
   },
   {

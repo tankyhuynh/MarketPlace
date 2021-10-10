@@ -110,7 +110,7 @@ const AdminHeader = () => {
     const renderNavItems = (items) => {
         return items.map((item, index) => {
             return (
-                <Accordion elevation={0} style={{ backgroundColor: '#0065C1', color: 'white' }}>
+                <Accordion elevation={0} style={{ backgroundColor: '#0065C1', color: 'white' }} key={index}>
                     <AccordionSummary
                         // expandIcon={item.children.length > 1 ? <ExpandMoreIcon /> : null}
                         // aria-controls="panel1a-content"

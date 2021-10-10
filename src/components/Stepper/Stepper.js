@@ -163,41 +163,44 @@ const HorizontalLinearStepper = (props) => {
                 fieldIdList: stateFieldsChecked ? stateFieldsChecked.checked : [],
                 advantage: props.project ? props.project.advantage : '',
                 comDevLevel: props.project ? (
-                    props.project.commercialDevelopmentLevelList.length
+                    props.project.commercialDevelopmentLevelList
                     ? (
-                        props.project.commercialDevelopmentLevelList
-                        .map(comDevLevel => {
-                            if(comDevLevel.developmentLevel.id != OTHER_ID){
-                                return setSelectedTransmissionMethodAndLevel(previousState => (
-                                    { ...previousState,
-                                        'comDevLevel': [
-                                            {
-                                                'developmentLevelId': comDevLevel.developmentLevel.id,
-                                                note: comDevLevel.developmentLevel.name
+                        props.project.commercialDevelopmentLevelList.length
+                            ? (
+                                props.project.commercialDevelopmentLevelList
+                                .map(comDevLevel => {
+                                    if(comDevLevel.developmentLevel.id != OTHER_ID){
+                                        return setSelectedTransmissionMethodAndLevel(previousState => (
+                                            { ...previousState,
+                                                'comDevLevel': [
+                                                    {
+                                                        'developmentLevelId': comDevLevel.developmentLevel.id,
+                                                        note: comDevLevel.developmentLevel.name
+                                                    }
+                                                ]
                                             }
-                                        ]
+                                        ))
                                     }
-                                ))
-                            }
-                            setSelectedTransmissionMethodAndLevel(previousState => (
-                                { ...previousState,
-                                    'comDevLevel': [
-                                        {
-                                            'developmentLevelId': comDevLevel.developmentLevel.id,
-                                            note: comDevLevel.note
+                                    setSelectedTransmissionMethodAndLevel(previousState => (
+                                        { ...previousState,
+                                            'comDevLevel': [
+                                                {
+                                                    'developmentLevelId': comDevLevel.developmentLevel.id,
+                                                    note: comDevLevel.note
+                                                }
+                                            ]
                                         }
-                                    ]
-                                }
-                            ))
-                            setOtherInputs(previousState => ({...previousState, comDevLevel: {
-                                name: 'Phương thức chuyển giao',
-                                label: 'Nhập tên phương thức',
-                                value: comDevLevel.note
-                            }}))
-                            return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
-                        })
-                    )
-                    : null
+                                    ))
+                                    setOtherInputs(previousState => ({...previousState, comDevLevel: {
+                                        name: 'Phương thức chuyển giao',
+                                        label: 'Nhập tên phương thức',
+                                        value: comDevLevel.note
+                                    }}))
+                                    return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
+                                })
+                            )
+                            : null
+                    ): null
                 ) : (
                     selectedTransmissionMethodAndLevel['comDevLevel']
                         .map(comDevLevel => {
@@ -212,6 +215,8 @@ const HorizontalLinearStepper = (props) => {
                 // ) : 1,
                 comTransMethod: props.project ?(
                     props.project.commercialTransmissionMethodList
+                    ? (
+                        props.project.commercialTransmissionMethodList
                         .map(comTransMethod => {
                             if(comTransMethod.transmissionMethod.id != OTHER_ID){
                                 return setSelectedTransmissionMethodAndLevel(previousState => (
@@ -232,6 +237,8 @@ const HorizontalLinearStepper = (props) => {
                             }}))
                             return setOtherInputOpen(previousState => ({...previousState, comTransMethod: true}))
                         })
+                    )
+                    : null
                 ) : (
                     selectedTransmissionMethodAndLevel['comTransMethod']
                         .map(comTransMethod => {
@@ -240,6 +247,9 @@ const HorizontalLinearStepper = (props) => {
                 ),
                 scope: props.project ? props.project.scope : 'scope useEffect',
                 price: props.project ? props.project.price : '',
+                challenge: props.project ? props.project.challenge : 'challenge',
+                solution: props.project ? props.project.solution : 'solution',
+                benefit: props.project ? props.project.benefit : 'benefit',
             })
         }
 
@@ -339,12 +349,13 @@ const HorizontalLinearStepper = (props) => {
         name: project ? project.name : '',
         shortDescription: project ? project.shortDescription : '',
         userId: project ? userIdState : '',
-        author: 'authors duAnNghienCuu',
-        fieldIdList: project ? project.fieldIdList : [], // Lĩnh vực phát triển
+        author: project ? project.author : '',
+        fieldId: project ? project.fieldIdList : [], // Lĩnh vực phát triển
         statusId: project ? project.statusId : '', // Lưu nháp 0-ko lưu, 1-lưu nháp, 2-chờ duyệt, 3...
         challenge: project ? project.challenge : '',
         solution: project ? project.solution : '',
         benefit: project ? project.benefit : '',
+        productImage: project ? project.productImage : '',
         template: project ? project.template : 1
     }
 
@@ -985,8 +996,8 @@ const HorizontalLinearStepper = (props) => {
                             error={project ? field.isRequired : ''} 
                             // minRows={2}
                             multiline
-                            rows={2}
-                            rowsMax={4}
+                            rows={4}
+                            rowsMax={6}
                         />
                      </div>
                 )

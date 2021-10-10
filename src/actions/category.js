@@ -4,6 +4,7 @@ import { CATEGORY_URL, CATEGORY_ADMIN_URL } from '../environments/constraints';
 
 import {
   FETCH_CATEGORIES,
+  CREATE_CATEGORY,
   EDIT_CATEGORY
     
 } from './types';
@@ -21,7 +22,7 @@ export const createCategory = (value) => async dispatch => {
   const response = await categories_Admin.post(CATEGORY_ADMIN_URL, value);
   console.log('createCategory:', response.data);
 
-  dispatch({ type: FETCH_CATEGORIES, payload: response.data });
+  dispatch({ type: CREATE_CATEGORY, payload: response.data });
 };
 
 

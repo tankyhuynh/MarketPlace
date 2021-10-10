@@ -3,6 +3,18 @@ import './template.css'
 import React from 'react';
 import { connect } from 'react-redux';
 
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import EmailIcon from '@mui/icons-material/Email';
+import HttpIcon from '@mui/icons-material/Http';
+import GroupIcon from '@mui/icons-material/Group';
+import BiotechIcon from '@mui/icons-material/Biotech';
+import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
+import TransformIcon from '@mui/icons-material/Transform';
+import CorporateFareIcon from '@mui/icons-material/CorporateFare';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+
 
 // import img1_a from '../../../assets/img1_a.png';
 // import img1_b from '../../../assets/img1_b.png';
@@ -30,6 +42,8 @@ const OTHER_LEVELDEVELOP_ID = 4
 const ProjectShow = ({ project , type, projectType, fields, levels, transmissions}) => {
 
     console.log('ProjectShow', project)
+    console.log('ProjectShow', projectType)
+    console.log('ProjectShow', type)
 
     // const renderImage = (image) => {
     //     if(image){
@@ -74,9 +88,11 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
     // };
 
     const renderContent = (items) => {
-        return items.map(item => {
+        
+        return items.map((item, index) => {
+           
             return (
-                <div id={item.name} className="flex flex-col">
+                <div id={item.name} className="flex flex-col" key={index}>
                     <span className="mt-4 text-2xl font-medium ">
                         {`${item.name} `}
                     </span>
@@ -87,6 +103,32 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                 </div>
             );
         })
+    };
+
+    const renderContentMobile = (items) => {
+        
+        const content = items.map((item, index) => {
+           
+            return (
+                <div id={item.name} className="flex items-center gap-4 border-2" key={index}>
+                    <span className="text-2xl font-medium ">
+                        { item.icon }
+                    </span>
+                    <span>
+                        { item.isUseEditor 
+                            ? <span dangerouslySetInnerHTML={{ __html: item.value }}  /> 
+                            : item.value  
+                        }
+                    </span>
+                </div>
+            );
+        })
+
+        return (
+            <div id="project_navbar_mobile" className="grid grid-flow-row col-span-3 ml-6 lg:hidden">
+                { content }
+            </div>
+        )
     };
 
     const {
@@ -113,6 +155,45 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
         benefit 
     } = project;
 
+
+    // commercialDevelopmentLevelList
+    const renderCommercials = (commercials) => {
+        const commercialsFormat = commercials.map((level, index) => {
+            console.log('renderContent', level.developmentLevel.name);
+            // eslint-disable-next-line eqeqeq
+            if(level.developmentLevel.id != OTHER_ID ){
+                return level.developmentLevel.name
+            }
+            return level.note 
+        })
+
+        return commercialsFormat.join(', ')
+    }
+
+    const renderTransmissions = (transmissions) => {
+        const transmissionsFormat = transmissions.map((transmission, index) => {
+            // eslint-disable-next-line eqeqeq
+            if(transmission.transmissionMethod.id != OTHER_ID ){
+                return transmission.transmissionMethod.name
+            }
+            return transmission.note 
+        })
+
+        return transmissionsFormat.join(', ')
+    }
+
+    const renderFields = (fields) => {
+        const fieldsFormat = fields.map((field, index) => {
+            // eslint-disable-next-line eqeqeq
+           
+            // return field.field.name
+            return <div>{ field.field.name }</div>
+        })
+
+        // return fieldsFormat.join(', ')
+        return fieldsFormat
+    }
+
     const OTHER_ID = 4;
 
     const templateViewProject = {
@@ -122,42 +203,53 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     {
                         name: 'Tên đơn vị',
                         value: companyName,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <LocationCityIcon />
                     },
                     {
                         name: 'Địa chỉ',
                         value: address,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <AddLocationAltIcon />
                     },
                     {
                         name: 'Số điện thoại',
                         value: phoneNumber,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <PhoneAndroidIcon />
                     },
                     {
                         name: 'Email',
                         value: email,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <EmailIcon />
                     },
                     {
                         name: 'Website',
                         value: website,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <HttpIcon />
                     },
                     {
                         name: 'Nhóm tác giả',
                         value: author,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <GroupIcon />
                     },
                     {
                         name: 'Lĩnh vực áp dụng',
                         value: type === TYPE_TEMPLATE_PREVIEW 
-                            ? project.fieldIdList.map(fieldId => {
-                                return <span>{fields[fieldId].name}</span>
-                            })
-                            : projectFieldList.map(field => {
-                                return <span>{field.field.name}</span>
-                            })
+                            ? (
+                                project.fieldIdList 
+                                ? (
+                                    project.fieldIdList.map((fieldId, index) => {
+                                        return <span key={index}>{fields[fieldId].name}</span>
+                                    })
+                                )
+                                : null
+                            )
+                            : renderFields(projectFieldList),
+                            icon: <BiotechIcon />
                         
                     },
                     {
@@ -168,27 +260,37 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                                 type === TYPE_TEMPLATE_PREVIEW 
                                 ? (
                                     project.comDevLevel.length
-                                    ?   project.comDevLevel.map(projectLevel => {
+                                    ?   project.comDevLevel.map((projectLevel, index) => {
+                                        console.log('renderContent', projectLevel);
                                             if(projectLevel.developmentLevelId === OTHER_LEVELDEVELOP_ID){
-                                                return <div>{ projectLevel.note }</div>
+                                                return <div key={index}>{ projectLevel.note }</div>
                                             }
-                                            else return levels[projectLevel.developmentLevelId].name
+                                            else return <div key={index}>{ levels[projectLevel.developmentLevelId].name }</div>
                                         })
                                     : ''
                                 ) 
                                 : (
                                     commercialDevelopmentLevelList ? (
-                                        commercialDevelopmentLevelList.map(level => {
-                                            // eslint-disable-next-line eqeqeq
-                                            if(level.developmentLevel.id != OTHER_ID ){
-                                                return <span>{level.developmentLevel.name}</span> 
-                                            }
-                                            return <span>{level.note}</span> 
-                                        })
+                                        renderCommercials(commercialDevelopmentLevelList) 
                                     ) : 1
                                 )
                             )
-                            : null
+                            : (
+                                commercialDevelopmentLevelList ? (
+                                    renderCommercials(commercialDevelopmentLevelList) 
+                                ) : 1
+                                // commercialDevelopmentLevelList ? (
+                                //     commercialDevelopmentLevelList.map((level, index) => {
+                                //         console.log('renderContent', level.developmentLevel.name);
+                                //         // eslint-disable-next-line eqeqeq
+                                //         if(level.developmentLevel.id != OTHER_ID ){
+                                //             return <span key={index}>{level.developmentLevel.name}</span> 
+                                //         }
+                                //         return <span key={index}>{level.note}</span> 
+                                //     })
+                                // ) : 1
+                            ),
+                            icon: <EscalatorWarningIcon />
                     },
                     {
                         name: 'Phương thức chuyển giao',
@@ -197,31 +299,36 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                                     type === TYPE_TEMPLATE_PREVIEW  
                                         ? (
                                             project.comTransMethod.length
-                                            ?   project.comTransMethod.map(projectTransmission => {
+                                            ?   project.comTransMethod.map((projectTransmission, index) => {
                                                     if(projectTransmission.transmissionMethodId === OTHER_LEVELDEVELOP_ID){
-                                                        return <div>{ projectTransmission.note }</div>
+                                                        return <div key={index}>{ projectTransmission.note }</div>
                                                     }
                                                     else return transmissions[projectTransmission.transmissionMethodId].name
                                                 })
                                             : ''
                                         ) 
                                         : (
-                                            commercialTransmissionMethodList ? (
-                                                    commercialTransmissionMethodList.map(transmission => {
-                                                        return <span>{transmission.transmissionMethod.name}</span> 
-                                                    })
-                                            ) : 1
+                                            commercialTransmissionMethodList
+                                                ? renderTransmissions(commercialTransmissionMethodList)
+                                                : 1
                                         )
                                 )
-                                : null
+                                : (
+                                    commercialTransmissionMethodList
+                                        ? renderTransmissions(commercialTransmissionMethodList)
+                                        : 1
+                                ),
+                                icon: <TransformIcon />
                     },
                     {
                         name: 'Phạm vi thương mại hóa',
-                        value: scope
+                        value: scope,
+                        icon: < CorporateFareIcon />
                     },
                     {
                         name: 'Chào giá tham khảo',
-                        value: price
+                        value: price,
+                        icon: <MonetizationOnIcon />
                     }
                 ]
             },
@@ -230,28 +337,16 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     {
                         name: 'Mô tả quy trình công nghệ',
                         value: process,
-                        isUseEditor: true
+                        isUseEditor: true,
+                        icon: ''
                         
                     },
                     {
                         name: 'Ưu điểm',
                         value: advantage,
-                        isUseEditor: true
+                        isUseEditor: true,
+                        icon: ''
                     },
-                    // {
-                    //     name: '',
-                    //     value: (
-                    //         <>
-                    //             <img 
-                    //                 src={productImage} 
-                    //                 alt={productImage} 
-                    //                 className="float-left object-cover w-full h-64 border-2" 
-                    //             />
-                    //             <section className="italic text-center">Hình ảnh sản phẩm</section>
-                    //         </>
-                    //     ),
-                    //     isUseEditor: false
-                    // },
                 ]
             }
         },
@@ -261,37 +356,49 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     {
                         name: 'Tên đơn vị',
                         value: companyName,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: <LocationCityIcon />
                     },
                     {
                         name: 'Địa chỉ',
                         value: address,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: ''
                     },
                     {
                         name: 'Số điện thoại',
                         value: phoneNumber,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: ''
                     },
                     {
                         name: 'Email',
                         value: email,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: ''
                     },
                     {
                         name: 'Website',
                         value: website,
-                        isUseEditor: false
+                        isUseEditor: false,
+                        icon: ''
                     },
                     {
                         name: 'Lĩnh vực áp dụng',
                         value: type === TYPE_TEMPLATE_PREVIEW 
-                            ? project.fieldIdList.map(fieldId => {
-                                return <span>{fields[fieldId].name}</span>
-                            })
-                            : projectFieldList.map(field => {
-                                return <span>{field.field.name}</span>
-                            })
+                            ? (
+                                project.fieldIdList
+                                ? (
+                                    project.fieldIdList.map((fieldId, index) => {
+                                        return <span key={index}>{fields[fieldId].name}</span>
+                                    })
+                                )
+                                : null
+                            )
+                            : projectFieldList.map((field, index) => {
+                                return <span key={index}>{field.field.name}</span>
+                            }),
+                            icon: ''
                     }
                 ]
             },
@@ -300,18 +407,21 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     {
                         name: 'Mô tả thách thức',
                         value: challenge,
-                        isUseEditor: true
+                        isUseEditor: true,
+                        icon: ''
                         
                     },
                     {
                         name: 'Mô tả giải pháp',
                         value: solution,
-                        isUseEditor: true
+                        isUseEditor: true,
+                        icon: ''
                     },
                     {
                         name: 'Mô tả lợi ích',
                         value: benefit,
-                        isUseEditor: true
+                        isUseEditor: true,
+                        icon: ''
                     },
                     
                 ]
@@ -330,6 +440,18 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
             </section>
         )
     }
+
+    const renderBodyMobile = (items) => {
+       
+        return (
+            <section>
+                <div className="">
+                    { renderContentMobile(items.children) }
+                </div>
+            </section>
+        )
+    }
+
     
     return (
         <>
@@ -376,7 +498,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     </div>
                     ): (
                         <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
-                            <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
+                            <div id="project_navbar_web" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
                                 { renderBody(
                                     project 
                                     ?(project.type === TYPE_COMMERCIAL 
@@ -390,8 +512,18 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                                     ? (project.type === TYPE_COMMERCIAL 
                                         ? templateViewProject.commercial.solutionInfo 
                                         : templateViewProject.researching.solutionInfo) 
-                                    : null) }
+                                    : null) 
+                                }
+                                { renderBodyMobile(
+                                        project 
+                                        ? (project.type === TYPE_COMMERCIAL 
+                                            ? templateViewProject.commercial.generalInfo 
+                                            : templateViewProject.researching.generalInfo) 
+                                        : null
+                                    )  
+                                }
                             </div>
+                            
                         </div>
                     )
                 }

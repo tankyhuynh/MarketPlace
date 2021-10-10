@@ -20,7 +20,8 @@ export const fetchDomains = () => async dispatch => {
 
 export const createDomain = (value) => async dispatch => {
   const response = await domain.post(DOMAINS_URL, value);
-  console.log('createDomain:', response.data);
+  console.log('createDomain client send:', value);
+  console.log('createDomain server response:', response.data);
 
   dispatch({ type: CREATE_DOMAIN, payload: response.data });
 };

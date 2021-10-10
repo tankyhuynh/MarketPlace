@@ -7,7 +7,7 @@ const Tabs = ({ tabs, color, openTabChange }) => {
 
     const renderTabsTitle = tabs.map((tab, index) => {
         return (
-            <li className="flex-auto mr-2 -mb-px text-center last:mr-0">
+            <li className="flex-auto mr-2 -mb-px text-center last:mr-0" key={index}>
                     <a
                         className={
                         "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
@@ -31,7 +31,7 @@ const Tabs = ({ tabs, color, openTabChange }) => {
 
     const renderTabsContent = tabs.map((tab, index) => {
         return (
-            <div className={openTab === index ? "block" : "hidden"} id="link1">
+            <div className={openTab === index ? "block" : "hidden"} id="link1" key={index}>
                     { tab.content }
             </div>
         );

@@ -79,16 +79,16 @@ class ProjectList extends React.Component {
             return projectFieldList.map(field => {
                 const randomIndex = Math.floor(Math.random() * this.randomColors.length);
                 if(field.field.name.length > 30){
-                    var shortUuDiem = field.field.name.substring(0, 30) + "...";
+                    var shortField = field.field.name.substring(0, 30) + "...";
                     return (
                         <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase rounded-full bg-${this.randomColors[randomIndex]}-500`}>
-                            { shortUuDiem }
+                            { shortField }
                         </span>
                     )
                 }
                 
                 return (
-                    <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-500`}>
+                    <span className={`px-2 flex justify-center text-center self-center text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-500`}>
                         {  field.field.name }
                     </span>
                 ) 
@@ -168,7 +168,7 @@ class ProjectList extends React.Component {
                             
                             <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
                                     <div>
-                                        <div className="grid grid-cols-5">
+                                        <div className="grid grid-cols-5 xl:grid-flow-col">
                                             <div className="flex items-baseline col-span-4 gap-2">
                                             { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
                                                 ? (
@@ -181,7 +181,7 @@ class ProjectList extends React.Component {
                                                 
                                                 { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
                                             </div>
-                                            <div className="italic font-medium"> 
+                                            <div className="mx-2 italic font-medium"> 
                                                 { this.renderTypeOfProject(project.type) }
                                             </div>
                                         </div>
@@ -201,7 +201,8 @@ class ProjectList extends React.Component {
                                             <span className="font-semibold">
                                                 {/* {this.renderAuthors(project.author)} */}
                                                 {/* Huỳnh Tấn Kỷ */}
-                                                { project.user.fullName }
+                                                {/* { project.user.fullName } */}
+                                                { project.author }
                                             </span>
                                             <span className="self-end">
                                                 { dateFormat(project.createdDate, "HH:MM, dddd, mmmm dS, yyyy") } <br />

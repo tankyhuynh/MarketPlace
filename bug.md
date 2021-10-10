@@ -22,6 +22,9 @@
 ## UI
     - Home:
         - 2xl: fail
+    - Upload image:
+        - show loading when wait
+    - Short description: increase input height
 
 ## Auth
     - Login:
@@ -32,3 +35,7 @@
     - (OK) validate nhap form
     - (OK) dang nhap
     - (OK) click vao nguoi dung ko dc
+
+## Backend
+    - Commercial: fieldIdList
+    - Researching: projectFieldList
