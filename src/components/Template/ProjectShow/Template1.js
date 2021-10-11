@@ -110,7 +110,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
         const content = items.map((item, index) => {
            
             return (
-                <div id={item.name} className="flex items-center gap-4 border-2" key={index}>
+                <div id={item.name} className="flex items-center gap-4" key={index}>
                     <span className="text-2xl font-medium ">
                         { item.icon }
                     </span>
@@ -363,25 +363,25 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                         name: 'Địa chỉ',
                         value: address,
                         isUseEditor: false,
-                        icon: ''
+                        icon: <AddLocationAltIcon />
                     },
                     {
                         name: 'Số điện thoại',
                         value: phoneNumber,
                         isUseEditor: false,
-                        icon: ''
+                        icon: <PhoneAndroidIcon />
                     },
                     {
                         name: 'Email',
                         value: email,
                         isUseEditor: false,
-                        icon: ''
+                        icon: <EmailIcon />
                     },
                     {
                         name: 'Website',
                         value: website,
                         isUseEditor: false,
-                        icon: ''
+                        icon: <HttpIcon />
                     },
                     {
                         name: 'Lĩnh vực áp dụng',
@@ -398,7 +398,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                             : projectFieldList.map((field, index) => {
                                 return <span key={index}>{field.field.name}</span>
                             }),
-                            icon: ''
+                            icon: <BiotechIcon />
                     }
                 ]
             },
@@ -444,7 +444,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
     const renderBodyMobile = (items) => {
        
         return (
-            <section>
+            <section className="-ml-6">
                 <div className="">
                     { renderContentMobile(items.children) }
                 </div>
@@ -493,7 +493,16 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                                 ? (projectType === TYPE_COMMERCIAL 
                                     ? templateViewProject.commercial.solutionInfo 
                                     : templateViewProject.researching.solutionInfo) 
-                                : null) }
+                                : null) 
+                            }
+                            { renderBodyMobile(
+                                        project 
+                                        ? (project.type === TYPE_COMMERCIAL 
+                                            ? templateViewProject.commercial.generalInfo 
+                                            : templateViewProject.researching.generalInfo) 
+                                        : null
+                                    )  
+                            }
                         </div>
                     </div>
                     ): (
@@ -506,7 +515,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                                         : templateViewProject.researching.generalInfo) 
                                     : null) }
                             </div>
-                            <div id="project_content" className="col-span-3 ml-6">
+                            <div id="project_content" className="flex flex-col col-span-4 gap-2 ml-6">
                                 { renderBody(
                                     project 
                                     ? (project.type === TYPE_COMMERCIAL 

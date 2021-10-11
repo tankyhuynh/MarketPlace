@@ -14,14 +14,32 @@ export const columns = [
     width: 90 
   },
   {
-    field: 'code',
-    headerName: 'Code',
+    field: 'fullName',
+    headerName: 'Họ tên',
     width: 300,
     editable: true,
   },
   {
-    field: 'name',
-    headerName: 'Name',
+    field: 'email',
+    headerName: 'Email',
+    width: 300,
+    editable: true,
+  },
+  {
+    field: 'phoneNumber',
+    headerName: 'Số điện thoại',
+    width: 300,
+    editable: true,
+  },
+  {
+    field: 'address',
+    headerName: 'Địa chỉ',
+    width: 300,
+    editable: true,
+  },
+  {
+    field: 'gender',
+    headerName: 'Giới tính',
     width: 300,
     editable: true,
   },

@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useDialog } from 'react-st-modal';
 
 
-const FormEditField = ({ formConfig, initialValue, roles, onSubmit }) => {
+const FormEditField = ({ formConfig, initialValue, users, onSubmit }) => {
 
     const [value, setValue] = useState(initialValue);
     const dialog = useDialog();
@@ -32,7 +32,7 @@ const FormEditField = ({ formConfig, initialValue, roles, onSubmit }) => {
 
     const renderFields = () => {
         return (
-            roles
+            users
                 .filter(field => field.editable)            
                 .map(field => {
                     return (

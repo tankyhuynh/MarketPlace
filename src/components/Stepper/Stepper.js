@@ -36,7 +36,8 @@ import { LOADED, LOADING } from '../../actions/types';
 
 const OTHER_ID = 4
 
-const filebrowserUploadUrl = 'https://marketplace-demo-v1.herokuapp.com/api/v1/fileupload';
+// const filebrowserUploadUrl = 'https://marketplace-demo-v1.herokuapp.com/api/v1/fileupload';
+const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
 const removeButtons = 'PasteFromWord'
 
 
@@ -535,13 +536,15 @@ const HorizontalLinearStepper = (props) => {
             const config = {
                 header: { 'content-type': 'multipart/form-data' }
             }
-            formData.append("file", files[0]);
+            formData.append("upload", files[0]);
 
-            axios.post(environment.url.java + '/fileUploads/tinymce', formData, config)
+            axios.post(environment.url.java + '/fileUploads/ckeditor', formData, config)
                 .then(response => {
                     console.log('upload iamge: ', response);
-                    console.log('reponse.data.location: ', response.data.location);
-                    const imgSrc = response.data.location;
+                    // console.log('reponse.data.location: ', response.data.location);
+                    // const imgSrc = response.data.location;
+                    console.log('response.data.url: ', response.data.url);
+                    const imgSrc = response.data.url;
 
                     if (response.data) {
                         setProject(previousState => ({...previousState, productImage: imgSrc}) )

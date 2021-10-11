@@ -6,7 +6,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchRoles, createRole, editRole } from '../../../actions/role';
+import { fetchUsers, createUser, editUser } from '../../../actions/user';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert'
 
@@ -14,13 +14,13 @@ import { useAlert } from 'react-alert'
 import FormEdit from './FormEdit'
 
 const formConfig_Add = {
-    title: "Thêm vai trò",
+    title: "Thêm người dùng",
     button_text_ok: 'Thêm',
     button_text_cancel: 'Hủy'
 }
 
 const formConfig_Edit = {
-    title: "Sửa vai trò",
+    title: "Sửa người dùng",
     button_text_ok: 'Sửa',
     button_text_cancel: 'Hủy'
 }
@@ -30,7 +30,7 @@ const AdminField = (props) => {
     const alertUseAlert = useAlert()
 
     useEffect(() => {
-        props.fetchRoles()
+        props.fetchUsers()
     }, [])
     
     const handleEditRowsModelChange = useCallback((model) => {
@@ -41,24 +41,24 @@ const AdminField = (props) => {
 
     
     const onEdit = (value) => {
-        console.log('FormEdit onEdit role: ', value);
-        props.editRole(value)
+        console.log('FormEdit onEdit user: ', value);
+        props.editUser(value)
         alertUseAlert.show('Chỉnh sửa hoàn tất')
     }
 
     const onAdd = (value) => {
-        console.log('FormEdit onAdd role: ', value);
-        props.createRole(value)
+        console.log('FormEdit onAdd user: ', value);
+        props.createUser(value)
         alertUseAlert.show('Thêm hoàn tất')
         // props.fetchRoles()
     }
 
-    const onBtnEditClick = async (role) => {
+    const onBtnEditClick = async (user) => {
         await CustomDialog(
             <FormEdit 
                 formConfig={formConfig_Edit}
-                initialValue={role}
-                roles={columns} 
+                initialValue={user}
+                users={columns} 
                 onSubmit={onEdit}
             />, {
             title: formConfig_Edit.title,
@@ -67,12 +67,12 @@ const AdminField = (props) => {
 
     }
 
-    const onBtnAddClick = async (role) => {
+    const onBtnAddClick = async (user) => {
         await CustomDialog(
             <FormEdit 
                 formConfig={formConfig_Add}
-                initialValue={role}
-                roles={columns} 
+                initialValue={user}
+                users={columns} 
                 onSubmit={onAdd}
             />, {
             title: formConfig_Add.title,
@@ -109,7 +109,7 @@ const AdminField = (props) => {
             </button>
             <Table 
                 columns={columns} 
-                rows={renderRows(props.roles)}
+                rows={renderRows(props.users)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
             />
@@ -119,11 +119,11 @@ const AdminField = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        roles:  Object.values(state.roles),
+        users:  Object.values(state.users),
     };
 }
 
 export default connect(
     mapStateToProps, 
-    { fetchRoles, createRole, editRole }
+    { fetchUsers, createUser, editUser }
 )(AdminField);

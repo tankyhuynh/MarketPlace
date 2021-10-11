@@ -37,9 +37,10 @@ export const signIn = (userId, userProfile) => {
   // ------ Auth --------
 export const signup = (formValues, propsHistory) => async (dispatch, getState) => {
     dispatch({ type: LOADING });
-    const formUpdate = { ...formValues, roleId: 4 }
+    const formUpdate = { ...formValues, roleId: 6 }
     const response = await users.post(SIGNUP_URL, { ...formUpdate });
-    console.log(response)
+    console.log('client send: ', formValues)
+    console.log('server response: ', response)
 
     propsHistory.push('/auth/signin');
     dispatch({ type: LOADED });

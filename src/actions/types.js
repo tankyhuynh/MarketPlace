@@ -55,5 +55,10 @@ export const FETCH_ROLE = 'FETCH_ROLE'
 export const CREATE_ROLE = 'CREATE_ROLE'
 export const EDIT_ROLE = 'EDIT_ROLE'
 
+export const FETCH_USERS = 'FETCH_USERS'
+export const FETCH_USER = 'FETCH_USER'
+export const CREATE_USER = 'CREATE_USER'
+export const EDIT_USER = 'EDIT_USER'
+
 export const BLOCK_NAVIGATION = 'BLOCK_NAVIGATION'
 export const UNBLOCK_NAVIGATION = 'UNBLOCK_NAVIGATION'

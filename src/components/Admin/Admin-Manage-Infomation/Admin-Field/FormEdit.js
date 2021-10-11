@@ -17,9 +17,9 @@ import MenuItem from '@mui/material/MenuItem';
 // ]
 
 
-const FormEditField = ({ formConfig, initialValue, fields, onSubmit, fetchCategories, categories }) => {
+const FormEditField = ({ formConfig, initialValue, fields, onSubmit, categories }) => {
 
-    const [value, setValue] = useState(initialValue);
+    const [value, setValue] = useState(initialValue ? initialValue : { categoryId: 1 });
     const dialog = useDialog();
 
     const handleComboboxChange = (event) => {

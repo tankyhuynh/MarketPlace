@@ -15,6 +15,7 @@ import functionReducer from './functionReducer'
 import categoryReducer from './categoryReducer'
 import domainReducer from './domainReducer'
 import roleReducer from './roleReducer'
+import userReducer from './userReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -31,5 +32,6 @@ export default combineReducers({
     functions: functionReducer,
     categories: categoryReducer,
     domains: domainReducer,
-    roles: roleReducer
+    roles: roleReducer,
+    users: userReducer
 });

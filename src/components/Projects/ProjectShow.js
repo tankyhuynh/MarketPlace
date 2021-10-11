@@ -13,6 +13,7 @@ class ProjectShow extends React.Component {
 
     componentDidMount() {
         console.log('this.props.match.params.id', this.props.match.params.id);
+        console.log('this.props.project', this.props.project);
         this.props.fetchProject(this.props.match.params.id);
     }
 

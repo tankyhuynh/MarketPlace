@@ -23,4 +23,5 @@ module.exports = {
    DOMAINS_URL : '/admin/domains',
    ROLES_URL : '/roles',
    ROLES_ADMIN_URL : '/admin/roles',
+   USER_URL : '/admin/users',
 } 

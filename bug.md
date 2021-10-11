@@ -39,3 +39,6 @@
 ## Backend
     - Commercial: fieldIdList
     - Researching: projectFieldList
+
+## Admin
+    - Category: default value when add
