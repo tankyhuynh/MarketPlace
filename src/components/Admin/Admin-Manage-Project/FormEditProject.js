@@ -9,7 +9,7 @@ const FormEdit = ({ fields }) => {
             return (
                 <TextField 
                     id="outlined-basic" 
-                    label={field.name} 
+                    label={field ? field.headerName : ''} 
                     variant="outlined" 
                 />
             )

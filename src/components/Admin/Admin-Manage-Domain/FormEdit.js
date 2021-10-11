@@ -21,7 +21,7 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit, fetchCateg
                     return (
                         <TextField 
                             id="outlined-basic" 
-                            label={field ? field.field : ''} 
+                            label={field ? field.headerName : ''} 
                             variant="outlined"
                             fullWidth
                             defaultValue={initialValue ? initialValue[field.field] : ''}
@@ -43,7 +43,7 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit, fetchCateg
 
     const renderActions =() => {
         return (
-            <div className="flex gap-2">
+            <div className="flex justify-end gap-2 my-2">
                 <button
                     onClick={e => onSubmitForm(e)}
                     className="px-4 py-2 text-white bg-green-500 rounded-lg"

@@ -15,19 +15,19 @@ export const columns = [
   },
   {
     field: 'code',
-    headerName: 'Code',
+    headerName: 'Mã',
     width: 300,
     editable: true,
   },
   {
     field: 'name',
-    headerName: 'Name',
+    headerName: 'Tên',
     width: 300,
     editable: true,
   },
   {
     field: 'action',
-    headerName: 'Action',
+    headerName: 'Hành động',
     width: 150,
     editable: false,
     renderCell: actionFormatter,

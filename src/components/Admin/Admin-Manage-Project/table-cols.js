@@ -52,7 +52,7 @@ export const columns = [
     },
     {
       field: 'action',
-      headerName: 'Action',
+      headerName: 'Hành động',
       width: 120,
       editable: false,
       renderCell: actionFormatter

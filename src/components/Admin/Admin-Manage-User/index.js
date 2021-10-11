@@ -74,6 +74,7 @@ const AdminField = (props) => {
                 initialValue={user}
                 users={columns} 
                 onSubmit={onAdd}
+                
             />, {
             title: formConfig_Add.title,
             showCloseIcon: true,

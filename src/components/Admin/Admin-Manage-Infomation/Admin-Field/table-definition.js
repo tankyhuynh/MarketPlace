@@ -16,21 +16,21 @@ export const columns = [
   },
   {
     field: 'code',
-    headerName: 'Code',
+    headerName: 'Mã',
     width: 150,
     editable: true,
     type: 'text'
   },
   {
     field: 'name',
-    headerName: 'Name',
+    headerName: 'Tên',
     width: 250,
     editable: true,
     type: 'text'
   },
   {
     field: 'category',
-    headerName: 'Category',
+    headerName: 'Thể loại',
     width: 250,
     editable: true,
     renderCell: categoryFormatter,
@@ -38,7 +38,7 @@ export const columns = [
   },
   {
     field: 'action',
-    headerName: 'Action',
+    headerName: 'Hành động',
     width: 100,
     editable: false,
     renderCell: actionFormatter,
