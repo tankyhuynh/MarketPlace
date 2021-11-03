@@ -20,10 +20,10 @@ export default function SimpleAccordion(props) {
   const classes = useStyles();
 
   const renderList = () => {
-    return props.data.map(item => {
+    return props.data.map((item, index) => {
       return (
-        <>
-          <Accordion>
+        <div key={index}>
+          {/* <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -36,8 +36,22 @@ export default function SimpleAccordion(props) {
                     { item.answer }
                   </Typography>
               </AccordionDetails>
+          </Accordion> */}
+          <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>{ item.question }</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                    { item.answer }
+                </Typography>
+              </AccordionDetails>
           </Accordion>
-        </>
+        </div>
       )
     })
   }

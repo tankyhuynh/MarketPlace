@@ -1,7 +1,12 @@
+/* eslint-disable eqeqeq */
 import './template.css'
 
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
+import { useAlert } from 'react-alert'
+
+import { createCustomerContact } from '../../../actions/customerContact'
 
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
@@ -14,21 +19,12 @@ import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 import TransformIcon from '@mui/icons-material/Transform';
 import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import { CustomDialog } from 'react-st-modal';
+
+import FormSubmit from './FormSubmit'
+import { columns } from './table-definition'
 
 
-// import img1_a from '../../../assets/img1_a.png';
-// import img1_b from '../../../assets/img1_b.png';
-// import img2_a from '../../../assets/img2_a.png';
-// import img2_b from '../../../assets/img2_a.png';
-// import img3_a from '../../../assets/img3_a.jpg';
-// import img3_b from '../../../assets/img3_b.png';
-// import img5_a from '../../../assets/img5_a.jpg';
-// import img5_b from '../../../assets/img5_b.png';
-// import logo from '../../../assets/logo.png';
-// import Test1 from '../../../assets/Grapes_Red.jpg';
-// import Test2 from '../../../assets/sugarcane-sugar-200611.jpg';
-
-// import MainBackgroundImage from '../../../assets/Grapes_Red.jpg' 
 
 const TYPE_COMMERCIAL = 'CP'
 // const TYPE_RESEARCHING = 'RP'
@@ -37,13 +33,43 @@ const TYPE_TEMPLATE_PREVIEW = 'preview'
 const OTHER_LEVELDEVELOP_ID = 4
 // const OTHER_TRANSMISSION_ID = 4
 
+const formConfig = {
+    title: "Thông tin liên hệ",
+    button_text_ok: 'Gửi',
+    button_text_cancel: 'Hủy'
+}
 
 
-const ProjectShow = ({ project , type, projectType, fields, levels, transmissions}) => {
+const ProjectShow = ({ project , type, projectType, fields, levels, transmissions, createCustomerContact}) => {
 
     console.log('ProjectShow', project)
     console.log('ProjectShow', projectType)
     console.log('ProjectShow', type)
+
+    const alertUseAlert = useAlert()
+
+    const onSubmit = (value) => {
+        const submitData = { ...value, projectId: value.id };
+        console.log('FormEdit onSubmit contact: ', submitData);
+        
+        createCustomerContact(submitData)
+        alertUseAlert.show('Thêm hoàn tất')
+    }
+
+    const onBtnContactClick = async (project) => {
+        const pickedFieldsProject = _.pick(project, 'id', 'name')
+            await CustomDialog(
+                <FormSubmit 
+                    formConfig={formConfig}
+                    initialValue={pickedFieldsProject}
+                    domains={columns} 
+                    onSubmit={onSubmit}
+                />, {
+                title: formConfig.title,
+                showCloseIcon: true,
+            });
+
+    }
 
     // const renderImage = (image) => {
     //     if(image){
@@ -93,7 +119,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
            
             return (
                 <div id={item.name} className="flex flex-col" key={index}>
-                    <span className="mt-4 text-2xl font-medium ">
+                    <span className="mt-4 text-xl font-medium ">
                         {`${item.name} `}
                     </span>
                     { item.isUseEditor 
@@ -182,13 +208,46 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
         return transmissionsFormat.join(', ')
     }
 
-    const renderFields = (fields) => {
+    const renderFieldsShow = (fields) => {
         const fieldsFormat = fields.map((field, index) => {
             // eslint-disable-next-line eqeqeq
-           
-            // return field.field.name
             return <div>{ field.field.name }</div>
         })
+
+        // return fieldsFormat.join(', ')
+        return fieldsFormat
+    }
+    const renderFieldsPreview = (projectFields) => {
+
+        let fieldsFormat = []
+        if(projectFields){
+            fieldsFormat = projectFields.map((field, index) => {
+                // eslint-disable-next-line eqeqeq
+                let result;
+                if(fields[field]){
+                    console.log('result fields[field]: ', fields[field]);
+                    result =  fields[field]    
+                }
+                else {
+                    // eslint-disable-next-line array-callback-return
+                    Object.values(fields).map(item => {
+                        let tmpResult = item.childOfFieldList.find(item => item.id == field)
+                        result = tmpResult ? tmpResult : result
+                        if(!result){
+                            item.childOfFieldList.map(childItem => {
+                                tmpResult = childItem.childOfFieldList.find(item => item.id == field)
+                                result = tmpResult ? tmpResult : result
+                                return result
+                            })
+                        }
+                        
+                    })
+                    
+                }
+
+                return <div>{ result ? result.name : null }</div> 
+            })
+        }
 
         // return fieldsFormat.join(', ')
         return fieldsFormat
@@ -226,7 +285,16 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     },
                     {
                         name: 'Website',
-                        value: website,
+                        value: (
+                            <a 
+                                href={website} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className={`text-blue-500 italic`}
+                            >
+                                { website }
+                            </a>
+                        ),
                         isUseEditor: false,
                         icon: <HttpIcon />
                     },
@@ -241,14 +309,10 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                         value: type === TYPE_TEMPLATE_PREVIEW 
                             ? (
                                 project.fieldIdList 
-                                ? (
-                                    project.fieldIdList.map((fieldId, index) => {
-                                        return <span key={index}>{fields[fieldId].name}</span>
-                                    })
-                                )
+                                ? renderFieldsPreview(project.fieldIdList)
                                 : null
                             )
-                            : renderFields(projectFieldList),
+                            : renderFieldsShow(projectFieldList),
                             icon: <BiotechIcon />
                         
                     },
@@ -329,6 +393,18 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                         name: 'Chào giá tham khảo',
                         value: price,
                         icon: <MonetizationOnIcon />
+                    },
+                    {
+                        name: '',
+                        value: (
+                            <button 
+                                className="p-4 text-white bg-green-500 rounded-lg"
+                                onClick={(e) => onBtnContactClick(project)}
+                            >
+                                Liên hệ ngay
+                            </button>
+                        ),
+                        icon: <MonetizationOnIcon />
                     }
                 ]
             },
@@ -387,12 +463,8 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                         name: 'Lĩnh vực áp dụng',
                         value: type === TYPE_TEMPLATE_PREVIEW 
                             ? (
-                                project.fieldIdList
-                                ? (
-                                    project.fieldIdList.map((fieldId, index) => {
-                                        return <span key={index}>{fields[fieldId].name}</span>
-                                    })
-                                )
+                                project.fieldId
+                                ? renderFieldsPreview(project.fieldId) // Backend truyền là fieldId - Đừng sửa
                                 : null
                             )
                             : projectFieldList.map((field, index) => {
@@ -458,7 +530,7 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
             <div className="">
                 <div className="my-3 text-center md:text-left">
                     <div 
-                        className="grid grid-cols-1 p-8 -mt-3 -mx-28"
+                        className="grid grid-cols-1 p-8 -mt-3"
                         style={{ backgroundImage: `linear-gradient(rgba(194, 179, 199, 0.9), rgba(123, 121, 123, 0.9)), url(${productImage})` }}
                     >
                         <section className="z-10 flex flex-col items-center w-2/3 gap-4 mx-auto text-center">
@@ -475,11 +547,13 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                     </div>
                 </div>
                 {/* <div className="grid grid-cols-4 gap-4 p-4"> */}
+
+                
                 
                 {type === TYPE_TEMPLATE_PREVIEW
                     ?(
                         <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
-                        <div id="project_navbar" className="flex-col hidden col-span-1 mx-4 rounded-lg lg:flex">
+                        <div id="project_navbar" className="flex-col hidden col-span-1 rounded-lg lg:flex">
                             { renderBody(
                                 project 
                                 ?(projectType === TYPE_COMMERCIAL 
@@ -552,5 +626,5 @@ const mapStateToProps = (state, ownProps) => {
 };
 export default connect(
     mapStateToProps,
-    {  }
+    { createCustomerContact }
   )(ProjectShow);

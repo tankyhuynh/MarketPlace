@@ -31,14 +31,17 @@ const AdminProjectAll = (props) => {
     }, []);
 
     const renderRows = (rows) => {
-        return rows.map(row => {
+        return rows
+        .filter(row => row.status.id === DD_PROJECT_ID)
+        .map(row => {
             const action = (
                 <div className="flex">
                     <Link
-                        to={`/projects/edit/${row.id}`}
-                        className="px-2 text-white bg-green-500 rounded-lg"
-                        >
-                        Edit
+                        to={`/admin/projects/edit/${row.id}`}
+                        className="self-center px-2 text-white rounded-lg w-28"
+                        style={{ backgroundColor: 'deepskyblue' }}
+                    >
+                        Bấm để duyệt
                     </Link>
                 </div>
             )
@@ -51,7 +54,7 @@ const AdminProjectAll = (props) => {
         <div className="mt-4">
             <Table 
                 columns={columns} 
-                rows={renderRows(props.projects.filter(project => project.status.id === DD_PROJECT_ID))}
+                rows={renderRows(props.projects)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange}
             />

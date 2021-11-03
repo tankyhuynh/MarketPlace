@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
-import { CustomDialog } from 'react-st-modal';
+import { CustomDialog, Confirm } from 'react-st-modal';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Table from '../../../Table/Table-Admin';
 import { columns } from '../table-definition';
 
-import { fetchStatuses, createStatus } from '../../../../actions/status';
+import { fetchStatuses, createStatus, editStatus, deleteStatus } from '../../../../actions/status';
 import { connect } from 'react-redux';
 
 import FormEdit from '../FormEdit'
@@ -39,6 +41,8 @@ const AdminField = (props) => {
     
     const onEdit = (value) => {
         console.log('FormEdit onEdit status: ', value);
+        props.editStatus(value)
+        props.fetchStatuses()
     }
 
     const onAdd = (value) => {
@@ -75,16 +79,41 @@ const AdminField = (props) => {
 
     }
 
+    const onBtnDeleteClick = async (field) => {
+        const CONSTFIRM_TITLE = 'Xác nhận' 
+        const CONSTFIRM_TEXT = `Bạn muốn xóa ''${field.name}'' ? `
+        const CONSTFIRM_OK_BUTTON_TEXT = 'Đồng ý' 
+        const CONSTFIRM_OK_CANCEL_TEXT = 'Hủy' 
+
+        const result = await Confirm(
+            CONSTFIRM_TEXT, 
+            CONSTFIRM_TITLE,
+            CONSTFIRM_OK_BUTTON_TEXT,
+            CONSTFIRM_OK_CANCEL_TEXT
+        );
+        
+        if (result) {
+            props.deleteStatus(field.id)
+        } else {
+        // Сonfirmation not confirmed
+        }
+    }
 
     const renderRows = (rows) => {
         return rows.map(row => {
             const action = (
-                <div className="">
+                <div className="flex gap-2 mx-auto">
                     <button 
                         onClick={() => onBtnEditClick(row)}
-                        className="px-2 text-white bg-green-500 rounded-lg"    
+                        className="text-white rounded-lg"    
                     >
-                        Edit
+                        <EditIcon color="warning" />
+                    </button>
+                    <button 
+                        onClick={() => onBtnDeleteClick(row)}
+                        className="text-white rounded-lg"    
+                    >
+                        <DeleteIcon color="error" />
                     </button>
                 </div>
             )
@@ -119,5 +148,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchStatuses, createStatus }
+    { fetchStatuses, createStatus, editStatus, deleteStatus }
 )(AdminField);

@@ -1,3 +1,5 @@
+import history from '../history'
+
 import field from '../apis/field';
 import field_Admin from '../apis/field_Admin';
 import { FIELD_URL, FIELD_ADMIN_URL } from '../environments/constraints';
@@ -5,7 +7,9 @@ import { FIELD_URL, FIELD_ADMIN_URL } from '../environments/constraints';
 import {
   FETCH_FIELDS,
   FETCH_FIELD,
-  CREATE_FIELD
+  CREATE_FIELD,
+  EDIT_FIELD,
+  DELETE_FIELD
     
 } from './types';
 
@@ -32,15 +36,22 @@ export const createField = (value) => async dispatch => {
   console.log('createField:', response.data);
 
   dispatch({ type: CREATE_FIELD, payload: response.data });
+
 };
 
 export const editField = (value) => async dispatch => {
   const response = await field_Admin.put(`${FIELD_ADMIN_URL}/${value.id}`, value);
   console.log('editField:', response.data);
 
-  dispatch({ type: CREATE_FIELD, payload: response.data });
+  dispatch({ type: EDIT_FIELD, payload: response.data });
 };
 
+export const deleteField = id => async dispatch => {
+  const response = await field_Admin.delete(`${FIELD_ADMIN_URL}/${id}`);
+  console.log('deleteField:', response.data);
+
+  dispatch({ type: DELETE_FIELD, payload: id });
+};
 
 
 

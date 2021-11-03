@@ -58,7 +58,10 @@ const Researcher_Home = () => {
                             />
                             Dự án
                         </Link>
-                        <Link className="flex flex-col gap-2 rounded-2xl content_center menu">
+                        <Link 
+                            to={'/researchers/groups'}
+                            className="flex flex-col gap-2 rounded-2xl content_center menu"
+                        >
                             {/* <GroupIcon style={{ fontSize:"80px", color: "black"  }} /> */}
                             <img 
                                 src={GroupDemoIcon} 

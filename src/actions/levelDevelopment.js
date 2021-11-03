@@ -7,6 +7,7 @@ import {
   FETCH_LEVEL_DEVELOPMENT,
   CREATE_LEVEL_DEVELOPMENT,
   EDIT_LEVEL_DEVELOPMENT,
+  DELETE_LEVEL_DEVELOPMENT
     
 } from './types';
 
@@ -40,6 +41,12 @@ export const editLevel = (value) => async dispatch => {
   console.log('editLevel:', response.data);
 
   dispatch({ type: EDIT_LEVEL_DEVELOPMENT, payload: response.data });
+};
+
+export const deleteLevel = id => async dispatch => {
+  await levelDevelopment_Admin.delete(`${LEVEL_ADMIN_URL}/${id}`);
+
+  dispatch({ type: DELETE_LEVEL_DEVELOPMENT, payload: id });
 };
 
 //------ End LevelDevelopments --------

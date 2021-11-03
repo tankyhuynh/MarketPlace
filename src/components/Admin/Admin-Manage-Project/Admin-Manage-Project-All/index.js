@@ -5,20 +5,30 @@ import { connect } from 'react-redux';
 
 import { 
     fetchProjects_Commercial,
-    fetchProjects_Researching
+    fetchProjects_Researching,
+    fetchProjects_all_by_domainId
 } 
 from '../../../../actions/project';
 
 import Table from '../../../Table/Table-Admin';
-import { columns } from '../table-cols';
+import { columns } from '../table-cols-all';
 import { Link } from 'react-router-dom';
+
+
 
 
 const AdminProjectAll = (props) => {
 
+    
+
+
     useEffect(() => {
-        props.fetchProjects_Commercial();
-        props.fetchProjects_Researching();
+        // props.fetchProjects_Commercial();
+        // props.fetchProjects_Researching();
+
+        const userDataLocalStorage = localStorage.getItem("userData");
+        const user = JSON.parse(userDataLocalStorage);
+        props.fetchProjects_all_by_domainId(user.domain.id);
     }, [])
 
     const [editRowsModel, setEditRowsModel] = useState({});
@@ -33,14 +43,18 @@ const AdminProjectAll = (props) => {
             const action = (
                 <div className="flex">
                     <Link
-                        to={`/projects/edit/${row.id}`}
-                        className="px-2 text-white bg-green-500 rounded-lg"
-                        >
-                        Edit
+                        to={`/admin/projects/edit/${row.id}`}
+                        className="self-center px-2 text-white rounded-lg w-28"
+                        style={{ backgroundColor: 'deepskyblue' }}
+                    >
+                        Bấm để duyệt
                     </Link>
                 </div>
             )
-            return {...row, action: action}
+            
+            const projectStatus = row.status ? row.status : ''
+
+            return {...row, action: action, projectStatus}
         })
     }
     
@@ -66,7 +80,8 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     { 
-        fetchProjects_Commercial,
-        fetchProjects_Researching 
+        // fetchProjects_Commercial,
+        // fetchProjects_Researching,
+        fetchProjects_all_by_domainId 
     }
 )(AdminProjectAll);

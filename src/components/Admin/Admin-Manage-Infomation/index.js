@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 
 import Tab from '../../Tab/Tab';
 import TableField from './Admin-Field';
-import TableCategory from './Admin-Category';
 import TableLevel from './Admin-Level';
 import TableStatus from './Admin-Status';
 import TableTranmission from './Admin-Tranmission';
@@ -16,12 +15,6 @@ const AdminDashboard = () => {
     const [openTab, setOpenTab] = useState(0);
 
     const tabs = [
-        {
-            title: 'Thông tin danh mục lĩnh vực',
-            content: (
-               <TableCategory />
-            )
-        },
         {
             title: 'Thông tin lĩnh vực',
             content: (
@@ -56,10 +49,11 @@ const AdminDashboard = () => {
     return (
             
             <div 
-                className="w-full mx-6 sm:w-3/4 lg:w-5/6" 
+                className="w-full sm:w-3/4 lg:w-5/6" 
                 id="mainContainer"
             >
-                <div className="flex flex-row items-center justify-between px-4 py-4 shadow">
+
+                {/* <div className="flex flex-row items-center justify-between px-4 py-4 shadow">
                     <button 
                         id="btnContainer" 
                         className="focus:outline-none sm:hidden"
@@ -103,7 +97,8 @@ const AdminDashboard = () => {
                             className="w-10 h-10 rounded-full" 
                         />
                     </div>
-                </div>
+                </div> */}
+
                 <Tab 
                     tabs={tabs} 
                     color="red" 

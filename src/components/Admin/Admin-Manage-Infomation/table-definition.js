@@ -28,7 +28,7 @@ export const columns = [
   {
     field: 'action',
     headerName: 'Hành động',
-    width: 130,
+    width: 150,
     editable: false,
     renderCell: actionFormatter,
   },

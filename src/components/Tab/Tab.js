@@ -1,10 +1,10 @@
 import React from "react";
 
-const Tabs = ({ tabs, color, openTabChange }) => {
-    const [openTab, setOpenTab] = React.useState(0);
+const Tabs = ({ tabs, color, openTabChange, openTabProps }) => {
+    const [openTab, setOpenTab] = React.useState(openTabProps ? openTabProps : 0);
 
     openTabChange(openTab);
-
+    
     const renderTabsTitle = tabs.map((tab, index) => {
         return (
             <li className="flex-auto mr-2 -mb-px text-center last:mr-0" key={index}>
@@ -31,7 +31,7 @@ const Tabs = ({ tabs, color, openTabChange }) => {
 
     const renderTabsContent = tabs.map((tab, index) => {
         return (
-            <div className={openTab === index ? "block" : "hidden"} id="link1" key={index}>
+            <div className={ (openTab === index) ? "block" : "hidden"} id="link1" key={index}>
                     { tab.content }
             </div>
         );

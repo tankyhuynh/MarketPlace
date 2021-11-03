@@ -5,6 +5,7 @@ import {
     FETCH_FIELD,
     CREATE_FIELD,
     EDIT_FIELD,
+    DELETE_FIELD
 
 } from '../actions/types';
 
@@ -19,6 +20,8 @@ export default (state = {}, action) => {
             return { ...state, [action.payload.id]: action.payload } ;
         case EDIT_FIELD:
             return { ...state, [action.payload.id]: action.payload } ;
+        case DELETE_FIELD:
+            return _.omit(state, action.payload);
         default:
             return state;
     }

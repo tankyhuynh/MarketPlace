@@ -4,6 +4,8 @@ import Tab from '../../Tab/Tab';
 import AdminManageProjectAll from './Admin-Manage-Project-All'
 import AdminManageProjectDD from './Admin-Manage-Project-DD'
 import AdminManageProjectCD from './Admin-Manage-Project-CD'
+import AdminManageProjectTC from './Admin-Manage-Project-TC'
+import AdminManageProjectTMP from './Admin-Manage-Project-TMP'
 
 
 const tabs = [
@@ -35,7 +37,7 @@ const tabs = [
         title: 'Từ chối',
         content: (
             <>
-                <AdminManageProjectCD />
+                <AdminManageProjectTC />
             </>
         )
     },
@@ -43,7 +45,7 @@ const tabs = [
         title: 'Nháp',
         content: (
             <>
-                <AdminManageProjectCD />
+                <AdminManageProjectTMP />
             </>
         )
     }

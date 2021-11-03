@@ -2,6 +2,7 @@ import './CardCustom.css'
 
 import React from "react";
 import Card from "@material-tailwind/react/Card";
+// import CardMedia from '@mui/material/CardMedia';
 import CardBody from "@material-tailwind/react/CardBody";
 import CardFooter from "@material-tailwind/react/CardFooter";
 import Button from "@material-tailwind/react/Button";
@@ -67,27 +68,35 @@ const CardCustom = ({ card }) => {
                 uuDiems.map(uuDiem => {
                     return uuDiemStr += uuDiem;
                 })
-
-                if(uuDiemStr.length > 100){
-                    var shortUuDiem = uuDiemStr.substring(0, 100) + "...";
+                if(uuDiemStr.length > 90){
+                    var shortUuDiem = uuDiemStr.substring(0, 90) + "...";
                     return shortUuDiem;
                 }
            }
-           return uuDiems;
+           return uuDiems[0];
         }
     };
     
     return (
-        // <Card className="flex flex-col justify-between card">
-        <Card className="grid justify-between grid-flow-row card">
-            <img
-                // src={ renderImage(renderImageSrc(card)) }
-                src={ card.productImage ? card.productImage : renderImage(renderImageSrc(card)) } 
-                alt={ card.ten }
-                // className="self-center h-64"
-                className="object-cover object-center w-full my-2 rounded-lg max-h-64"
-            />
-            <CardBody>
+        // <Card className="grid justify-between grid-flow-row card">
+        <Card className="flex flex-col justify-between shadow-sm card">
+           
+            <div
+                // component="img"
+                // height="10"
+                // image={ card.productImage ? card.productImage : renderImage(renderImageSrc(card)) }
+                // alt={ card.ten }
+                className=""
+            >
+                <img
+                    // src={ renderImage(renderImageSrc(card)) }
+                    src={ card.productImage ? card.productImage : renderImage(renderImageSrc(card)) } 
+                    alt={ card.ten }
+                    // className="self-center h-64"
+                    className="object-cover object-center w-full h-64 my-2 rounded-lg max-h-64"
+                />
+            </div>
+            <CardBody className="">
                 <div className="text-xl font-bold">{ renderTen(card.name) }</div>
                 <div 
                     className="mt-6"
@@ -95,9 +104,9 @@ const CardCustom = ({ card }) => {
                 />
             </CardBody>
 
-            <CardFooter>
+            <CardFooter className="self-end">
                 <Button color="lightBlue" size="lg" ripple="light">
-                    Xem chi tiết ...
+                    Xem chi tiết
                 </Button>
             </CardFooter>
         </Card>

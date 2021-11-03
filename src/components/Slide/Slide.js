@@ -46,10 +46,10 @@ const Slide = ({ slide, index, projectImage }) => {
         <Link to={`/projects/show/${slide.id}`} className="bg-green-500">
             <Card className={`${classes.root} slide-background md:w-full`}>
               <Grid container spacing={3} >
-                  <Grid item xs={6} className="">
+                  <Grid item xs={6} md={12}>
                       <CardOranization image={slide.productImage} />
                   </Grid>
-                  <Grid item xs={6} className="">
+                  <Grid item xs={6} md={12}>
                       <CardProjectInfo project={slide} />
                   </Grid>
                 

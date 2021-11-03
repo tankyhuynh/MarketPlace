@@ -15,7 +15,13 @@ import functionReducer from './functionReducer'
 import categoryReducer from './categoryReducer'
 import domainReducer from './domainReducer'
 import roleReducer from './roleReducer'
+import roleOfGroupReducer from './roleOfGroupReducer'
 import userReducer from './userReducer'
+import researchGroupReducer from './researchGroupReducer'
+import faqReducer from './faqReducer'
+import aboutReducer from './aboutReducer'
+import contactReducer from './contactReducer'
+import customerContactReducer from './customerContactReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -33,5 +39,11 @@ export default combineReducers({
     categories: categoryReducer,
     domains: domainReducer,
     roles: roleReducer,
-    users: userReducer
+    rolesOfGroup: roleOfGroupReducer,
+    users: userReducer,
+    researchGroups: researchGroupReducer,
+    faqs: faqReducer,
+    abouts: aboutReducer,
+    contacts: contactReducer,
+    customerContacts: customerContactReducer
 });

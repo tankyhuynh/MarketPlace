@@ -7,6 +7,7 @@ import {
   FETCH_STATUS,
   CREATE_STATUS,
   EDIT_STATUS,
+  DELETE_STATUS
     
 } from './types';
 
@@ -41,6 +42,12 @@ export const editStatus = (value) => async dispatch => {
   console.log('editStatus:', response.data);
 
   dispatch({ type: EDIT_STATUS, payload: response.data });
+};
+
+export const deleteStatus = id => async dispatch => {
+  await status_Admin.delete(`${STATUS_ADMIN_URL}/${id}`);
+
+  dispatch({ type: DELETE_STATUS, payload: id });
 };
 
 

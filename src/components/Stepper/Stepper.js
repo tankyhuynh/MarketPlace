@@ -40,33 +40,11 @@ const OTHER_ID = 4
 const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
 const removeButtons = 'PasteFromWord'
 
+const TYPE_PROJECT_COMMERCIAL = 'CP'
+// const TYPE_PROJECT_RESEARCHING = 'RP'
+
 
 const HorizontalLinearStepper = (props) => {
-    // const initData = {
-    //     userId: 1,
-    //     statusId: 1,
-    //     companyName: '',
-    //     author: '',
-    //     address: '',
-    //     phoneNumber: '',
-    //     fax: '',
-    //     email: '',
-    //     website: '',
-    //     name: '',
-    //     shortDescription: '',
-    //     process: '',
-    //     fieldIdList: [],
-    //     advantage: '',
-    //     comDevLevel: [],
-    //     comTransMethod: [],
-    //     scope: '',
-    //     price: '',
-    //     productImage: '',
-    //     challenge: '',
-    //     solution: '',
-    //     benefit: '',
-    // }
-    
 
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
@@ -75,7 +53,7 @@ const HorizontalLinearStepper = (props) => {
     const dispatch = useDispatch()
     const alertUseAlert = useAlert()
 
-    console.log('HorizontalLinearStepper props.project: ', props.project);
+    // console.log('HorizontalLinearStepper props.project: ', props.project);
 
     const [stateFieldsChecked, setFieldsChecked] = useState({
         checked: props.project ? (
@@ -145,9 +123,8 @@ const HorizontalLinearStepper = (props) => {
     useEffect(() => {
         
         if(props.project){
-            console.log('HorizontalLinearStepper props.project useEffect: ', props.project);
-            console.log('HorizontalLinearStepper props.project useEffect: ', props.project.commercialDevelopmentLevelList);
-            
+            props.project.type === TYPE_PROJECT_COMMERCIAL ? setOpenTab(0) : setOpenTab(1);  
+
             setProject({
                 userId: userIdState,
                 statusId: statusId,
@@ -217,29 +194,42 @@ const HorizontalLinearStepper = (props) => {
                 comTransMethod: props.project ?(
                     props.project.commercialTransmissionMethodList
                     ? (
-                        props.project.commercialTransmissionMethodList
-                        .map(comTransMethod => {
-                            if(comTransMethod.transmissionMethod.id != OTHER_ID){
-                                return setSelectedTransmissionMethodAndLevel(previousState => (
-                                    { ...previousState,
-                                        'comTransMethod': [
-                                            {
-                                                'transmissionMethodId': comTransMethod.transmissionMethod.id,
-                                                note: comTransMethod.transmissionMethod.name
+                        props.project.commercialTransmissionMethodList.length
+                            ? (
+                                props.project.commercialTransmissionMethodList
+                                .map(comTransMethod => {
+                                    if(comTransMethod.transmissionMethod.id != OTHER_ID){
+                                        return setSelectedTransmissionMethodAndLevel(previousState => (
+                                            { ...previousState,
+                                                'comTransMethod': [
+                                                    {
+                                                        'transmissionMethodId': comTransMethod.transmissionMethod.id,
+                                                        note: comTransMethod.transmissionMethod.name
+                                                    }
+                                                ]
                                             }
-                                        ]
+                                        ))
                                     }
-                                ))
-                            }
-                            setOtherInputs(previousState => ({...previousState, comTransMethod: {
-                                name: 'Mức độ phát triển',
-                                label: 'Nhập tên mức độ',
-                                value: comTransMethod.transmissionMethod.name
-                            }}))
-                            return setOtherInputOpen(previousState => ({...previousState, comTransMethod: true}))
-                        })
-                    )
-                    : null
+                                    setSelectedTransmissionMethodAndLevel(previousState => (
+                                        { ...previousState,
+                                            'comTransMethod': [
+                                                {
+                                                    'transmissionMethodId': comTransMethod.transmissionMethod.id,
+                                                    note: comTransMethod.note
+                                                }
+                                            ]
+                                        }
+                                    ))
+                                    setOtherInputs(previousState => ({...previousState, comTransMethod: {
+                                        name: 'Phương thức chuyển giao',
+                                        label: 'Nhập tên phương thức',
+                                        value: comTransMethod.note
+                                    }}))
+                                    return setOtherInputOpen(previousState => ({...previousState, comTransMethod: true}))
+                                })
+                            )
+                            : null
+                    ): null
                 ) : (
                     selectedTransmissionMethodAndLevel['comTransMethod']
                         .map(comTransMethod => {
@@ -921,35 +911,61 @@ const HorizontalLinearStepper = (props) => {
         })
     }
 
-    const renderCheckboxCategoryChildren = (category) => {
-        const children = []
-        props.fields.filter(field => field.category ? field.category.id === category.id : null)
-            .map(item => {
-                return children.push({
-                    value: `${item.id}`,
-                    label: item.name,
+    const renderCheckboxCategoryChildren = (field) => {
+        let children = [];
+        if(field.childOfFieldList.length){
+            field.childOfFieldList
+                .map(fieldChild => {
+                    if(renderCheckboxCategoryChildren(fieldChild)){
+                        return children.push({
+                            value: `${fieldChild.id}`,
+                            label: fieldChild.name,
+                            children: renderCheckboxCategoryChildren(fieldChild)
+                        })
+                    }
+                    return children.push({
+                        value: `${fieldChild.id}`,
+                        label: fieldChild.name,
+                    })
                 })
-            })
+        }
+        
         if(children.length){
             return children
         }
         return null
     }
-    
-    const nodes = props.categories ? props.categories.map(category => {
-        if(renderCheckboxCategoryChildren(category)){
+
+
+    const nodes = props.fields ? props.fields.map(field => {
+        if(renderCheckboxCategoryChildren(field)){
             return {
-                value: `${category.code}`,
-                label: category.name,
-                children: renderCheckboxCategoryChildren(category)
+                value: `${field.id}`,
+                label: `${ field.name }`,
+                // label: <button onClick={(e) => onTest(e, field)} classname="mx-4 my-2 bg-green-500">{ field.name }</button>,
+                children: renderCheckboxCategoryChildren(field)
             }
         }
         return {
-            value: `${category.id}-${category.code}`,
-            label: category.name,
+            value: `${field.id}`,
+            label: field.name,
         }
     })
     : [];
+    // const nodes = props.categories ? props.categories.map(category => {
+    //     if(renderCheckboxCategoryChildren(category)){
+    //         return {
+    //             value: `${category.code}`,
+    //             label: category.name,
+    //             children: renderCheckboxCategoryChildren(category)
+    //         }
+    //     }
+    //     return {
+    //         value: `${category.id}-${category.code}`,
+    //         label: category.name,
+    //     }
+    // })
+    // : [];
     
     
     const onCheckboxTreeViewChecked = (checked) => {
@@ -1138,17 +1154,33 @@ const HorizontalLinearStepper = (props) => {
         );
     };
 
-    const tabs = [
-        {
-            title: 'Dự án thương mại',
-            content: renderDuAnThuongMai()
-        },
-        {
-            title: 'Dự án nghiên cứu',
-            //   content: 'Hiện tại tính năng đang phát triển'
-            content: renderDuAnNghienCuu()
-        }
-    ];
+    const tabs = 
+        props.project
+            ? props.project.type === TYPE_PROJECT_COMMERCIAL
+                ? [
+                    {
+                        title: 'Dự án thương mại',
+                        content: renderDuAnThuongMai()
+                    }
+                ]
+                : [
+                    {
+                        title: 'Dự án nghiên cứu',
+                        //   content: 'Hiện tại tính năng đang phát triển'
+                        content: renderDuAnNghienCuu()
+                    }
+                ]
+            : [
+                {
+                    title: 'Dự án thương mại',
+                    content: renderDuAnThuongMai()
+                },
+                {
+                    title: 'Dự án nghiên cứu',
+                    //   content: 'Hiện tại tính năng đang phát triển'
+                    content: renderDuAnNghienCuu()
+                }
+            ];
 
     const onOpenedTabChange = (openTab) => {
         setOpenTab(openTab);
@@ -1157,7 +1189,12 @@ const HorizontalLinearStepper = (props) => {
     const renderStep2 = () => {
         return (
         <>
-            <Tab tabs={tabs} color="red" openTabChange={onOpenedTabChange} />
+            <Tab 
+                tabs={tabs} 
+                color="red" 
+                openTabChange={onOpenedTabChange} 
+                openTabProps={openTab} 
+            />
         </>
         );
     };
@@ -1179,9 +1216,9 @@ const HorizontalLinearStepper = (props) => {
             if(openTab === 0){
                 console.log('Complete with duAnThuongMai', duAnThuongMai); 
             }
-            // if(openTab === 1){
-            //     console.log('Complete with duAnNghienCuu', duAnNghienCuu); 
-            // }
+            if(openTab === 1){
+                console.log('Complete with duAnNghienCuu', duAnNghienCuu); 
+            }
             return renderPreview();
         default:
             return 'Unknown step';

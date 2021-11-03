@@ -1,6 +1,7 @@
 import projects from '../apis/projects';
+import projectsAdmin from '../apis/projects_Admin';
 import history from '../history'
-import { PROJECTS_URL,  PROJECTS_COMMERCIAL_URL, PROJECTS_RESEARCHING_URL } from '../environments/constraints';
+import { PROJECTS_URL, PROJECTS_BY_DOMAIN_ID_URL,  PROJECTS_COMMERCIAL_URL, PROJECTS_RESEARCHING_URL } from '../environments/constraints';
 
 import {
   FETCH_PROJECTS,
@@ -32,6 +33,18 @@ export const fetchProjects_Researching = () => async dispatch => {
 };
 
 
+// Fetch by Domain ID
+export const fetchProjects_all_by_domainId = (domainId) => async dispatch => {
+  const response = await projectsAdmin.get(`${PROJECTS_BY_DOMAIN_ID_URL}/${domainId}`);
+  console.log('fetchProjects_all_by_domainId :', response.data);
+
+  // sửa chỗ response.data => response.data.projects
+  dispatch({ type: FETCH_PROJECTS, payload: response.data });
+};
+
+// End Fetch by Domain ID
+
+
 
 export const fetchProjects_DaDuyet = () => async dispatch => {
   const response = await projects.get(`${PROJECTS_URL}/${STATUS_DD_ID}`);
@@ -61,6 +74,8 @@ export const fetchProjects_Nhap = () => async dispatch => {
   // sửa chỗ response.data => response.data.projects
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
 };
+
+
 
 
 export const fetchProject = (id) => async dispatch => {

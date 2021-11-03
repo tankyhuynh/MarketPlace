@@ -1,0 +1,27 @@
+.stepper--btn {
+    @apply py-2 w-28 h-10 mx-2 rounded-lg
+}
+
+.stepper--field {
+    @apply grid grid-rows-2 grid-cols-6 lg:justify-between my-4 self-center items-center
+}   
+
+.stepper--label {
+    @apply block mt-4 mb-2 mr-2 text-base font-bold text-gray-700 lg:self-center;
+}
+
+.stepper--input {
+    @apply col-span-6  
+}
+
+.stepper-combobox {
+    @apply flex flex-col lg:grid lg:grid-cols-3 my-4
+}
+
+.stepper-combobox--content {
+    @apply flex justify-center lg:col-span-2
+}
+
+.stepper-combobox--content-select { 
+    @apply text-gray-700 border shadow py-2 rounded w-2/3 lg:w-full
+}

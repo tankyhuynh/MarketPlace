@@ -1,6 +1,6 @@
-// const fieldFormatter = ({ value }) => { 
-//   return <span style={{textTransform: 'uppercase'}}>{value ? value.name : ''}</span> 
-// };
+const genderFormatter = ({ value }) => { 
+    return <span style={{fontStyle: 'italic'}}>{value === 0 ? 'Nam' : 'Nữ'}</span> 
+};
 const actionFormatter = ({ value }) => { 
   return (
     <div className="flex">{ value }</div>
@@ -28,7 +28,7 @@ export const columns = [
   {
     field: 'phoneNumber',
     headerName: 'Số điện thoại',
-    width: 300,
+    width: 200,
     editable: true,
   },
   {
@@ -40,8 +40,9 @@ export const columns = [
   {
     field: 'gender',
     headerName: 'Giới tính',
-    width: 300,
+    width: 150,
     editable: true,
+    renderCell: genderFormatter
   },
   {
     field: 'action',

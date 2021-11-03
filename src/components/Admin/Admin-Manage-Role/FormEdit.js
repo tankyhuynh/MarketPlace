@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useDialog } from 'react-st-modal';
 
 
-const FormEditField = ({ formConfig, initialValue, roles, onSubmit, fetchCategories, categories }) => {
+const FormEditField = ({ formConfig, initialValue, roles, onSubmit }) => {
 
     const [value, setValue] = useState(initialValue);
     const dialog = useDialog();
 
-    useEffect(() => {
-        // fetchCategories()
-    }, [])
-    
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
     }   

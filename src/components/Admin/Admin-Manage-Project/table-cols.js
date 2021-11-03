@@ -8,6 +8,30 @@ import dateFormat from 'dateformat';
 
 //     return levelsFormated.join(', ')
 // };
+
+const colors = {
+  1: {
+      color: 'green'
+  },
+  2: {
+      color: 'orange'
+  },
+  3: {
+      color: 'red'
+  },
+  4: {
+      color: 'gray'
+  }
+}
+
+const statusFormatter = ({ value }) => { 
+  return (
+    <div className={`bg-${value ? colors[value.id].color : 'yellow'}-500 rounded-2xl text-center w-full mx-4 text-white`}>
+        { value ? value.name : '' }
+      </div>
+  )
+};
+
 const dateFormatter = ({ value }) => { 
     return  dateFormat(value, "HH:MM, dddd, mmmm dS, yyyy") 
 };
@@ -30,6 +54,13 @@ export const columns = [
       width: 350,
       editable: false,
     },
+    // {
+    //   field: 'projectStatus',
+    //   headerName: 'Trạng thái',
+    //   width: 150,
+    //   editable: false,
+    //   renderCell: statusFormatter
+    // },
     {
       field: 'author',
       headerName: 'Tác giả',
@@ -50,13 +81,15 @@ export const columns = [
       editable: false,
       renderCell: dateFormatter
     },
+   
     {
       field: 'action',
       headerName: 'Hành động',
-      width: 120,
+      width: 150,
       editable: false,
       renderCell: actionFormatter
     },
+    
  
   ];
   

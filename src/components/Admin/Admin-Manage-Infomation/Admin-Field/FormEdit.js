@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import { useDialog } from 'react-st-modal';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+// import {
+//     Select,
+//     MenuItem,
+//     InputLabel,
+//     TextField,
+//     FormControl
+//   } from "@mui/material";
 
-// const categories_test = [
-//     {
-//         name: '1',
-//         code: 'CODE1'
-//     },
-//     {
-//         name: '2',
-//         code: 'CODE2'
-//     }
-// ]
+import TextField from '@mui/material/TextField';
 
 
 const FormEditField = ({ formConfig, initialValue, fields, onSubmit, categories }) => {
@@ -22,37 +17,41 @@ const FormEditField = ({ formConfig, initialValue, fields, onSubmit, categories 
     const [value, setValue] = useState(initialValue ? initialValue : { categoryId: 1 });
     const dialog = useDialog();
 
-    const handleComboboxChange = (event) => {
-        setValue(previousState => ({...previousState, categoryId: event.target.value }))
-    };
-    
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
     }   
 
-    const renderCombobox = (items) => {
+    // const handleComboboxChange = (event) => {
+    //     setValue(previousState => ({...previousState, categoryId: event.target.value }))
+    // };
 
-        const renderItems = items 
-                    ? items.map(item => {
-                        return <MenuItem value={item.id}>{item.name}</MenuItem>
-                    })
-                    : null
+    // const renderCombobox = (items) => {
 
-        return (
-            <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                // value={1}
-                defaultValue={initialValue ? initialValue.category.id : 1}
-                onChange={handleComboboxChange}
-                label="Category"
-            >
-               { renderItems }
-            </Select>
-        )
-    }
+    //     const renderItems = items 
+    //                 ? items.map((item, index) => {
+    //                     return <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+    //                 })
+    //                 : null
+
+    //     return (
+    //         <FormControl>
+    //             <InputLabel id="select-category">Danh mục</InputLabel>
+    //             <Select
+    //                 labelId="select-category"
+    //                 id="demo-simple-select-standard"
+    //                 // value={1}
+    //                 defaultValue={initialValue ? initialValue.category.id : 1}
+    //                 onChange={handleComboboxChange}
+    //                 label={"Category"}
+    //             >
+    //                 { renderItems }
+    //             </Select>
+    //         </FormControl>
+    //     )
+    // }
 
     const renderFields = () => {
+        console.log('initialValue: ', initialValue)
         return (
             fields
                 .filter(field => field.editable && field.type === 'text')            
@@ -73,6 +72,7 @@ const FormEditField = ({ formConfig, initialValue, fields, onSubmit, categories 
     const onSubmitForm = (event) => {
         event.preventDefault();
         dialog.close(value)
+        // onSubmit(initialValue.childOfFieldId, value)
         onSubmit(value)
     }
     const onCancelForm = (event) => {
@@ -110,7 +110,7 @@ const FormEditField = ({ formConfig, initialValue, fields, onSubmit, categories 
             className="flex flex-col items-center"
         >
             { renderFields() }
-            { renderCombobox(categories) }
+            {/* { renderCombobox(categories) } */}
             { renderActions() }
         </Box>
     )

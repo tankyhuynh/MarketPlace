@@ -6,16 +6,18 @@ import { DataGrid } from '@material-ui/data-grid';
 export default function Test({columns, rows, editRowsModel, handleEditRowsModelChange, onCellEditStop}) {
 
   return (
-    <div style={{ height: 400, width: '100%', textAlign: "center" }}>
+    // <div style={{ height: 400, width: '100%', textAlign: "center" }}>
+    <div className={`w-full text-center`}>
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
+        pageSize={10}
         checkboxSelection
         disableSelectionOnClick
         editRowsModel={editRowsModel}
         onEditRowsModelChange={handleEditRowsModelChange}
         onCellEditStop={onCellEditStop}
+        autoHeight
       />
       {/* <code>editRowsModel: {JSON.stringify(editRowsModel)}</code> */}
     </div>

@@ -42,3 +42,64 @@
 
 ## Admin
     - Category: default value when add
+    - Field: dont render exactly checkboxtreeview
+
+
+
+## Họ tên - SĐT - Nội dung liên hệ
+## Backend
+    - Người dùng
+        - Cập nhật, thêm, sửa, xóa
+    - Liên hệ
+        - Tạo bảng liên hệ
+
+    - T7+CN
+        - Gắn chức năng vô test
+        - Đi lại quy trình
+            - Superadmin trùm
+            - Admin: quản lý dự án theo domain
+
+## Remain
+    - Manage users
+    - Introduce
+    - Contact
+    - Group
+    - Researcher profile
+    - Hightlight
+    - FAQ
+    
+    - Extended
+        - Filter + search
+    
+
+## Group
+    - Tên nhóm
+    - Giới thiệu (editor)
+    - Chủ đề nghiên cứu (editor)
+    - Publication (editor)
+    - Chọn thành viên add vô nhóm
+     - input search by 
+    - Hình đại diện nhóm
+    - Next để xem reviewsss
+
+## Bug Frontend
+    - Show project images 
+        - dont map size with form submit
+        - Can change size product image to fix in it's frame
+    - Researcher profile dont complete  
+        - Must disable input first
+        - Enable edit by edit button
+    - Submit projectc:
+        - Other transmissionMethod: dont get other value when render to show
+    - Admin
+        - levelDevelopment: tree dont rebuild exactly when add or delete
+
+## Bug backend
+    - Function: cannot add, update
+    - User + User admin:
+        - Cannot search by username
+
+## 
+    - https://ctts.ctu.edu.vn/lien-he 
+
+

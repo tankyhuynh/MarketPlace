@@ -1,8 +1,9 @@
 import users from '../apis/users';
 import { 
+  ROLE_SUPER_ADMIN,
   ROLE_ADMIN, 
   ROLE_NNC, 
-  ROLE_OTHER,
+  ROLE_USER,
   LOGIN_URL,
   SIGNUP_URL 
 } 
@@ -37,7 +38,7 @@ export const signIn = (userId, userProfile) => {
   // ------ Auth --------
 export const signup = (formValues, propsHistory) => async (dispatch, getState) => {
     dispatch({ type: LOADING });
-    const formUpdate = { ...formValues, roleId: 6 }
+    const formUpdate = { ...formValues, roleId: 4 }
     const response = await users.post(SIGNUP_URL, { ...formUpdate });
     console.log('client send: ', formValues)
     console.log('server response: ', response)
@@ -50,10 +51,10 @@ export const signup = (formValues, propsHistory) => async (dispatch, getState) =
     if(roleCode === ROLE_NNC){
       propsHistory.push('/researchers');
     }
-    if(roleCode === ROLE_OTHER){
+    if(roleCode === ROLE_USER){
       propsHistory.push('/');
     }
-    if(roleCode === ROLE_ADMIN){
+    if(roleCode === ROLE_ADMIN || roleCode === ROLE_SUPER_ADMIN){
       propsHistory.push('/admin');
     }
   }

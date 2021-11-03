@@ -9,6 +9,7 @@ import {
   FETCH_TRANSMISSION_METHOD,
   CREATE_TRANSMISSION_METHOD,
   EDIT_TRANSMISSION_METHOD,
+  DELETE_TRANSMISSION_METHOD
 
 } from './types';
 
@@ -44,6 +45,14 @@ export const fetchTransmissionMethods = () => async dispatch => {
   
     dispatch({ type: EDIT_TRANSMISSION_METHOD, payload: response.data });
   };
+
+  export const deleteTransmissionMethod = id => async dispatch => {
+    await transmissionMethod_Admin.delete(`${TRANSMISSION_ADMIN_URL}/${id}`);
+  
+    dispatch({ type: DELETE_TRANSMISSION_METHOD, payload: id });
+  };
+  
+
   //------ End TransmissionMethods --------
 
 

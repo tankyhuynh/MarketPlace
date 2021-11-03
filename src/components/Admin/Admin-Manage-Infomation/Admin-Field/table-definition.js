@@ -1,6 +1,6 @@
-const categoryFormatter = ({ value }) => { 
-  return <span style={{textTransform: 'uppercase'}}>{value ? value.name : ''}</span> 
-};
+// const categoryFormatter = ({ value }) => { 
+//   return <span style={{textTransform: 'uppercase'}}>{value ? value.name : ''}</span> 
+// };
 const actionFormatter = ({ value }) => { 
   return (
     <div className="flex my-1">{ value }</div>
@@ -8,38 +8,47 @@ const actionFormatter = ({ value }) => {
 };
 
 export const columns = [
+  {
+    field: 'actionAdd',
+    headerName: ' ',
+    width: 80,
+    editable: false,
+    renderCell: actionFormatter,
+    type: 'text'
+  },
   { 
     field: 'id', 
     headerName: 'ID', 
     width: 100,
-    type: 'text'
-  },
-  {
-    field: 'code',
-    headerName: 'Mã',
-    width: 150,
     editable: true,
     type: 'text'
   },
+  // // {
+  // //   field: 'code',
+  // //   headerName: 'Mã',
+  // //   width: 150,
+  // //   editable: true,
+  // //   type: 'text'
+  // },
   {
     field: 'name',
     headerName: 'Tên',
-    width: 250,
+    width: 550,
     editable: true,
     type: 'text'
   },
+  // {
+  //   field: 'category',
+  //   headerName: 'Thể loại',
+  //   width: 250,
+  //   editable: true,
+  //   renderCell: categoryFormatter,
+  //   type: 'combobox'
+  // },
   {
-    field: 'category',
-    headerName: 'Thể loại',
-    width: 250,
-    editable: true,
-    renderCell: categoryFormatter,
-    type: 'combobox'
-  },
-  {
-    field: 'action',
+    field: 'actions',
     headerName: 'Hành động',
-    width: 100,
+    width: 150,
     editable: false,
     renderCell: actionFormatter,
     type: 'text'

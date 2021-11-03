@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import Modal from './TestModal'
-// import Editable from './TestEditables'
+import Editable from './TestEditables'
 // import DragAndDrop from '../DragAndDropFile/'
 // import Joditditor from './TestJoditEditor'
 // import QuillEditor from './TestQuillEditor'
@@ -11,6 +11,10 @@ import CheckboxTree from './TestCheckboxView'
 // import TestSearchFilter from './TestSearchFilter'
 // import Template from './TestTemplate'
 // import Template from './TestTemplate'
+// import TestResearcherAccount from './TestResearcherAccount'
+// import TestSearchBar from './TestSearchBar'
+// import TestImageEditor from './TestImageEditor'
+import TestImageCrop from './TestImageCrop'
 
 const Test = () => {
   return (
@@ -18,9 +22,11 @@ const Test = () => {
       {/* <TinyMCEEditor />
       <FaHeart style={{color: 'red', fontSize: '50px'}}/>
       <FaRegHeart style={{color: 'green', fontSize: '50px'}}/> */}
-      <CheckboxTree />
+      {/* <CheckboxTree /> */}
       {/* <TestSearchFilter /> */}
       {/* <Template /> */}
+      {/* <TestResearcherAccount /> */}
+      <TestImageCrop />
     </>
   )
 }

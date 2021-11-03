@@ -23,7 +23,7 @@ const defaultPageContent = {
         imageSrc: "https://www.nomadiclabs.ca/img/nomadic-04.jpg" 
     },
     title: { 
-        text: "Editable Fields Demo!" 
+        text: "Thông tin cá nhân!" 
     },
     textarea: { 
         text: "Check the README on Github for the documentation \n\nHappy editing!" 
@@ -153,7 +153,7 @@ const defaultPageContent = {
 
                 <div className="wrapper">
                     <div className="flex-container">
-                        <div className="flex-item image">
+                        {/* <div className="flex-item image">
                             <EditableImageUpload
                                 content={pageContent.image}
                                 onSave={this.handleContentChange("image")}
@@ -161,15 +161,23 @@ const defaultPageContent = {
                                 showCaption={true}
                                 uploadImage={uploadImage}
                             />
-                        </div>
+                        </div> */}
 
                         <div className="flex-item desc">
-                            <h2>
-                                <EditableText 
-                                    content={pageContent.subtitle} 
-                                    onSave={this.handleContentChange("subtitle")} 
-                                />
-                            </h2>
+                            <di className="flex justify-between">
+                                <h2>
+                                    <EditableText 
+                                        content={pageContent.subtitle} 
+                                        onSave={this.handleContentChange("subtitle")} 
+                                    />
+                                </h2>
+                                <h2>
+                                    <EditableText 
+                                        content={pageContent.subtitle} 
+                                        onSave={this.handleContentChange("subtitle")} 
+                                    />
+                                </h2>
+                            </di>
                             <hr />
 
                             <div className="demo-items">
