@@ -14,7 +14,7 @@ import StreamShow from "./streams/StreamShow";
 // import Test from "./Test/TestCKEditor";
 import Test from "./Test/Test";
 
-import SignUp from './Auth/SignUp/SignUp';
+import SignUp from './Auth/SignUp';
 
 // import Researcher_Home from './Researcher/Researcher_Home/Researcher_Home';
 import Researcher_Home from './Researcher/Researcher_Account';

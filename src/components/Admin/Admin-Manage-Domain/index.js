@@ -9,7 +9,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchDomains, createDomain, editDomain } from '../../../actions/domain';
+import { 
+    fetchDomains, 
+    createDomain, 
+    editDomain,
+    deleteDomain, 
+
+} from '../../../actions/domain';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert'
 
@@ -99,7 +105,8 @@ const AdminField = (props) => {
         );
         
         if (result) {
-            props.deleteGroup(field.id)
+            props.deleteDomain(field.id)
+            alertUseAlert.error('Xóa hoàn tất')
         } else {
         // Сonfirmation not confirmed
         }
@@ -154,5 +161,10 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchDomains, createDomain, editDomain }
+    { 
+        fetchDomains, 
+        createDomain, 
+        editDomain, 
+        deleteDomain 
+    }
 )(AdminField);

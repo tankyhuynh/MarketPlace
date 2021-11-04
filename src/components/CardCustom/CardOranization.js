@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
-// import CardContent from '@material-ui/core/CardContent';
+import CardContent from '@material-ui/core/CardContent';
 
 import { red } from '@material-ui/core/colors';
 
@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
   },
   image: {
-    // width: 64,
-    // height: 64,
+    // width: 500,
+    height: 500,
   },
   img: {
     margin: 'auto',
@@ -64,31 +64,27 @@ export default function RecipeReviewCard({ image }) {
 
     // <Card className={`${classes.root} slide-background bg-red-500 `}>
         <Grid 
-            container spacing={3}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
+            container 
+            spacing={3}
         >
-            <Grid item xs={12}>
-                   <div className="flex items-start text-xl font-bold text-green-500">
+            <CardContent className="flex flex-col justify-between gap-2 ">
+                   <div className="flex text-xl font-bold text-center text-green-500">
                        Can Tho University
                    </div>
-                   <div className="grid grid-cols-6 gap-4">
-                     <div className="col-start-1 col-end-4 text-xs text-left">
+                   {/* <div className="grid grid-cols-6 gap-4"> */}
+                   <div className="flex flex-col justify-between gap-4">
+                     {/* <div className="col-start-1 col-end-4 text-xs text-left"> */}
+                     <div className="text-xs text-left ">
                          This impressive paella is a perfect party dish and a fun meal to cook together with your
                          guests. Add 1 cup of frozen peas along with the mussels, if you like.
                      </div>
-                     <ButtonBase 
-                       className={`${classes.image} col-end-7 col-span-2`}
-                     >
-                       <img 
-                         className={`${classes.img} `} 
-                         alt="complex" 
-                         src={logoImg}
-                       />
-                     </ButtonBase>
+                        <CardMedia
+                          className={`${classes.media}`}
+                          image={logoImg}
+                          title="Paella dish"
+                        />
                  </div>
-            </Grid>
+            </CardContent>
           
         </Grid>
     // </Card>

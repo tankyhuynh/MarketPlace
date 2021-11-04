@@ -5,7 +5,7 @@ import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import { useAlert } from 'react-alert'
 
 import { Container, TextField, Chip, Avatar  } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -20,7 +20,6 @@ import Checkbox from '../Checkcbox'
 
 import logo from '../../../../assets/logo.png'
 import user_avatar from '../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
-
 
 const TYPE_TEXT = 'text'
 const TYPE_EDITOR = 'editor'
@@ -51,6 +50,7 @@ const removeButtons = 'PasteFromWord'
 const UpdateUser = (props) => {
 
     const history = useHistory();
+    const alertUseAlert = useAlert()
 
     const [value, setValue] = useState(props.group ? props.group : {});
 
@@ -279,6 +279,7 @@ const UpdateUser = (props) => {
         console.log('onSubmitForm: ', value)
         props.editGroup(value)
         history.push('/admin/groups')
+        alertUseAlert.show('Cập nhật hoàn tất')
     }
 
     const onCancelForm = () => {
@@ -380,34 +381,6 @@ const UpdateUser = (props) => {
         return null
     } 
 
-    
-
-    const renderSearchMember = () => {
-        return (
-            <div>
-                <TextField 
-                    id="outlined-basic" 
-                    label={`Thêm thành viên`} 
-                    variant="outlined"
-                    fullWidth
-                    className="w-full"
-                    // defaultValue={initialValue ? initialValue[field.field] : ''}
-                    onChange={(e) => onSearchMember(e.target.value)}
-                />
-
-                <section className="mt-2">
-                    { renderListMember() }
-                </section>
-
-                <section className="mt-10 bg-gray-400">
-                    { renderSearchResultMemberList() }
-                </section>
-                
-            </div>
-        )
-    }
-
-
     return (
         <>
             <Container 
@@ -418,18 +391,8 @@ const UpdateUser = (props) => {
                     { renderTextFields() }
                 </div>
 
-                {/* <div className="mt-2">
-                    { renderPasswordFields() }
-                </div> */}
-
                 <div className="flex flex-col gap-4 mt-4">
-
-                    {/* // label, data, selectedIndex, onChecked */}
-                    {/* <Combobox label="Tên miền" data={props.domains} selectedIndex={1} onDomainChange={onDomainChange} />
-                    <Combobox label="Vai trò" data={props.roles} selectedIndex={1} onRoleChange={onRoleChange}/> */}
-                    
                     { renderComboboxFields() }
-
                     { renderCheckboxFields() }
                 </div>
 
@@ -437,11 +400,6 @@ const UpdateUser = (props) => {
                     { renderEditorFields() }
                 </div>
 
-
-                {/* <div className="mt-4">
-                    { renderSearchMember() }
-                </div> */}
-                
                 <div>
                     { renderImageFields() }
                 </div>

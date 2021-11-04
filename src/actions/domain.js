@@ -4,7 +4,8 @@ import { DOMAINS_URL } from '../environments/constraints';
 import {
   FETCH_DOMAINS,
   CREATE_DOMAIN,
-  EDIT_DOMAIN
+  EDIT_DOMAIN,
+  DELETE_DOMAIN
     
 } from './types';
 
@@ -31,6 +32,12 @@ export const editDomain = (value) => async dispatch => {
   console.log('editDomain:', response.data);
 
   dispatch({ type: EDIT_DOMAIN, payload: response.data });
+};
+
+export const deleteDomain = id => async dispatch => {
+  await domain.delete(`${DOMAINS_URL}/${id}`);
+
+  dispatch({ type: DELETE_DOMAIN, payload: id });
 };
 
 

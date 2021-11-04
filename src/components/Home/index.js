@@ -1,50 +1,46 @@
 import './Home.css'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import CarouselCustom from '../Carousel/CarouselCustom'
 import Card from '../CardCustom/CardHome'
+import CardOrganization from '../CardCustom/CardHome_Organization'
 import { Link } from 'react-router-dom';
 
 import video from '../../assets/growag-introduction.mp4';
 
 import { loading, loaded } from '../../actions/loading';
 import { fetchProjects_DaDuyet } from '../../actions/project';
+import { fetchGroups } from '../../actions/researchGroup';
 
 import img_demo_1 from '../../assets/ReseacherG/a94c9623e56984aa63201e1e8b0d0703';
 import img_demo_2 from '../../assets/ReseacherG/infectious-disease-researcher-lab-test-petri-microscope.jpg';
 import img_demo_3 from '../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg';
 
-// import img_demo_1 from '../../assets/iTRAK-contain-500x240.jpg';
-// import img_demo_2 from '../../assets/KALYX-contain-500x240.jpg';
-// import img_demo_3 from '../../assets/Onside_LOGO_Lime_RGB_POS-contain-500x240.jpg';
 
-
-
-
-const organizations = [
-    {
-        name: 'Nhóm nghiên cứu hóa học',
-        hinhAnhTongThe: img_demo_1,
-        advantage: [
-            'Chuyên nghiên cứu thành phần hóa học nghiên cứu thành phần hóa học'    
-        ]
-    },
-    {
-        name: 'Nhóm dịch vụ xét nghiệm y tế',
-        hinhAnhTongThe: img_demo_2,
-        advantage: [
-            'Những thay đổi trong mô hình chăm sóc sức khỏe, những tiến bộ đột phá về công nghệ trong lĩnh vực y tế cùng những thay đổi trong các chuẩn mực chăm sóc bệnh nhân, tất cả đều góp phần vào một kỷ nguyên mới của y học nói chung và cho mảng xét nghiệm y tế nói riêng.'
-        ]
-    },
-    {
-        name: 'Nhóm nghiên cứu PAN',
-        hinhAnhTongThe: img_demo_3,
-        advantage: [
-            'Các công ty trong lĩnh vực nông nghiệp, thực phẩm vẫn là mục tiêu PAN muốn tìm để M&A'    
-        ]
-    },
-];
+// const organizations = [
+//     {
+//         name: 'Nhóm nghiên cứu hóa học',
+//         hinhAnhTongThe: img_demo_1,
+//         advantage: [
+//             'Chuyên nghiên cứu thành phần hóa học nghiên cứu thành phần hóa học'    
+//         ]
+//     },
+//     {
+//         name: 'Nhóm dịch vụ xét nghiệm y tế',
+//         hinhAnhTongThe: img_demo_2,
+//         advantage: [
+//             'Những thay đổi trong mô hình chăm sóc sức khỏe, những tiến bộ đột phá về công nghệ trong lĩnh vực y tế cùng những thay đổi trong các chuẩn mực chăm sóc bệnh nhân, tất cả đều góp phần vào một kỷ nguyên mới của y học nói chung và cho mảng xét nghiệm y tế nói riêng.'
+//         ]
+//     },
+//     {
+//         name: 'Nhóm nghiên cứu PAN',
+//         hinhAnhTongThe: img_demo_3,
+//         advantage: [
+//             'Các công ty trong lĩnh vực nông nghiệp, thực phẩm vẫn là mục tiêu PAN muốn tìm để M&A'    
+//         ]
+//     },
+// ];
 
 const filterProjects = (posts, query) => {
     if (!query) {
@@ -61,6 +57,7 @@ const Home = (props) => {
 
     useEffect(() => {
         props.fetchProjects_DaDuyet();
+        props.fetchGroups();
     }, [])
 
     const query = new URLSearchParams(window.location.search).get('s');
@@ -80,13 +77,17 @@ const Home = (props) => {
         });
     }
 
-    const renderOrganizations = organizations.map((card) =>{
-        return (
-            <Link to="/" key={card.ten}>
-                <Card card={card} key={card.ten} />
-            </Link>
-        );
-    });
+    const renderOrganizations = (organizations) => {
+        return organizations
+                .slice(0,3)
+                .map((group) =>{
+                    return (
+                        <Link to={`/groups/show/${group.id}`} key={group.name}>
+                            <CardOrganization card={group} key={group.name} />
+                        </Link>
+                    );
+                });
+    }
 
     return (
         <>
@@ -112,7 +113,7 @@ const Home = (props) => {
                             ? (<CarouselCustom 
                                 // slides={this.props.projects.filter(project => project.statusId !== 2)} 
                                 slides={props.projects} 
-                                organizations={organizations}
+                                organizations={props.researchGroups}
                             />)
                             : null
                         }
@@ -143,7 +144,7 @@ const Home = (props) => {
                 <div id="organizations" className={`${props.projects.length ? 'mt-4' : 'z-10 md:mt-24 xl:my-0 2xl:mt-0' }`}>
                     <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
                     <div className="projects_organizations">
-                        { renderOrganizations }
+                        { renderOrganizations(props.researchGroups) }
                     </div>
                 </div>
             </div>
@@ -158,12 +159,17 @@ const mapStateToProps = state => {
         projects:  Object.values(state.projects),
         streams: Object.values(state.streams),
         currentUserId: state.auth.userId,
-        isSignedIn: state.auth.isSignedIn
+        isSignedIn: state.auth.isSignedIn,
+        researchGroups:  Object.values(state.researchGroups),
     };
   };
   
 export default connect(
     mapStateToProps,
-    { fetchProjects_DaDuyet, loading, loaded }
+    { 
+        fetchProjects_DaDuyet, 
+        loading, loaded,
+        fetchGroups 
+    }
 )(Home);
 

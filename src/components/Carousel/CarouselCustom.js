@@ -1,3 +1,5 @@
+import './CarouselCustom.css'
+
 import React, { useRef } from 'react';
 import Carousel from 'react-elastic-carousel'
 import Slide from '../Slide/Slide';
@@ -6,8 +8,14 @@ import Slide from '../Slide/Slide';
 const CarouselCustom = ({ slides, organizations }) => {
     const renderSlides = slides.map((slide) =>{
         return (
-            <div className="text-center text-black" key={slide.id}>
-                <Slide slide={slide} organizations={organizations} key={slide.id} />
+            <div 
+                className="text-center text-black" key={slide.id}
+            >
+                <Slide 
+                    slide={slide} 
+                    organizations={organizations} 
+                    key={slide.id} 
+                />
             </div>
         )
     })
