@@ -63,14 +63,12 @@ export default function RecipeReviewCard({ image }) {
   return (
 
     // <Card className={`${classes.root} slide-background bg-red-500 `}>
-        <Grid container spacing={3} >
-            <Grid item xs={12}>
-              <CardMedia
-                className={classes.media}
-                image={image}
-                title="Paella dish"
-              />
-            </Grid>
+        <Grid 
+            container spacing={3}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+        >
             <Grid item xs={12}>
                    <div className="flex items-start text-xl font-bold text-green-500">
                        Can Tho University

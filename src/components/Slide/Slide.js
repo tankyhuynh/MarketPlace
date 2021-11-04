@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: '60vw',
+      // maxHeight: '60vh',
     },
     item: {
         height: 345
@@ -45,16 +46,19 @@ const Slide = ({ slide, index, projectImage }) => {
     return (
         <Link to={`/projects/show/${slide.id}`} className="bg-green-500">
             <Card className={`${classes.root} slide-background md:w-full`}>
-              <Grid container spacing={3} >
-                  <Grid item xs={6} md={12}>
-                      <CardOranization image={slide.productImage} />
+                <Grid 
+                    container 
+                    spacing={{ xs: 2, md: 3 }} 
+                    columns={{ xs: 4, sm: 8, md: 12 }}
+                    className="flex items-center justify-center"
+                >
+                      <Grid item xs={12} md={6} className="hidden lg:block">
+                          <CardOranization image={slide.productImage} />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                          <CardProjectInfo project={slide} />
+                      </Grid>
                   </Grid>
-                  <Grid item xs={6} md={12}>
-                      <CardProjectInfo project={slide} />
-                  </Grid>
-                
-              </Grid>
-
             </Card>
         </Link>
     );

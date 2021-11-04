@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 
 import { red } from '@material-ui/core/colors';
 
@@ -49,10 +51,18 @@ export default function RecipeReviewCard({ project }) {
   const classes = useStyles();
 
   return (
-    <div className={`${classes.root} flex justify-around`}>
-      <CardContent className="flex flex-col justify-around">
-        <div className="text-lg font-medium text-left text-green-500">
+    // <div className={`${classes.root} flex justify-around`}>
+    <Grid container spacing={3} >
+      <CardContent className="flex flex-col justify-between gap-2 ">
+        <div className="text-lg font-medium text-left text-green-500 ">
            { project.name }
+        </div>
+        <div>
+            <CardMedia
+              className={classes.media}
+              image={project.productImage}
+              title="Paella dish"
+            />
         </div>
         <div className="flex gap-4 text-xs text-left">
             <div 
@@ -64,6 +74,6 @@ export default function RecipeReviewCard({ project }) {
             />
         </div>
       </CardContent>
-    </div>
+    </Grid>
   );
 }
