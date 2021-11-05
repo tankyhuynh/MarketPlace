@@ -64,7 +64,7 @@ export default function RecipeReviewCard({ project }) {
               title="Paella dish"
             />
         </div>
-        <div className="flex gap-4 text-xs text-left">
+        <div className="hidden gap-4 text-xs text-left lg:flex">
             <div 
               dangerouslySetInnerHTML={{ __html: 
                 renderUuDiem(project.shortDescription) 

@@ -54,9 +54,9 @@ const navItems = {
       name: 'Quản lý dự án',
       path: '/admin/projects',
   },
-  11: {
+  12: {
       name: 'Quản lý giới thiệu',
-      path: '/admin/introduction',
+      path: '/admin/abouts',
   }
 }
 

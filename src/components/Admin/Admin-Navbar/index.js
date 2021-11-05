@@ -80,7 +80,7 @@ const navItems = {
         name: 'Quản lý dự án',
         path: '/projects',
     },
-    11: {
+    12: {
         className: 'nav-items',
         icon: <PreviewIcon />,
         name: 'Quản lý giới thiệu',

@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: '60vw',
-      height: '70vh',
+      minHeight: '60vh',
     },
     item: {
         height: 345
