@@ -49,7 +49,7 @@ const Slide = ({ slide, organizations }) => {
             className="bg-green-500"
         >
             <Card 
-                className={`${classes.root} flex slide-background border-2 border-pink-500 md:w-full`}
+                className={`${classes.root} flex slide-background md:w-full`}
             >
                 <Grid 
                     container 

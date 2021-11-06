@@ -11,10 +11,12 @@ import { connect } from 'react-redux';
 
 const ComboboxStatusId = (props) => {
 
+    // eslint-disable-next-line no-unused-vars
     const [statusId, setStatusId] = useState(1);
 
     useEffect(() => {
         props.fetchStatuses()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const renderCombobox = (items) => {

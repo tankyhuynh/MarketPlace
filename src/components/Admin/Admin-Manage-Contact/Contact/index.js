@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import _ from 'lodash';
+// import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CustomDialog } from 'react-st-modal';
-import { useAlert } from 'react-alert'
+// import { useAlert } from 'react-alert'
 
 import ReplyIcon from '@mui/icons-material/Reply';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
+// import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import Table from '../../../Table/Table-Admin';
 import { columns } from './table-definition';
 import FormSubmit from '../FormEdit'
 
 import { fetchContacts } from '../../../../actions/contactAdmin';
-import FormEdit from '../FormEdit'
+// import FormEdit from '../FormEdit'
 
 const formConfig = {
     title: "Phản hồi liên hệ",
@@ -24,7 +24,7 @@ const formConfig = {
 
 const AdminManageGroup = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    const alertUseAlert = useAlert()
+    // const alertUseAlert = useAlert()
 
     useEffect(() => {
         props.fetchContacts()
@@ -84,27 +84,27 @@ const AdminManageGroup = (props) => {
     } 
 
     
-    const onAdd = (value) => {
-        console.log('FormEdit onAdd domain: ', value);
-        props.createDomain(value)
-        props.fetchDomains()
-        alertUseAlert.show('Thêm hoàn tất')
-        // props.fetchRoles()
-    }
+    // const onAdd = (value) => {
+    //     console.log('FormEdit onAdd domain: ', value);
+    //     props.createDomain(value)
+    //     props.fetchDomains()
+    //     alertUseAlert.show('Thêm hoàn tất')
+    //     // props.fetchRoles()
+    // }
 
-    const onBtnAddClick = async (domain) => {
-        await CustomDialog(
-            <FormEdit 
-                formConfig={formConfig}
-                initialValue={domain}
-                domains={columns} 
-                onSubmit={onAdd}
-            />, {
-            title: formConfig.title,
-            showCloseIcon: true,
-        });
+    // const onBtnAddClick = async (domain) => {
+    //     await CustomDialog(
+    //         <FormEdit 
+    //             formConfig={formConfig}
+    //             initialValue={domain}
+    //             domains={columns} 
+    //             onSubmit={onAdd}
+    //         />, {
+    //         title: formConfig.title,
+    //         showCloseIcon: true,
+    //     });
 
-    }
+    // }
 
     return ( 
         

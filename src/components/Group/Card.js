@@ -2,10 +2,11 @@ import './CardCustom.css'
 
 import React from "react";
 import Card from "@material-tailwind/react/Card";
-// import CardMedia from '@mui/material/CardMedia';
 import CardBody from "@material-tailwind/react/CardBody";
-import CardFooter from "@material-tailwind/react/CardFooter";
-import Button from "@material-tailwind/react/Button";
+
+// import CardMedia from '@mui/material/CardMedia';
+// import CardFooter from "@material-tailwind/react/CardFooter";
+// import Button from "@material-tailwind/react/Button";
 
 import img1_a from '../../assets/img1_a.png';
 import img1_b from '../../assets/img1_b.png';
@@ -19,7 +20,7 @@ import logo from '../../assets/logo.png';
 
 
 const CardCustom = ({ card }) => {
-    const randomImages = [img1_a, img1_b, img2_a, img2_b, img3_a, img3_b, img5_a, img5_b];
+    // const randomImages = [img1_a, img1_b, img2_a, img2_b, img3_a, img3_b, img5_a, img5_b];
 
     const renderImage = (image) => {
         if(image){
@@ -35,7 +36,7 @@ const CardCustom = ({ card }) => {
                  default: return image;
              }
         }
-        const j = Math.floor(Math.random() * ((randomImages.length -1)));
+        // const j = Math.floor(Math.random() * ((randomImages.length -1)));
         return logo;
         // return randomImages[j];
      }

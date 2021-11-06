@@ -1,3 +1,6 @@
+import _ from 'lodash';
+// import history from '../history';
+
 import users from '../apis/users';
 import { 
   ROLE_SUPER_ADMIN,
@@ -5,7 +8,8 @@ import {
   ROLE_NNC, 
   ROLE_USER,
   LOGIN_URL,
-  SIGNUP_URL 
+  SIGNUP_NORMAL_USER_URL,
+  SIGNUP_RESEARCHER_USER_URL 
 } 
   from '../environments/constraints';
 
@@ -36,16 +40,42 @@ export const signIn = (userId, userProfile) => {
   };
 
   // ------ Auth --------
-export const signup = (formValues, propsHistory) => async (dispatch, getState) => {
+export const signupNormalUser = (formValues, propsHistory) => async (dispatch, getState) => {
     dispatch({ type: LOADING });
-    const formUpdate = { ...formValues, roleId: 4 }
-    const response = await users.post(SIGNUP_URL, { ...formUpdate });
+    // const formUpdate = { ...formValues, roleId: 4 }
+    if(formValues.gender === true){
+      formValues = {...formValues, gender: 1}
+    }
+    else {
+      formValues = {...formValues, gender: 0}
+    }
+    _.unset(formValues, 'repassword')
+    const response = await users.post(SIGNUP_NORMAL_USER_URL,  formValues);
     console.log('client send: ', formValues)
     console.log('server response: ', response)
 
+    // history.push('/auth/signin');
     propsHistory.push('/auth/signin');
     dispatch({ type: LOADED });
-  };
+};
+export const signupResearcherUser = (formValues, propsHistory) => async (dispatch, getState) => {
+    dispatch({ type: LOADING });
+    // const formUpdate = { ...formValues, roleId: 4 }
+    if(formValues.gender === true){
+      formValues = {...formValues, gender: 1}
+    }
+    else {
+      formValues = {...formValues, gender: 0}
+    }
+    _.unset(formValues, 'repassword')
+    const response = await users.post(SIGNUP_RESEARCHER_USER_URL,  formValues);
+    console.log('client send: ', formValues)
+    console.log('server response: ', response)
+
+    // history.push('/auth/signin');
+    propsHistory.push('/auth/signin');
+    dispatch({ type: LOADED });
+};
   
   const renderRedirectAfterLogin = (roleCode, propsHistory) => {
     if(roleCode === ROLE_NNC){

@@ -6,7 +6,8 @@ import {
   FETCH_USERS,
   FETCH_USER,
   CREATE_USER,
-  EDIT_USER
+  EDIT_USER,
+  DELETE_USER
     
 } from './types';
 
@@ -48,6 +49,12 @@ export const editUser = (value) => async dispatch => {
   dispatch({ type: EDIT_USER, payload: response.data });
 };
 
+export const deleteUser = id => async dispatch => {
+  await userAdmin.delete(`${USER_ADMIN_URL}/${id}`);
+
+  dispatch({ type: DELETE_USER, payload: id });
+};
+
 export const editUserFunction = (userId, functionId, checked) => async dispatch => {
   const response = await userFunctionAdmin.put(`${USER_FUNCTION_ADMIN_URL}`, { userId, functionId, isEnable: checked });
   console.log('editUserFunction:', response.data);
@@ -56,6 +63,7 @@ export const editUserFunction = (userId, functionId, checked) => async dispatch 
   // const data = { userId, functionId, isEnable: checked };
   // console.log('editUserFunction data:', data);
 };
+
 
 
 //------ End LevelDevelopments --------

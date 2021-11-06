@@ -9,28 +9,28 @@ import dateFormat from 'dateformat';
 //     return levelsFormated.join(', ')
 // };
 
-const colors = {
-  1: {
-      color: 'green'
-  },
-  2: {
-      color: 'orange'
-  },
-  3: {
-      color: 'red'
-  },
-  4: {
-      color: 'gray'
-  }
-}
+// const colors = {
+//   1: {
+//       color: 'green'
+//   },
+//   2: {
+//       color: 'orange'
+//   },
+//   3: {
+//       color: 'red'
+//   },
+//   4: {
+//       color: 'gray'
+//   }
+// }
 
-const statusFormatter = ({ value }) => { 
-  return (
-    <div className={`bg-${value ? colors[value.id].color : 'yellow'}-500 rounded-2xl text-center w-full mx-4 text-white`}>
-        { value ? value.name : '' }
-      </div>
-  )
-};
+// const statusFormatter = ({ value }) => { 
+//   return (
+//     <div className={`bg-${value ? colors[value.id].color : 'yellow'}-500 rounded-2xl text-center w-full mx-4 text-white`}>
+//         { value ? value.name : '' }
+//       </div>
+//   )
+// };
 
 const dateFormatter = ({ value }) => { 
     return  dateFormat(value, "HH:MM, dddd, mmmm dS, yyyy") 

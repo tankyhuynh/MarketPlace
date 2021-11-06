@@ -1,18 +1,15 @@
 import '../../editor/editables.css'
 
 import React from 'react';
-import { render } from 'react-dom';
 import { EditablesContext, theme } from '../../editor/editables/EditablesContext';
 
 import EditableParagraph from '../../editor/editables/EditableParagraph';
 import EditableText from '../../editor/editables/EditableText';
 import EditableTextArea from '../../editor/editables/EditableTextArea';
-import EditableNumber from '../../editor/editables/EditableNumber';
 import EditableLink from "../../editor/editables/EditableLink";
 import EditableImageUpload from "../../editor/editables/EditableImageUpload";
 import EditableFileUpload from "../../editor/editables/EditableFileUpload";
 import EditableBackgroundImage from "../../editor/editables/EditableBackgroundImage";
-import EditableTimeline from "../../editor/editables/EditableTimeline";
 import EditableEmbeddedIframe from "../../editor/editables/EditableEmbeddedIframe";
 import EditableLightboxImageUpload from "../../editor/editables/EditableLightboxImageUpload";
 import EditableCollection from "../../editor/editables/EditableCollection";

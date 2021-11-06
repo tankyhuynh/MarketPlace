@@ -1,9 +1,9 @@
-const genderFormatter = ({ value }) => { 
-  if(value){
-    return <span style={{fontStyle: 'italic'}}>{value ? 'Nam' : 'Nu'}</span> 
-  }
-  return <span style={{fontStyle: 'italic'}}>{value}</span> 
-};
+// const genderFormatter = ({ value }) => { 
+//   if(value){
+//     return <span style={{fontStyle: 'italic'}}>{value ? 'Nam' : 'Nu'}</span> 
+//   }
+//   return <span style={{fontStyle: 'italic'}}>{value}</span> 
+// };
 const actionFormatter = ({ value }) => { 
   return (
     <div className="flex">{ value }</div>

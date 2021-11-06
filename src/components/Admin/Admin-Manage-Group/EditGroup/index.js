@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
 
@@ -6,7 +6,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { fetchGroup } from '../../../../actions/researchGroup'
 
-import Tab from '../../../Tab/Tab';
 import FormGroup from './Form'
 import { columns as columnsNormalUser } from './table-definition'
 import { connect } from 'react-redux';
@@ -15,6 +14,7 @@ const AdminEditGroup = (props) => {
     
     useEffect(() => {
         props.fetchGroup(props.match.params.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

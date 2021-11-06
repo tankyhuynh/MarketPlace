@@ -1,14 +1,14 @@
 import environment from '../../../../environments/environment'
 import axios from 'axios';
-import _ from 'lodash';
+// import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { Container, TextField, Chip, Avatar  } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Container, TextField  } from '@mui/material';
+// import DeleteIcon from '@mui/icons-material/Delete';
 
 import { CKEditor } from 'ckeditor4-react';
 import { DropzoneArea } from 'material-ui-dropzone';
@@ -22,12 +22,12 @@ import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
 
 import logo from '../../../../assets/logo.png'
-import user_avatar from '../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
+// import user_avatar from '../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
 
 
 const TYPE_TEXT = 'text'
 const TYPE_EDITOR = 'editor'
-const TYPE_PASSWORD= 'password'
+// const TYPE_PASSWORD= 'password'
 const TYPE_COMBOBOX = 'combobox'
 const TYPE_CHECKBOX = 'checkbox'
 const TYPE_IMAGE = 'image'
@@ -44,9 +44,10 @@ const AddGroup = (props) => {
 
     const [value, setValue] = useState({});
 
+    // eslint-disable-next-line no-unused-vars
     const [isShowChipMember, setShowChipMember] = useState(false)
-    const [members, setMembers] = useState([])
-    const [searchMember, setSearchMember] = useState(null)
+    // const [members, setMembers] = useState([])
+    // const [searchMember, setSearchMember] = useState(null)
     
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
@@ -56,6 +57,7 @@ const AddGroup = (props) => {
     useEffect(() => {
         props.fetchDomains()
         props.fetchRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const { columns } = props
@@ -125,30 +127,30 @@ const AddGroup = (props) => {
         )
     }
 
-    const renderPasswordFields = () => {
-        const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
-                            .map(field => {
-                                return (
-                                    <TextField 
-                                        id="outlined-basic" 
-                                        label={field ? field.headerName : ''} 
-                                        variant="outlined"
-                                        fullWidth
-                                        className="w-full"
-                                        type={field.type}
-                                        // defaultValue={initialValue ? initialValue[field.field] : ''}
-                                        onChange={(e) => handleChange(field.field, e.target.value)}
-                                    />
-                                )
-        })
+    // const renderPasswordFields = () => {
+    //     const usersFormat = columns
+    //                         .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
+    //                         .map(field => {
+    //                             return (
+    //                                 <TextField 
+    //                                     id="outlined-basic" 
+    //                                     label={field ? field.headerName : ''} 
+    //                                     variant="outlined"
+    //                                     fullWidth
+    //                                     className="w-full"
+    //                                     type={field.type}
+    //                                     // defaultValue={initialValue ? initialValue[field.field] : ''}
+    //                                     onChange={(e) => handleChange(field.field, e.target.value)}
+    //                                 />
+    //                             )
+    //     })
     
-        return (
-            <div className="flex flex-col gap-4">
-                { usersFormat }
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="flex flex-col gap-4">
+    //             { usersFormat }
+    //         </div>
+    //     )
+    // }
 
     const renderCheckboxFields = () => {
         const usersFormat = columns
@@ -249,10 +251,10 @@ const AddGroup = (props) => {
         console.log('Combobox change - roleId: ', roleId)
         handleChange('roleId', roleId)
     }
-    const onGenderChange = (gender) => {
-        console.log('Combobox change - gender: ', gender)
-        handleChange('gender', gender)
-    }
+    // const onGenderChange = (gender) => {
+    //     console.log('Combobox change - gender: ', gender)
+    //     handleChange('gender', gender)
+    // }
 
     const onCheckboxEnableChange = (fieldName, checked) => {
         console.log('onCheckboxEnableChange: ', fieldName, checked);
@@ -272,125 +274,125 @@ const AddGroup = (props) => {
 
     
 
-    const handleClick = (e) => {
-        e.preventDefault()
-        // return { ...state, ..._.mapKeys(action.payload, 'id') };
-        let member = {};
+    // const handleClick = (e) => {
+    //     e.preventDefault()
+    //     // return { ...state, ..._.mapKeys(action.payload, 'id') };
+    //     let member = {};
 
-        member = {
-            name: searchMember,
-            avatar: user_avatar
-        }
+    //     member = {
+    //         name: searchMember,
+    //         avatar: user_avatar
+    //     }
 
-        setMembers(
-            { ...members, ..._.mapKeys(member, 'name') 
-        })
+    //     setMembers(
+    //         { ...members, ..._.mapKeys(member, 'name') 
+    //     })
 
-        if(searchMember){
-            member = {
-                name: searchMember,
-                avatar: user_avatar
-            }
-        }
-        if(member){
-            setMembers(
-                { ...members, ..._.mapKeys(member, 'name') 
-            })
-        }
-        setSearchMember(null)
+    //     if(searchMember){
+    //         member = {
+    //             name: searchMember,
+    //             avatar: user_avatar
+    //         }
+    //     }
+    //     if(member){
+    //         setMembers(
+    //             { ...members, ..._.mapKeys(member, 'name') 
+    //         })
+    //     }
+    //     setSearchMember(null)
         
 
-        console.log('handleClick: ', members)
+    //     console.log('handleClick: ', members)
 
-    }
+    // }
 
-    const handleDeleteMember = (member) => {
-        console.log('handleDeleteMember: ', member)
-        if(searchMember){
-            setMembers(_.omit(members, member.name))
-        }
-    }
-    const handleDeleteResult = () => {
-        console.log('handleDeleteResult: ')
-        setSearchMember(null)
-    }
+    // const handleDeleteMember = (member) => {
+    //     console.log('handleDeleteMember: ', member)
+    //     if(searchMember){
+    //         setMembers(_.omit(members, member.name))
+    //     }
+    // }
+    // const handleDeleteResult = () => {
+    //     console.log('handleDeleteResult: ')
+    //     setSearchMember(null)
+    // }
 
-    const onSearchMember =  (member) => {
-        console.log('onSearchMember: ', member)
-        if(member === 'tanky'){
-            setSearchMember({
-                name: member,
-                avatar: user_avatar
-            })
-        }
-        else setShowChipMember(false)
-    }
+    // const onSearchMember =  (member) => {
+    //     console.log('onSearchMember: ', member)
+    //     if(member === 'tanky'){
+    //         setSearchMember({
+    //             name: member,
+    //             avatar: user_avatar
+    //         })
+    //     }
+    //     else setShowChipMember(false)
+    // }
 
-    const renderListMember = () => {
-        if(members){
-            return Object.values(members).map(member => {
-                if(member.name){
-                    return (
-                        <Chip
-                            label={member ? member.name : ''}
-                            avatar={<Avatar alt="Natacha" src={member ? member.avatar : logo} />}
-                            // onClick={handleClick}
-                            onDelete={e =>handleDeleteMember(member)}
-                            deleteIcon={<DeleteIcon />}
-                            variant="outlined"
-                        />
-                    )
-                }
-                return null
-            })
-        }
-        return null
-    }
+    // const renderListMember = () => {
+    //     if(members){
+    //         return Object.values(members).map(member => {
+    //             if(member.name){
+    //                 return (
+    //                     <Chip
+    //                         label={member ? member.name : ''}
+    //                         avatar={<Avatar alt="Natacha" src={member ? member.avatar : logo} />}
+    //                         // onClick={handleClick}
+    //                         onDelete={e =>handleDeleteMember(member)}
+    //                         deleteIcon={<DeleteIcon />}
+    //                         variant="outlined"
+    //                     />
+    //                 )
+    //             }
+    //             return null
+    //         })
+    //     }
+    //     return null
+    // }
 
-    const renderSearchResultMemberList = () => {
-        if(searchMember){
-            return (
-                <section>
-                    <Chip
-                        label={searchMember ? searchMember.name : ''}
-                        avatar={<Avatar alt="Natacha" src={searchMember ? searchMember.avatar : logo} />}
-                        onClick={e => handleClick(e)}
-                        onDelete={handleDeleteResult}
-                        deleteIcon={<DeleteIcon />}
-                        variant="outlined"
-                    />
-                </section>
-            )
-        }
-        return null
-    } 
+    // const renderSearchResultMemberList = () => {
+    //     if(searchMember){
+    //         return (
+    //             <section>
+    //                 <Chip
+    //                     label={searchMember ? searchMember.name : ''}
+    //                     avatar={<Avatar alt="Natacha" src={searchMember ? searchMember.avatar : logo} />}
+    //                     onClick={e => handleClick(e)}
+    //                     onDelete={handleDeleteResult}
+    //                     deleteIcon={<DeleteIcon />}
+    //                     variant="outlined"
+    //                 />
+    //             </section>
+    //         )
+    //     }
+    //     return null
+    // } 
 
     
 
-    const renderSearchMember = () => {
-        return (
-            <div>
-                <TextField 
-                    id="outlined-basic" 
-                    label={`Thêm thành viên`} 
-                    variant="outlined"
-                    fullWidth
-                    className="w-full"
-                    // defaultValue={initialValue ? initialValue[field.field] : ''}
-                    onChange={(e) => onSearchMember(e.target.value)}
-                />
+    // const renderSearchMember = () => {
+    //     return (
+    //         <div>
+    //             <TextField 
+    //                 id="outlined-basic" 
+    //                 label={`Thêm thành viên`} 
+    //                 variant="outlined"
+    //                 fullWidth
+    //                 className="w-full"
+    //                 // defaultValue={initialValue ? initialValue[field.field] : ''}
+    //                 onChange={(e) => onSearchMember(e.target.value)}
+    //             />
 
-                <section className="mt-2">
-                    { renderListMember() }
-                </section>
+    //             <section className="mt-2">
+    //                 { renderListMember() }
+    //             </section>
 
-                <section className="mt-10 bg-gray-400">
-                    { renderSearchResultMemberList() }
-                </section>
+    //             <section className="mt-10 bg-gray-400">
+    //                 { renderSearchResultMemberList() }
+    //             </section>
                 
-            </div>
-        )
-    }
+    //         </div>
+    //     )
+    // }
 
 
     return (

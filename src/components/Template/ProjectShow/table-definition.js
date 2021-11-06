@@ -1,11 +1,11 @@
 // const fieldFormatter = ({ value }) => { 
 //   return <span style={{textTransform: 'uppercase'}}>{value ? value.name : ''}</span> 
 // };
-const actionFormatter = ({ value }) => { 
-  return (
-    <div className="flex">{ value }</div>
-  )
-};
+// const actionFormatter = ({ value }) => { 
+//   return (
+//     <div className="flex">{ value }</div>
+//   )
+// };
 // projectId;
 // fullName;
 // phoneNumber;

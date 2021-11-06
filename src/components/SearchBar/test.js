@@ -1,32 +1,32 @@
 import { useState } from 'react';
+import Search from './index';
 // import logo from './logo.svg';
 // import './App.css';
-import Search from './index';
 // import Announcer from './announcer';
 
-const posts = [
-    { id: '1', name: 'This first post is about React' },
-    { id: '2', name: 'This next post is about Preact' },
-    { id: '3', name: 'We have yet another React post!' },
-    { id: '4', name: 'This is the fourth and final post' },
-];
+// const posts = [
+//     { id: '1', name: 'This first post is about React' },
+//     { id: '2', name: 'This next post is about Preact' },
+//     { id: '3', name: 'We have yet another React post!' },
+//     { id: '4', name: 'This is the fourth and final post' },
+// ];
 
-const filterPosts = (posts, query) => {
-    if (!query) {
-        return posts;
-    }
+// const filterPosts = (posts, query) => {
+//     if (!query) {
+//         return posts;
+//     }
 
-    return posts.filter((post) => {
-        const postName = post.name.toLowerCase();
-        return postName.includes(query);
-    });
-};
+//     return posts.filter((post) => {
+//         const postName = post.name.toLowerCase();
+//         return postName.includes(query);
+//     });
+// };
 
 const App = () => {
     const { search } = window.location;
     const query = new URLSearchParams(search).get('s');
     const [searchQuery, setSearchQuery] = useState(query || '');
-    const filteredPosts = filterPosts(posts, searchQuery);
+    // const filteredPosts = filterPosts(posts, searchQuery);
 
     console.log('window.location: ', window.location);
 

@@ -6,6 +6,8 @@ module.exports = {
 
    LOGIN_URL : '/users/login',
    SIGNUP_URL : '/users',
+   SIGNUP_RESEARCHER_USER_URL : '/users/sign-up/researcher-user',
+   SIGNUP_NORMAL_USER_URL : '/users/sign-up/normal-user',
    FIELD_URL: '/fields',
    FIELD_ADMIN_URL: '/admin/fields',
    LEVEL_URL : '/developmentLevels',

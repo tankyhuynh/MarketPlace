@@ -7,7 +7,6 @@ import { fetchProject } from '../../actions/project'
 
 // import TemplateDefaults from '../Template/ProjectShow/Default';
 import Template1 from '../Template/ProjectShow/Template1';
-import Footer from '../Footer'
 
 class ProjectShow extends React.Component {
 

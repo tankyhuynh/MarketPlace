@@ -1,4 +1,4 @@
-import history from '../history'
+// import history from '../history'
 
 import field from '../apis/field';
 import field_Admin from '../apis/field_Admin';

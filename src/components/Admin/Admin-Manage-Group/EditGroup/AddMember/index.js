@@ -1,4 +1,4 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 import axios from 'axios';
 import environment from '../../../../../environments/environment'
 
@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 import { Container, TextField, Chip, Avatar  } from '@mui/material';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
@@ -18,33 +18,33 @@ import { fetchGroup, addMember, deleteMember } from '../../../../../actions/rese
 import { fetchRolesOfGroup } from '../../../../../actions/roleOfGroup'
 import { fetchDomains } from '../../../../../actions/domain'
 
-import { columns } from '../table-definition'
+// import { columns } from '../table-definition'
 import Combobox from '../../Combobox'
-import Checkbox from '../../Checkcbox'
+// import Checkbox from '../../Checkcbox'
 
 import logo from '../../../../../assets/logo.png'
-import user_avatar from '../../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
+// import user_avatar from '../../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
 
 
-const TYPE_TEXT = 'text'
-const TYPE_PASSWORD = 'password'
-const TYPE_COMBOBOX = 'combobox'
+// const TYPE_TEXT = 'text'
+// const TYPE_PASSWORD = 'password'
+// const TYPE_COMBOBOX = 'combobox'
 // const TYPE_CHECKBOX = 'checkbox'
 
-const genders = [
-    {
-        id: true,
-        name: 'Nam'
-    },
-    {
-        id: false,
-        name: 'Nữ'
-    },
-    {
-        id: false,
-        name: 'Khác'
-    }
-]
+// const genders = [
+//     {
+//         id: true,
+//         name: 'Nam'
+//     },
+//     {
+//         id: false,
+//         name: 'Nữ'
+//     },
+//     {
+//         id: false,
+//         name: 'Khác'
+//     }
+// ]
 
 const MESSAGE_ADD_SUCCCESS = "Thêm thành viên thành công"
 const MESSAGE_DELETE_SUCCCESS = "Xóa thành viên thành công"
@@ -53,7 +53,7 @@ const MESSAGE_DELETE_SUCCCESS = "Xóa thành viên thành công"
 const EditUser = (props) => {
 
     const alertUseAlert = useAlert();
-    const history = useHistory();
+    // const history = useHistory();
 
 
     const [value, setValue] = useState({
@@ -62,7 +62,7 @@ const EditUser = (props) => {
 
     });
 
-    const [isShowChipMember, setShowChipMember] = useState(false)
+    // const [isShowChipMember, setShowChipMember] = useState(false)
     const [members, setMembers] = useState(props.group ? props.group.groupDetailList : {})
     const [searchMember, setSearchMember] = useState(null)
     
@@ -75,142 +75,143 @@ const EditUser = (props) => {
         props.fetchGroup(props.match.params.id);
         props.fetchDomains()
         props.fetchRolesOfGroup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const renderTextFields = () => {
-        const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_TEXT) )            
-                            .map(field => {
-                                return (
-                                    <TextField 
-                                        id="outlined-basic" 
-                                        label={field ? field.headerName : ''} 
-                                        variant="outlined"
-                                        fullWidth
-                                        className="w-full"
-                                        defaultValue={props.user ? props.user[field.field] : ''}
-                                        onChange={(e) => handleChange(field.field, e.target.value)}
-                                    />
-                                )
-        })
+    // const renderTextFields = () => {
+    //     const usersFormat = columns
+    //                         .filter(field => ( field.editable && field.type === TYPE_TEXT) )            
+    //                         .map(field => {
+    //                             return (
+    //                                 <TextField 
+    //                                     id="outlined-basic" 
+    //                                     label={field ? field.headerName : ''} 
+    //                                     variant="outlined"
+    //                                     fullWidth
+    //                                     className="w-full"
+    //                                     defaultValue={props.user ? props.user[field.field] : ''}
+    //                                     onChange={(e) => handleChange(field.field, e.target.value)}
+    //                                 />
+    //                             )
+    //     })
     
-        return (
-            <div className="flex flex-col gap-4">
-                { usersFormat }
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="flex flex-col gap-4">
+    //             { usersFormat }
+    //         </div>
+    //     )
+    // }
 
-    const renderPasswordFields = () => {
-        const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
-                            .map(field => {
-                                return (
-                                    <TextField 
-                                        id="outlined-basic" 
-                                        label={field ? field.headerName : ''} 
-                                        variant="outlined"
-                                        fullWidth
-                                        className="w-full"
-                                        type={field.type}
-                                        // defaultValue={initialValue ? initialValue[field.field] : ''}
-                                        onChange={(e) => handleChange(field.field, e.target.value)}
-                                    />
-                                )
-        })
+    // const renderPasswordFields = () => {
+    //     const usersFormat = columns
+    //                         .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
+    //                         .map(field => {
+    //                             return (
+    //                                 <TextField 
+    //                                     id="outlined-basic" 
+    //                                     label={field ? field.headerName : ''} 
+    //                                     variant="outlined"
+    //                                     fullWidth
+    //                                     className="w-full"
+    //                                     type={field.type}
+    //                                     // defaultValue={initialValue ? initialValue[field.field] : ''}
+    //                                     onChange={(e) => handleChange(field.field, e.target.value)}
+    //                                 />
+    //                             )
+    //     })
     
-        return (
-            <div className="flex flex-col gap-4">
-                { usersFormat }
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="flex flex-col gap-4">
+    //             { usersFormat }
+    //         </div>
+    //     )
+    // }
 
-    const renderComboboxFields = () => {
-        const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_COMBOBOX) )            
-                            .map(field => {
-                               if(field.field === 'gender'){
-                                    return (
-                                        <Combobox 
-                                            label={field.headerName} 
-                                            data={genders ? genders : []} 
-                                            selectedIndex={true} 
-                                            onChecked={onGenderChange} 
-                                        />
-                                    )
-                               }
-                               return (
-                                <Combobox 
-                                    label={field.headerName} 
-                                    data={props[field.data]} 
-                                    // selectedIndex={1} 
-                                    selectedIndex={props.user ? (props.user[field.field] ? props.user[field.field].id : 1) : 1} 
-                                    onChecked={field.field === 'domainId' ? onDomainChange : onRoleChange} 
-                                />
-                            )
-        })
+    // const renderComboboxFields = () => {
+    //     const usersFormat = columns
+    //                         .filter(field => ( field.editable && field.type === TYPE_COMBOBOX) )            
+    //                         .map(field => {
+    //                            if(field.field === 'gender'){
+    //                                 return (
+    //                                     <Combobox 
+    //                                         label={field.headerName} 
+    //                                         data={genders ? genders : []} 
+    //                                         selectedIndex={true} 
+    //                                         onChecked={onGenderChange} 
+    //                                     />
+    //                                 )
+    //                            }
+    //                            return (
+    //                             <Combobox 
+    //                                 label={field.headerName} 
+    //                                 data={props[field.data]} 
+    //                                 // selectedIndex={1} 
+    //                                 selectedIndex={props.user ? (props.user[field.field] ? props.user[field.field].id : 1) : 1} 
+    //                                 onChecked={field.field === 'domainId' ? onDomainChange : onRoleChange} 
+    //                             />
+    //                         )
+    //     })
     
-        return (
-            <div className="flex flex-col gap-5">
-                { usersFormat }
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="flex flex-col gap-5">
+    //             { usersFormat }
+    //         </div>
+    //     )
+    // }
 
-    const onDomainChange = (domainId) => {
-        console.log('Combobox change - domainId: ', domainId)
-        handleChange('domainId', domainId)
-    }
+    // const onDomainChange = (domainId) => {
+    //     console.log('Combobox change - domainId: ', domainId)
+    //     handleChange('domainId', domainId)
+    // }
     const onRoleChange = (roleId) => {
         console.log('Combobox change - roleId: ', roleId)
         handleChange('roleOfGroupId', roleId)
         handleChange('userProfileId', searchMember.id)
     }
-    const onGenderChange = (gender) => {
-        console.log('Combobox change - gender: ', gender)
-        handleChange('gender', gender)
-    }
+    // const onGenderChange = (gender) => {
+    //     console.log('Combobox change - gender: ', gender)
+    //     handleChange('gender', gender)
+    // }
 
-    const onCheckboxEnableChange = (checked) => {
-        handleChange('isEnabled', checked)
-    }
-    const onCheckboxUserFunctionChange = (checked) => {
-        handleChange('userFunctiions', checked)
-    }
+    // const onCheckboxEnableChange = (checked) => {
+    //     handleChange('isEnabled', checked)
+    // }
+    // const onCheckboxUserFunctionChange = (checked) => {
+    //     handleChange('userFunctiions', checked)
+    // }
 
-    const onSubmitForm = (event) => {
-        event.preventDefault();
-        console.log('onSubmitForm: ', value)
-        props.createUser(value)
-    }
+    // const onSubmitForm = (event) => {
+    //     event.preventDefault();
+    //     console.log('onSubmitForm: ', value)
+    //     props.createUser(value)
+    // }
 
-    const onCancelForm = () => {
-        console.log(value)
-    }
+    // const onCancelForm = () => {
+    //     console.log(value)
+    // }
 
-    const renderCheckboxUserFunctions = () => {
-        const userFunctionList 
-            = props.user ? (
-                props.user.userFunctionList
-                    .map(userFunction => {
-                        return (
-                            <Checkbox 
-                                label={userFunction.function.description} 
-                                isChecked={true} 
-                                onCheckboxChange={(checked) => onCheckboxUserFunctionChange(checked)}
-                            />
-                        )
-                    })
-        )
-        : null 
+    // const renderCheckboxUserFunctions = () => {
+    //     const userFunctionList 
+    //         = props.user ? (
+    //             props.user.userFunctionList
+    //                 .map(userFunction => {
+    //                     return (
+    //                         <Checkbox 
+    //                             label={userFunction.function.description} 
+    //                             isChecked={true} 
+    //                             onCheckboxChange={(checked) => onCheckboxUserFunctionChange(checked)}
+    //                         />
+    //                     )
+    //                 })
+    //     )
+    //     : null 
     
-        return (
-            <div className="flex flex-col gap-4">
-                { userFunctionList }
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="flex flex-col gap-4">
+    //             { userFunctionList }
+    //         </div>
+    //     )
+    // }
 
     const onSearchMember =  (username) => {
 

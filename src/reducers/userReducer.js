@@ -4,7 +4,8 @@ import {
     FETCH_USERS,
     FETCH_USER,
     CREATE_USER,
-    EDIT_USER
+    EDIT_USER,
+    DELETE_USER
 
 } from '../actions/types';
 
@@ -19,6 +20,8 @@ export default (state = {}, action) => {
             return { ...state, [action.payload.id]: action.payload } ;
         case EDIT_USER:
             return { ...state, [action.payload.id]: action.payload } ;
+        case DELETE_USER:
+            return _.omit(state, action.payload);
         default:
             return state;
     }

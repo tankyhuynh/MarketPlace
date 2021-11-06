@@ -1,29 +1,29 @@
-const genderFormatter = ({ value }) => { 
-  return <span style={{fontStyle: 'italic'}}>{value ? 'Nam' : 'Nu'}</span> 
-};
+// const genderFormatter = ({ value }) => { 
+//   return <span style={{fontStyle: 'italic'}}>{value ? 'Nam' : 'Nu'}</span> 
+// };
 const actionFormatter = ({ value }) => { 
   return (
     <div className="flex">{ value }</div>
   )
 };
 
-const editorFormatter = ({ value }) => { 
-  return (
-    <div 
-        dangerouslySetInnerHTML={{ __html: value }} 
-    />
-  )
-}
+// const editorFormatter = ({ value }) => { 
+//   return (
+//     <div 
+//         dangerouslySetInnerHTML={{ __html: value }} 
+//     />
+//   )
+// }
 
-const imageFormatter = ({ value }) => { 
-  return (
-    <img 
-      src={value} 
-      alt={value}
-      // className="w-32"
-    />
-  )
-};
+// const imageFormatter = ({ value }) => { 
+//   return (
+//     <img 
+//       src={value} 
+//       alt={value}
+//       // className="w-32"
+//     />
+//   )
+// };
 
 // private String fullName;
 // private String avatar;

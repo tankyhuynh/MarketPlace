@@ -7,61 +7,61 @@ import SideBar from '../Sidebar';
 
 import { fetchGroup } from '../../../actions/researchGroup'
 
-import Member from '../Member'
 
-import researcherImage from '../../../assets/TMThai.jpg'
+// import researcherImage from '../../../assets/TMThai.jpg'
 
-const members = [
-    {
-        name: 'Trương Minh Thái',
-        avatar: researcherImage,
-        qualification: ' Ph.D - Head of Department ',
-        email: 'tmthai@cit.ctu.edu.vn'
+// const members = [
+//     {
+//         name: 'Trương Minh Thái',
+//         avatar: researcherImage,
+//         qualification: ' Ph.D - Head of Department ',
+//         email: 'tmthai@cit.ctu.edu.vn'
         
-    },
-    {
-        name: 'Trương Minh Thái',
-        avatar: researcherImage,
-        qualification: ' Ph.D - Head of Department ',
-        email: 'tmthai@cit.ctu.edu.vn'
+//     },
+//     {
+//         name: 'Trương Minh Thái',
+//         avatar: researcherImage,
+//         qualification: ' Ph.D - Head of Department ',
+//         email: 'tmthai@cit.ctu.edu.vn'
         
-    },
-    {
-        name: 'Trương Minh Thái',
-        avatar: researcherImage,
-        qualification: ' Ph.D - Head of Department ',
-        email: 'tmthai@cit.ctu.edu.vn'
+//     },
+//     {
+//         name: 'Trương Minh Thái',
+//         avatar: researcherImage,
+//         qualification: ' Ph.D - Head of Department ',
+//         email: 'tmthai@cit.ctu.edu.vn'
         
-    },
-    {
-        name: 'Trương Minh Thái',
-        avatar: researcherImage,
-        qualification: ' Ph.D - Head of Department ',
-        email: 'tmthai@cit.ctu.edu.vn'
+//     },
+//     {
+//         name: 'Trương Minh Thái',
+//         avatar: researcherImage,
+//         qualification: ' Ph.D - Head of Department ',
+//         email: 'tmthai@cit.ctu.edu.vn'
         
-    },
-    {
-        name: 'Trương Minh Thái',
-        avatar: researcherImage,
-        qualification: ' Ph.D - Head of Department ',
-        email: 'tmthai@cit.ctu.edu.vn'
+//     },
+//     {
+//         name: 'Trương Minh Thái',
+//         avatar: researcherImage,
+//         qualification: ' Ph.D - Head of Department ',
+//         email: 'tmthai@cit.ctu.edu.vn'
         
-    },
-    {
-        name: 'Trương Minh Thái',
-        avatar: researcherImage,
-        qualification: ' Ph.D - Head of Department ',
-        email: 'tmthai@cit.ctu.edu.vn'
+//     },
+//     {
+//         name: 'Trương Minh Thái',
+//         avatar: researcherImage,
+//         qualification: ' Ph.D - Head of Department ',
+//         email: 'tmthai@cit.ctu.edu.vn'
         
-    },
+//     },
 
-];
+// ];
 
 
 const ResearcherGroup = (props) => {
 
     useEffect(() => {
         props.fetchGroup(props.match.params.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const renderMembers = (members) => {
@@ -85,37 +85,36 @@ const ResearcherGroup = (props) => {
             content: (
                 <>
                     <div 
-                        dangerouslySetInnerHTML={{ __html: props.group ? props.group.introduction : '' }} 
-                        // className="mt-4 text-xl"
+                        dangerouslySetInnerHTML={
+                            { __html: props.group 
+                                ? props.group.introduction 
+                                : '' }
+                        } 
                     />
-                    {/* <section className="mt-2 text-xl">
-                        Những thay đổi trong mô hình chăm sóc sức khỏe, những tiến bộ đột phá về công nghệ trong lĩnh vực y tế cùng những thay đổi trong các chuẩn mực chăm sóc bệnh nhân, tất cả đều góp phần vào một kỷ nguyên mới của y học nói chung và cho mảng xét nghiệm y tế nói riêng.
-                    </section>
-                    <section className="mt-2">
-                        <img 
-                            src={img_demo_2}
-                            alt={img_demo_2}
-                        />
-                    </section> */}
                 </>
             )
         },
-        mission: {
-            name: ' Nhiệm vụ và sứ mệnh',
-            title: '',
-            content: (
-                <section className="mt-4 text-xl">
-                    Những thay đổi trong mô hình chăm sóc sức khỏe, những tiến bộ đột phá về công nghệ trong lĩnh vực y tế cùng những thay đổi trong các chuẩn mực chăm sóc bệnh nhân, tất cả đều góp phần vào một kỷ nguyên mới của y học nói chung và cho mảng xét nghiệm y tế nói riêng.
-                </section>
-            ) 
-        },
+        // mission: {
+        //     name: ' Nhiệm vụ và sứ mệnh',
+        //     title: '',
+        //     content: (
+        //         <section className="mt-4 text-xl">
+        //             Những thay đổi trong mô hình chăm sóc sức khỏe, những tiến bộ đột phá về công nghệ trong lĩnh vực y tế cùng những thay đổi trong các chuẩn mực chăm sóc bệnh nhân, tất cả đều góp phần vào một kỷ nguyên mới của y học nói chung và cho mảng xét nghiệm y tế nói riêng.
+        //         </section>
+        //     ) 
+        // },
         researchTopic: {
             name: 'Chủ đề nghiên cứu',
             title: '',
             content: (
                 <div 
-                    dangerouslySetInnerHTML={{ __html: props.group ? props.group.researchTopic : '' }} 
-                    // className="mt-4 text-xl"
+                    dangerouslySetInnerHTML={
+                        { 
+                            __html: props.group 
+                                ? props.group.researchTopic 
+                                : '' 
+                        }
+                    } 
                 />
             )
          },
@@ -142,24 +141,24 @@ const ResearcherGroup = (props) => {
 
     const [content, setContent] = useState(items['introduction'] ? items['introduction'].content : '');
     
-    const renderList = () => {
-        return items.map(item => {
-            return (
-                <section className="mx-auto my-6 text-center ">
-                    <span 
-                        className="px-4 py-2 text-2xl font-bold bg-gray-200 text- rounded-xl"
-                        style={{ color: '#0065C1' }}
-                    >
-                        {item.name  }
-                    </span>
-                    <section className="mt-3 text-4xl font-bold">
-                        { item.title }
-                    </section>
-                    { item.content }
-                </section>
-            )
-        })
-    }
+    // const renderList = () => {
+    //     return items.map(item => {
+    //         return (
+    //             <section className="mx-auto my-6 text-center ">
+    //                 <span 
+    //                     className="px-4 py-2 text-2xl font-bold bg-gray-200 text- rounded-xl"
+    //                     style={{ color: '#0065C1' }}
+    //                 >
+    //                     {item.name  }
+    //                 </span>
+    //                 <section className="mt-3 text-4xl font-bold">
+    //                     { item.title }
+    //                 </section>
+    //                 { item.content }
+    //             </section>
+    //         )
+    //     })
+    // }
 
     const onSidebarItemClick = (content) => {
         setContent(content)

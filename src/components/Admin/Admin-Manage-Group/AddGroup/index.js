@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
-import Tab from '../../../Tab/Tab';
+// import Tab from '../../../Tab/Tab';
 import FormUser from './Form'
 import { columns as columnsNormalUser } from './table-definition'
 
 
-const tabs = [
-    {
-        title: 'Người dùng bình thường',
-        content: (
-            <>
-                <FormUser columns={columnsNormalUser} />
-            </>
-        )
-    },
-];
+// const tabs = [
+//     {
+//         title: 'Người dùng bình thường',
+//         content: (
+//             <>
+//                 <FormUser columns={columnsNormalUser} />
+//             </>
+//         )
+//     },
+// ];
 
 const AdminManageUser = () => {
     
-    const [openTab, setOpenTab] = useState(0);
+    // const [openTab, setOpenTab] = useState(0);
 
-    const onOpenedTabChange = (opendTab) => {
-        console.log(openTab);
-        setOpenTab(opendTab);
-    };
+    // const onOpenedTabChange = (opendTab) => {
+    //     console.log(openTab);
+    //     setOpenTab(opendTab);
+    // };
 
     return (
         <>

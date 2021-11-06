@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import _ from 'lodash';
+// import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CustomDialog } from 'react-st-modal';
-import { useAlert } from 'react-alert'
+// import { useAlert } from 'react-alert'
 
 import ReplyIcon from '@mui/icons-material/Reply';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
+// import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import { fetchcCustomerContacts } from '../../../../actions/customerContactAdmin';
 
@@ -24,7 +24,7 @@ const formConfig = {
 
 const AdminManageGroup = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    const alertUseAlert = useAlert()
+    // const alertUseAlert = useAlert()
 
     useEffect(() => {
         props.fetchcCustomerContacts()
@@ -84,13 +84,13 @@ const AdminManageGroup = (props) => {
     } 
 
     
-    const onAdd = (value) => {
-        console.log('FormEdit onAdd domain: ', value);
-        props.createDomain(value)
-        props.fetchDomains()
-        alertUseAlert.show('Thêm hoàn tất')
-        // props.fetchRoles()
-    }
+    // const onAdd = (value) => {
+    //     console.log('FormEdit onAdd domain: ', value);
+    //     props.createDomain(value)
+    //     props.fetchDomains()
+    //     alertUseAlert.show('Thêm hoàn tất')
+    //     // props.fetchRoles()
+    // }
 
 
 

@@ -3,13 +3,10 @@ import axios from 'axios';
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
 
 import { Container, TextField } from '@mui/material';
-
 import { CKEditor } from 'ckeditor4-react';
 import { DropzoneArea } from 'material-ui-dropzone';
-
 
 import { createUser } from '../../../../actions/user'
 import { fetchRoles } from '../../../../actions/role'
@@ -64,6 +61,7 @@ const AddUser = (props) => {
     useEffect(() => {
         props.fetchDomains()
         props.fetchRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const { columns } = props

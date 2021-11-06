@@ -13,10 +13,6 @@ import { loading, loaded } from '../../actions/loading';
 import { fetchProjects_DaDuyet } from '../../actions/project';
 import { fetchGroups } from '../../actions/researchGroup';
 
-import img_demo_1 from '../../assets/ReseacherG/a94c9623e56984aa63201e1e8b0d0703';
-import img_demo_2 from '../../assets/ReseacherG/infectious-disease-researcher-lab-test-petri-microscope.jpg';
-import img_demo_3 from '../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg';
-
 
 // const organizations = [
 //     {
@@ -58,6 +54,7 @@ const Home = (props) => {
     useEffect(() => {
         props.fetchProjects_DaDuyet();
         props.fetchGroups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const query = new URLSearchParams(window.location.search).get('s');

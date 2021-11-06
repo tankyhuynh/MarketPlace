@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { fetchDomains } from '../../../actions/domain'
-import { fetchRoles } from '../../../actions/role'
+import React, { useState } from 'react';
 
 import {
     Select,
@@ -8,10 +6,10 @@ import {
     InputLabel,
     FormControl
   } from "@mui/material";
-import { connect } from 'react-redux';
 
 const ComboboxCustom = (props) => {
 
+    // eslint-disable-next-line no-unused-vars
     const [checked, setChecked] = useState(1);
 
     const renderCombobox = (items) => {

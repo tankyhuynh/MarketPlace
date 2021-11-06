@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchUserProfileById } from '../../../actions/user'
 import { fetchRolesOfGroup } from '../../../actions/roleOfGroup'
 
-import Image from "@material-tailwind/react/Image";
 import Paragraph from "@material-tailwind/react/Paragraph";
 
 import logo from '../../../assets/logo.png';
@@ -13,6 +12,7 @@ const ResearcherGroup = (props) => {
     useEffect(() => {
         props.fetchUserProfileById(props.match.params.id)
         props.fetchRolesOfGroup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // return (

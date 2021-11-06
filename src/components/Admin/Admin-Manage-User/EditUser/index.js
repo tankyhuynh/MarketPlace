@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
@@ -6,7 +8,7 @@ import { useAlert } from 'react-alert'
 import { Container, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import { fetchUser, createUser, editUserFunction } from '../../../../actions/user'
+import { fetchUser, createUser, editUser, editUserFunction } from '../../../../actions/user'
 import { fetchRoles } from '../../../../actions/role'
 import { fetchDomains } from '../../../../actions/domain'
 
@@ -38,12 +40,7 @@ const genders = [
 const EditUser = (props) => {
     const alertUseAlert = useAlert()
 
-    const [value, setValue] = useState({
-        domainId: 1,
-        roleId: 1,
-        isEnabled: false,
-        gender: true
-    });
+    const [value, setValue] = useState(props.user ? props.user : {});
     
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
@@ -54,6 +51,7 @@ const EditUser = (props) => {
         props.fetchUser(props.match.params.id);
         props.fetchDomains()
         props.fetchRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const renderTextFields = () => {
@@ -152,6 +150,7 @@ const EditUser = (props) => {
 
     const onCheckboxEnableChange = (checked) => {
         handleChange('isEnabled', checked)
+        console.log('onCheckboxEnableChange change - enable: ', checked)
     }
     const onCheckboxUserFunctionChange = (userId, functionId, checked, functionDescription)  => {
         console.log('onCheckboxUserFunctionChange: ', userId, functionId, checked)
@@ -170,8 +169,16 @@ const EditUser = (props) => {
 
     const onSubmitForm = (event) => {
         event.preventDefault();
-        console.log('onSubmitForm: ', value)
-        props.createUser(value)
+        
+        const updateValue = {...value, 
+            domainId: value.domain ? value.domain.id : null,
+            roleId: value.role ? value.role.id : null,
+        }
+        // _.unset(updateValue, 'role')
+        const omitObject = _.omit(updateValue, ['domain', 'role', 'userFunctionList'])
+
+        console.log('onSubmitForm omitObject: ', omitObject)
+        props.editUser(omitObject)
     }
 
     const onCancelForm = () => {
@@ -236,7 +243,12 @@ const EditUser = (props) => {
                             
                             { renderComboboxFields() }
 
-                            <Checkbox label="Enable" isChecked={false} onCheckboxChange={onCheckboxEnableChange} />
+                            <Checkbox 
+                                label="Enable" 
+                                fieldName="isEnabled"
+                                isChecked={false} 
+                                onCheckboxChange={(fieldName, isChecked) => onCheckboxEnableChange(isChecked)} 
+                            />
                         </div>
 
                         <div className="flex justify-end gap-2 my-2">
@@ -284,7 +296,8 @@ const mapStateToProps = (state, ownProps) => {
     { 
         fetchRoles,
         fetchDomains,
-        fetchUser, createUser, editUserFunction
+        fetchUser, createUser, editUser,
+        editUserFunction
     }
   )(EditUser);
 

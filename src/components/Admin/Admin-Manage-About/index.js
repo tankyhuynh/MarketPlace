@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { CustomDialog } from 'react-st-modal';
+// import { CustomDialog } from 'react-st-modal';
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,26 +11,26 @@ import { columns } from './table-definition-show';
 
 import { fetchAbouts, createAbout, editAbout } from '../../../actions/about';
 import { connect } from 'react-redux';
-import { useAlert } from 'react-alert'
+// import { useAlert } from 'react-alert'
 
 
-import FormEdit from './FormEdit'
+// import FormEdit from './FormEdit'
 
-const formConfig_Add = {
-    title: "Thêm giới thiệu",
-    button_text_ok: 'Thêm',
-    button_text_cancel: 'Hủy'
-}
+// const formConfig_Add = {
+//     title: "Thêm giới thiệu",
+//     button_text_ok: 'Thêm',
+//     button_text_cancel: 'Hủy'
+// }
 
-const formConfig_Edit = {
-    title: "Sửa giới thiệu",
-    button_text_ok: 'Sửa',
-    button_text_cancel: 'Hủy'
-}
+// const formConfig_Edit = {
+//     title: "Sửa giới thiệu",
+//     button_text_ok: 'Sửa',
+//     button_text_cancel: 'Hủy'
+// }
 
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    const alertUseAlert = useAlert()
+    // const alertUseAlert = useAlert()
 
     useEffect(() => {
         props.fetchAbouts()
@@ -43,47 +43,47 @@ const AdminField = (props) => {
 
 
     
-    const onEdit = (value) => {
-        console.log('FormEdit onEdit introduction: ', value);
-        props.editDomain(value)
-        alertUseAlert.show('Chỉnh sửa hoàn tất')
-    }
+    // const onEdit = (value) => {
+    //     console.log('FormEdit onEdit introduction: ', value);
+    //     props.editDomain(value)
+    //     alertUseAlert.show('Chỉnh sửa hoàn tất')
+    // }
 
-    const onAdd = (value) => {
-        console.log('FormEdit onAdd introduction: ', value);
-        props.createDomain(value)
-        props.fetchDomains()
-        alertUseAlert.show('Thêm hoàn tất')
-        // props.fetchRoles()
-    }
+    // const onAdd = (value) => {
+    //     console.log('FormEdit onAdd introduction: ', value);
+    //     props.createDomain(value)
+    //     props.fetchDomains()
+    //     alertUseAlert.show('Thêm hoàn tất')
+    //     // props.fetchRoles()
+    // }
 
-    const onBtnEditClick = async (domain) => {
-        await CustomDialog(
-            <FormEdit 
-                formConfig={formConfig_Edit}
-                initialValue={domain}
-                domains={columns} 
-                onSubmit={onEdit}
-            />, {
-            title: formConfig_Edit.title,
-            showCloseIcon: true,
-        });
+    // const onBtnEditClick = async (domain) => {
+    //     await CustomDialog(
+    //         <FormEdit 
+    //             formConfig={formConfig_Edit}
+    //             initialValue={domain}
+    //             domains={columns} 
+    //             onSubmit={onEdit}
+    //         />, {
+    //         title: formConfig_Edit.title,
+    //         showCloseIcon: true,
+    //     });
 
-    }
+    // }
 
-    const onBtnAddClick = async (domain) => {
-        await CustomDialog(
-            <FormEdit 
-                formConfig={formConfig_Add}
-                initialValue={domain}
-                domains={columns} 
-                onSubmit={onAdd}
-            />, {
-            title: formConfig_Add.title,
-            showCloseIcon: true,
-        });
+    // const onBtnAddClick = async (domain) => {
+    //     await CustomDialog(
+    //         <FormEdit 
+    //             formConfig={formConfig_Add}
+    //             initialValue={domain}
+    //             domains={columns} 
+    //             onSubmit={onAdd}
+    //         />, {
+    //         title: formConfig_Add.title,
+    //         showCloseIcon: true,
+    //     });
 
-    }
+    // }
 
 
     const renderRows = (rows) => {

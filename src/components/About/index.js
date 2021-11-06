@@ -8,6 +8,7 @@ const About = (props) => {
 
     useEffect(() => {
       props.fetchAbouts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

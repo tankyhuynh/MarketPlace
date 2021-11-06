@@ -6,14 +6,21 @@ import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import validator from 'validator' 
 import { withAlert } from 'react-alert'
+import { withRouter  } from 'react-router-dom'
 
-import { signup } from '../../../actions/auth'
+import { signupResearcherUser } from '../../../actions/auth'
+
+import Combobox from './Combobox'
 
 // import Input from '@material-tailwind/react/Input'
 import TextField from '@mui/material/TextField';
 
 
 class SignUp extends React.Component {
+
+    state = {
+        domainId: 1
+    }
 
     componentDidMount() {
         console.log('props: ', this.props)
@@ -44,14 +51,41 @@ class SignUp extends React.Component {
         );  
     }
 
+    handleChange = (field, value) => {
+        this.setState({
+            [field]: value
+        })
+    }  
+
+    onDomainChange = (domainId) => {
+        console.log('Combobox change - domainId: ', domainId)
+        this.handleChange('domainId', domainId)
+    }
+
+    renderCombobox = () => {
+        return (
+            <Combobox 
+                label={'Tên miền'} 
+                selectedIndex={1} 
+                onChecked={this.onDomainChange} 
+            />
+        )
+    }
+
     onSubmit = (formValues) => {
         console.log('Sign up');
-        this.props.signup(formValues, this.props.history)
+        console.log('Sign up domainId', this.state.domainId);
+        
+        const updateFormValues = { ...formValues, domainId: this.state.domainId }
+        console.log('Sign up formValues', updateFormValues);
+        console.log('Sign up this.props.history', this.props.history);
+        this.props.signupResearcherUser(updateFormValues, this.props.history)
             .then(response => {
                 this.props.alert.show('Đăng ký thành công !!!')  
             })
             .catch(error => {
                 this.props.alert.error('Đăng ký thất bại, vui lòng kiểm tra lại thông tin nhập !!!')  
+                console.log('error: ', error)
             });
     }
 
@@ -137,26 +171,21 @@ class SignUp extends React.Component {
                                             Nữ
                                         </label>
                                 </div>
-
-                                <Field 
-                                    name="website" 
-                                    component={this.renderInput} 
-                                    label="Website" 
-                                    type="text"
-                                />
-                                <Field 
-                                    name="qualification" 
-                                    component={this.renderInput} 
-                                    label="Trình độ chuyên môn" 
-                                    type="text"
-                                />
                                 
+                                <Field 
+                                    name="domainId" 
+                                    component={this.renderCombobox} 
+                                    label="Tên miền" 
+                                    type="text"
+                                />
+
                                 <Field 
                                     name="username" 
                                     component={this.renderInput} 
                                     label="Tên đăng nhập" 
                                     type="text"
                                 />
+
                                 <Field 
                                     name="password" 
                                     component={this.renderInput} 
@@ -261,4 +290,8 @@ const formWrapped = reduxForm({
     validate: validate
 })(withAlert()(SignUp));
 
-export default connect(null, { signup })(formWrapped);
+
+export default withRouter(connect(
+    null, 
+    { signupResearcherUser }
+)(formWrapped));

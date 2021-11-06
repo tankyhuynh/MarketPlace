@@ -6,14 +6,21 @@ import { Link } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
 import validator from 'validator' 
 import { withAlert } from 'react-alert'
+import { withRouter  } from 'react-router-dom'
 
-import { signup } from '../../../actions/auth'
+import { signupNormalUser } from '../../../actions/auth'
 
 // import Input from '@material-tailwind/react/Input'
 import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 class SignUp extends React.Component {
+    
+    state = {
+        getNews: true
+    }
 
     componentDidMount() {
         console.log('props: ', this.props)
@@ -52,14 +59,47 @@ class SignUp extends React.Component {
         );  
     }
 
+    handleChange = (event) => {
+        console.log('handleChange getNews: ', event.target.checked)
+        this.setState({
+          getNews: event.target.checked,
+        });
+      };
+
+    renderCheckbox = ({ input, type, label, meta }) => {
+        // const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+        return (
+            <div>
+                <FormControlLabel
+                    label={label}
+                    control={
+                        <Checkbox 
+                            {...input} 
+                            checked={this.state.getNews}
+                            size="small" 
+                            onClick={e => this.handleChange(e)}
+                        />
+                    }
+                />
+                {this.renderError(meta)}
+            </div>
+        );  
+    }
+
     onSubmit = (formValues) => {
         console.log('Sign up');
-        this.props.signup(formValues, this.props.history)
+        console.log('Sign up domainId', this.state.domainId);
+        
+        const updateFormValues = { ...formValues, domainId: this.state.domainId }
+        console.log('Sign up formValues', updateFormValues);
+        console.log('Sign up this.props.history', this.props.history);
+        this.props.signupNormalUser(updateFormValues, this.props.history)
             .then(response => {
                 this.props.alert.show('Đăng ký thành công !!!')  
             })
             .catch(error => {
                 this.props.alert.error('Đăng ký thất bại, vui lòng kiểm tra lại thông tin nhập !!!')  
+                console.log('error: ', error)
             });
     }
 
@@ -158,6 +198,13 @@ class SignUp extends React.Component {
                                     label="Nhập lại mật khẩu" 
                                     type="password"
                                 />
+
+                                <Field 
+                                    name="getNews" 
+                                    component={this.renderCheckbox} 
+                                    label="Nhận thông báo" 
+                                    type="checkbox"
+                                />
                                 
                             </div>
 
@@ -250,4 +297,13 @@ const formWrapped = reduxForm({
     validate: validate
 })(withAlert()(SignUp));
 
-export default connect(null, { signup })(formWrapped);
+export default withRouter(
+    connect
+    (
+        null, 
+        { 
+            signupNormalUser 
+        }
+    )
+    (formWrapped)
+);

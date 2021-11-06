@@ -1,17 +1,16 @@
-import avatar from '../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
 import environment from '../../../environments/environment'
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
 import { CKEditor } from 'ckeditor4-react';
 
 import { Container, TextField } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Avatar from '@mui/material/Avatar';
 
-
-import Editable from './TestEditables'
+// import { Link } from 'react-router-dom'
+// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+// import Avatar from '@mui/material/Avatar';
+// import avatar from '../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
+// import Editable from './TestEditables'
 
 
 import { fetchUser ,createUser } from '../../../actions/user'
@@ -20,8 +19,8 @@ import { fetchDomains } from '../../../actions/domain'
 
 import { columns } from './table-definition'
 import Combobox from './Combobox'
-import Checkbox from './Checkcbox'
 import Navbar from './Navbar'
+// import Checkbox from './Checkcbox'
 
 
 
@@ -53,6 +52,7 @@ const ResearcherAccount = (props) => {
 
 
     const [isDisable, setDisable] = useState(true)
+    // eslint-disable-next-line no-unused-vars
     const [value, setValue] = useState({
         domainId: 1,
         roleId: 1,
@@ -69,6 +69,7 @@ const ResearcherAccount = (props) => {
     useEffect(() => {
         props.fetchDomains()
         props.fetchRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const renderTextFields = () => {
@@ -218,12 +219,12 @@ const ResearcherAccount = (props) => {
         handleChange('gender', gender)
     }
 
-    const onCheckboxEnableChange = (checked) => {
-        handleChange('isEnabled', checked)
-    }
-    const onCheckboxUserFunctionChange = (checked) => {
-        handleChange('userFunctiions', checked)
-    }
+    // const onCheckboxEnableChange = (checked) => {
+    //     handleChange('isEnabled', checked)
+    // }
+    // const onCheckboxUserFunctionChange = (checked) => {
+    //     handleChange('userFunctiions', checked)
+    // }
 
     const onDisableStatusChange = (event) => {
         event.preventDefault();
@@ -237,34 +238,34 @@ const ResearcherAccount = (props) => {
         // props.createUser(value)
     }
 
-    const onCancelForm = () => {
-        console.log(value)
-    }
+    // const onCancelForm = () => {
+    //     console.log(value)
+    // }
 
-    const renderCheckboxUserFunctions = () => {
-        const userFunctionList 
-            = props.user ? (
-                props.user.userFunctionList
-                    .map(userFunction => {
-                        return (
-                            <Checkbox 
-                                label={userFunction.function.description} 
-                                isChecked={true} 
-                                onCheckboxChange={(checked) => onCheckboxUserFunctionChange(checked)}
-                            />
-                        )
-                    })
-        )
-        : null 
+    // const renderCheckboxUserFunctions = () => {
+    //     const userFunctionList 
+    //         = props.user ? (
+    //             props.user.userFunctionList
+    //                 .map(userFunction => {
+    //                     return (
+    //                         <Checkbox 
+    //                             label={userFunction.function.description} 
+    //                             isChecked={true} 
+    //                             onCheckboxChange={(checked) => onCheckboxUserFunctionChange(checked)}
+    //                         />
+    //                     )
+    //                 })
+    //     )
+    //     : null 
     
-        return (
-            <div className="flex flex-col gap-4">
-                { userFunctionList }
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="flex flex-col gap-4">
+    //             { userFunctionList }
+    //         </div>
+    //     )
+    // }
 
-    const { fullName } = props.user
+    // const { fullName } = props.user
 
     return (
 

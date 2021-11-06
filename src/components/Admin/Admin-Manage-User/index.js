@@ -11,24 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchUsers, createUser, editUser } from '../../../actions/user';
+import { fetchUsers, createUser, editUser, deleteUser } from '../../../actions/user';
 import { connect } from 'react-redux';
-// import { useAlert } from 'react-alert'
-
-
-// import FormEdit from './FormEdit'
-
-// const formConfig_Add = {
-//     title: "Thêm người dùng",
-//     button_text_ok: 'Thêm',
-//     button_text_cancel: 'Hủy'
-// }
-
-// const formConfig_Edit = {
-//     title: "Sửa người dùng",
-//     button_text_ok: 'Sửa',
-//     button_text_cancel: 'Hủy'
-// }
 
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
@@ -42,50 +26,6 @@ const AdminField = (props) => {
         console.log(model);
         setEditRowsModel(model);
     }, []);
-
-
-    
-    // const onEdit = (value) => {
-    //     console.log('FormEdit onEdit user: ', value);
-    //     props.editUser(value)
-    //     alertUseAlert.show('Chỉnh sửa hoàn tất')
-    // }
-
-    // const onAdd = (value) => {
-    //     console.log('FormEdit onAdd user: ', value);
-    //     props.createUser(value)
-    //     alertUseAlert.show('Thêm hoàn tất')
-    //     // props.fetchRoles()
-    // }
-
-    // const onBtnEditClick = async (user) => {
-    //     // await CustomDialog(
-    //     //     <FormEdit 
-    //     //         formConfig={formConfig_Edit}
-    //     //         initialValue={user}
-    //     //         users={columns} 
-    //     //         onSubmit={onEdit}
-    //     //     />, {
-    //     //     title: formConfig_Edit.title,
-    //     //     showCloseIcon: true,
-    //     // });
-
-    // }
-
-    // const onBtnAddClick = async (user) => {
-    //     await CustomDialog(
-    //         <FormEdit 
-    //             formConfig={formConfig_Add}
-    //             initialValue={user}
-    //             users={columns} 
-    //             onSubmit={onAdd}
-                
-    //         />, {
-    //         title: formConfig_Add.title,
-    //         showCloseIcon: true,
-    //     });
-
-    // }
 
     const onBtnDeleteClick = async (field) => {
         const CONSTFIRM_TITLE = 'Xác nhận' 
@@ -101,7 +41,7 @@ const AdminField = (props) => {
         );
         
         if (result) {
-            props.deleteGroup(field.id)
+            props.deleteUser(field.id)
         } else {
         // Сonfirmation not confirmed
         }
@@ -164,5 +104,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchUsers, createUser, editUser }
+    { fetchUsers, createUser, editUser, deleteUser }
 )(AdminField);
