@@ -95,7 +95,7 @@ export const columns = [
     field: 'reply',
     headerName: 'Nội dung phản hồi',
     width: 350,
-    editable: true,
+    editable: true, 
     type: 'editor',
     isShow: false,
     // renderCell: actionFormatter,

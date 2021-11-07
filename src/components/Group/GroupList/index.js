@@ -149,12 +149,11 @@ class ProjectList extends React.Component {
                     <>
                         <Link 
                             to={`/groups/show/${group.id}`} 
-                            className="grid items-center grid-cols-1 mx-6 border-gray-500 md:grid-cols-4"
+                            className="flex flex-col md:grid items-center md:grid-cols-1 mx-6 border-gray-500 lg:grid-cols-4"
                             key={index}
                         >
                             <div className="items-center self-center col-span-1 my-4">
                                 <img 
-                                    // src={this.renderImage(this.renderImageSrc(group))} 
                                     src={group.groupImage} 
                                     alt="random imgee" 
                                     className="object-cover object-center w-32 h-32 my-2 rounded-lg max-h-64" 
@@ -177,14 +176,8 @@ class ProjectList extends React.Component {
                                     <div className="mt-4 b-0">
                                         <span className="flex flex-col italic text-teal-600">
                                             <span className="font-semibold">
-                                                {/* {this.renderAuthors(project.author)} */}
-                                                {/* Huỳnh Tấn Kỷ */}
-                                                {/* { project.user.fullName } */}
                                                 { group.author }
                                             </span>
-                                            {/* <span className="self-end">
-                                                { dateFormat(group.createdDate, "HH:MM, dddd, mmmm dS, yyyy") } <br />
-                                            </span> */}
                                         </span>
                                     </div> 
                             </div>
@@ -198,7 +191,7 @@ class ProjectList extends React.Component {
     render() {
         return (
             <>
-                <div className="grid grid-cols-1 mx-64">
+                <div className="grid grid-cols-1 mx-auto md:mx-64">
                     {this.renderList()}
                 </div>
             </>

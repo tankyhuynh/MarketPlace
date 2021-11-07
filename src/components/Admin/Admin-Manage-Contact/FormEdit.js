@@ -20,7 +20,6 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit }) => {
     const [value, setValue] = useState(initialValue);
     const dialog = useDialog();
 
-
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
     }   
@@ -30,6 +29,19 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit }) => {
             domains
                 .filter(field => field.isShow && field.type === TYPE_TEXT)            
                 .map(field => {
+                    if(field.field !== 'project'){
+                        return (
+                            <TextField 
+                                id="outlined-basic" 
+                                label={field ? field.headerName : ''} 
+                                variant="outlined"
+                                fullWidth
+                                disabled={!field.editable}
+                                defaultValue={initialValue ? initialValue[field.field] : ''}
+                                onChange={(e) => handleChange(field.field, e.target.value)} 
+                            />
+                        )
+                    }
                     return (
                         <TextField 
                             id="outlined-basic" 
@@ -37,7 +49,7 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit }) => {
                             variant="outlined"
                             fullWidth
                             disabled={!field.editable}
-                            defaultValue={initialValue ? initialValue[field.field] : ''}
+                            defaultValue={initialValue ? initialValue[field.field].name : ''}
                             onChange={(e) => handleChange(field.field, e.target.value)} 
                         />
                     )
@@ -74,7 +86,7 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit }) => {
 
     const renderEditorFields = () => {
         const usersFormat = domains
-                            .filter(field => ( field.isShow && field.type === TYPE_EDITOR) )            
+                            .filter(field => ( field.editable && field.type === TYPE_EDITOR) )            
                             .map(field => {
                                 return (
                                     <div className="flex flex-col gap-4 mt-4">

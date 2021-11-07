@@ -308,7 +308,7 @@ const Header = (props) => {
 
 
   const renderAccountMenuMobile = () => {
-    if(props.isSignedIn){
+    if(props.isSignedIn || userProfile){
       return (
         <>
           <div className="flex flex-col gap-4 p-2">

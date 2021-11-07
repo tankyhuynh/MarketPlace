@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import Card from '../Card';
 import SideBar from '../Sidebar';
 
@@ -164,18 +166,40 @@ const ResearcherGroup = (props) => {
         setContent(content)
     }
 
+    const renderContent = () => {
+        if(items){
+            return Object.values(items).map((item, index) => {
+                return (
+                    <span className="mx-4 font-medium">
+                        { item.content }
+                    </span>
+                )
+            })
+        }
+    } 
+
     return (
-        <div>
+        <div className="flex flex-col gap-4">
             {/* <div className="flex flex-col gap-2 md:mx-32">
                 { renderList() }
             </div> */}
-            <div className="flex gap-2">
-                <div className="">
+            <Link 
+                to={'/groups'}
+                className="mx-4"
+            >
+                <ArrowBackIcon />
+            </Link>
+
+            <div className="hidden lg:flex gap-2">
+                <div>
                     <SideBar items={items} onSidebaritemClick={onSidebarItemClick} />
                 </div>
                 <div className="px-10 mt-10">
                     { content }
                 </div>
+            </div>
+            <div className="flex flex-col lg:hidden gap-2">
+                { renderContent() }
             </div>
         </div>
     ) 
