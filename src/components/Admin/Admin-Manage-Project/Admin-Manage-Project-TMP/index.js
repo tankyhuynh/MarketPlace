@@ -4,8 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { 
-    fetchProjects_Commercial,
-    fetchProjects_Researching
+    fetchProjects_all_by_domainId
 } 
 from '../../../../actions/project';
 
@@ -19,8 +18,7 @@ const TMP_PROJECT_ID = 4;
 const AdminProjectAll = (props) => {
 
     useEffect(() => {
-        props.fetchProjects_Commercial();
-        props.fetchProjects_Researching();
+        props.fetchProjects_all_by_domainId();
     }, [])
 
     const [editRowsModel, setEditRowsModel] = useState({});
@@ -69,7 +67,6 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     { 
-        fetchProjects_Commercial,
-        fetchProjects_Researching 
+        fetchProjects_all_by_domainId
     }
 )(AdminProjectAll);

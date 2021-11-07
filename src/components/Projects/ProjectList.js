@@ -149,14 +149,17 @@ class ProjectList extends React.Component {
         return 0
     }
 
-    filterProjects = (posts, query) => {
+    filterProjects = (projects, query) => {
         if (!query) {
-            return posts;
+            return projects;
         }
     
-        return posts.filter((post) => {
-            const postName = post.name.toLowerCase();
-            return postName.includes(query);
+        return projects.filter((project) => {
+            const projectName = project.name.toLowerCase();
+            const projectAuthor = project.author.toLowerCase();
+
+
+            return projectName.includes(query) || projectAuthor.includes(query);
         });
     };
 
@@ -186,15 +189,15 @@ class ProjectList extends React.Component {
                                     <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
                                             <div>
                                                 <div className="grid grid-cols-5 xl:grid-flow-col">
-                                                    <div className="flex items-baseline col-span-4 gap-2">
-                                                    { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
-                                                        ? (
-                                                            <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
-                                                                New
-                                                            </span>
-                                                        )
-                                                        : null
-                                                    }
+                                                    <div className="flex items-center col-span-4 gap-2">
+                                                        { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
+                                                            ? (
+                                                                <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
+                                                                    New
+                                                                </span>
+                                                            )
+                                                            : null
+                                                        }
                                                         
                                                         { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
                                                     </div>

@@ -76,7 +76,8 @@ export const columns = [
     width: 300,
     editable: true,
     type: 'combobox',
-    data: 'domains'
+    data: 'domains',
+    parent: 'domain'
   },
   {
     field: 'roleId',
@@ -84,7 +85,8 @@ export const columns = [
     width: 300,
     editable: true,
     type: 'combobox',
-    data: 'roles'
+    data: 'roles',
+    parent: 'role'
   },
   {
     field: 'dob',
@@ -93,7 +95,7 @@ export const columns = [
     editable: true,
     isShow: true,
     // renderCell: genderFormatter,
-    type: 'text'
+    type: 'date'
   },
   {
     field: 'qualification',
@@ -116,6 +118,7 @@ export const columns = [
     headerName: 'Mật khẩu',
     width: 300,
     editable: true,
+    isShow: true,
     type: 'password'
   },
   {

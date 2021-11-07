@@ -52,7 +52,7 @@ export const columns = [
     editable: true,
     isShow: true,
     renderCell: genderFormatter,
-    type: 'text'
+    type: 'combobox'
   },
   {
     field: 'dob',
@@ -61,7 +61,7 @@ export const columns = [
     editable: true,
     isShow: true,
     // renderCell: genderFormatter,
-    type: 'text'
+    type: 'date'
   },
   {
     field: 'bio',

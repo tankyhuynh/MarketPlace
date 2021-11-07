@@ -31,7 +31,9 @@ export const createCustomerContact = (value) => async dispatch => {
   const response = await customerContact_Admin.post(CUSTOMER_CONTACT_ADMIN_URL, value);
   console.log('createCustomerContact:', response.data);
 
-  dispatch({ type: CREATE_CUSTOMER_CONTACT, payload: response.data });
+  const responseFetchAlls = await customerContact_Admin.get(CUSTOMER_CONTACT_ADMIN_URL);
+
+  dispatch({ type: FETCH_CUSTOMER_CONTACTS, payload: responseFetchAlls.data });
 };
 
 

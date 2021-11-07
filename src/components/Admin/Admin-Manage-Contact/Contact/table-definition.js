@@ -79,7 +79,7 @@ export const columns = [
     headerName: 'Tiêu đề',
     width: 350,
     editable: false,
-    type: 'editor',
+    type: 'textarea',
     isShow: true,
     // renderCell: actionFormatter,
   },

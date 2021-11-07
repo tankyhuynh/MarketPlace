@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchRoles, createRole, editRole } from '../../../actions/role';
+import { fetchRoles, createRole, editRole, deleteRole } from '../../../actions/role';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert'
 
@@ -97,7 +97,8 @@ const AdminField = (props) => {
         );
         
         if (result) {
-            props.deleteGroup(field.id)
+            props.deleteRole(field.id)
+            alertUseAlert.error('Xóa hoàn tất')
         } else {
         // Сonfirmation not confirmed
         }
@@ -152,5 +153,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchRoles, createRole, editRole }
+    { fetchRoles, createRole, editRole, deleteRole }
 )(AdminField);

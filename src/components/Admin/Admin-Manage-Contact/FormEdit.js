@@ -65,8 +65,11 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit }) => {
         }))
     }
 
-    const handleCKEditorChange = () => {
-        console.log();
+    const handleCKEditorChange =  (event, editor) => {
+        const name = event.editor.name;
+        const data = event.editor.getData();
+        
+        handleChange(name, data)
     }
 
     const renderEditorFields = () => {
@@ -77,9 +80,9 @@ const FormEditField = ({ formConfig, initialValue, domains, onSubmit }) => {
                                     <div className="flex flex-col gap-4 mt-4">
                                         <section>{ field.headerName }</section>
                                         <CKEditor 
-                                            id={field.id}
-                                            name={field.fieldName}
-                                            activeClass={field.fieldName}
+                                            id={field.field}
+                                            name={field.field}
+                                            activeClass={field.field}
                                             // initData={project ? project[field.fieldName] : ''}
                                             editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"
                                             config={{

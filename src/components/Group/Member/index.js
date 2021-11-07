@@ -90,7 +90,7 @@ const ResearcherGroup = (props) => {
                         <section>
                             Email: { props.user ? props.user.email : '' }
                         </section>
-                        <section>
+                        <section className="hidden lg:block">
                             <Paragraph>
                                 { props.user ? props.user.fullName : '' } is a former student of Bachelor 
                                 of Engineering in Computer Science at Cantho University. 

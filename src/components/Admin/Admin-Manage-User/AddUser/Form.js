@@ -19,6 +19,7 @@ import logo from '../../../../assets/logo.png'
 
 
 const TYPE_TEXT = 'text'
+const TYPE_DATE = 'date'
 const TYPE_EDITOR = 'editor'
 const TYPE_PASSWORD= 'password'
 const TYPE_COMBOBOX = 'combobox'
@@ -68,11 +69,13 @@ const AddUser = (props) => {
 
     const renderTextFields = () => {
         const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_TEXT) )            
+                            .filter(field => ( field.editable && ( field.type === TYPE_TEXT || field.type === TYPE_DATE ) ) )            
+                            // .filter(field => ( field.editable && ( field.type === TYPE_TEXT ) ) )            
                             .map(field => {
                                 return (
                                     <TextField 
                                         id="outlined-basic" 
+                                        type={field.type}
                                         label={field ? field.headerName : ''} 
                                         variant="outlined"
                                         fullWidth

@@ -15,12 +15,7 @@ import { columns } from '../table-cols-all';
 import { Link } from 'react-router-dom';
 
 
-
-
 const AdminProjectAll = (props) => {
-
-    
-
 
     useEffect(() => {
         // props.fetchProjects_Commercial();

@@ -4,7 +4,8 @@ import {
     FETCH_ROLES,
     FETCH_ROLE,
     CREATE_ROLE,
-    EDIT_ROLE
+    EDIT_ROLE,
+    DELETE_ROLE
 
 } from '../actions/types';
 
@@ -19,6 +20,8 @@ export default (state = {}, action) => {
             return { ...state, [action.payload.id]: action.payload } ;
         case EDIT_ROLE:
             return { ...state, [action.payload.id]: action.payload } ;
+        case DELETE_ROLE:
+            return _.omit(state, action.payload);
         default:
             return state;
     }

@@ -120,12 +120,11 @@ const NUMBER_OF_TEMPLATES = 2;
     const levels = useSelector(state => state.levels);
     const transmissions = useSelector(state => state.transmissions);
     const fields = useSelector(state => state.fields);
-    console.log('levels Selector: ', levels)
-    console.log('fields Selector: ', levels)
 
-    console.log('ProjectPreview Selector projectType: ', props.type)
-
-    console.log(props.project)
+    // console.log('levels Selector: ', levels)
+    // console.log('fields Selector: ', levels)
+    // console.log('ProjectPreview Selector projectType: ', props.type)
+    // console.log(props.project)
     //   const fields = useSelector(state => state.fields);
     //   const levels = useSelector(state => state.levels);
     //   const transmissions = useSelector(state => state.transmissions);

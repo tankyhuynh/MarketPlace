@@ -1,26 +1,48 @@
 import _ from 'lodash';
+import environment from '../../../../environments/environment';
+import { ROLE_ADMIN, ROLE_NNC, ROLE_USER } from '../../../../environments/constraints'
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
+import { CKEditor } from 'ckeditor4-react';
+import { useHistory } from 'react-router-dom';
 
 import { Container, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import { fetchUser, createUser, editUser, editUserFunction } from '../../../../actions/user'
+import { 
+    fetchUser, 
+    fetchUserProfileById,
+    createUser, 
+    editUser, 
+    editNormalUser_Admin,
+    editResearcherUser_Admin, 
+    editAdminUser_Admin,
+    editUserFunction 
+
+} from '../../../../actions/user'
 import { fetchRoles } from '../../../../actions/role'
 import { fetchDomains } from '../../../../actions/domain'
 
-import { columns } from './table-definition'
+import { columns as normalUserColumn } from '../AddUser/table-definition-normalUser'
+import { columns as researcherColumn } from '../AddUser/table-definition-researcherUser'
+import { columns as adminColumn } from '../AddUser/table-definition-admin'
+
 import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
 
 
 const TYPE_TEXT = 'text'
+const TYPE_DATE = 'date'
 const TYPE_PASSWORD = 'password'
 const TYPE_COMBOBOX = 'combobox'
+const TYPE_EDITOR = 'editor'
 // const TYPE_CHECKBOX = 'checkbox'
+
+const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
+const removeButtons = 'PasteFromWord'
 
 const genders = [
     {
@@ -39,8 +61,17 @@ const genders = [
 
 const EditUser = (props) => {
     const alertUseAlert = useAlert()
+    const history = useHistory();
 
-    const [value, setValue] = useState(props.user ? props.user : {});
+
+    const [value, setValue] = useState(props.user 
+        ?  {
+            ...props.user, 
+            domainId: props.user ? (props.user.domain? props.user.domain.id : 1) : 1,
+            roleId: props.user ? (props.user.role ? props.user.role.id : 1 ) : 1,
+        } 
+        : {}
+    );
     
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
@@ -48,19 +79,33 @@ const EditUser = (props) => {
 
 
     useEffect(() => {
-        props.fetchUser(props.match.params.id);
+        props.fetchUserProfileById(props.match.params.id);
         props.fetchDomains()
         props.fetchRoles()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const renderTextFields = () => {
-        const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_TEXT) )            
+        const usersFormat = 
+                            (
+                                props.user 
+                                ? (
+                                    props.user.role
+                                    ? (
+                                        props.user.role.code === ROLE_USER ? normalUserColumn : 
+                                        props.user.role.code === ROLE_NNC ? researcherColumn : 
+                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                    ) 
+                                    : []
+                                )
+                                : [] 
+                            )
+                            .filter(field => ( field.editable && (field.type === TYPE_TEXT || field.type === TYPE_DATE) ) )            
                             .map(field => {
                                 return (
                                     <TextField 
                                         id="outlined-basic" 
+                                        type={field.type}
                                         label={field ? field.headerName : ''} 
                                         variant="outlined"
                                         fullWidth
@@ -79,7 +124,20 @@ const EditUser = (props) => {
     }
 
     const renderPasswordFields = () => {
-        const usersFormat = columns
+        const usersFormat = 
+                            (
+                                props.user 
+                                ? (
+                                    props.user.role
+                                    ? (
+                                        props.user.role.code === ROLE_USER ? normalUserColumn : 
+                                        props.user.role.code === ROLE_NNC ? researcherColumn : 
+                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                    ) 
+                                    : []
+                                )
+                                : [] 
+                            )
                             .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
                             .map(field => {
                                 return (
@@ -103,8 +161,73 @@ const EditUser = (props) => {
         )
     }
 
+    const handleCKEditorChange = (event, editor) => {
+        const name = event.editor.name;
+        const data = event.editor.getData();
+        
+        handleChange(name, data)
+    }
+
+    const renderEditorFields = () => {
+        const usersFormat = 
+                            (
+                                props.user 
+                                ? (
+                                    props.user.role
+                                    ? (
+                                        props.user.role.code === ROLE_USER ? normalUserColumn : 
+                                        props.user.role.code === ROLE_NNC ? researcherColumn : 
+                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                    ) 
+                                    : []
+                                )
+                                : [] 
+                            )
+                            .filter(field => ( field.isShow && field.type === TYPE_EDITOR) )            
+                            .map(field => {
+                                return (
+                                    <div className="flex flex-col gap-4">
+                                        <section>{ field.headerName }</section>
+                                        <CKEditor 
+                                            id={field.field}
+                                            name={field.field}
+                                            activeClass={field.field}
+                                            initData={props.user ? props.user[field.field] : ''}
+                                            editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"
+                                            config={{
+                                                filebrowserUploadUrl: filebrowserUploadUrl,
+                                                removeButtons: removeButtons,
+                                                isReadOnly: true,
+                                                height: 400
+                                            }}
+                                            onChange={handleCKEditorChange}
+                                        />
+                                    </div>
+                                )
+        })
+    
+        return (
+            <>
+                { usersFormat }
+            </>
+        )
+    }
+
     const renderComboboxFields = () => {
-        const usersFormat = columns
+        const usersFormat = 
+                            (
+                                props.user 
+                                ? (
+                                    props.user.role
+                                    ? (
+                                        props.user.role.code === ROLE_USER ? normalUserColumn : 
+                                        props.user.role.code === ROLE_NNC ? researcherColumn : 
+                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                    ) 
+                                    : []
+                                )
+                                : [] 
+                            )
                             .filter(field => ( field.editable && field.type === TYPE_COMBOBOX) )            
                             .map(field => {
                                if(field.field === 'gender'){
@@ -122,7 +245,8 @@ const EditUser = (props) => {
                                     label={field.headerName} 
                                     data={props[field.data]} 
                                     // selectedIndex={1} 
-                                    selectedIndex={props.user ? (props.user[field.field] ? props.user[field.field].id : 1) : 1} 
+                                    selectedIndex={props.user ? (props.user[field.parent] ? props.user[field.parent].id : 1) : 1} 
+                                    // selectedIndex={props.user ? props.user[field.parent].id  : 1} 
                                     onChecked={field.field === 'domainId' ? onDomainChange : onRoleChange} 
                                 />
                             )
@@ -167,7 +291,55 @@ const EditUser = (props) => {
         }
     }
 
-    const onSubmitForm = (event) => {
+    const onSubmit_NormalUser = (event) => {
+
+        // "fullName": "string",
+        // "avatar": "string",
+        // "email": "string",
+        // "phoneNumber": "string",
+        // "address": "string",
+        // "getNews": true,
+        // "gender": 0,
+        // "username": "string",
+        // "password": "string"
+
+        event.preventDefault();
+        
+        const updateValue = {...value, 
+            domainId: value.domain ? value.domain.id : null,
+            // roleId: value.role ? value.role.id : null,
+        }
+        // _.unset(updateValue, 'role')
+        const omitObject = _.omit(updateValue, ['domain', 'role', 'userFunctionList'])
+
+        console.log('onSubmitForm omitObject: ', omitObject)
+        props.editNormalUser_Admin(omitObject)
+            .then(() => {
+                alertUseAlert.success('Đã cập nhật thông tin người dùng')
+                history.push('/admin/users')
+            })
+
+    }
+    const onSubmit_ResearcherUser = (event) => {
+
+        // {
+        //     "fullName": "string",
+        //     "email": "string",
+        //     "phoneNumber": "string",
+        //     "address": "string",
+        //     "gender": 0,
+        //     "dob": "string",
+        //     "username": "string",
+        //     "password": "string",
+        //     "avatar": "string",
+        //     "bio": "string",
+        //     "website": "string",
+        //     "qualification": "string",
+        //     "domainId": 0,
+        //     "roleId": 0,
+        //     "isEnabled": true
+        //   }
+
         event.preventDefault();
         
         const updateValue = {...value, 
@@ -178,7 +350,47 @@ const EditUser = (props) => {
         const omitObject = _.omit(updateValue, ['domain', 'role', 'userFunctionList'])
 
         console.log('onSubmitForm omitObject: ', omitObject)
-        props.editUser(omitObject)
+        props.editResearcherUser_Admin(omitObject)
+        alertUseAlert.success('Đã cập nhật thông tin người dùng')
+
+        history.push('/admin/users')
+    }
+    const onSubmit_AdminUser = (event) => {
+
+        // "fullName": "string",
+        // "email": "string",
+        // "phoneNumber": "string",
+        // "address": "string",
+        // "username": "string",
+        // "password": "string",
+        // "isEnabled": true,
+        // "domainId": 0,
+        // "roleId": 0
+
+        event.preventDefault();
+        
+        const omitObject = _.omit(value, ['domain', 'role', 'userFunctionList'])
+
+        console.log('onSubmitForm omitObject: ', omitObject)
+        props.editAdminUser_Admin(omitObject)
+            .then(response => {
+                history.push('/admin/users')
+                alertUseAlert.success('Đã cập nhật quản trị viên')
+            })
+
+    }
+
+    const onSubmitForm = (event) => {
+        console.log('onSubmitForm: ', value)
+        if(props.user.role.code === ROLE_NNC){
+            onSubmit_ResearcherUser(event)
+        }
+        if(props.user.role.code === ROLE_ADMIN){
+            onSubmit_AdminUser(event)
+        }
+        else {
+            onSubmit_NormalUser(event)
+        }
     }
 
     const onCancelForm = () => {
@@ -187,8 +399,10 @@ const EditUser = (props) => {
 
     const renderCheckboxUserFunctions = () => {
         const userFunctionList 
-            = props.user ? (
+            = props.user 
+            ? (
                 props.user.userFunctionList
+                ? props.user.userFunctionList
                     .map(userFunction => {
                         return (
                             <Checkbox 
@@ -198,8 +412,9 @@ const EditUser = (props) => {
                             />
                         )
                     })
-        )
-        : null 
+                : null
+            )
+            : null 
     
         return (
             <div className="flex flex-col gap-4">
@@ -246,9 +461,14 @@ const EditUser = (props) => {
                             <Checkbox 
                                 label="Enable" 
                                 fieldName="isEnabled"
-                                isChecked={false} 
+                                isChecked={ props.user ? props.user.isEnabled : false } 
                                 onCheckboxChange={(fieldName, isChecked) => onCheckboxEnableChange(isChecked)} 
                             />
+
+                        <div className="mt-2">
+                            { renderEditorFields() }
+                        </div>
+
                         </div>
 
                         <div className="flex justify-end gap-2 my-2">
@@ -296,7 +516,8 @@ const mapStateToProps = (state, ownProps) => {
     { 
         fetchRoles,
         fetchDomains,
-        fetchUser, createUser, editUser,
+        fetchUser, fetchUserProfileById, createUser, editUser, 
+        editNormalUser_Admin, editResearcherUser_Admin, editAdminUser_Admin,
         editUserFunction
     }
   )(EditUser);

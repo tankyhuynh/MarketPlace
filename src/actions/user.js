@@ -1,6 +1,15 @@
+import user from '../apis/users';
 import userAdmin from '../apis/user_Admin';
 import userFunctionAdmin from '../apis/userFunction_Admin';
-import { USER_ADMIN_URL, USER_FUNCTION_ADMIN_URL } from '../environments/constraints';
+import { 
+  USER_ADMIN_URL, 
+  USER_FUNCTION_ADMIN_URL ,
+  USER_RESEARCHER_URL,
+  USER_NORMAL_ADMIN_URL,
+  USER_RESEARCHER_ADMIN_URL,
+  USER_ADMIN_ADMIN_URL,
+
+} from '../environments/constraints';
 
 import {
   FETCH_USERS,
@@ -45,6 +54,34 @@ export const createUser = (value) => async dispatch => {
 export const editUser = (value) => async dispatch => {
   const response = await userAdmin.put(`${USER_ADMIN_URL}/${value.id}`, value);
   console.log('editUser:', response.data);
+
+  dispatch({ type: EDIT_USER, payload: response.data });
+};
+
+export const editResearcherUser = (value) => async dispatch => {
+  const response = await user.put(`${USER_RESEARCHER_URL}/${value.id}`, value);
+  console.log('editResearcherUser:', response.data);
+
+  dispatch({ type: EDIT_USER, payload: response.data });
+};
+
+export const editNormalUser_Admin = (value) => async dispatch => {
+  const response = await user.put(`${USER_NORMAL_ADMIN_URL}/${value.id}`, value);
+  console.log('editNormalUser_Admin:', response.data);
+
+  dispatch({ type: EDIT_USER, payload: response.data });
+};
+
+export const editResearcherUser_Admin = (value) => async dispatch => {
+  const response = await userAdmin.put(`${USER_RESEARCHER_ADMIN_URL}/${value.id}`, value);
+  console.log('editResearcherUser_Admin:', response.data);
+
+  dispatch({ type: EDIT_USER, payload: response.data });
+};
+
+export const editAdminUser_Admin = (value) => async dispatch => {
+  const response = await userAdmin.put(`${USER_ADMIN_ADMIN_URL}/${value.id}`, value);
+  console.log('editAdminUser_Admin:', response.data);
 
   dispatch({ type: EDIT_USER, payload: response.data });
 };

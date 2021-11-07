@@ -10,10 +10,16 @@ const actionFormatter = ({ value }) => {
   )
 };
 
+const projectNameFormatter = ({ value }) => { 
+  return (
+    <div className="flex">{ value.name }</div>
+  )
+};
+
 const statusFormatter = ({ value }) => { 
   return (
     <div className={`bg-${value ? (value === true ? 'green' : 'red') : 'yellow'}-500 rounded-2xl text-center w-full mx-4 text-white`}>
-        { value ? (value === true ? 'Đã phản hồi' : 'Chưa phản hồi') : '' }
+        { value ? (value === true ? 'Đã phản hồi' : 'Chưa phản hồi') : 'Chưa phản hồi' }
       </div>
   )
 };
@@ -24,22 +30,24 @@ export const columns = [
     headerName: 'ID', 
     width: 90,
     type: 'text' ,
-    isShow: false,
+    isShow: true,
   },
   {
     field: 'replied',
     headerName: 'Trạng thái',
     width: 150,
     editable: false,
-    renderCell: statusFormatter
+    renderCell: statusFormatter,
+    isShow: true,
   },
   {
-    field: 'name',
+    field: 'project',
     headerName: 'Tên sản phẩm',
     width: 450,
     editable: false,
     type: 'text',
     isShow: true,
+    renderCell: projectNameFormatter
   },
   {
     field: 'fullName',
@@ -75,12 +83,21 @@ export const columns = [
     // renderCell: actionFormatter,
   },
   {
+    field: 'title',
+    headerName: 'Tiêu đề',
+    width: 350,
+    editable: true,
+    type: 'textarea',
+    isShow: false,
+    // renderCell: actionFormatter,
+  },
+  {
     field: 'reply',
     headerName: 'Nội dung phản hồi',
     width: 350,
     editable: true,
     type: 'editor',
-    isShow: true,
+    isShow: false,
     // renderCell: actionFormatter,
   },
   {
@@ -89,6 +106,7 @@ export const columns = [
     width: 150,
     editable: false,
     renderCell: actionFormatter,
+    isShow: true,
   },
 
 ];

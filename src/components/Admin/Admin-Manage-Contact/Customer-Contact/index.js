@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// import _ from 'lodash';
+import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CustomDialog } from 'react-st-modal';
-// import { useAlert } from 'react-alert'
+import { useAlert } from 'react-alert'
+import { useHistory } from 'react-router-dom';
 
 import ReplyIcon from '@mui/icons-material/Reply';
 // import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
-import { fetchcCustomerContacts } from '../../../../actions/customerContactAdmin';
+import { fetchcCustomerContacts, createCustomerContact } from '../../../../actions/customerContactAdmin';
 
 import Table from '../../../Table/Table-Admin';
 import { columns } from './table-definition-customer-contact';
@@ -24,7 +25,9 @@ const formConfig = {
 
 const AdminManageGroup = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    // const alertUseAlert = useAlert()
+    const alertUseAlert = useAlert()
+    const history = useHistory();
+
 
     useEffect(() => {
         props.fetchcCustomerContacts()
@@ -36,9 +39,13 @@ const AdminManageGroup = (props) => {
     }, []);
 
     const onSubmit = (value) => {
-        console.log('FormEdit onSubmit contact: ', value);
-        // props.editDomain(value)
-        // alertUseAlert.show('Chỉnh sửa hoàn tất')
+        
+        const pickedFieldsProject = _.pick(value, 'id', 'email', 'title', 'content')
+        console.log('FormEdit onSubmit contact: ', pickedFieldsProject);
+
+        props.createCustomerContact(value)
+        alertUseAlert.show('Đã phản hồi thành công')
+        history.push('/admin/contacts');
     }
 
     
@@ -60,27 +67,29 @@ const AdminManageGroup = (props) => {
    
 
     const renderRows = (rows) => {
-        return rows.map(row => {
-            const action = (
-                <div className="flex gap-4">
-                    <button 
-                        onClick={() => onBtnReplyClick(row)}
-                        // to={`/admin/groups/edit/${row.id}`}
-                        // className="px-4 py-2 rounded-lg bgye"    
-                    >
-                        <ReplyIcon color="success" />
-                    </button>
-                    {/* <Link 
-                        // onClick={() => onBtnEditClick(row)}
-                        to={`/admin/groups/add-member`}
-                        className=""    
-                    >
-                        <GroupAddIcon color="success" />
-                    </Link> */}
-                </div>
-            )
-            return {...row, action: action}
-        })
+        return rows
+                // .filter(row => row.isShow)
+                .map(row => {
+                    const action = (
+                        <div className="flex gap-4">
+                            <button 
+                                onClick={() => onBtnReplyClick(row)}
+                                // to={`/admin/groups/edit/${row.id}`}
+                                // className="px-4 py-2 rounded-lg bgye"    
+                            >
+                                <ReplyIcon color="success" />
+                            </button>
+                            {/* <Link 
+                                // onClick={() => onBtnEditClick(row)}
+                                to={`/admin/groups/add-member`}
+                                className=""    
+                            >
+                                <GroupAddIcon color="success" />
+                            </Link> */}
+                        </div>
+                    )
+                    return {...row, action: action}
+                })
     } 
 
     
@@ -111,7 +120,7 @@ const AdminManageGroup = (props) => {
             </Link> */}
             <div className="h-2"></div>
             <Table 
-                columns={columns} 
+                columns={columns.filter(column => column.isShow)} 
                 rows={renderRows(props.customerContacts)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
@@ -128,5 +137,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, 
-    { fetchcCustomerContacts }
+    { fetchcCustomerContacts, createCustomerContact }
 )(AdminManageGroup);

@@ -30,12 +30,14 @@ class ImageCrop extends PureComponent {
   };
 
   onCropComplete = (crop) => {
+    console.log('onCropComplete crop', crop);
     this.makeClientCrop(crop);
   };
 
   onCropChange = (crop, percentCrop) => {
     // You could also use percentCrop:
     // this.setState({ crop: percentCrop });
+    // console.log('crop', crop, 'percentCrop', percentCrop);
     this.setState({ crop });
   };
 
@@ -47,6 +49,9 @@ class ImageCrop extends PureComponent {
         'newFile.jpeg'
       );
       this.setState({ croppedImageUrl });
+      console.log('makeClientCrop croppedImageUrl', croppedImageUrl);
+      console.log('makeClientCrop this.imageRef', this.imageRef);
+      console.log('makeClientCrop this.imageRef.src', this.imageRef.src);
     }
   }
 

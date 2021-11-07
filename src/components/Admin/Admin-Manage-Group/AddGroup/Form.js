@@ -87,10 +87,10 @@ const AddGroup = (props) => {
     }
 
     const handleCKEditorChange = (event, editor) => {
-            const name = event.editor.name;
-            const data = event.editor.getData();
-            
-            handleChange(name, data)
+        const name = event.editor.name;
+        const data = event.editor.getData();
+        
+        handleChange(name, data)
     }
 
     const renderEditorFields = () => {

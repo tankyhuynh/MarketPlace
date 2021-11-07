@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
+import { useAlert } from 'react-alert'
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchFunctions, createFunction,  editFunction } from '../../../actions/function';
+import { fetchFunctions, createFunction,  editFunction, deleteFunction } from '../../../actions/function';
 import { fetchRoles } from '../../../actions/role';
 import { connect } from 'react-redux';
 
@@ -31,6 +32,8 @@ const formConfig_Edit = {
 const AdminFunction = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
 
+    const alertUseAlert = useAlert()
+
     console.log('AdminFunction functions: ', props.functions)
 
     useEffect(() => {
@@ -50,12 +53,14 @@ const AdminFunction = (props) => {
         console.log('FormEdit onEdit field: ', updateValue);
         props.editFunction(updateValue)
         props.fetchFunctions()
+        alertUseAlert.show('Chỉnh sửa hoàn tất')
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd field: ', value);
         props.createFunction(value)
         props.fetchFunctions()
+        alertUseAlert.show('Thêm hoàn tất')
     }
 
     const onBtnEditClick = async (field) => {
@@ -102,7 +107,8 @@ const AdminFunction = (props) => {
         );
         
         if (result) {
-            props.deleteGroup(field.id)
+            props.deleteFunction(field.id)
+            alertUseAlert.error('Xóa hoàn tất')
         } else {
         // Сonfirmation not confirmed
         }
@@ -159,7 +165,7 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps, 
     { 
-        fetchFunctions, createFunction, editFunction,
+        fetchFunctions, createFunction, editFunction, deleteFunction,
         fetchRoles 
     }
 )(AdminFunction);

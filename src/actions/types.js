@@ -63,6 +63,7 @@ export const FETCH_ROLES = 'FETCH_ROLES'
 export const FETCH_ROLE = 'FETCH_ROLE'
 export const CREATE_ROLE = 'CREATE_ROLE'
 export const EDIT_ROLE = 'EDIT_ROLE'
+export const DELETE_ROLE = 'DELETE_ROLE'
 
 export const FETCH_ROLES_OF_GROUP = 'FETCH_ROLES_OF_GROUP'
 export const FETCH_ROLE_OF_GROUP = 'FETCH_ROLE_OF_GROUP'

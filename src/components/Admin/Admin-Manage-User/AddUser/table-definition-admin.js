@@ -59,6 +59,24 @@ export const columns = [
     type: 'combobox'
   },
   {
+    field: 'domainId',
+    headerName: 'Tên miền',
+    width: 300,
+    editable: true,
+    type: 'combobox',
+    data: 'domains',
+    parent: 'domain'
+  },
+  {
+    field: 'roleId',
+    headerName: 'Vai trò',
+    width: 300,
+    editable: true,
+    type: 'combobox',
+    data: 'roles',
+    parent: 'role'
+  },
+  {
     field: 'username',
     headerName: 'Tên đăng nhập',
     width: 300,

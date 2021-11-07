@@ -73,7 +73,7 @@ class AdminProjectEdit extends React.Component {
     }
     
     render() {
-        console.log('props project create: ', this.props);
+        // console.log('props project create: ', this.props);
         return (
             <>
                 <Stepper 

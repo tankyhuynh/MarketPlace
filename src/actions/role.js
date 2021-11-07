@@ -5,6 +5,7 @@ import {
   FETCH_ROLES,
   CREATE_ROLE,
   EDIT_ROLE,
+  DELETE_ROLE
     
 } from './types';
 
@@ -30,6 +31,12 @@ export const editRole = (value) => async dispatch => {
   console.log('editRole:', response.data);
 
   dispatch({ type: EDIT_ROLE, payload: response.data });
+};
+
+export const deleteRole = id => async dispatch => {
+  await roles_Admin.delete(`${ROLES_ADMIN_URL}/${id}`);
+
+  dispatch({ type: DELETE_ROLE, payload: id });
 };
 
 
