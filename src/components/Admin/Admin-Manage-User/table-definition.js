@@ -6,12 +6,27 @@ const actionFormatter = ({ value }) => {
     <div className="flex">{ value }</div>
   )
 };
+const statusFormatter = ({ value }) => { 
+  return (
+    <div className={`bg-${value ? (value === true ? 'green' : 'red') : 'yellow'}-500 rounded-2xl text-center w-full mx-4 text-white`}>
+        { value ? (value === true ? 'Đã kích hoạt' : 'Chưa kích hoạt') : 'Chưa kích hoạt' }
+      </div>
+  )
+};
 
 export const columns = [
   { 
     field: 'id', 
     headerName: 'ID', 
     width: 90 
+  },
+  {
+    field: 'isEnabled',
+    headerName: 'Trạng thái',
+    width: 150,
+    editable: false,
+    renderCell: statusFormatter,
+    isShow: true,
   },
   {
     field: 'fullName',

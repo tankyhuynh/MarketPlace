@@ -342,18 +342,20 @@ const EditUser = (props) => {
 
         event.preventDefault();
         
-        const updateValue = {...value, 
-            domainId: value.domain ? value.domain.id : null,
-            roleId: value.role ? value.role.id : null,
-        }
+        // const updateValue = {...value, 
+        //     domainId: value.domain ? value.domain.id : null,
+        //     roleId: value.role ? value.role.id : null,
+        // }
         // _.unset(updateValue, 'role')
-        const omitObject = _.omit(updateValue, ['domain', 'role', 'userFunctionList'])
+        const omitObject = _.omit(value, ['domain', 'role', 'userFunctionList'])
 
         console.log('onSubmitForm omitObject: ', omitObject)
         props.editResearcherUser_Admin(omitObject)
-        alertUseAlert.success('Đã cập nhật thông tin người dùng')
-
-        history.push('/admin/users')
+            .then(() => {
+                alertUseAlert.success('Đã cập nhật thông tin người dùng')
+                history.push('/admin/users')
+            })
+        
     }
     const onSubmit_AdminUser = (event) => {
 
