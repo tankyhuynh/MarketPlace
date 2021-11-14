@@ -22,7 +22,7 @@ import validator from 'validator'
 
 import TinyMCEEditor from '../editor/TinyMCE-Editor'
 import { CKEditor } from 'ckeditor4-react';
-import Tab from '../Tab/Tab';
+import Tab from '../Projects/Tab/Tab';
 import ProjectPreview from '../Projects/ProjectPreviewWithEnableEdit';
 import CheckboxView from '../Projects/CheckboxTreeView'
 
@@ -63,6 +63,8 @@ const HorizontalLinearStepper = (props) => {
         ) : [],
         expanded: []
     })
+
+    
 
     const [project, setProject] = useState({});
     const [statusId, setStatusId] = useState(2);
@@ -121,128 +123,133 @@ const HorizontalLinearStepper = (props) => {
 
     let isProjectDontSaved = true;
     useEffect(() => {
+        const projectLocalStorage = localStorage.getItem("project");
+        const projectParseFromLocalStorage = JSON.parse(projectLocalStorage);
         
-        if(props.project){
-            props.project.type === TYPE_PROJECT_COMMERCIAL ? setOpenTab(0) : setOpenTab(1);  
-
-            setProject({
-                userId: userIdState,
-                statusId: statusId,
-                companyName: props.project ? props.project.companyName : '',
-                author: props.project ? props.project.author : '',
-                address: props.project ? props.project.address : '',
-                phoneNumber: props.project ? props.project.phoneNumber : '',
-                fax: props.project ? props.project.fax : '',
-                email: props.project ? props.project.email : '',
-                website: props.project ? props.project.website : '',
-                name: props.project ? props.project.name : '',
-                shortDescription: props.project ? props.project.shortDescription : '',
-                process: props.project ? props.project.process : 'process',
-                fieldIdList: stateFieldsChecked ? stateFieldsChecked.checked : [],
-                advantage: props.project ? props.project.advantage : '',
-                comDevLevel: props.project ? (
-                    props.project.commercialDevelopmentLevelList
-                    ? (
-                        props.project.commercialDevelopmentLevelList.length
-                            ? (
-                                props.project.commercialDevelopmentLevelList
-                                .map(comDevLevel => {
-                                    if(comDevLevel.developmentLevel.id != OTHER_ID){
-                                        return setSelectedTransmissionMethodAndLevel(previousState => (
+        if(!projectParseFromLocalStorage){
+            if(props.project){
+                props.project.type === TYPE_PROJECT_COMMERCIAL ? setOpenTab(0) : setOpenTab(1);  
+    
+                setProject({
+                    userId: userIdState,
+                    statusId: statusId,
+                    companyName: props.project ? props.project.companyName : '',
+                    author: props.project ? props.project.author : '',
+                    address: props.project ? props.project.address : '',
+                    phoneNumber: props.project ? props.project.phoneNumber : '',
+                    fax: props.project ? props.project.fax : '',
+                    email: props.project ? props.project.email : '',
+                    website: props.project ? props.project.website : '',
+                    name: props.project ? props.project.name : '',
+                    shortDescription: props.project ? props.project.shortDescription : '',
+                    process: props.project ? props.project.process : 'process',
+                    fieldIdList: stateFieldsChecked ? stateFieldsChecked.checked : [],
+                    advantage: props.project ? props.project.advantage : '',
+                    comDevLevel: props.project ? (
+                        props.project.commercialDevelopmentLevelList
+                        ? (
+                            props.project.commercialDevelopmentLevelList.length
+                                ? (
+                                    props.project.commercialDevelopmentLevelList
+                                    .map(comDevLevel => {
+                                        if(comDevLevel.developmentLevel.id != OTHER_ID){
+                                            return setSelectedTransmissionMethodAndLevel(previousState => (
+                                                { ...previousState,
+                                                    'comDevLevel': [
+                                                        {
+                                                            'developmentLevelId': comDevLevel.developmentLevel.id,
+                                                            note: comDevLevel.developmentLevel.name
+                                                        }
+                                                    ]
+                                                }
+                                            ))
+                                        }
+                                        setSelectedTransmissionMethodAndLevel(previousState => (
                                             { ...previousState,
                                                 'comDevLevel': [
                                                     {
                                                         'developmentLevelId': comDevLevel.developmentLevel.id,
-                                                        note: comDevLevel.developmentLevel.name
+                                                        note: comDevLevel.note
                                                     }
                                                 ]
                                             }
                                         ))
-                                    }
-                                    setSelectedTransmissionMethodAndLevel(previousState => (
-                                        { ...previousState,
-                                            'comDevLevel': [
-                                                {
-                                                    'developmentLevelId': comDevLevel.developmentLevel.id,
-                                                    note: comDevLevel.note
+                                        setOtherInputs(previousState => ({...previousState, comDevLevel: {
+                                            name: 'Phương thức chuyển giao',
+                                            label: 'Nhập tên phương thức',
+                                            value: comDevLevel.note
+                                        }}))
+                                        return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
+                                    })
+                                )
+                                : null
+                        ): null
+                    ) : (
+                        selectedTransmissionMethodAndLevel['comDevLevel']
+                            .map(comDevLevel => {
+                                return comDevLevel
+                            })
+                    ),
+                    // comDevLevel:  selectedTransmissionMethodAndLevel ? (
+                    //     selectedTransmissionMethodAndLevel['comDevLevel']
+                    //         .map(comDevLevel => {
+                    //             return comDevLevel
+                    //         })
+                    // ) : 1,
+                    comTransMethod: props.project ?(
+                        props.project.commercialTransmissionMethodList
+                        ? (
+                            props.project.commercialTransmissionMethodList.length
+                                ? (
+                                    props.project.commercialTransmissionMethodList
+                                    .map(comTransMethod => {
+                                        if(comTransMethod.transmissionMethod.id != OTHER_ID){
+                                            return setSelectedTransmissionMethodAndLevel(previousState => (
+                                                { ...previousState,
+                                                    'comTransMethod': [
+                                                        {
+                                                            'transmissionMethodId': comTransMethod.transmissionMethod.id,
+                                                            note: comTransMethod.transmissionMethod.name
+                                                        }
+                                                    ]
                                                 }
-                                            ]
+                                            ))
                                         }
-                                    ))
-                                    setOtherInputs(previousState => ({...previousState, comDevLevel: {
-                                        name: 'Phương thức chuyển giao',
-                                        label: 'Nhập tên phương thức',
-                                        value: comDevLevel.note
-                                    }}))
-                                    return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
-                                })
-                            )
-                            : null
-                    ): null
-                ) : (
-                    selectedTransmissionMethodAndLevel['comDevLevel']
-                        .map(comDevLevel => {
-                            return comDevLevel
-                        })
-                ),
-                // comDevLevel:  selectedTransmissionMethodAndLevel ? (
-                //     selectedTransmissionMethodAndLevel['comDevLevel']
-                //         .map(comDevLevel => {
-                //             return comDevLevel
-                //         })
-                // ) : 1,
-                comTransMethod: props.project ?(
-                    props.project.commercialTransmissionMethodList
-                    ? (
-                        props.project.commercialTransmissionMethodList.length
-                            ? (
-                                props.project.commercialTransmissionMethodList
-                                .map(comTransMethod => {
-                                    if(comTransMethod.transmissionMethod.id != OTHER_ID){
-                                        return setSelectedTransmissionMethodAndLevel(previousState => (
+                                        setSelectedTransmissionMethodAndLevel(previousState => (
                                             { ...previousState,
                                                 'comTransMethod': [
                                                     {
                                                         'transmissionMethodId': comTransMethod.transmissionMethod.id,
-                                                        note: comTransMethod.transmissionMethod.name
+                                                        note: comTransMethod.note
                                                     }
                                                 ]
                                             }
                                         ))
-                                    }
-                                    setSelectedTransmissionMethodAndLevel(previousState => (
-                                        { ...previousState,
-                                            'comTransMethod': [
-                                                {
-                                                    'transmissionMethodId': comTransMethod.transmissionMethod.id,
-                                                    note: comTransMethod.note
-                                                }
-                                            ]
-                                        }
-                                    ))
-                                    setOtherInputs(previousState => ({...previousState, comTransMethod: {
-                                        name: 'Phương thức chuyển giao',
-                                        label: 'Nhập tên phương thức',
-                                        value: comTransMethod.note
-                                    }}))
-                                    return setOtherInputOpen(previousState => ({...previousState, comTransMethod: true}))
-                                })
-                            )
-                            : null
-                    ): null
-                ) : (
-                    selectedTransmissionMethodAndLevel['comTransMethod']
-                        .map(comTransMethod => {
-                            return comTransMethod
-                        })
-                ),
-                scope: props.project ? props.project.scope : 'scope useEffect',
-                price: props.project ? props.project.price : '',
-                challenge: props.project ? props.project.challenge : 'challenge',
-                solution: props.project ? props.project.solution : 'solution',
-                benefit: props.project ? props.project.benefit : 'benefit',
-            })
+                                        setOtherInputs(previousState => ({...previousState, comTransMethod: {
+                                            name: 'Phương thức chuyển giao',
+                                            label: 'Nhập tên phương thức',
+                                            value: comTransMethod.note
+                                        }}))
+                                        return setOtherInputOpen(previousState => ({...previousState, comTransMethod: true}))
+                                    })
+                                )
+                                : null
+                        ): null
+                    ) : (
+                        selectedTransmissionMethodAndLevel['comTransMethod']
+                            .map(comTransMethod => {
+                                return comTransMethod
+                            })
+                    ),
+                    scope: props.project ? props.project.scope : 'scope useEffect',
+                    price: props.project ? props.project.price : '',
+                    challenge: props.project ? props.project.challenge : 'challenge',
+                    solution: props.project ? props.project.solution : 'solution',
+                    benefit: props.project ? props.project.benefit : 'benefit',
+                })
+            }
         }
+        else setProject(projectParseFromLocalStorage);
 
         console.log('render Stepper useEffect after: ', project);
 
@@ -262,13 +269,13 @@ const HorizontalLinearStepper = (props) => {
         
     },[])
 
-    useEffect(() => {
-        if(project){
-            if(statusId === 4 ){
-                onSubmit();   
-            }
-        }
-    },[statusId])
+    // useEffect(() => {
+    //     if(project){
+    //         if(statusId === 4 ){
+    //             onSubmit();   
+    //         }
+    //     }
+    // },[statusId])
 
     useEffect(() => {
         if(isProjectDontSaved){
@@ -597,6 +604,8 @@ const HorizontalLinearStepper = (props) => {
                 }
             })
         }
+
+        localStorage.removeItem('project');
 
     }
 
@@ -1154,36 +1163,51 @@ const HorizontalLinearStepper = (props) => {
         );
     };
 
-    const tabs = 
-        props.project
-            ? props.project.type === TYPE_PROJECT_COMMERCIAL
-                ? [
-                    {
-                        title: 'Dự án thương mại',
-                        content: renderDuAnThuongMai()
-                    }
-                ]
-                : [
-                    {
-                        title: 'Dự án nghiên cứu',
-                        //   content: 'Hiện tại tính năng đang phát triển'
-                        content: renderDuAnNghienCuu()
-                    }
-                ]
-            : [
-                {
-                    title: 'Dự án thương mại',
-                    content: renderDuAnThuongMai()
-                },
-                {
-                    title: 'Dự án nghiên cứu',
-                    //   content: 'Hiện tại tính năng đang phát triển'
-                    content: renderDuAnNghienCuu()
-                }
-            ];
+    // const tabs = 
+    //     props.project
+    //         ? props.project.type === TYPE_PROJECT_COMMERCIAL
+    //             ? [
+    //                 {
+    //                     title: 'Dự án thương mại',
+    //                     content: renderDuAnThuongMai()
+    //                 }
+    //             ]
+    //             : [
+    //                 {
+    //                     title: 'Dự án nghiên cứu',
+    //                     //   content: 'Hiện tại tính năng đang phát triển'
+    //                     content: renderDuAnNghienCuu()
+    //                 }
+    //             ]
+    //         : [
+    //             {
+    //                 title: 'Dự án thương mại',
+    //                 content: renderDuAnThuongMai()
+    //             },
+    //             {
+    //                 title: 'Dự án nghiên cứu',
+    //                 //   content: 'Hiện tại tính năng đang phát triển'
+    //                 content: renderDuAnNghienCuu()
+    //             }
+    //         ];
 
-    const onOpenedTabChange = (openTab) => {
-        setOpenTab(openTab);
+    const tabs = [
+        {
+            title: 'Dự án thương mại',
+            content: renderDuAnThuongMai(),
+            type: 'CP'
+        },
+        {
+            title: 'Dự án nghiên cứu',
+            //   content: 'Hiện tại tính năng đang phát triển'
+            content: renderDuAnNghienCuu(),
+            type: 'RP'
+        }
+    ];
+
+    const onOpenedTabChange = (projectType) => {
+        // setOpenTab(openTab);
+        projectType === TYPE_PROJECT_COMMERCIAL ? setOpenTab(0) : setOpenTab(1);
     };
 
     const renderStep2 = () => {
@@ -1194,6 +1218,7 @@ const HorizontalLinearStepper = (props) => {
                 color="red" 
                 openTabChange={onOpenedTabChange} 
                 openTabProps={openTab} 
+                isEnableToChangeTab={props.type === 'edit' ? false : true}
             />
         </>
         );
@@ -1385,8 +1410,14 @@ const HorizontalLinearStepper = (props) => {
     };
 
     // Save nháp
-    const onSaveTemp = () => {
+    const onSaveTemp = (e) => {
+        e.preventDefault();
         console.log('statusId', project.statusId);
+        // props.onSaveTemp(duAnThuongMai);
+        const projectLocalStorage = localStorage.setItem('project', JSON.stringify(duAnThuongMai));
+        console.log('localStorage.getItem(\'project\'): ', projectLocalStorage);
+
+        history.push('/projects');
         // onSubmit();
     };
 
@@ -1483,7 +1514,7 @@ const HorizontalLinearStepper = (props) => {
                 <button 
                     className="text-white bg-gray-500 stepper--btn"
                     // onClick={() => setStatusId(2)}
-                    onClick={() =>  props.onSaveTemp(duAnThuongMai)}
+                    onClick={(e) => onSaveTemp(e)}
                 >
                     Lưu nháp
                 </button>

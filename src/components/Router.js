@@ -67,8 +67,10 @@ const Router = () => {
             <Route path="/auth/signup" exact component={SignUp}></Route>
 
             <Route path="/projects" exact component={ProjectList}></Route>
-            <Route path="/projects/show/:id" exact component={ProjectShow}></Route>
-            <PrivateRoute path="/projects/edit/:id" exact component={ProjectEdit}></PrivateRoute>
+            {/* <Route path="/projects/show/:id" exact component={ProjectShow}></Route> */}
+            <Route path="/projects/show/:type/:id" exact component={ProjectShow}></Route>
+            {/* <PrivateRoute path="/projects/edit/:id" exact component={ProjectEdit}></PrivateRoute> */}
+            <PrivateRoute path="/projects/edit/:type/:id" exact component={ProjectEdit}></PrivateRoute>
             <PrivateRoute path="/projects/new" exact component={ProjectCreate}></PrivateRoute>
 
             <Route path="/groups" exact component={GroupList}></Route>
@@ -96,7 +98,7 @@ const Router = () => {
             <PrivateRoute path="/admin" exact component={Admin}></PrivateRoute>
             <PrivateRoute path="/admin/informations" exact component={AdminDashboard}></PrivateRoute>
             <PrivateRoute path="/admin/projects" exact component={AdminManageProject}></PrivateRoute>   
-            <PrivateRoute path="/admin/projects/edit/:id" exact component={AdminManageProject_Edit}></PrivateRoute>
+            <PrivateRoute path="/admin/projects/edit/:type/:id" exact component={AdminManageProject_Edit}></PrivateRoute>
             <PrivateRoute path="/admin/users" exact component={AdminManageUser}></PrivateRoute>
             <PrivateRoute path="/admin/users/new" exact component={AdminManageAddUser}></PrivateRoute>
             <PrivateRoute path="/admin/users/edit/:id" exact component={AdminManageEditUser}></PrivateRoute>

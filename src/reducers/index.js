@@ -4,6 +4,9 @@ import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
 import streamsReducer from './streamsReducer';
 import projectsReducer from './projectsReducer';
+import researcherProjectsReducer from './researcherProjectsReducer';
+import adminProjectsReducer from './adminProjectsReducer';
+import projectsDetailReducer from './projectsDetailReducer';
 import tempProjectsDetailReducer from './tempProjectsReducer';
 import levelDevelopmentReducer from './levelDevelopmentReducer';
 import transmissionMethodReducer from './transmissionMethodReducer'
@@ -29,6 +32,9 @@ export default combineReducers({
     levels: levelDevelopmentReducer,
     fields: fieldReducer,
     projects: projectsReducer,
+    researcherProjects: researcherProjectsReducer,
+    adminProjects: adminProjectsReducer,
+    projectsDetail: projectsDetailReducer,
     tempProject: tempProjectsDetailReducer,
     streams: streamsReducer,
     transmissions: transmissionMethodReducer,
@@ -47,3 +53,4 @@ export default combineReducers({
     contacts: contactReducer,
     customerContacts: customerContactReducer
 });
+

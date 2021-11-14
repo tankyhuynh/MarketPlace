@@ -4,11 +4,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { 
-    fetchProjects_Commercial,
-    fetchProjects_Researching,
-    fetchProjects_all_by_domainId
+    fetchProjects_all_by_domainId,
+    fetchProjects
 } 
-from '../../../../actions/project';
+from '../../../../actions/adminProject';
+
+import { ROLE_SUPER_ADMIN } from '../../../../environments/constraints'
 
 import Table from '../../../Table/Table-Admin';
 import { columns } from '../table-cols-all';
@@ -23,7 +24,13 @@ const AdminProjectAll = (props) => {
 
         const userDataLocalStorage = localStorage.getItem("userData");
         const user = JSON.parse(userDataLocalStorage);
-        props.fetchProjects_all_by_domainId(user.domain.id);
+
+        if(user.role.code === ROLE_SUPER_ADMIN) {
+            props.fetchProjects();
+        }
+        else {
+            props.fetchProjects_all_by_domainId(user.domain.id);
+        }
     }, [])
 
     const [editRowsModel, setEditRowsModel] = useState({});
@@ -38,7 +45,7 @@ const AdminProjectAll = (props) => {
             const action = (
                 <div className="flex">
                     <Link
-                        to={`/admin/projects/edit/${row.id}`}
+                        to={`/admin/projects/edit/${row.type}/${row.id}`}
                         className="self-center px-2 text-white rounded-lg w-28"
                         style={{ backgroundColor: 'deepskyblue' }}
                     >
@@ -68,15 +75,14 @@ const AdminProjectAll = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        projects: Object.values(state.projects)
+        projects: Object.values(state.adminProjects)
     };
 };
   
 export default connect(
     mapStateToProps,
     { 
-        // fetchProjects_Commercial,
-        // fetchProjects_Researching,
-        fetchProjects_all_by_domainId 
+        fetchProjects_all_by_domainId,
+        fetchProjects 
     }
 )(AdminProjectAll);

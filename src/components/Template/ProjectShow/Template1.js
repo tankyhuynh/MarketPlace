@@ -323,13 +323,13 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                             ? (
                                 type === TYPE_TEMPLATE_PREVIEW 
                                 ? (
-                                    project.comDevLevel.length
+                                    project.comDevLevel && project.comDevLevel.length
                                     ?   project.comDevLevel.map((projectLevel, index) => {
                                         console.log('renderContent', projectLevel);
                                             if(projectLevel.developmentLevelId === OTHER_LEVELDEVELOP_ID){
                                                 return <div key={index}>{ projectLevel.note }</div>
                                             }
-                                            else return <div key={index}>{ levels[projectLevel.developmentLevelId].name }</div>
+                                            else return <div key={index}>{ levels[projectLevel.developmentLevelId] ? levels[projectLevel.developmentLevelId].name : '' }</div>
                                         })
                                     : ''
                                 ) 
@@ -362,12 +362,12 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                                 ? (
                                     type === TYPE_TEMPLATE_PREVIEW  
                                         ? (
-                                            project.comTransMethod.length
+                                            project.comTransMethod && project.comTransMethod.length
                                             ?   project.comTransMethod.map((projectTransmission, index) => {
                                                     if(projectTransmission.transmissionMethodId === OTHER_LEVELDEVELOP_ID){
                                                         return <div key={index}>{ projectTransmission.note }</div>
                                                     }
-                                                    else return transmissions[projectTransmission.transmissionMethodId].name
+                                                    else return transmissions[projectTransmission.transmissionMethodId] ? transmissions[projectTransmission.transmissionMethodId].name : ''
                                                 })
                                             : ''
                                         ) 

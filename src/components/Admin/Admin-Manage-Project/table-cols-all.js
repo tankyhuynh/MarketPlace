@@ -32,6 +32,12 @@ const statusFormatter = ({ value }) => {
   )
 };
 
+const userFormatter = ({ value }) => { 
+  return (
+    <div>{ value ? value.fullName : '' }</div>
+  )
+};
+
 const dateFormatter = ({ value }) => { 
     return  dateFormat(value, "HH:MM, dddd, mmmm dS, yyyy") 
 };
@@ -66,6 +72,13 @@ export const columns = [
       headerName: 'Tác giả',
       width: 250,
       editable: false,
+    },
+    {
+      field: 'user',
+      headerName: 'Người gửi',
+      width: 250,
+      editable: false,
+      renderCell: userFormatter
     },
     // {
     //   field: 'commercialDevelopmentLevelList',

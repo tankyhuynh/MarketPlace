@@ -3,15 +3,15 @@ import { DataGrid } from '@material-ui/data-grid';
 
 
 
-export default function Test({columns, rows, editRowsModel, handleEditRowsModelChange, onCellEditStop}) {
+export default function Test({columns, rows, editRowsModel, handleEditRowsModelChange, onCellEditStop, pageSize}) {
 
   return (
     // <div style={{ height: 400, width: '100%', textAlign: "center" }}>
-    <div className={`w-full text-center`}>
+    <div className={`w-full text-center`} key={Math.random()}>
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={10}
+        pageSize={pageSize ? pageSize : 10}
         checkboxSelection
         disableSelectionOnClick
         editRowsModel={editRowsModel}

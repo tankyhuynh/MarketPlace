@@ -2,10 +2,9 @@ import environment from '../../../../environments/environment'
 import axios from 'axios';
 // import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
-
-
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useAlert } from 'react-alert'
 
 import { Container, TextField  } from '@mui/material';
 // import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,10 +12,14 @@ import { Container, TextField  } from '@mui/material';
 import { CKEditor } from 'ckeditor4-react';
 import { DropzoneArea } from 'material-ui-dropzone';
 
-
 import { createGroup } from '../../../../actions/researchGroup'
 import { fetchRoles } from '../../../../actions/role'
 import { fetchDomains } from '../../../../actions/domain'
+
+import {
+    STATUS_ADD_SUCCESS
+
+} from '../../../status.messsage'
 
 import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
@@ -32,8 +35,6 @@ const TYPE_COMBOBOX = 'combobox'
 const TYPE_CHECKBOX = 'checkbox'
 const TYPE_IMAGE = 'image'
 
-
-
 const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
 const removeButtons = 'PasteFromWord'
 
@@ -41,6 +42,7 @@ const removeButtons = 'PasteFromWord'
 const AddGroup = (props) => {
 
     const history = useHistory();
+    const alert = useAlert();
 
     const [value, setValue] = useState({});
 
@@ -266,6 +268,7 @@ const AddGroup = (props) => {
         console.log('onSubmitForm: ', value)
         props.createGroup(value)
         history.push('/admin/groups');
+        alert.success(STATUS_ADD_SUCCESS)
     }
 
     const onCancelForm = () => {

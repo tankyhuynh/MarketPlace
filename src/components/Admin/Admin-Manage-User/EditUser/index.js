@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import environment from '../../../../environments/environment';
-import { ROLE_ADMIN, ROLE_NNC, ROLE_USER } from '../../../../environments/constraints'
+import { ROLE_ADMIN, ROLE_NNC, ROLE_SUPER_ADMIN, ROLE_USER } from '../../../../environments/constraints'
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -69,6 +69,7 @@ const EditUser = (props) => {
             ...props.user, 
             domainId: props.user ? (props.user.domain? props.user.domain.id : 1) : 1,
             roleId: props.user ? (props.user.role ? props.user.role.id : 1 ) : 1,
+            password: props.user ? props.user.password : 1,
         } 
         : {}
     );
@@ -94,7 +95,7 @@ const EditUser = (props) => {
                                     ? (
                                         props.user.role.code === ROLE_USER ? normalUserColumn : 
                                         props.user.role.code === ROLE_NNC ? researcherColumn : 
-                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                        ( props.user.role.code === ROLE_ADMIN || props.user.role.code === ROLE_SUPER_ADMIN ) ? adminColumn : []
                                     ) 
                                     : []
                                 )
@@ -132,7 +133,7 @@ const EditUser = (props) => {
                                     ? (
                                         props.user.role.code === ROLE_USER ? normalUserColumn : 
                                         props.user.role.code === ROLE_NNC ? researcherColumn : 
-                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                        ( props.user.role.code === ROLE_ADMIN || props.user.role.code === ROLE_SUPER_ADMIN ) ? adminColumn : []
                                     ) 
                                     : []
                                 )
@@ -177,7 +178,7 @@ const EditUser = (props) => {
                                     ? (
                                         props.user.role.code === ROLE_USER ? normalUserColumn : 
                                         props.user.role.code === ROLE_NNC ? researcherColumn : 
-                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                        ( props.user.role.code === ROLE_ADMIN || props.user.role.code === ROLE_SUPER_ADMIN ) ? adminColumn : []
                                     ) 
                                     : []
                                 )
@@ -222,7 +223,7 @@ const EditUser = (props) => {
                                     ? (
                                         props.user.role.code === ROLE_USER ? normalUserColumn : 
                                         props.user.role.code === ROLE_NNC ? researcherColumn : 
-                                        props.user.role.code === ROLE_ADMIN ? adminColumn : []
+                                        ( props.user.role.code === ROLE_ADMIN || props.user.role.code === ROLE_SUPER_ADMIN ) ? adminColumn : []
                                     ) 
                                     : []
                                 )
@@ -387,7 +388,7 @@ const EditUser = (props) => {
         if(props.user.role.code === ROLE_NNC){
             onSubmit_ResearcherUser(event)
         }
-        if(props.user.role.code === ROLE_ADMIN){
+        if(props.user.role.code === ROLE_ADMIN || props.user.role.code === ROLE_SUPER_ADMIN){
             onSubmit_AdminUser(event)
         }
         else {

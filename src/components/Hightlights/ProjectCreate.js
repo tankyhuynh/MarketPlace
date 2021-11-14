@@ -110,9 +110,11 @@ class ProjectCreate extends React.Component {
         this.onSaveTemp(projectTemp)
     }
     
-
+ 
     onSaveTemp = (project) => {
         console.log('Save temp project ProjectCreate: ', project);
+        
+        // const projectLocalStorage = localStorage.getItem('project')
         // axios.post(environment.url.java + URL, project)
         // .then(response => {
         //     if (response) {

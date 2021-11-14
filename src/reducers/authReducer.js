@@ -27,13 +27,14 @@ export default (state = INITIAL_STATE, action) => {
             };
         case SIGN_OUT:
             localStorage.clear();
-            return { 
-                ...state, 
-                isSignedIn: false, 
-                userId: null,
-                fullName: null,
-                userProfile: null
-            };
+            // return { 
+            //     ...state, 
+            //     isSignedIn: false, 
+            //     userId: null,
+            //     fullName: null,
+            //     userProfile: null
+            // };
+            return {}
         default:
             return state;
     }

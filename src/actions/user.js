@@ -2,7 +2,8 @@ import user from '../apis/users';
 import userAdmin from '../apis/user_Admin';
 import userFunctionAdmin from '../apis/userFunction_Admin';
 import { 
-  USER_ADMIN_URL, 
+  USER_ID_URL, 
+  USER_ADMIN_URL,
   USER_FUNCTION_ADMIN_URL ,
   USER_RESEARCHER_URL,
   USER_NORMAL_ADMIN_URL,
@@ -16,7 +17,7 @@ import {
   FETCH_USER,
   CREATE_USER,
   EDIT_USER,
-  DELETE_USER
+  DELETE_USER,
     
 } from './types';
 
@@ -37,10 +38,12 @@ export const fetchUser = (id) => async dispatch => {
 };
 
 export const fetchUserProfileById = (id) => async dispatch => {
-  const response = await userAdmin.get(`${USER_ADMIN_URL}/id/${id}`);
-  console.log(response);
+  const response = await user.get(`${USER_ID_URL}/${id}`);
+  console.log('fetchUserProfileById: ', response.data);
 
   dispatch({ type: FETCH_USER, payload: response.data });
+  
+  return response.data;
 };
 
 export const createUser = (value) => async dispatch => {
@@ -62,7 +65,11 @@ export const editResearcherUser = (value) => async dispatch => {
   const response = await user.put(`${USER_RESEARCHER_URL}/${value.id}`, value);
   console.log('editResearcherUser:', response.data);
 
+  // localStorage.setItem('userData', JSON.stringify(response.data));
+
   dispatch({ type: EDIT_USER, payload: response.data });
+
+  return response.data;
 };
 
 export const editNormalUser_Admin = (value) => async dispatch => {

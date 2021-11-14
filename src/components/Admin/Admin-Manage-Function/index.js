@@ -1,21 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
+import { connect } from 'react-redux';
 import { useAlert } from 'react-alert'
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
 import { fetchFunctions, createFunction,  editFunction, deleteFunction } from '../../../actions/function';
 import { fetchRoles } from '../../../actions/role';
-import { connect } from 'react-redux';
 
 import FormEdit from './FormEdit'
+
+import {
+    STATUS_ADD_SUCCESS,
+    STATUS_EDIT_SUCCESS,
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL,
+
+} from '../../status.messsage'
 
 const formConfig_Add = {
     title: "Thêm chức năng",
@@ -32,7 +39,7 @@ const formConfig_Edit = {
 const AdminFunction = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
 
-    const alertUseAlert = useAlert()
+    const alert = useAlert()
 
     console.log('AdminFunction functions: ', props.functions)
 
@@ -53,14 +60,14 @@ const AdminFunction = (props) => {
         console.log('FormEdit onEdit field: ', updateValue);
         props.editFunction(updateValue)
         props.fetchFunctions()
-        alertUseAlert.show('Chỉnh sửa hoàn tất')
+        alert.success(STATUS_EDIT_SUCCESS)
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd field: ', value);
         props.createFunction(value)
         props.fetchFunctions()
-        alertUseAlert.show('Thêm hoàn tất')
+        alert.success(STATUS_ADD_SUCCESS)
     }
 
     const onBtnEditClick = async (field) => {
@@ -108,9 +115,10 @@ const AdminFunction = (props) => {
         
         if (result) {
             props.deleteFunction(field.id)
-            alertUseAlert.error('Xóa hoàn tất')
+            alert.success(STATUS_DELETE_SUCCESS)
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL)
         }
     }
 

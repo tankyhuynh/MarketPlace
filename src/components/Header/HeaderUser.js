@@ -414,7 +414,7 @@ const Header = (props) => {
           <div className={`${classes.sectionDesktop} flex gap-2`}>
               <div className="m-auto">
                   {/* { cookies["fullName"] ? cookies["fullName"] : props.currentFullName }  */}
-                  { userProfile ? userProfile.fullName : props.currentFullName}
+                  { props.userProfile ? props.userProfile.fullName : props.currentFullName}
               </div>
               <div>
                   {renderAccount()}

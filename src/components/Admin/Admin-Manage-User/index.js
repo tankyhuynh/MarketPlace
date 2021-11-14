@@ -88,6 +88,7 @@ const AdminField = (props) => {
             <div className="h-2"></div>
             <Table 
                 columns={columns} 
+                pageSize={20}
                 rows={renderRows(props.users)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 

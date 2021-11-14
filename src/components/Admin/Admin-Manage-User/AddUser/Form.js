@@ -3,14 +3,23 @@ import axios from 'axios';
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useAlert } from 'react-alert'
 
 import { Container, TextField } from '@mui/material';
 import { CKEditor } from 'ckeditor4-react';
 import { DropzoneArea } from 'material-ui-dropzone';
 
-import { createUser } from '../../../../actions/user'
+import { 
+    createUser_Admin,
+    createResearcherUser_Admin,
+    createAdminUser_Admin
+
+ } from '../../../../actions/userAdmin'
 import { fetchRoles } from '../../../../actions/role'
 import { fetchDomains } from '../../../../actions/domain'
+
+import { TYPE_ADMIN, TYPE_NNC, TYPE_USER } from '../user.type'
 
 import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
@@ -47,11 +56,14 @@ const removeButtons = 'PasteFromWord'
 
 const AddUser = (props) => {
 
+    const history = useHistory();
+    const alertUseAlert = useAlert()
+
     const [value, setValue] = useState({
         domainId: 1,
         roleId: 1,
         isEnabled: false,
-        gender: true
+        gender: 0
     });
     
     const handleChange = (field, value) => {
@@ -65,7 +77,7 @@ const AddUser = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const { columns } = props
+    const { columns, userType } = props
 
     const renderTextFields = () => {
         const usersFormat = columns
@@ -93,8 +105,11 @@ const AddUser = (props) => {
         )
     }
 
-    const handleCKEditorChange = () => {
-        console.log();
+    const handleCKEditorChange = (event) => {
+        const name = event.editor.name;
+        const data = event.editor.getData();
+        
+        handleChange(name, data)
     }
 
     const renderEditorFields = () => {
@@ -106,8 +121,8 @@ const AddUser = (props) => {
                                         <section>{ field.headerName }</section>
                                         <CKEditor 
                                             id={field.id}
-                                            name={field.fieldName}
-                                            activeClass={field.fieldName}
+                                            name={field.field}
+                                            activeClass={field.field}
                                             // initData={project ? project[field.fieldName] : ''}
                                             editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"
                                             config={{
@@ -159,7 +174,12 @@ const AddUser = (props) => {
                             .filter(field => ( field.editable && field.type === TYPE_CHECKBOX) )            
                             .map(field => {
                                 return (
-                                    <Checkbox label={field.headerName} fieldName={field.field} isChecked={false} onCheckboxChange={onCheckboxEnableChange} />
+                                    <Checkbox 
+                                        label={field.headerName} 
+                                        fieldName={field.field} 
+                                        isChecked={false} 
+                                        onCheckboxChange={onCheckboxEnableChange} 
+                                    />
                                 )
         })
     
@@ -187,7 +207,7 @@ const AddUser = (props) => {
                     const imgSrc = response.data.url;
 
                     if (response.data) {
-                        handleChange('productImage', imgSrc)
+                        handleChange('avatar', imgSrc)
                     } else {
                         return alert('failed to upload file')
                     }
@@ -261,9 +281,9 @@ const AddUser = (props) => {
         console.log('Combobox change - roleId: ', roleId)
         handleChange('roleId', roleId)
     }
-    const onGenderChange = (gender) => {
-        console.log('Combobox change - gender: ', gender)
-        handleChange('gender', gender)
+    const onGenderChange = (genderNumber) => {
+        console.log('Combobox change - gender: ', genderNumber)
+        handleChange('genderNumber', genderNumber - 1)
     }
 
     const onCheckboxEnableChange = (fieldName, checked) => {
@@ -274,7 +294,38 @@ const AddUser = (props) => {
     const onSubmitForm = (event) => {
         event.preventDefault();
         console.log('onSubmitForm: ', value)
-        // props.createUser(value)
+
+        // const ROLE_ADMIN_ID = 2
+        const ROLE_NNC_ID = 3
+        const ROLE_USER_ID = 4
+        if(userType === TYPE_ADMIN){
+            const updateValue = {...value }
+
+            console.log('onSubmitForm admin: ', updateValue)
+            props.createAdminUser_Admin(updateValue)
+
+            history.push('/admin/users')
+            alertUseAlert.success('Đã tạo admin thành công')
+        }
+        if(userType === TYPE_NNC){
+            const updateValue = {...value, roleId: ROLE_NNC_ID}
+            
+            console.log('onSubmitForm nnc: ', updateValue)
+            props.createResearcherUser_Admin(updateValue)
+            
+            history.push('/admin/users')
+            alertUseAlert.success('Đã tạo nhà nghiên cứu thành công')
+        }
+        if(userType === TYPE_USER){
+            const updateValue = {...value, roleId: ROLE_USER_ID}
+            
+            console.log('onSubmitForm user: ', updateValue)
+            props.createUser_Admin(updateValue)
+            
+            history.push('/admin/users')
+            alertUseAlert.success('Đã tạo người dùng thành công')
+        }
+        
     }
 
     const onCancelForm = () => {
@@ -347,6 +398,8 @@ const mapStateToProps = (state, ownProps) => {
     { 
         fetchRoles,
         fetchDomains,
-        createUser
+        createUser_Admin,
+        createResearcherUser_Admin,
+        createAdminUser_Admin
     }
   )(AddUser);

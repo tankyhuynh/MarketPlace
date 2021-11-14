@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
+import { connect } from 'react-redux';
+import { useAlert } from 'react-alert'
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
@@ -16,11 +18,16 @@ import {
     deleteDomain, 
 
 } from '../../../actions/domain';
-import { connect } from 'react-redux';
-import { useAlert } from 'react-alert'
-
 
 import FormEdit from './FormEdit'
+
+import {
+    STATUS_ADD_SUCCESS,
+    STATUS_EDIT_SUCCESS,
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL,
+
+} from '../../status.messsage'
 
 const formConfig_Add = {
     title: "Thêm domain",
@@ -36,7 +43,7 @@ const formConfig_Edit = {
 
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    const alertUseAlert = useAlert()
+    const alert = useAlert()
 
     useEffect(() => {
         props.fetchDomains()
@@ -52,15 +59,16 @@ const AdminField = (props) => {
     const onEdit = (value) => {
         console.log('FormEdit onEdit domain: ', value);
         props.editDomain(value)
-        alertUseAlert.show('Chỉnh sửa hoàn tất')
+
+        alert.success(STATUS_EDIT_SUCCESS)
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd domain: ', value);
         props.createDomain(value)
         props.fetchDomains()
-        alertUseAlert.show('Thêm hoàn tất')
-        // props.fetchRoles()
+
+        alert.success(STATUS_ADD_SUCCESS)
     }
 
     const onBtnEditClick = async (domain) => {
@@ -106,9 +114,10 @@ const AdminField = (props) => {
         
         if (result) {
             props.deleteDomain(field.id)
-            alertUseAlert.error('Xóa hoàn tất')
+            alert.success(STATUS_DELETE_SUCCESS)
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL)
         }
     }
 

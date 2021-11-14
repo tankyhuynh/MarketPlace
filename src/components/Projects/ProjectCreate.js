@@ -113,6 +113,9 @@ class ProjectCreate extends React.Component {
 
     onSaveTemp = (project) => {
         console.log('Save temp project ProjectCreate: ', project);
+        
+        
+
         // axios.post(environment.url.java + URL, project)
         // .then(response => {
         //     if (response) {

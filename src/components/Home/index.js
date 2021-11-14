@@ -67,7 +67,7 @@ const Home = (props) => {
             // .slice(0,3)
             .map(card => {
                 return (
-                    <Link to={`/projects/show/${card.id}`} key={card.id}>
+                    <Link to={`/projects/show/${card.type}/${card.id}`} key={card.id}>
                         <Card card={card} key={card.id} />
                     </Link>
                 );

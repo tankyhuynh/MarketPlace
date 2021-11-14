@@ -98,8 +98,8 @@ export const columns = [
   //   type: 'password'
   // },
   {
-    field: 'enable',
-    headerName: 'IsEnable',
+    field: 'isEnabled',
+    headerName: 'Kích hoạt',
     width: 300,
     editable: true,
     type: 'checkbox'

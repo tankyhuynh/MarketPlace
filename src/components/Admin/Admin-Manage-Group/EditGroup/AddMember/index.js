@@ -269,10 +269,10 @@ const EditUser = (props) => {
         setSearchMember(null)
     }
 
-    const renderListMember = () => {
-        console.log('renderListMember: ', members)
-        if(members){
-            return Object.values(members).map(member => {
+    const renderListMember = (membersList) => {
+        console.log('renderListMember: ', membersList)
+        if(membersList){
+            return Object.values(membersList).map(member => {
                  console.log('renderMember: ', member)
                 if(member){
                    if(member.userProfile){
@@ -369,7 +369,7 @@ const EditUser = (props) => {
                 </div>
 
                 <section className="mt-2">
-                    { renderListMember() }
+                    { renderListMember(members) }
                 </section>
 
                 <section className="mt-10">

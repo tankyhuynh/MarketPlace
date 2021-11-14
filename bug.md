@@ -93,13 +93,36 @@
         - Other transmissionMethod: dont get other value when render to show
     - Admin
         - levelDevelopment: tree dont rebuild exactly when add or delete
+        - Manage project:
+            - Stepper:
+                - comDevLevel + comDevTransmisstion: 
+                    - (OK) check nhưng khi submit lên chưa đỗi
+                    - other input double check thì mới chịu tắt
 
 ## Bug backend
     - Function: cannot add, update
     - User + User admin:
         - Cannot search by username
+    - Admin
+        - Group
+            - Cannot add
+    - Group:
+        - Cannot add new member
 
 ## 
     - https://ctts.ctu.edu.vn/lien-he 
 
 
+##
+    - Create seperate store for: 
+        - Researcher projects
+            - Cannot use "projects" because it may use in researcher project
+        - Amin projects by domain
+    - Admin manage user
+        - Remain
+            - Admin user
+    - Researcher
+        - Project edit: tab dont render exactly
+            
+
+    

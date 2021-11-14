@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
+import { useAlert } from 'react-alert'
+
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,6 +14,14 @@ import { fetchLevelDevelopments, createLevel, editLevel, deleteLevel } from '../
 import { connect } from 'react-redux';
 
 import FormEdit from '../FormEdit'
+
+import {
+    STATUS_ADD_SUCCESS,
+    STATUS_EDIT_SUCCESS,
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL,
+
+} from '../../../status.messsage'
 
 const formConfig_Add = {
     title: "Thêm mức độ phát triển",
@@ -28,6 +38,8 @@ const formConfig_Edit = {
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
 
+    const alert = useAlert()
+
     useEffect(() => {
         props.fetchLevelDevelopments()
     }, [])
@@ -43,12 +55,16 @@ const AdminField = (props) => {
         console.log('FormEdit onEdit level: ', value);
         props.editLevel(value)
         props.fetchLevelDevelopments()
+
+        alert.success(STATUS_EDIT_SUCCESS)
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd  level: ', value);
         props.createLevel(value)
         props.fetchLevelDevelopments()
+
+        alert.success(STATUS_ADD_SUCCESS)
     }
 
     const onBtnDeleteClick = async (field) => {
@@ -66,8 +82,10 @@ const AdminField = (props) => {
         
         if (result) {
             props.deleteLevel(field.id)
+            alert.success(STATUS_DELETE_SUCCESS)
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL)
         }
     }
 

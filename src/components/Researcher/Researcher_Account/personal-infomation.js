@@ -4,6 +4,7 @@ import _ from 'lodash'
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { CKEditor } from 'ckeditor4-react';
+import { useAlert } from 'react-alert'
 
 import { Container, TextField } from '@mui/material';
 
@@ -13,8 +14,9 @@ import { Container, TextField } from '@mui/material';
 // import avatar from '../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
 // import Editable from './TestEditables'
 
+import ChangePassword from './change-password'
 
-import { fetchUser , createUser, editResearcherUser } from '../../../actions/user'
+import { fetchUserProfileById , createUser, editResearcherUser } from '../../../actions/user'
 import { fetchRoles } from '../../../actions/role'
 import { fetchDomains } from '../../../actions/domain'
 
@@ -52,10 +54,13 @@ const genders = [
 
 const ResearcherAccount = (props) => {
 
+    const alertUseAlert = useAlert()
+
 
     const [isDisable, setDisable] = useState(true)
     // eslint-disable-next-line no-unused-vars
     const [value, setValue] = useState( props.user ? props.user : {} );
+    // const [user, setUser] = useState(props.user ? props.user : {});
     
     
     const handleChange = (field, value) => {
@@ -64,6 +69,11 @@ const ResearcherAccount = (props) => {
 
 
     useEffect(() => {
+        // props.fetchUserProfileById(props.userId)
+        //     .then(response => {
+        //         console.log('fetchUserProfileByIdresponse: ', response)
+        //         setUser(response)
+        //     })
         props.fetchDomains()
         props.fetchRoles()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +124,7 @@ const ResearcherAccount = (props) => {
                                                 id={field.field}
                                                 name={field.field}
                                                 activeClass={field.field}
-                                                // initData={project ? project[field.fieldName] : ''}
+                                                initData={props.user ? props.user[field.field] : ''}
                                                 editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"
                                                 config={{
                                                     filebrowserUploadUrl: filebrowserUploadUrl,
@@ -249,7 +259,12 @@ const ResearcherAccount = (props) => {
 
         console.log('onSubmitForm omitObject: ', omitObject)
 
-        // props.editResearcherUser(omitObject)
+        props.editResearcherUser(omitObject)
+        alertUseAlert.success('Cập nhật thành công')
+        setDisable(true)
+
+        // history.push('/')
+
     }
 
     // const onCancelForm = () => {
@@ -295,7 +310,7 @@ const ResearcherAccount = (props) => {
             <div className="grid grid-cols-12 grid-rows-1 gap-4">
      
                 <div className="flex flex-col col-span-3 border-2">
-                    <Navbar user={props.user}/>
+                    <Navbar user={props.user ? props.user : {}}/>
                 </div>
 
                 {/* <div className="col-span-9">
@@ -322,6 +337,16 @@ const ResearcherAccount = (props) => {
 
                     <div className="mt-2">
                         { renderEditorFields() }
+                    </div>
+                    
+                    <div className="mt-2">
+                        {
+                            !isDisable && <ChangePassword 
+                                            isDisable={isDisable} 
+                                            password={props.user ? props.user.password : ''}
+                                            handleChange={handleChange}
+                                        />
+                        }
                     </div>
 
                     <div className="flex justify-end gap-2 my-2">
@@ -354,7 +379,8 @@ const ResearcherAccount = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        user: state.auth.userProfile,
+        // user: state.users[state.auth.userId],
+        // userId: state.auth.userId,
         roles: Object.values(state.roles),
         domains: Object.values(state.domains),
     };
@@ -365,7 +391,8 @@ const mapStateToProps = (state, ownProps) => {
     { 
         fetchRoles,
         fetchDomains,
-        fetchUser, createUser, editResearcherUser
+        fetchUserProfileById, 
+        createUser, editResearcherUser
     }
   )(ResearcherAccount);
 

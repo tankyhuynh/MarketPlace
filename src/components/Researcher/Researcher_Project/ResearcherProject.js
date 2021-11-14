@@ -12,9 +12,14 @@ import Tab from '../../Tab/Tab'
 import CreateIcon from '@material-ui/icons/Create';
 
 import { 
-    fetchProjects_Commercial 
+    fetchProjectByUserIdAndStatusId 
 } 
-from '../../../actions/project'
+from '../../../actions/researcherProject'
+
+const STATUS_DD_PROJECT_ID = 1;
+const STATUS_CD_PROJECT_ID = 2;
+const STATUS_TC_PROJECT_ID = 3;
+const STATUS_TEMP_PROJECT_ID = 4;
 
 const ResearcherProject  = (props) => {
 
@@ -22,12 +27,36 @@ const ResearcherProject  = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [projectsPerPage] = useState(10);
 
+    // let DDProjects = props.projects.filter(project => project.status.id === STATUS_DD_PROJECT_ID);
+    // let CDProjects = props.projects.filter(project => project.status.id === STATUS_CD_PROJECT_ID);
+    // let TCProjects = props.projects.filter(project => project.status.id === STATUS_TC_PROJECT_ID);
+    // let tempProjects = props.projects.filter(project => project.status.id === STATUS_TEMP_PROJECT_ID);
+    const [DDProjects, setDDProjects] = useState([]);
+    const [CDProjects, setCDProjects] = useState([]);
+    const [TCProjects, setTCProjects] = useState([]);
+    const [tempProjects, setTempProjects] = useState([]);
+
     let userDataLocalStorage = localStorage.getItem("userData");
     let user = JSON.parse(userDataLocalStorage);
 
 
     useEffect(() => {
-        props.fetchProjects_Commercial()
+        props.fetchProjectByUserIdAndStatusId(user.id, STATUS_DD_PROJECT_ID)
+            .then(response => {
+                setDDProjects(response);
+            });
+        props.fetchProjectByUserIdAndStatusId(user.id, STATUS_CD_PROJECT_ID)
+            .then(response => {
+                setCDProjects(response);
+            });
+        props.fetchProjectByUserIdAndStatusId(user.id, STATUS_TC_PROJECT_ID)
+            .then(response => {
+                setTCProjects(response);
+            });
+        props.fetchProjectByUserIdAndStatusId(user.id, STATUS_TEMP_PROJECT_ID)
+            .then(response => {
+                setTempProjects(response);
+            });
 
     }, []);
 
@@ -73,7 +102,7 @@ const ResearcherProject  = (props) => {
     const renderProject = (projects) => {
         console.log('projects: ', projects);
         return projects
-            .filter(project => user.id === project.user.id)
+            // .filter(project => user.id === project.user.id)
             .map((project, index) => {
                 console.log('renderProjects', projects, 'id:', project.id);
                 // user.id === project.user.id
@@ -141,19 +170,20 @@ const ResearcherProject  = (props) => {
                         actions: {
                             name: 'Hành động',
                             className: 'px-6 py-4 text-sm font-medium text-right whitespace-nowrap',
-                            content: user.id === project.user.id
-                                        ? (
+                            content: 
+                                    // user.id === project.user.id
+                                    //     ? (
                                             <div className="flex justify-center mx-auto">
                                                 <Link 
-                                                    to={`/projects/edit/${project.id}`} 
+                                                    to={`/projects/edit/${project.type}/${project.id}`} 
                                                     className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:text-indigo-900"
                                                     alt="test"
                                                 >
                                                     <CreateIcon />
                                                 </Link>
                                             </div>
-                                        )
-                                        : null
+                                        // )
+                                        // : null
                         }
                     }
                 );
@@ -244,18 +274,13 @@ const ResearcherProject  = (props) => {
     // })
     // }
 
-    const DD_PROJECT_ID = 1;
-    const CD_PROJECT_ID = 2;
-    const TC_PROJECT_ID = 3;
-    const TEMP_PROJECT_ID = 4;
+    
 
     const indexOfLastPost = currentPage * projectsPerPage;
     const indexOfFirstPost = indexOfLastPost - projectsPerPage;
     const currentProjects = props.projects.slice(indexOfFirstPost, indexOfLastPost);
-    const DDProjects = props.projects.filter(project => project.status.id === DD_PROJECT_ID);
-    const CDProjects = props.projects.filter(project => project.status.id === CD_PROJECT_ID);
-    const TCProjects = props.projects.filter(project => project.status.id === TC_PROJECT_ID);
-    const tempProjects = props.projects.filter(project => project.status.id === TEMP_PROJECT_ID);
+
+    
 
     console.log('DDProjects', DDProjects.length);
     console.log('CDProjects', CDProjects.length);
@@ -446,13 +471,13 @@ const ResearcherProject  = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        projects: Object.values(state.projects)
+        projects: Object.values(state.researcherProjects)
     };
 };
   
 export default connect(
     mapStateToProps,
     { 
-        fetchProjects_Commercial  
+        fetchProjectByUserIdAndStatusId  
     }
 )(ResearcherProject);

@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
+import { useAlert } from 'react-alert'
+
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,6 +14,14 @@ import { fetchStatuses, createStatus, editStatus, deleteStatus } from '../../../
 import { connect } from 'react-redux';
 
 import FormEdit from '../FormEdit'
+
+import {
+    STATUS_ADD_SUCCESS,
+    STATUS_EDIT_SUCCESS,
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL,
+
+} from '../../../status.messsage'
 
 const formConfig_Add = {
     title: "Thêm trạng thái",
@@ -28,6 +38,8 @@ const formConfig_Edit = {
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
 
+    const alert = useAlert();
+
     useEffect(() => {
         props.fetchStatuses()
     }, [])
@@ -43,12 +55,16 @@ const AdminField = (props) => {
         console.log('FormEdit onEdit status: ', value);
         props.editStatus(value)
         props.fetchStatuses()
+        
+        alert.success(STATUS_EDIT_SUCCESS);
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd  status: ', value);
         props.createStatus(value)
         props.fetchStatuses()
+
+        alert.success(STATUS_ADD_SUCCESS);
     }
 
     const onBtnEditClick = async (status) => {
@@ -94,8 +110,10 @@ const AdminField = (props) => {
         
         if (result) {
             props.deleteStatus(field.id)
+            alert.success(STATUS_DELETE_SUCCESS);
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL);
         }
     }
 

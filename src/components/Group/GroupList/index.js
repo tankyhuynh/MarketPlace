@@ -148,11 +148,13 @@ class ProjectList extends React.Component {
             return (
                     <>
                         <Link 
+                            key={index}     
                             to={`/groups/show/${group.id}`} 
-                            className="flex flex-col md:grid items-center md:grid-cols-1 mx-6 border-gray-500 lg:grid-cols-4"
-                            key={index}
+                            // className="grid items-center md:grid-cols-1 mx-6 border-gray-500 lg:grid-cols-4"
+                            className="flex flex-col md:flex-row items-center w-4/5 mx-auto"
                         >
-                            <div className="items-center self-center col-span-1 my-4">
+                            {/* <div className="items-center self-center col-span-1 my-4"> */}
+                            <div className="items-center self-center w-1/4 my-4">
                                 <img 
                                     src={group.groupImage} 
                                     alt="random imgee" 
@@ -160,26 +162,29 @@ class ProjectList extends React.Component {
                                 />     
                             </div>  
                             
-                            <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
-                                    <div>
-                                        <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
-                                            {group.name}
-                                        </h4>
-                                    </div>
-                                
-                                    <div 
-                                        dangerouslySetInnerHTML={{ __html: group.introduction }} 
-                                        className="row-span-2 mt-1"
-
-                                    />
+                            {/* <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max"> */}
+                            <div className="md:w-3/4">
+                                <div className="grid grid-flow-row grid-cols-1 p-6 auto-rows-max">
+                                        <div>
+                                            <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
+                                                {group.name}
+                                            </h4>
+                                        </div>
                                     
-                                    <div className="mt-4 b-0">
-                                        <span className="flex flex-col italic text-teal-600">
-                                            <span className="font-semibold">
-                                                { group.author }
+                                        <div 
+                                            dangerouslySetInnerHTML={{ __html: group.introduction }} 
+                                            className="row-span-2 mt-1"
+
+                                        />
+                                        
+                                        <div className="mt-4 b-0">
+                                            <span className="flex flex-col italic text-teal-600">
+                                                <span className="font-semibold">
+                                                    { group.author }
+                                                </span>
                                             </span>
-                                        </span>
-                                    </div> 
+                                        </div> 
+                                </div>
                             </div>
                         </Link>
                         <hr/>

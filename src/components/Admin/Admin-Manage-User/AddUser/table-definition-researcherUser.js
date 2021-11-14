@@ -83,7 +83,7 @@ export const columns = [
     field: 'roleId',
     headerName: 'Vai trò',
     width: 300,
-    editable: true,
+    editable: false,
     type: 'combobox',
     data: 'roles',
     parent: 'role'
@@ -121,13 +121,13 @@ export const columns = [
     isShow: true,
     type: 'password'
   },
-  {
-    field: 'confirm_password',
-    headerName: 'Xác nhận mật khẩu',
-    width: 300,
-    editable: true,
-    type: 'password'
-  },
+  // {
+  //   field: 'confirm_password',
+  //   headerName: 'Xác nhận mật khẩu',
+  //   width: 300,
+  //   editable: true,
+  //   type: 'password'
+  // },
 
   {
     field: 'bio',
@@ -140,8 +140,8 @@ export const columns = [
   },
 
   {
-    field: 'enable',
-    headerName: 'IsEnable',
+    field: 'isEnabled',
+    headerName: 'Kích hoạt',
     width: 300,
     editable: true,
     type: 'checkbox'

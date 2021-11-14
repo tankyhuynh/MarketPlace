@@ -1,9 +1,29 @@
 import React from 'react';
 
-const ChangePassword = () => {
+import { TextField } from '@mui/material';
+
+const ChangePassword = (props) => {
+
+    const { 
+        isDisable,
+        password,
+        handleChange
+
+    } = props;
+
     return (
         <div>
-            ChangePassword
+            <TextField 
+                fluid
+                id="outlined-basic" 
+                type={'password'}
+                fullWidth={true}
+                label={'Mật khẩu'}
+                variant="outlined"
+                disabled={isDisable}
+                defaultValue={password}
+                onChange={(e) => handleChange('password', e.target.value)}
+            />
         </div>
     )
 }

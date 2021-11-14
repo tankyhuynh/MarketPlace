@@ -2,22 +2,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Confirm } from 'react-st-modal';
+import { connect } from 'react-redux';
+import {  useAlert } from 'react-alert';
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
+import {
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL
+
+} from '../../status.messsage'
+
 import { fetchGroups, createGroup, editGroup, deleteGroup } from '../../../actions/researchGroup';
-import { connect } from 'react-redux';
 
 const AdminManageGroup = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    // const alertUseAlert = useAlert()
+    const alert = useAlert()
 
     useEffect(() => {
         props.fetchGroups()
@@ -43,8 +49,10 @@ const AdminManageGroup = (props) => {
         
         if (result) {
             props.deleteGroup(field.id)
+            alert.success(STATUS_DELETE_SUCCESS)
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL)
         }
     }
    

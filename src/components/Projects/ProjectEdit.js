@@ -1,20 +1,28 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchProject } from '../../actions/project'
+import { 
+    fetchProjectDetail_Commercial,
+    fetchProjectDetail_Researching
+  
+  } from '../../actions/projectDetail'
+
 import { fetchFields } from '../../actions/field'
 import { fetchLevelDevelopments } from '../../actions/levelDevelopment'
 import { fetchTransmissionMethods } from '../../actions/transmissionMethod'
 
-
 import Stepper from '../Stepper/Stepper';
 
+const TYPE_COMMERCIAL = 'CP';
+const TYPE_RESEARCHING = 'RP';
 
-class ProjectEdit extends React.Component {
- 
+const ProjectEdit = (props) => {
+    
+    const [projectDetail, setProjectDetail] = useState(null)
 
-    steps = [
+    const steps = [
             'Thông tin chung', 
             'Thông tin về giải pháp, sản phẩm, công nghệ, thiết bị sẵn sàng chuyển giao', 
             'Xem kết quả'
@@ -63,35 +71,54 @@ class ProjectEdit extends React.Component {
     //     return null;
     // }
 
-    componentDidMount(){
-        // this.props.fetchProjectDetail(this.props.match.params.id);
-        this.props.fetchProject(this.props.match.params.id);
-        this.props.fetchLevelDevelopments();
-        this.props.fetchTransmissionMethods();
-        this.props.fetchFields();
-    }
+    useEffect(() => {
+
+        if(props.match.params.type === TYPE_COMMERCIAL){
+            props.fetchProjectDetail_Commercial(props.match.params.id)
+            .then(response => {
+                console.log('props.fetchProjectDetail_Commercial: ', response)
+                setProjectDetail(response)
+            });
+        }
+        if(props.match.params.type === TYPE_RESEARCHING){
+            props.fetchProjectDetail_Researching(props.match.params.id)
+            .then(response => {
+                console.log('props.fetchProjectDetail_Researching: ', response)
+                setProjectDetail(response)
+            });
+        }
+
+        props.fetchLevelDevelopments();
+        props.fetchTransmissionMethods();
+        props.fetchFields();
+    // eslint-disable-next-line
+    }, [])  
     
-    render() {
-        console.log('props project create: ', this.props);
-        return (
-            <>
-                <Stepper 
-                    steps={this.steps} 
-                    levels={this.props.levels}
-                    fields={this.props.fields}
-                    transmissions={this.props.transmissions}
-                    project={this.props.project}
-                    type='edit'
-                    id={this.props.match.params.id}
-                />
-            </>
-        ); 
-    }
+        
+    return (
+        <>
+            {   
+                projectDetail
+                    ? (
+                        <Stepper 
+                            steps={steps} 
+                            levels={props.levels}
+                            fields={props.fields}
+                            transmissions={props.transmissions}
+                            project={props.project}
+                            type='edit' 
+                            id={props.match.params.id}
+                        />
+                    )
+                    : null
+            }
+        </>
+    )
 };
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        project: state.projects[ownProps.match.params.id],
+        project: state.projectsDetail[ownProps.match.params.id],
         levels: Object.values(state.levels),
         fields: Object.values(state.fields),
         transmissions: Object.values(state.transmissions), 
@@ -101,7 +128,7 @@ const mapStateToProps = (state, ownProps) => {
   export default connect(
     mapStateToProps,
     { 
-        fetchProject, 
+        fetchProject, fetchProjectDetail_Commercial, fetchProjectDetail_Researching,
         fetchLevelDevelopments, 
         fetchTransmissionMethods, 
         fetchFields,

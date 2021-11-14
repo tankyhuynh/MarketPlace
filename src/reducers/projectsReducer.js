@@ -6,6 +6,7 @@ import {
     CREATE_PROJECT,
     EDIT_PROJECT,
     DELETE_PROJECT,
+    CLEAR_PROJECTS
 } from '../actions/types';
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -21,6 +22,8 @@ export default (state = {}, action) => {
             return { ...state, [action.payload.id]: action.payload } ;
         case DELETE_PROJECT:
             return _.omit(state, action.payload);
+        case CLEAR_PROJECTS:
+            return {};
         default:
             return state;
     }

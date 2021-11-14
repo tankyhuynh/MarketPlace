@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
+import { useAlert } from 'react-alert'
+
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,6 +14,14 @@ import { fetchTransmissionMethods, createTransmissionMethod, editTransmissionMet
 import { connect } from 'react-redux';
 
 import FormEdit from '../FormEdit'
+
+import {
+    STATUS_ADD_SUCCESS,
+    STATUS_EDIT_SUCCESS,
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL,
+
+} from '../../../status.messsage'
 
 const formConfig_Add = {
     title: "Thêm phương thức chuyển giao",
@@ -28,6 +38,8 @@ const formConfig_Edit = {
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
 
+    const alert = useAlert();
+
     useEffect(() => {
         props.fetchTransmissionMethods()
     }, [])
@@ -43,12 +55,16 @@ const AdminField = (props) => {
         console.log('FormEdit onEdit transmission: ', value);
         props.editTransmissionMethod(value)
         props.fetchTransmissionMethods()
+
+        alert.success(STATUS_EDIT_SUCCESS);
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd  transmission: ', value);
         props.createTransmissionMethod(value)
         props.fetchTransmissionMethods()
+
+        alert.success(STATUS_ADD_SUCCESS);
     }
 
     const onBtnEditClick = async (transmission) => {
@@ -79,22 +95,24 @@ const AdminField = (props) => {
     }
 
     const onBtnDeleteClick = async (field) => {
-        const CONSTFIRM_TITLE = 'Xác nhận' 
-        const CONSTFIRM_TEXT = `Bạn muốn xóa ''${field.name}'' ? `
-        const CONSTFIRM_OK_BUTTON_TEXT = 'Đồng ý' 
-        const CONSTFIRM_OK_CANCEL_TEXT = 'Hủy' 
+        const CONFIRM_TITLE = 'Xác nhận' 
+        const CONFIRM_TEXT = `Bạn muốn xóa ''${field.name}'' ? `
+        const CONFIRM_OK_BUTTON_TEXT = 'Đồng ý' 
+        const CONFIRM_OK_CANCEL_TEXT = 'Hủy' 
 
         const result = await Confirm(
-            CONSTFIRM_TEXT, 
-            CONSTFIRM_TITLE,
-            CONSTFIRM_OK_BUTTON_TEXT,
-            CONSTFIRM_OK_CANCEL_TEXT
+            CONFIRM_TEXT, 
+            CONFIRM_TITLE,
+            CONFIRM_OK_BUTTON_TEXT,
+            CONFIRM_OK_CANCEL_TEXT
         );
         
         if (result) {
             props.deleteTransmissionMethod(field.id)
+            alert.success(STATUS_DELETE_SUCCESS);
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL);
         }
     }
 

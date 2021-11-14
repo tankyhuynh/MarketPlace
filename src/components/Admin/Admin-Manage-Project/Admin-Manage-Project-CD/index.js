@@ -34,7 +34,7 @@ const AdminProjectAll = (props) => {
             const action = (
                 <div className="flex">
                     <Link
-                        to={`/admin/projects/edit/${row.id}`}
+                        to={`/admin/projects/edit/${row.type}/${row.id}`}
                         className="self-center px-2 text-white rounded-lg w-28"
                         style={{ backgroundColor: 'deepskyblue' }}
                     >
@@ -61,7 +61,7 @@ const AdminProjectAll = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        projects: Object.values(state.projects)
+        projects: Object.values(state.adminProjects)
     };
 };
   

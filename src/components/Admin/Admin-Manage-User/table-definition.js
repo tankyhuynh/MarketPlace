@@ -13,6 +13,13 @@ const statusFormatter = ({ value }) => {
       </div>
   )
 };
+const roleFormatter = ({ value }) => { 
+  return (
+    <div className="italic">
+      { value ? value.name : '' }
+    </div>
+  )
+};
 
 export const columns = [
   { 
@@ -26,6 +33,14 @@ export const columns = [
     width: 150,
     editable: false,
     renderCell: statusFormatter,
+    isShow: true,
+  },
+  {
+    field: 'role',
+    headerName: 'Vai trò',
+    width: 150,
+    editable: false,
+    renderCell: roleFormatter,
     isShow: true,
   },
   {

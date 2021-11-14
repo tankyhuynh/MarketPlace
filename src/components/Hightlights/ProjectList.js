@@ -7,8 +7,10 @@ import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
 import { 
-    fetchProjects_Commercial,
-    fetchProjects_Researching 
+    // fetchProjects_Commercial,
+    // fetchProjects_Researching,
+    fetchProjects_DaDuyet
+    
 } from '../../actions/project'
 
 
@@ -36,8 +38,10 @@ class ProjectList extends React.Component {
     STATUS_ID_DA_DUYET = 1;
 
     componentDidMount(){
-        this.props.fetchProjects_Commercial();
-        this.props.fetchProjects_Researching();
+        // this.props.fetchProjects_Commercial();
+        // this.props.fetchProjects_Researching();
+
+        this.props.fetchProjects_DaDuyet();
 
         const interval = setInterval(
             // set number every 5s
@@ -76,18 +80,20 @@ class ProjectList extends React.Component {
     renderLinhVuc = (projectFieldList) => {
         if(projectFieldList){
             return projectFieldList.map(field => {
-                const randomIndex = Math.floor(Math.random() * this.randomColors.length);
+                // const randomIndex = Math.floor(Math.random() * this.randomColors.length);
                 if(field.field.name.length > 30){
                     var shortField = field.field.name.substring(0, 30) + "...";
                     return (
-                        <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase rounded-full bg-${this.randomColors[randomIndex]}-500`}>
+                        // <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-white uppercase rounded-full bg-${this.randomColors[randomIndex]}-500`}>
+                        <span className={`inline-block px-2 text-xs font-semibold tracking-wide bg-blue-500 text-white uppercase rounded-full`}>
                             { shortField }
                         </span>
                     )
                 }
                 
                 return (
-                    <span className={`px-2 flex justify-center text-center self-center text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-500`}>
+                    // <span className={`px-2 flex justify-center text-center self-center text-xs font-semibold tracking-wide text-white uppercase bg-gray-400 rounded-full bg-${this.randomColors[randomIndex]}-500`}>
+                    <span className={`px-2 flex justify-center text-center self-center text-xs font-semibold tracking-wide text-white uppercase bg-blue-500 rounded-full`}>
                         {  field.field.name }
                     </span>
                 ) 
@@ -166,7 +172,7 @@ class ProjectList extends React.Component {
                             <>
                                 <Link 
                                     to={`/projects/show/${project.id}`} 
-                                    className="grid grid-cols-1 mx-6 border-b-2 border-gray-500 md:grid-cols-4"
+                                    className="grid grid-cols-1 mx-6 border-gray-500 md:grid-cols-4"
                                     key={index}
                                 >
                                     <div className="items-center self-center col-span-1 my-4">
@@ -181,7 +187,7 @@ class ProjectList extends React.Component {
                                     <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
                                             <div>
                                                 <div className="grid grid-cols-5 xl:grid-flow-col">
-                                                    <div className="flex items-baseline col-span-4 gap-2">
+                                                    <div className="flex flex-col md:flex-row self-start items-center col-span-4 gap-2">
                                                     { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
                                                         ? (
                                                             <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
@@ -224,6 +230,7 @@ class ProjectList extends React.Component {
                                             </div> 
                                     </div>
                                 </Link>
+                                <hr />
                             </>
                     );
         })
@@ -251,7 +258,8 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps, 
     { 
-        fetchProjects_Commercial,
-        fetchProjects_Researching 
+        // fetchProjects_Commercial,
+        // fetchProjects_Researching,
+        fetchProjects_DaDuyet 
     }
 )(ProjectList);

@@ -71,8 +71,15 @@ const HorizontalLinearStepper = (props) => {
     const [statusId, setStatusId] = useState(2);
 
     const [isOtherInputOpen, setOtherInputOpen] = useState({
-        comDevLevel: false,
-        comTransMethod: false,
+        comDevLevel: 
+            props.project.commercialDevelopmentLevelList 
+            ?
+                props.project.commercialDevelopmentLevelList.some(item => item.developmentLevel.id === OTHER_ID)
+            : {},
+        comTransMethod: 
+            props.project.commercialTransmissionMethodList
+            ? props.project.commercialTransmissionMethodList.some(item => item.transmissionMethod.id === OTHER_ID)
+            : {},
     })
     const [otherInputs, setOtherInputs] = useState({
         comDevLevel: {
@@ -151,34 +158,42 @@ const HorizontalLinearStepper = (props) => {
                             ? (
                                 props.project.commercialDevelopmentLevelList
                                 .map(comDevLevel => {
+                                    let selectedLevels = selectedTransmissionMethodAndLevel['comDevLevel']
+
                                     if(comDevLevel.developmentLevel.id != OTHER_ID){
-                                        return setSelectedTransmissionMethodAndLevel(previousState => (
-                                            { ...previousState,
-                                                'comDevLevel': [
-                                                    {
-                                                        'developmentLevelId': comDevLevel.developmentLevel.id,
-                                                        note: comDevLevel.developmentLevel.name
-                                                    }
-                                                ]
-                                            }
-                                        ))
-                                    }
-                                    setSelectedTransmissionMethodAndLevel(previousState => (
-                                        { ...previousState,
-                                            'comDevLevel': [
+                                            selectedLevels.push(
                                                 {
                                                     'developmentLevelId': comDevLevel.developmentLevel.id,
-                                                    note: comDevLevel.note
+                                                    note: comDevLevel.developmentLevel.name
                                                 }
-                                            ]
-                                        }
-                                    ))
-                                    setOtherInputs(previousState => ({...previousState, comDevLevel: {
-                                        name: 'Phương thức chuyển giao',
-                                        label: 'Nhập tên phương thức',
-                                        value: comDevLevel.note
-                                    }}))
-                                    return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
+                                            )
+                                            return setSelectedTransmissionMethodAndLevel(previousState => (
+                                                { ...previousState,
+                                                    'comDevLevel': selectedLevels
+                                                }
+                                            )
+                                        )
+                                    }
+
+                                    else {
+                                        selectedLevels.push(
+                                            {
+                                                'developmentLevelId': comDevLevel.developmentLevel.id,
+                                                note: comDevLevel.note 
+                                            }
+                                        )
+                                        setSelectedTransmissionMethodAndLevel(previousState => (
+                                            { ...previousState,
+                                                'comDevLevel': selectedLevels
+                                            }
+                                        ))
+                                        setOtherInputs(previousState => ({...previousState, comDevLevel: {
+                                            name: 'Phương thức chuyển giao',
+                                            label: 'Nhập tên phương thức',
+                                            value: comDevLevel.note
+                                        }}))
+                                        return setOtherInputOpen(previousState => ({...previousState, comDevLevel: true}))
+                                    }
                                 })
                             )
                             : null
@@ -203,26 +218,29 @@ const HorizontalLinearStepper = (props) => {
                             ? (
                                 props.project.commercialTransmissionMethodList
                                 .map(comTransMethod => {
+                                    let selectedTransmisstions = selectedTransmissionMethodAndLevel['comTransMethod']
+
                                     if(comTransMethod.transmissionMethod.id != OTHER_ID){
+                                        selectedTransmisstions.push({
+                                            'transmissionMethodId': comTransMethod.transmissionMethod.id,
+                                            note: comTransMethod.transmissionMethod.name
+                                        })
                                         return setSelectedTransmissionMethodAndLevel(previousState => (
                                             { ...previousState,
-                                                'comTransMethod': [
-                                                    {
-                                                        'transmissionMethodId': comTransMethod.transmissionMethod.id,
-                                                        note: comTransMethod.transmissionMethod.name
-                                                    }
-                                                ]
+                                                'comTransMethod': selectedTransmisstions
                                             }
                                         ))
                                     }
+
+                                    selectedTransmisstions.push(
+                                        {
+                                            'transmissionMethodId': comTransMethod.transmissionMethod.id,
+                                            note: comTransMethod.note
+                                        }
+                                    )
                                     setSelectedTransmissionMethodAndLevel(previousState => (
                                         { ...previousState,
-                                            'comTransMethod': [
-                                                {
-                                                    'transmissionMethodId': comTransMethod.transmissionMethod.id,
-                                                    note: comTransMethod.note
-                                                }
-                                            ]
+                                            'comTransMethod': selectedTransmisstions
                                         }
                                     ))
                                     setOtherInputs(previousState => ({...previousState, comTransMethod: {
@@ -671,10 +689,12 @@ const HorizontalLinearStepper = (props) => {
             if(id === OTHER_ID){
                 handleOtherInputStatusChange(field)
             }
-            selected.push({
-                [field_ID]: id,
-                note: ''
-            })
+            else {
+                selected.push({
+                    [field_ID]: id,
+                    note: ''
+                })
+            }
         }
 
         setSelectedTransmissionMethodAndLevel(previousState => (
@@ -695,7 +715,8 @@ const HorizontalLinearStepper = (props) => {
                         id={field} 
                         name={field}
                         checked={isOtherInputOpen[field]}   
-                        onChange={() => handleOtherInputStatusChange(field)}
+                        // onChange={() => handleOtherInputStatusChange(field)}
+                        onChange={() => handleMultipleCheckboxTransmissionChange(field, OTHER_ID)}
                     />
                     Khác    
                     { isOtherInputOpen[field] && 
@@ -798,26 +819,17 @@ const HorizontalLinearStepper = (props) => {
                                     // id={field.fieldName}
                                     checked={   
                                         field.fieldName !== 'fieldIdList'
-                                            ?  
-                                            //      (
-                                            //         selectedTransmissionMethodAndLevel[field.fieldName].filter(item => {
-                                            //             if(field.fieldName === 'comDevLevel'){
-                                            //                 return item.developmentLevelId === propsData.id
-                                            //             }
-                                            //             else return item.transmissionMethodId === propsData.id
-                                            //         }).length > 0
-                                            //     )
-                                                isCheckboxChecked(field, propsData.id)
-                                                : null
-                                            // :   selectedCheckbox[field.fieldName].includes(propsData.id)
+                                            ? isCheckboxChecked(field, propsData.id)
+                                            : isCheckboxChecked(field, OTHER_ID)
                                     } 
                                     name={field.fieldName} 
                                     value={propsData.code}
                                     onChange={ 
                                         () => 
-                                            field.fieldName !== 'fieldIdList' 
-                                            ? handleMultipleCheckboxTransmissionChange(field.fieldName, propsData.id) 
-                                            : null
+                                            // field.fieldName !== 'fieldIdList' 
+                                            // ? 
+                                            handleMultipleCheckboxTransmissionChange(field.fieldName, propsData.id) 
+                                            // : null
                                             // : handleMultipleCheckboxFieldListChange('fieldIdList', propsData.id)
                                     }
                                 />

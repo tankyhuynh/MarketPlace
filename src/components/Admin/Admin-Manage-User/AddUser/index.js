@@ -6,25 +6,25 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import Tab from '../../../Tab/Tab';
 import FormUser from './Form'
-import { columns as columnsNormalUser } from './table-definition-normalUser'
+// import { columns as columnsNormalUser } from './table-definition-normalUser'
 import { columns as columnsResearcherUser } from './table-definition-researcherUser'
 import { columns as columnsAdminUser } from './table-definition-admin'
-
+import { TYPE_ADMIN, TYPE_NNC } from '../user.type'
 
 const tabs = [
-    {
-        title: 'Người dùng bình thường',
-        content: (
-            <>
-                <FormUser columns={columnsNormalUser} />
-            </>
-        )
-    },
+    // {
+    //     title: 'Người dùng bình thường',
+    //     content: (
+    //         <>
+    //             <FormUser columns={columnsNormalUser} userType={TYPE_USER} />
+    //         </>
+    //     )
+    // },
     {
         title: 'Nhà nghiên cứu',
         content: (
             <>
-                <FormUser columns={columnsResearcherUser} />
+                <FormUser columns={columnsResearcherUser} userType={TYPE_NNC} />
             </>
         )
     },
@@ -32,7 +32,7 @@ const tabs = [
         title: 'Quản trị viên',
         content: (
             <>
-                <FormUser columns={columnsAdminUser} />
+                <FormUser columns={columnsAdminUser} userType={TYPE_ADMIN} />
             </>
         )
     },

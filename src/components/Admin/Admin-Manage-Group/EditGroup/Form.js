@@ -15,6 +15,11 @@ import { DropzoneArea } from 'material-ui-dropzone';
 
 import { editGroup } from '../../../../actions/researchGroup'
 
+import {
+    STATUS_EDIT_SUCCESS
+
+} from '../../../status.messsage'
+
 import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
 
@@ -280,7 +285,7 @@ const UpdateUser = (props) => {
         console.log('onSubmitForm: ', value)
         props.editGroup(value)
         history.push('/admin/groups')
-        alertUseAlert.show('Cập nhật hoàn tất')
+        alertUseAlert.success(STATUS_EDIT_SUCCESS)
     }
 
     const onCancelForm = () => {

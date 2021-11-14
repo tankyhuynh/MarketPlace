@@ -2,18 +2,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CustomDialog, Confirm } from 'react-st-modal';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import { connect } from 'react-redux';
+import { useAlert } from 'react-alert'
+
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+import { fetchRoles, createRole, editRole, deleteRole } from '../../../actions/role';
 
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchRoles, createRole, editRole, deleteRole } from '../../../actions/role';
-import { connect } from 'react-redux';
-import { useAlert } from 'react-alert'
-
-
 import FormEdit from './FormEdit'
+
+import {
+    STATUS_ADD_SUCCESS,
+    STATUS_EDIT_SUCCESS,
+    STATUS_DELETE_SUCCESS,
+    STATUS_DELETE_CANCEL,
+
+} from '../../status.messsage'
 
 const formConfig_Add = {
     title: "Thêm vai trò",
@@ -29,7 +37,7 @@ const formConfig_Edit = {
 
 const AdminField = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
-    const alertUseAlert = useAlert()
+    const alert = useAlert()
 
     useEffect(() => {
         props.fetchRoles()
@@ -45,14 +53,16 @@ const AdminField = (props) => {
     const onEdit = (value) => {
         console.log('FormEdit onEdit role: ', value);
         props.editRole(value)
-        alertUseAlert.show('Chỉnh sửa hoàn tất')
+
+        alert.success(STATUS_EDIT_SUCCESS)
     }
 
     const onAdd = (value) => {
         console.log('FormEdit onAdd role: ', value);
         props.createRole(value)
-        alertUseAlert.show('Thêm hoàn tất')
         props.fetchRoles()
+
+        alert.success(STATUS_ADD_SUCCESS)
     }
 
     const onBtnEditClick = async (role) => {
@@ -98,9 +108,10 @@ const AdminField = (props) => {
         
         if (result) {
             props.deleteRole(field.id)
-            alertUseAlert.error('Xóa hoàn tất')
+            alert.success(STATUS_DELETE_SUCCESS)
         } else {
         // Сonfirmation not confirmed
+            alert.info(STATUS_DELETE_CANCEL)
         }
     }
 
