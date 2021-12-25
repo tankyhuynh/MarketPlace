@@ -1,53 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-
-import { red } from '@material-ui/core/colors';
 import logoImg from '../../assets/logo.png';
 import Grid from '@material-ui/core/Grid';
 
-// import logo_dhktqd from '../../assets/logo_dhktqd.jpg';
-// import logo_dhvh from '../../assets/logo_dhvh.png';
-// import logo_hcmute from '../../assets/logo_hcmute.png';
-// import productImg from '../../assets/iTRAK-contain-500x240.jpg';
-// import Card from "@material-tailwind/react/Card";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // minHeight: 345,
-    height: 380,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  image: {
-    // width: 500,
-    height: 500,
-  },
-  img: {
-    margin: 'auto',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },
-}));
-
 export default function RecipeReviewCard({ image }) {
-  const classes = useStyles();
 
   // const organizationsName = ["Đại học Cần Thơ", "Đại học Kinh tế quốc dân", "Đại học v"]
   // const logoList = [logoImg, logo_dhktqd, logo_dhvh, logo_hcmute];
@@ -75,11 +31,18 @@ export default function RecipeReviewCard({ image }) {
                          This impressive paella is a perfect party dish and a fun meal to cook together with your
                          guests. Add 1 cup of frozen peas along with the mussels, if you like.
                      </div>
-                        <CardMedia
+                        {/* <CardMedia
                           className={`${classes.media}`}
                           image={logoImg}
                           title="Paella dish"
-                        />
+                        /> */}
+                        <div className="items-center self-center col-span-1 my-4">
+                            <img 
+                                src={logoImg} 
+                                alt="random imgee" 
+                                className="object-cover object-center w-full my-2 rounded-lg max-h-64" 
+                            />     
+                        </div>  
                  </div>
             </CardContent>
           

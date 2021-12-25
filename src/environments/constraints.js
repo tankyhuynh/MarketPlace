@@ -27,7 +27,7 @@ module.exports = {
    STATUS_URL : '/statuses',
    STATUS_ADMIN_URL : '/admin/statuses',
    FUNCTIONS_URL : '/admin/functions',
-   DOMAINS_URL : '/admin/domains',
+   DOMAINS_ADMIN_URL : '/admin/domains',
    ROLES_URL : '/roles',
    ROLES_ADMIN_URL : '/admin/roles',
    ROLE_OF_GROUP_ADMIN_URL : '/admin/role-of-groups',
@@ -40,6 +40,7 @@ module.exports = {
    USER_ADMIN_URL : '/admin/users',
    USER_ID_URL : '/users/id',
    USER_FUNCTION_ADMIN_URL : '/admin/userFunctions',
+   RESEARCH_GROUP_URL : '/research-groups',
    RESEARCH_GROUP_ADMIN_URL : '/admin/research-groups',
    RESEARCH_GROUP_DETAIL_ADMIN_URL : '/admin/group-details',
    FAQ_URL : '/faqs',
@@ -48,5 +49,6 @@ module.exports = {
    CONTACT_ADMIN_URL : '/admin/contacts',
    CUSTOMER_CONTACT_URL : '/customer-contacts',
    CUSTOMER_CONTACT_ADMIN_URL : '/admin/customer-contacts',
+   ABOUT_URL : '/about-pages',
    ABOUT_ADMIN_URL : '/admin/about-pages',
 } 

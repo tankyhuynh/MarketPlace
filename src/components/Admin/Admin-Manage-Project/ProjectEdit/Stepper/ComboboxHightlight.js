@@ -32,7 +32,7 @@ const ComboboxCustom = (props) => {
 
     return (
         <>
-            <FormControl>
+            <FormControl fullWidth>
                 <InputLabel id="select-category">{ props.label }</InputLabel>
                 <Select
                     labelId="select-category"

@@ -65,7 +65,7 @@ export const columns = [
   },
   {
     field: 'bio',
-    headerName: 'Bio',
+    headerName: 'Tiểu sử',
     width: 150,
     editable: true,
     isShow: true,

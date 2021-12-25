@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { withAlert } from 'react-alert'
 
 import { login } from '../../../actions/auth';
-import { loaded } from '../../../actions/loading';
+import { loaded } from '../../../actions/load';
 
 class SignIn extends React.Component {
 
@@ -146,10 +146,10 @@ const validate = formValues => {
     const errors = {};
 
     if (!formValues.username) {
-        errors.username = 'You must enter a username'
+        errors.username = 'Tên đăng nhập không được để trống'
     }
     if (!formValues.password) {
-        errors.password = 'You must enter a password'
+        errors.password = 'Mật khẩu không được để trống'
     }
 
     return errors;

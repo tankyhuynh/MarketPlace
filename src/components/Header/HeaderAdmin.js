@@ -1,32 +1,32 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import './Header.css'
-import { ROLE_ADMIN, ROLE_NNC } from '../../environments/constraints';
+import { ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_NNC } from '../../environments/constraints';
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { useCookies } from 'react-cookie';
-
-import { signOut } from '../../actions/auth';
-
 import { alpha, makeStyles } from '@material-ui/core/styles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-// import Menu from '@material-ui/core/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-// import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-// import HomeIcon from '@material-ui/icons/Home';
-// import AndroidIcon from '@material-ui/icons/Android';
-// import GroupIcon from '@material-ui/icons/Group';
-// import Brightness7Icon from '@material-ui/icons/Brightness7';
-// import LiveHelpIcon from '@material-ui/icons/LiveHelp';
-// import AnnouncementIcon from '@material-ui/icons/Announcement';
+import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
+import AppsIcon from '@material-ui/icons/Apps';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import DnsIcon from '@mui/icons-material/Dns';
+import FunctionsIcon from '@mui/icons-material/Functions';
+import ImagesearchRollerIcon from '@mui/icons-material/ImagesearchRoller';
+import PreviewIcon from '@mui/icons-material/Preview';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
+import { signOut } from '../../actions/auth';
+
+import logo from '../../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -89,24 +89,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
   console.log(props);
-  // const [cookies, setCookie, removeCookie] = useCookies(['fullName', 'roleCode']);
-  // if(props.currentFullName){
-  //   setCookie('fullName', props.currentFullName, { path: '/' });
-  // }
-  // if(props.currentRoleCode){
-  //   setCookie('roleCode', props.currentRoleCode, { path: '/' });
-  // }
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [roleCode, setRoleCode] = useState(null);
+
   let userDataLocalStorage = localStorage.getItem("userData");
   let user = JSON.parse(userDataLocalStorage);
   let userProfile = user ? user : undefined
 
   useEffect(() => {
     if(props.userProfile){
+      console.log('roleCode', roleCode)
       setRoleCode(props.userProfile.role.code)
     }
     userDataLocalStorage = localStorage.getItem("userData");
@@ -114,141 +110,124 @@ const Header = (props) => {
     userProfile = user ? user : undefined
   }, [userDataLocalStorage])
 
-  // const links = [
-  //   {
-  //     path: '/',
-  //     name: 'Trang chủ',
-  //     icon: <HomeIcon />
-  //   },
-  //   {
-  //     path: '/projects',
-  //     name: 'Dự án',
-  //     icon: <AndroidIcon />
-  //   },
-  //   {
-  //     path: '/organizations',
-  //     name: 'Nhóm nghiên cứu',
-  //     icon: <GroupIcon /> 
-  //   },
-  //   {
-  //     path: '/hightlights',
-  //     name: 'Nổi bật',
-  //     icon: <Brightness7Icon />
-  //   },
-  //   {
-  //     path: '/faq',
-  //     name: 'FAQ',
-  //     icon: <LiveHelpIcon />
-  //   },
-  //   {
-  //     path: '/contact',
-  //     name: 'Liên hệ',
-  //     icon: <PermContactCalendarIcon />
-  //   },
-  //   {
-  //     path: '/introduction',
-  //     name: 'Giới thiệu',
-  //     icon: <AnnouncementIcon />
-  //   },
-  // ]
+const links = [
+    {
+        className: 'nav-item-admin-header',
+        icon: <HomeIcon />,
+        name: 'Quản lý thông tin',
+        path: '/informations',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <AppsIcon />,
+        name: 'Quản lý dự án',
+        path: '/projects',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <InfoIcon />,
+        name: 'Quản lý người dùng',
+        path: '/users',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <ImagesearchRollerIcon />,
+        name: 'Quản lý vai trò',
+        path: '/roles',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <DnsIcon />,
+        name: 'Quản lý domain',
+        path: '/domains',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <FunctionsIcon />,
+        name: 'Quản lý chức năng',
+        path: '/functions',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <SettingsIcon />,
+        name: 'Quản lý nhóm nghiên cứu',
+        path: '/groups',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <LiveHelpIcon />,
+        name: 'Quản lý FAQ',
+        path: '/faqs',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <VpnKeyIcon />,
+        name: 'Quản lý liên hệ',
+        path: '/contacts',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <AppsIcon />,
+        name: 'Quản lý dự án',
+        path: '/projects',
+    },
+    {
+        className: 'nav-item-admin-header',
+        icon: <PreviewIcon />,
+        name: 'Quản lý giới thiệu',
+        path: '/abouts',
+    }
+]
 
-  // const renderLinks = (links, mode, className) => {
-  //   return links.map((link, index) => {
-  //     if(mode === 'web'){
-  //       return (
-  //         <Link to={link.path} className={`header--link ${className}`} key={index}>
-  //           {link.name}
-  //         </Link>
-  //       )
-  //     }
-  //     return (
-  //       <Link to={link.path} className={`header--link ${className}`} key={index}>
-  //         {link.icon}
-  //         {link.name}
-  //       </Link>
-  //     )
-  //   })
-  // }
+  const renderLinks = (links, mode, className) => {
+    return links.map((link, index) => {
+      if(mode === 'web'){
+        return (
+          <Link to={`/admin${link.path}`} className={`header--link_admin ${link.className}`} key={index}>
+            {link.name}
+          </Link>
+        )
+      }
+      return (
+        <Link to={`/admin${link.path}`} className={`header--link_admin ${link.className}`} key={index}>
+          <section>
+              {link.icon}
+          </section>
+          <section>
+              {link.name}
+          </section>
+        </Link>
+      )
+    })
+  }
 
-  // const renderUserOptionsWeb = (className) => {
-  //   return (
-  //       <>
-  //         {renderLinks(links, 'web', className)}
-  //       </>
-  //   )
-  // }
-  // const renderUserOptionsMobile = (className) => {
-  //   return (
-  //       <>
-  //         {renderLinks(links, 'mobile', className)}
-  //       </>
-  //   )
-  // }
-  // const renderResearcherOptionsWeb = (className) => {
-  //   return (
-  //       <>
-  //           { renderUserOptionsWeb(className) }
-  //       </>
-  //   )
-  // }
+  const renderUserOptionsMobile = (className) => {
+    return (
+        <>
+          {renderLinks(links, 'mobile', className)}
+        </>
+    )
+  }
 
-  // const renderAdminOptionsWeb = (className) => {
-  //   return (
-  //       <>
-  //           { renderUserOptionsWeb(className) }
-  //       </>
-  //   )
-  // }
+  const renderOptions = (mode, className) => {
+    if(!props.isSignedIn){
+      return renderUserOptionsMobile(className);
+    } 
+  }
 
-  // const renderResearcherOptionsMobile = (className) => {
-  //   return (
-  //       <>
-  //           { renderUserOptionsMobile(className) }
-  //           {/* <Link to="/researchers" className={`header--link ${className}`}>
-  //               <AppsIcon />
-  //               Menu chức năng
-  //           </Link> */}
-  //       </>
-  //   )
-  // }
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
 
-  // const renderOptions = (mode, className) => {
-  //   if(!props.isSignedIn){
-  //     if(mode === 'web'){
-  //       return renderUserOptionsWeb(className);
-  //     }
-  //     return renderUserOptionsMobile(className);
-  //   } 
-    
-  //   if(roleCode === ROLE_NNC || roleCode === ROLE_ADMIN){
-  //       if(mode === 'web'){
-  //         if(roleCode === ROLE_NNC){
-  //           return renderResearcherOptionsWeb(className)
-  //         }
-  //         return renderAdminOptionsWeb(className)
-  //       }
-  //       return renderResearcherOptionsMobile(className)
-  //   }
-  //   if(roleCode === ROLE_OTHER){
-  //       if(mode === 'web'){
-  //         return renderUserOptionsWeb(className)
-  //       }
-  //       return renderUserOptionsMobile(className)
-  //   }
-  // }
-
-  // const handleMobileMenuClose = () => {
-  //   setMobileMoreAnchorEl(null);
-  // };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
 
   const renderAccount = () => {
 
@@ -257,7 +236,7 @@ const Header = (props) => {
       if(userProfile.role.code === ROLE_NNC){
         link = '/researchers';
       }
-      if(userProfile.role.code === ROLE_ADMIN ){
+      if(userProfile.role.code === ROLE_ADMIN || userProfile.role.code === ROLE_SUPER_ADMIN ){
         link = '/admin';
       }
 
@@ -284,12 +263,9 @@ const Header = (props) => {
   }
 
   const renderUserProfile = () =>{
-    // console.log('cookieFullName',props.cookieFullName)
     return (
       <>
-        {/* <GoogleAuth /> */}
         {
-          // cookies["fullName"]
           userProfile
           ? (
               <div className="flex flex-col items-center gap-2 lg:flex-row">
@@ -308,138 +284,77 @@ const Header = (props) => {
     )
   }
 
-  // const renderAccountMenu = () => {
-  //   if(props.isSignedIn){
-  //     return (
-  //       <>
-  //         <div className="flex flex-col gap-4 p-2">
-  //           { renderOptions('web', 'header--btn') }
-  //           <button 
-  //               className="header--link header--btn"
-  //               onClick={() => onLogOut()}  
-  //             >
-  //               <ForwardIcon />
-  //               Đăng xuất
-  //           </button>
-  //           <button 
-  //               className="header--link header--btn"
-  //               onClick={() => onLogOut()}  
-  //             >
-  //               <AccountCircle />
-  //               Profile
-  //           </button>
 
-  //         </div>
-  //       </>
-  //     );
-  //   }
-  // };
-  // const renderAccountMenuMobile = () => {
-  //   if(props.isSignedIn){
-  //     return (
-  //       <>
-  //         <div className="flex flex-col gap-4 p-2">
-  //           { renderOptions('mobile', 'header--btn') }
-  //           <button 
-  //               className="header--link header--btn"
-  //               onClick={() => onLogOut()}  
-  //             >
-  //               <ForwardIcon />
-  //               Đăng xuất
-  //           </button>
-  //           <button 
-  //               className="header--link header--btn"
-  //               onClick={() => onLogOut()}  
-  //             >
-  //               <AccountCircle />
-  //               Profile
-  //           </button>
-
-  //         </div>
-  //       </>
-  //     );
-  //   }
-  // };
+  const renderAccountMenuMobile = () => {
+    if(props.isSignedIn || userProfile){
+      return (
+        <div className="flex flex-col gap-2">
+            { renderLinks(links, 'mobile', 'header--link_admin-mobile') }
+        </div>
+      );
+    }
+  };
 
   const menuId = 'primary-search-account-menu';
-  // const renderMenu = (
-  //   <Menu
-  //     anchorEl={anchorEl}
-  //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     id={menuId}
-  //     keepMounted
-  //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     open={isMenuOpen}
-  //     onClose={handleMenuClose}
-  //   >
-  //     {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
-  //     {/* <MenuItem onClick={handleMenuClose}>Sign In</MenuItem> */}
-  //     {/* <Link className="mx-4" to="/auth/signin">Sign In</Link> */}
-
-  //     {renderAccountMenuMobile()}
-  //   </Menu>
-  // );
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      {renderAccountMenuMobile()}
+    </Menu>
+  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  // const renderMobileMenu = (
-  //   <Menu
-  //     anchorEl={mobileMoreAnchorEl}
-  //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     id={mobileMenuId}
-  //     keepMounted
-  //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     open={isMobileMenuOpen}
-  //     onClose={handleMobileMenuClose}
-  //   >
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
       
-  //     {renderAccountMenuMobile()}
+      {renderAccountMenuMobile()}
 
-  //   </Menu>
-  // );
-
-  
-
-  
+    </Menu>
+  );
 
   return (
-    <div className={`${classes.grow} debug-screens`}>
+    <div className={`${classes.grow}`}>
+     
       <AppBar position="static" className={`${classes.headerBackground}`}>
+        
         <Toolbar>
-          {/* <Link 
-              to="/"
-              className="flex items-center"
-          >
-            <img 
-              className="w-16" 
-              src={logo}
-              alt="logo"
-            />
-            <div className="header--title">
-              ctu market place
-            </div>
-          </Link> */}
-          
           {/* divide header with left and right  */}
+          <Link 
+                  to="/"
+                  className="flex lg:hidden items-center"
+              >
+                  <img 
+                    className="w-16" 
+                    src={logo}
+                    alt="logo"
+                  />
+                  <div className="header--title">
+                    ctu market place
+                  </div>
+          </Link>
+
           <div className={classes.grow} />
-
-          {/* <div className={`${classes.search} space-x-16 h-10 md:mr-4 flex`}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Bạn muốn tìm kiếm gì...?"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
-
+          
           <div className={`${classes.sectionDesktop} flex gap-2`}>
+             
               <div className="m-auto">
                   {/* { cookies["fullName"] ? cookies["fullName"] : props.currentFullName }  */}
-                  { userProfile ? userProfile.fullName : props.currentFullName}
+                  { props.userProfile ? props.userProfile.fullName : props.currentFullName}
               </div>
               <div>
                   {renderAccount()}
@@ -449,7 +364,8 @@ const Header = (props) => {
               </div>
              
           </div>
-          <div className={classes.sectionMobile}>
+          
+          <div className={`${classes.sectionMobile}`}>
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
@@ -457,15 +373,17 @@ const Header = (props) => {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
+                
               <MoreIcon />
+
             </IconButton>
           </div>
         </Toolbar>
       </AppBar>
       
-      {/* <hr className="h-1" />
+      <hr className="h-1" />
 
-          <section className={`${classes.headerBackground} ${classes.header} invisible md:visible`}>
+          <section className={`${classes.headerBackground} ${classes.header} hidden`}>
               <div className={`flex gap-2 md:gap-6 text-white px-4 md:px-8`}>
                   {renderOptions('web')}
               </div>
@@ -473,7 +391,7 @@ const Header = (props) => {
      
 
       {renderMobileMenu}
-      {renderMenu} */}
+      {renderMenu}
       
     </div>
   );  

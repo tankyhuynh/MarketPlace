@@ -131,7 +131,7 @@ const AdminManageGroup = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        customerContacts:  Object.values(state.customerContacts),
+        customerContacts:  Object.values(state.adminCustomerContacts),
     };
 }
 

@@ -45,7 +45,7 @@ const Slide = ({ slide, organizations }) => {
 
     return (
         <Link 
-            to={`/projects/show/${slide.type}/${slide.id}`} 
+            to={`/projects/show/${slide.type}/${slide.id}/${slide.code}`} 
             className="bg-green-500"
         >
             <Card 

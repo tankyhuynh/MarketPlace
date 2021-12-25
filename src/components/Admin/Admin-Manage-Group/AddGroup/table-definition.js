@@ -31,6 +31,14 @@ export const columns = [
     type: 'text'
   },
   {
+    field: 'shortDescription',
+    headerName: 'Mô tả ngắn',
+    width: 300,
+    editable: true,
+    isShow: true,
+    type: 'textarea'
+  },
+  {
     field: 'introduction',
     headerName: 'Giới thiệu',
     width: 300,

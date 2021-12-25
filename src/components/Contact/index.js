@@ -88,7 +88,7 @@ const Contact = (props) => {
     const onSubmit = (value) => {
         console.log('FormEdit onSubmit contact: ', value);
         props.createContact(value)
-        alertUseAlert.show('Thêm hoàn tất')
+        alertUseAlert.show('Đã gửi liên hệ thành công!')
     }
  
     return (

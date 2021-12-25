@@ -32,6 +32,11 @@ const statusFormatter = ({ value }) => {
   )
 };
 
+const hightlightFormatter = ({ value }) => { 
+  return value
+};
+
+
 const userFormatter = ({ value }) => { 
   return (
     <div>{ value ? value.fullName : '' }</div>
@@ -54,6 +59,20 @@ export const columns = [
       headerName: 'ID', 
       width: 90 
     }, 
+    {
+      field: 'hightlightAndNumber',
+      headerName: ' ',
+      width: 150,
+      editable: false,
+      renderCell: hightlightFormatter
+    },
+    // {
+    //   field: 'number',
+    //   headerName: ' ',
+    //   width: 70,
+    //   editable: false,
+    //   renderCell: numberFormatter
+    // },
     {
       field: 'name',
       headerName: 'Tên dự án',

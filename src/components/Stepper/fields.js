@@ -138,13 +138,13 @@ export const fields = {
                 type: 'textarea',
                 isRequired: true
             },
-            fieldIdList: {
-                id: 'fieldIdList',
-                label: 'Lĩnh vực',
-                fieldName: 'fieldIdList',
-                type: 'checkboxTreeView',
-                isRequired: true
-            },
+            // fieldIdList: {
+            //     id: 'fieldIdList',
+            //     label: 'Lĩnh vực',
+            //     fieldName: 'fieldIdList',
+            //     type: 'checkboxTreeView',
+            //     isRequired: true
+            // },
             challenge: {
                 id: 'challenge',
                 label: 'Mô tả thách thức',

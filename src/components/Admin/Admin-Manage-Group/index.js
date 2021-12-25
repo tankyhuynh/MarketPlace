@@ -19,7 +19,7 @@ import {
 
 } from '../../status.messsage'
 
-import { fetchGroups, createGroup, editGroup, deleteGroup } from '../../../actions/researchGroup';
+import { fetchGroups, createGroup, editGroup, deleteGroup } from '../../../actions/researchGroup_Admin';
 
 const AdminManageGroup = (props) => {
     const [editRowsModel, setEditRowsModel] = useState({});
@@ -105,7 +105,7 @@ const AdminManageGroup = (props) => {
             <div className="h-2"></div>
             <Table 
                 columns={columns} 
-                rows={renderRows(props.researchGroups)}
+                rows={renderRows(props.adminResearchGroups)}
                 editRowsModel={editRowsModel}
                 handleEditRowsModelChange={handleEditRowsModelChange} 
             />
@@ -115,7 +115,7 @@ const AdminManageGroup = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        researchGroups:  Object.values(state.researchGroups),
+        adminResearchGroups:  Object.values(state.adminResearchGroups),
     };
 }
 

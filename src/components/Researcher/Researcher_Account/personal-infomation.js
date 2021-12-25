@@ -8,31 +8,19 @@ import { useAlert } from 'react-alert'
 
 import { Container, TextField } from '@mui/material';
 
-// import { Link } from 'react-router-dom'
-// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import Avatar from '@mui/material/Avatar';
-// import avatar from '../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
-// import Editable from './TestEditables'
-
 import ChangePassword from './change-password'
 
 import { fetchUserProfileById , createUser, editResearcherUser } from '../../../actions/user'
-import { fetchRoles } from '../../../actions/role'
-import { fetchDomains } from '../../../actions/domain'
+import { fetchDomains } from '../../../actions/domainAdmin'
 
 import { columns } from './table-definition'
 import Combobox from './Combobox'
 import Navbar from './Navbar'
-// import Checkbox from './Checkcbox'
-
-
 
 const TYPE_TEXT = 'text'
 const TYPE_DATE = 'date'
 const TYPE_EDITOR = 'editor'
-const TYPE_PASSWORD = 'password'
 const TYPE_COMBOBOX = 'combobox'
-// const TYPE_CHECKBOX = 'checkbox'
 
 const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
 const removeButtons = 'PasteFromWord'
@@ -56,26 +44,17 @@ const ResearcherAccount = (props) => {
 
     const alertUseAlert = useAlert()
 
-
     const [isDisable, setDisable] = useState(true)
     // eslint-disable-next-line no-unused-vars
     const [value, setValue] = useState( props.user ? props.user : {} );
-    // const [user, setUser] = useState(props.user ? props.user : {});
-    
+    const [enableEditPassword, setEnableEditPassword] = useState(false)
     
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
     }   
 
-
     useEffect(() => {
-        // props.fetchUserProfileById(props.userId)
-        //     .then(response => {
-        //         console.log('fetchUserProfileByIdresponse: ', response)
-        //         setUser(response)
-        //     })
         props.fetchDomains()
-        props.fetchRoles()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -139,42 +118,14 @@ const ResearcherAccount = (props) => {
                                 }
                                 return (
                                         <div 
-                                            className="mt-6"
                                             dangerouslySetInnerHTML={{ __html: props.user ? props.user[field.field] : '' }} 
                                         />
                                 )
-                                
-        })
-    
+                            })
         return (
             <>
                 { usersFormat }
             </>
-        )
-    }
-
-    const renderPasswordFields = () => {
-        const usersFormat = columns
-                            .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
-                            .map(field => {
-                                return (
-                                    <TextField 
-                                        id="outlined-basic" 
-                                        label={field ? field.headerName : ''} 
-                                        variant="outlined"
-                                        fullWidth
-                                        className="w-full"
-                                        type={field.type}
-                                        // defaultValue={initialValue ? initialValue[field.field] : ''}
-                                        onChange={(e) => handleChange(field.field, e.target.value)}
-                                    />
-                                )
-        })
-    
-        return (
-            <div className="flex flex-col gap-4">
-                { usersFormat }
-            </div>
         )
     }
 
@@ -187,29 +138,22 @@ const ResearcherAccount = (props) => {
                                         <Combobox 
                                             label={field.headerName} 
                                             data={genders ? genders : []} 
+                                            disabled={isDisable ? isDisable : false}
                                             selectedIndex={ props.user ? props.user.gender : 1 } 
                                             onChecked={onGenderChange} 
                                         />
                                     )
                                }
                                else {
-                                   if(!isDisable){
-                                        return (
-                                            <Combobox 
-                                                label={field.headerName} 
-                                                data={props[field.data]} 
-                                                disabled={true}
-                                                // selectedIndex={1} 
-                                                selectedIndex={props.user ? (props.user[field.field] ? props.user[field.field].id : 1) : 1} 
-                                                onChecked={field.field === 'domain' ? onDomainChange : onRoleChange} 
-                                            />
-                                        )
-                                   }
-                                   return (
-                                       <div>
-                                          {props.user ? (props.user[field.field] ? props.user[field.field].name : '') : ''} 
-                                       </div>
-                                   )
+                                    return (
+                                        <Combobox 
+                                            label={field.headerName} 
+                                            data={props[field.data]} 
+                                            disabled={isDisable ? isDisable : false}
+                                            selectedIndex={props.user ? (props.user[field.field] ? props.user[field.field].id : 1) : 1} 
+                                            onChecked={field.field === 'domain' ? onDomainChange : onRoleChange} 
+                                        />
+                                    )
                                }
         })
     
@@ -233,17 +177,9 @@ const ResearcherAccount = (props) => {
         handleChange('gender', genderNumber - 1)
     }
 
-    // const onCheckboxEnableChange = (checked) => {
-    //     handleChange('isEnabled', checked)
-    // }
-    // const onCheckboxUserFunctionChange = (checked) => {
-    //     handleChange('userFunctiions', checked)
-    // }
-
     const onDisableStatusChange = (event) => {
         event.preventDefault();
         setDisable(!isDisable)
-
     }
 
     const onSubmitForm = (event) => {
@@ -251,7 +187,6 @@ const ResearcherAccount = (props) => {
         console.log('onSubmitForm: ', value)
 
         const updateValue = {...value, 
-            domainId: value.domain ? value.domain.id : null,
             roleId: value.role ? value.role.id : null,
         }
         // _.unset(updateValue, 'role')
@@ -262,46 +197,35 @@ const ResearcherAccount = (props) => {
         props.editResearcherUser(omitObject)
         alertUseAlert.success('Cập nhật thành công')
         setDisable(true)
-
-        // history.push('/')
-
+        setEnableEditPassword(false)
     }
 
-    // const onCancelForm = () => {
-    //     console.log(value)
-    // }
-
-    // const renderCheckboxUserFunctions = () => {
-    //     const userFunctionList 
-    //         = props.user ? (
-    //             props.user.userFunctionList
-    //                 .map(userFunction => {
-    //                     return (
-    //                         <Checkbox 
-    //                             label={userFunction.function.description} 
-    //                             isChecked={true} 
-    //                             onCheckboxChange={(checked) => onCheckboxUserFunctionChange(checked)}
-    //                         />
-    //                     )
-    //                 })
-    //     )
-    //     : null 
-    
-    //     return (
-    //         <div className="flex flex-col gap-4">
-    //             { userFunctionList }
-    //         </div>
-    //     )
-    // }
-
-    // const { fullName } = props.user
+    const renderChangePassword = () => {
+        if(enableEditPassword){
+            return (
+                <ChangePassword 
+                    // isDisable={!enableEditPassword} 
+                    // password={props.user ? props.user.password : ''}
+                    handleChange={handleChange}
+                />
+            )
+        }
+        if(!isDisable){
+            return (
+                <button
+                    onClick={() => setEnableEditPassword(!enableEditPassword)}
+                    className={`px-4 py-2 rounded-xl ${enableEditPassword ? 'bg-gray-500' : 'bg-green-500'} text-white`}
+                >
+                    Thay đổi mật khẩu
+                </button>
+            )
+        }
+        return null
+    }
 
     return (
 
         <>
-            {/* <Link to={'/admin/users'}>
-                <ArrowBackIcon />
-            </Link> */}
             <Container 
                 maxWidth="lg"
                 className="flex gap-4 p-2 mt-4"
@@ -313,39 +237,27 @@ const ResearcherAccount = (props) => {
                     <Navbar user={props.user ? props.user : {}}/>
                 </div>
 
-                {/* <div className="col-span-9">
-                    <Editable />
-                </div> */}
-
-                <div className="col-span-9"> 
+                <div className="col-span-9 flex flex-col gap-4"> 
                     
                     <div className="col-span-9 mb-4 text-3xl font-bold text-left">
                         Thông tin cá nhân
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mt-2">
+                    <div className="grid grid-cols-2 gap-4">
                         { renderTextFields() }
                     </div>
                     
-                    <div className="mt-2">
-                        { renderPasswordFields() }
-                    </div>
-                    
-                    <div className="flex flex-col gap-4 mt-4">
+                    <div className="flex flex-col">
                         { renderComboboxFields() }
                     </div>
 
-                    <div className="mt-2">
+                    <div>
                         { renderEditorFields() }
                     </div>
                     
-                    <div className="mt-2">
+                    <div>
                         {
-                            !isDisable && <ChangePassword 
-                                            isDisable={isDisable} 
-                                            password={props.user ? props.user.password : ''}
-                                            handleChange={handleChange}
-                                        />
+                           renderChangePassword()
                         }
                     </div>
 
@@ -381,15 +293,13 @@ const mapStateToProps = (state, ownProps) => {
     return { 
         // user: state.users[state.auth.userId],
         // userId: state.auth.userId,
-        roles: Object.values(state.roles),
-        domains: Object.values(state.domains),
+        domains: Object.values(state.adminDomains),
     };
   };
   
   export default connect(
     mapStateToProps,
     { 
-        fetchRoles,
         fetchDomains,
         fetchUserProfileById, 
         createUser, editResearcherUser

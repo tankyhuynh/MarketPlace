@@ -98,7 +98,7 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
                         onInput={(e) => onSubmit(e, e.target.value)}
                         type="text"
                         id="header-search"
-                        placeholder="Bạn muốn tìm kiếm gì...?"
+                        placeholder="Tìm kiếm"
                         name="s"
                         className={`text-black ${classes.inputInput} rounded-2xl outline-none`}
                         classes={{

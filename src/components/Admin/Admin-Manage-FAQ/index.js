@@ -156,7 +156,7 @@ const AdminField = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        faqs:  Object.values(state.faqs),
+        faqs:  Object.values(state.adminFaqs),
     };
 }
 

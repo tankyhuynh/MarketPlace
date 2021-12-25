@@ -19,7 +19,7 @@ export const columns = [
   {
     field: 'name',
     headerName: 'Tên',
-    width: 750,
+    width: 550,
     editable: true,
     type: 'text'
   },

@@ -20,6 +20,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import validator from 'validator' 
 
+import ckeditorAuthHeader from '../../../../../services/ckeditor.auth.header'
+import authHeader from '../../../../../services/auth.header'
 
 import { CKEditor } from 'ckeditor4-react';
 import Tab from '../Tab'
@@ -34,18 +36,14 @@ import logo from '../../../../../assets/logo.png'
 import environment from '../../../../../environments/environment';
 import { createTempProject } from '../../../../../actions/project';
 import { block_navigation, unblock_navigation } from '../../../../../actions/blockNavigation';
-import { loading, loaded } from '../../../../../actions/loading';
-import { LOADED, LOADING, FETCH_PROJECTS } from '../../../../../actions/types';
+import { LOADED, LOADING } from '../../../../../actions/types';
 
 const OTHER_ID = 4
 
-// const filebrowserUploadUrl = 'https://marketplace-demo-v1.herokuapp.com/api/v1/fileupload';
 const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
 const removeButtons = 'PasteFromWord'
 
 const TYPE_PROJECT_COMMERCIAL = 'CP'
-// const TYPE_PROJECT_RESEARCHING = 'RP'
-
 
 const HorizontalLinearStepper = (props) => {
 
@@ -55,8 +53,6 @@ const HorizontalLinearStepper = (props) => {
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch()
     const alertUseAlert = useAlert()
-
-    // console.log('HorizontalLinearStepper props.project: ', props.project);
 
     const [stateFieldsChecked, setFieldsChecked] = useState({
         checked: props.project ? (
@@ -268,6 +264,7 @@ const HorizontalLinearStepper = (props) => {
                 sendEmail: props.project ? (props.project.sendEmail ? props.project.sendEmail : true) : false,
                 template: props.project ? (props.project.template ? props.project.template : 1) : 1,
                 inspectorId: props.project ? (props.project.inspectorId ? props.project.inspectorId : 1) : 1,
+                number: props.project ? (props.project.number ? props.project.number : 0) : 0,
                 
             })
         }
@@ -359,7 +356,7 @@ const HorizontalLinearStepper = (props) => {
         price: project ? project.price : '',
         productImage: project ? project.productImage : '',
         template: project ? project.template : 1,
-        number: project ? project.number : 1
+        number: project ? project.number : 0
     }
 
     const duAnNghienCuu = {
@@ -546,12 +543,11 @@ const HorizontalLinearStepper = (props) => {
     const onProjectImageChange = (files) => {
         console.log('onProjectImageChange', files)
             let formData = new FormData();
-            const config = {
-                header: { 'content-type': 'multipart/form-data' }
-            }
+            const config = ckeditorAuthHeader()
+            
             formData.append("upload", files[0]);
 
-            axios.post(environment.url.java + '/fileUploads/ckeditor', formData, config)
+            axios.post(environment.url.java + '/fileUploads/ckeditor', formData, { headers: authHeader() } )
                 .then(response => {
                     console.log('upload iamge: ', response);
                     // console.log('reponse.data.location: ', response.data.location);
@@ -613,7 +609,7 @@ const HorizontalLinearStepper = (props) => {
 
         // Làm sao để xác định được nó là project gì???????????
         if(props.type === 'edit'){
-            axios.put(environment.url.java_admin + URL + `/${props.id}`, {...submitProject, userId: project.userId})
+            axios.put(environment.url.java_admin + URL + `/${props.id}`, {...submitProject, userId: project.userId},  { headers: authHeader() })
             .then(response => {
                 if (response) {
                     dispatch({ type: LOADED})
@@ -865,22 +861,10 @@ const HorizontalLinearStepper = (props) => {
                                     filebrowserUploadUrl: filebrowserUploadUrl,
                                     removeButtons: removeButtons,
                                     isReadOnly: true,
-                                    height: 600
+                                    height: 600,
                                 }}
                                 onChange={handleCKEditorChange}
                             />
-
-                            {/* 
-                                Chỗ này chưa biết có chạy đc ko
-                                Mới bỏ vô thử thôi
-                            */}
-                            {/* <TinyMCEEditor 
-                                // key={ (Math.random() + 1).toString(36).substring(7) }
-                                // projectId={project ? project.id : ''}
-                                name={field.fieldName}
-                                value={project ? project[field.fieldName] : '????'}
-                                onChange={handleTinyMCEEditorChange} 
-                            /> */}
                         </div>
                     </div>
                 )
@@ -1218,34 +1202,17 @@ const HorizontalLinearStepper = (props) => {
         setProject(previousState => ({...previousState, isHighlight}))
     }
 
-    const onComboboxHightlightIndexChange = (hightlightNumber) => {
-        setProject(previousState => ({...previousState, number: hightlightNumber}))
-    }
-
     const onCheckboxSendEmailChange = (sendEmail) => {
         setProject(previousState => ({...previousState, sendEmail}))
     }
 
-    const hightlightIndexes = [1,2,3,4,5]
-   
-    const renderComboboxHightlightIndex = () => {
-        console.log('renderComboboxHightlightIndex project: ', props.project);
-        console.log('renderComboboxHightlightIndex project.number: ', props.project.number);
-        if(project.isHighlight){
-            return (
-                <>
-                    <ComboboxHightlight 
-                        label={`Vị trí`} 
-                        data={hightlightIndexes} 
-                        // selectedIndex={1} 
-                        selectedIndex={props.project ? props.project.number : 1} 
-                        onChecked={onComboboxHightlightIndexChange} 
-                    />
-                    {/* ComboboxHightlight */}
-                </>
-            )
-        }
-        return null;
+    const renderHightlightIndexes = (maxNumber) => {
+        let hightlightIndexes = [];
+        for (var i = 1; i <= maxNumber; i++) {
+            hightlightIndexes.push(i)
+        } 
+        
+        return hightlightIndexes;
     }
 
     const renderStep3 = () => {
@@ -1257,10 +1224,6 @@ const HorizontalLinearStepper = (props) => {
                 <ComboboxStatus selectedIndex={project ? project.statusId : 1} onStatusChange={onStatusChange} />
                 <Checkcbox label="Send email" isChecked={project ? project.sendEmail : true} onCheckboxChange={onCheckboxSendEmailChange} />
                 <Checkcbox label="Hightlight" isChecked={props.project ? props.project.isHighlight : true} onCheckboxChange={onCheckboxHightlightChange} />
-
-                <div>
-                    { renderComboboxHightlightIndex() }
-                </div>
                 {/* inspectorId  - Người duyệt */}
             </div>
         </>

@@ -31,7 +31,7 @@ import logo from '../../assets/logo.png'
 import environment from '../../environments/environment';
 import { createTempProject } from '../../actions/project';
 import { block_navigation, unblock_navigation } from '../../actions/blockNavigation';
-import { loading, loaded } from '../../actions/loading';
+import { loading, loaded } from '../../actions/load';
 import { LOADED, LOADING } from '../../actions/types';
 
 const OTHER_ID = 4

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useAlert } from 'react-alert'
 
-import { createAbout } from '../../../actions/about'
+import { createAbout } from '../../../actions/aboutAdmin'
 
 import Editor from './editor'
 

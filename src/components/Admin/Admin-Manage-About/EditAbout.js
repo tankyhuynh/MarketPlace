@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useAlert } from 'react-alert'
 
 
-import { fetchAbout, editAbout } from '../../../actions/about'
+import { fetchAbout, editAbout } from '../../../actions/aboutAdmin'
 
 import Editor from './editor'
 
@@ -37,7 +37,7 @@ const EditAbout = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        about: state.abouts[ownProps.match.params.id],
+        about: state.adminAbouts[ownProps.match.params.id],
     };
 };
 

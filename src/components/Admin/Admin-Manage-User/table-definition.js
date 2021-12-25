@@ -52,21 +52,21 @@ export const columns = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 300,
+    width: 250,
     editable: true,
   },
-  {
-    field: 'phoneNumber',
-    headerName: 'Số điện thoại',
-    width: 200,
-    editable: true,
-  },
-  {
-    field: 'address',
-    headerName: 'Địa chỉ',
-    width: 300,
-    editable: true,
-  },
+  // {
+  //   field: 'phoneNumber',
+  //   headerName: 'Số điện thoại',
+  //   width: 200,
+  //   editable: true,
+  // },
+  // {
+  //   field: 'address',
+  //   headerName: 'Địa chỉ',
+  //   width: 300,
+  //   editable: true,
+  // },
   {
     field: 'gender',
     headerName: 'Giới tính',

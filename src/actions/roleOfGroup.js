@@ -1,5 +1,6 @@
 import roleOfGroup_Admin from '../apis/roleOfGroup_Admin';
 import { ROLE_OF_GROUP_ADMIN_URL } from '../environments/constraints';
+import authHeader from '../services/auth.header'
 
 import {
   FETCH_ROLES_OF_GROUP,
@@ -12,7 +13,7 @@ import {
 
 //------ LevelDevelopments --------
 export const fetchRolesOfGroup = () => async dispatch => {
-  const response = await roleOfGroup_Admin.get(ROLE_OF_GROUP_ADMIN_URL);
+  const response = await roleOfGroup_Admin.get(ROLE_OF_GROUP_ADMIN_URL, { headers: authHeader() });
   console.log('fetchRolesOfGroup:', response.data);
 
   dispatch({ type: FETCH_ROLES_OF_GROUP, payload: response.data });

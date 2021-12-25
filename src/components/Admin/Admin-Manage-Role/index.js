@@ -8,7 +8,7 @@ import { useAlert } from 'react-alert'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { fetchRoles, createRole, editRole, deleteRole } from '../../../actions/role';
+import { fetchRoles, createRole, editRole, deleteRole } from '../../../actions/roleAdmin';
 
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
@@ -158,7 +158,7 @@ const AdminField = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        roles:  Object.values(state.roles),
+        roles:  Object.values(state.adminRoles),
     };
 }
 

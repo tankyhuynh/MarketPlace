@@ -25,24 +25,25 @@ const items = [
 
 const ResearcherGroup = () => {
     
-    const renderList = () => {
-        return items.map(item => {
-            return (
-                <>
-                    <div>
-                        { item.name }
-                    </div>
-                    <div>
-                        { item.content }
-                    </div>
-                </>
-            )
-        })
-    }
+    // const renderList = () => {
+    //     return items.map(item => {
+    //         return (
+    //             <>
+    //                 <div>
+    //                     { item.name }
+    //                 </div>
+    //                 <div>
+    //                     { item.content }
+    //                 </div>
+    //             </>
+    //         )
+    //     })
+    // }
     
     return (
         <div>
-            { renderList() }
+            {/* { renderList() } */}
+            { `Hiện tai tính năng đang được phát triển` }
         </div>
     ) 
 }

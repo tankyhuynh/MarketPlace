@@ -12,8 +12,7 @@ import { Container, TextField  } from '@mui/material';
 import { CKEditor } from 'ckeditor4-react';
 import { DropzoneArea } from 'material-ui-dropzone';
 
-import { createGroup } from '../../../../actions/researchGroup'
-import { fetchRoles } from '../../../../actions/role'
+import { createGroup } from '../../../../actions/researchGroup_Admin'
 import { fetchDomains } from '../../../../actions/domain'
 
 import {
@@ -25,12 +24,10 @@ import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
 
 import logo from '../../../../assets/logo.png'
-// import user_avatar from '../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
-
 
 const TYPE_TEXT = 'text'
+const TYPE_TEXTAREA = 'textarea'
 const TYPE_EDITOR = 'editor'
-// const TYPE_PASSWORD= 'password'
 const TYPE_COMBOBOX = 'combobox'
 const TYPE_CHECKBOX = 'checkbox'
 const TYPE_IMAGE = 'image'
@@ -45,20 +42,15 @@ const AddGroup = (props) => {
     const alert = useAlert();
 
     const [value, setValue] = useState({});
-
     // eslint-disable-next-line no-unused-vars
     const [isShowChipMember, setShowChipMember] = useState(false)
-    // const [members, setMembers] = useState([])
-    // const [searchMember, setSearchMember] = useState(null)
-    
     const handleChange = (field, value) => {
         setValue(previousState => ({...previousState, [field]: value }))
     }   
 
-
     useEffect(() => {
         props.fetchDomains()
-        props.fetchRoles()
+        // props.fetchRoles()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -86,6 +78,27 @@ const AddGroup = (props) => {
                 { usersFormat }
             </div>
         )
+    }
+
+    const renderTextAreaFields = () => {
+        return (
+            columns
+                .filter(field => field.editable && field.type === TYPE_TEXTAREA)            
+                .map(field => {
+                    return (
+                        <TextField 
+                            id="outlined-basic" 
+                            label={field ? field.headerName : ''} 
+                            variant="outlined"
+                            fullWidth
+                            multiline
+                            rows={6}
+                            rowsMax={10}
+                            // defaultValue={initialValue ? initialValue[field.field] : ''}
+                            onChange={(e) => handleChange(field.field, e.target.value)} 
+                        />
+                    )
+        }))
     }
 
     const handleCKEditorChange = (event, editor) => {
@@ -129,31 +142,6 @@ const AddGroup = (props) => {
         )
     }
 
-    // const renderPasswordFields = () => {
-    //     const usersFormat = columns
-    //                         .filter(field => ( field.editable && field.type === TYPE_PASSWORD) )            
-    //                         .map(field => {
-    //                             return (
-    //                                 <TextField 
-    //                                     id="outlined-basic" 
-    //                                     label={field ? field.headerName : ''} 
-    //                                     variant="outlined"
-    //                                     fullWidth
-    //                                     className="w-full"
-    //                                     type={field.type}
-    //                                     // defaultValue={initialValue ? initialValue[field.field] : ''}
-    //                                     onChange={(e) => handleChange(field.field, e.target.value)}
-    //                                 />
-    //                             )
-    //     })
-    
-    //     return (
-    //         <div className="flex flex-col gap-4">
-    //             { usersFormat }
-    //         </div>
-    //     )
-    // }
-
     const renderCheckboxFields = () => {
         const usersFormat = columns
                             .filter(field => ( field.editable && field.type === TYPE_CHECKBOX) )            
@@ -180,10 +168,6 @@ const AddGroup = (props) => {
 
             axios.post(environment.url.java + '/fileUploads/ckeditor', formData, config)
                 .then(response => {
-                    console.log('upload iamge: ', response);
-                    // console.log('reponse.data.location: ', response.data.location);
-                    // const imgSrc = response.data.location;
-                    console.log('response.data.url: ', response.data.url);
                     const imgSrc = response.data.url;
 
                     if (response.data) {
@@ -253,10 +237,6 @@ const AddGroup = (props) => {
         console.log('Combobox change - roleId: ', roleId)
         handleChange('roleId', roleId)
     }
-    // const onGenderChange = (gender) => {
-    //     console.log('Combobox change - gender: ', gender)
-    //     handleChange('gender', gender)
-    // }
 
     const onCheckboxEnableChange = (fieldName, checked) => {
         console.log('onCheckboxEnableChange: ', fieldName, checked);
@@ -275,129 +255,6 @@ const AddGroup = (props) => {
         console.log(value)
     }
 
-    
-
-    // const handleClick = (e) => {
-    //     e.preventDefault()
-    //     // return { ...state, ..._.mapKeys(action.payload, 'id') };
-    //     let member = {};
-
-    //     member = {
-    //         name: searchMember,
-    //         avatar: user_avatar
-    //     }
-
-    //     setMembers(
-    //         { ...members, ..._.mapKeys(member, 'name') 
-    //     })
-
-    //     if(searchMember){
-    //         member = {
-    //             name: searchMember,
-    //             avatar: user_avatar
-    //         }
-    //     }
-    //     if(member){
-    //         setMembers(
-    //             { ...members, ..._.mapKeys(member, 'name') 
-    //         })
-    //     }
-    //     setSearchMember(null)
-        
-
-    //     console.log('handleClick: ', members)
-
-    // }
-
-    // const handleDeleteMember = (member) => {
-    //     console.log('handleDeleteMember: ', member)
-    //     if(searchMember){
-    //         setMembers(_.omit(members, member.name))
-    //     }
-    // }
-    // const handleDeleteResult = () => {
-    //     console.log('handleDeleteResult: ')
-    //     setSearchMember(null)
-    // }
-
-    // const onSearchMember =  (member) => {
-    //     console.log('onSearchMember: ', member)
-    //     if(member === 'tanky'){
-    //         setSearchMember({
-    //             name: member,
-    //             avatar: user_avatar
-    //         })
-    //     }
-    //     else setShowChipMember(false)
-    // }
-
-    // const renderListMember = () => {
-    //     if(members){
-    //         return Object.values(members).map(member => {
-    //             if(member.name){
-    //                 return (
-    //                     <Chip
-    //                         label={member ? member.name : ''}
-    //                         avatar={<Avatar alt="Natacha" src={member ? member.avatar : logo} />}
-    //                         // onClick={handleClick}
-    //                         onDelete={e =>handleDeleteMember(member)}
-    //                         deleteIcon={<DeleteIcon />}
-    //                         variant="outlined"
-    //                     />
-    //                 )
-    //             }
-    //             return null
-    //         })
-    //     }
-    //     return null
-    // }
-
-    // const renderSearchResultMemberList = () => {
-    //     if(searchMember){
-    //         return (
-    //             <section>
-    //                 <Chip
-    //                     label={searchMember ? searchMember.name : ''}
-    //                     avatar={<Avatar alt="Natacha" src={searchMember ? searchMember.avatar : logo} />}
-    //                     onClick={e => handleClick(e)}
-    //                     onDelete={handleDeleteResult}
-    //                     deleteIcon={<DeleteIcon />}
-    //                     variant="outlined"
-    //                 />
-    //             </section>
-    //         )
-    //     }
-    //     return null
-    // } 
-
-    
-
-    // const renderSearchMember = () => {
-    //     return (
-    //         <div>
-    //             <TextField 
-    //                 id="outlined-basic" 
-    //                 label={`Thêm thành viên`} 
-    //                 variant="outlined"
-    //                 fullWidth
-    //                 className="w-full"
-    //                 // defaultValue={initialValue ? initialValue[field.field] : ''}
-    //                 onChange={(e) => onSearchMember(e.target.value)}
-    //             />
-
-    //             <section className="mt-2">
-    //                 { renderListMember() }
-    //             </section>
-
-    //             <section className="mt-10 bg-gray-400">
-    //                 { renderSearchResultMemberList() }
-    //             </section>
-                
-    //         </div>
-    //     )
-    // }
-
-
     return (
         <>
             <Container 
@@ -407,19 +264,13 @@ const AddGroup = (props) => {
                 <div className="mt-2">
                     { renderTextFields() }
                 </div>
+                
+                <div className="mt-2">
+                    { renderTextAreaFields() }
+                </div>
 
-                {/* <div className="mt-2">
-                    { renderPasswordFields() }
-                </div> */}
-
-                <div className="flex flex-col gap-4 mt-4">
-
-                    {/* // label, data, selectedIndex, onChecked */}
-                    {/* <Combobox label="Tên miền" data={props.domains} selectedIndex={1} onDomainChange={onDomainChange} />
-                    <Combobox label="Vai trò" data={props.roles} selectedIndex={1} onRoleChange={onRoleChange}/> */}
-                    
+                <div className="flex flex-col gap-4">
                     { renderComboboxFields() }
-
                     { renderCheckboxFields() }
                 </div>
 
@@ -427,11 +278,6 @@ const AddGroup = (props) => {
                     { renderEditorFields() }
                 </div>
 
-
-                {/* <div className="mt-4">
-                    { renderSearchMember() }
-                </div> */}
-                
                 <div>
                     { renderImageFields() }
                 </div>
@@ -458,7 +304,7 @@ const AddGroup = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        roles: Object.values(state.roles),
+        // roles: Object.values(state.roles),
         domains: Object.values(state.domains),
     };
   };
@@ -466,7 +312,7 @@ const mapStateToProps = (state, ownProps) => {
   export default connect(
     mapStateToProps,
     { 
-        fetchRoles,
+        // fetchRoles,
         fetchDomains,
         createGroup
     }

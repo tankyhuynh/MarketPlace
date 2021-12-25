@@ -1,5 +1,6 @@
 import './Home.css'
 
+import _ from 'lodash';
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import CarouselCustom from '../Carousel/CarouselCustom'
@@ -9,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 import video from '../../assets/growag-introduction.mp4';
 
-import { loading, loaded } from '../../actions/loading';
+import { loading, loaded } from '../../actions/load';
 import { fetchProjects_DaDuyet } from '../../actions/project';
 import { fetchGroups } from '../../actions/researchGroup';
 
@@ -67,7 +68,10 @@ const Home = (props) => {
             // .slice(0,3)
             .map(card => {
                 return (
-                    <Link to={`/projects/show/${card.type}/${card.id}`} key={card.id}>
+                    <Link 
+                        to={`/projects/show/${card.type}/${card.id}/${card.code}`} 
+                        key={card.id}
+                    >
                         <Card card={card} key={card.id} />
                     </Link>
                 );
@@ -85,6 +89,9 @@ const Home = (props) => {
                     );
                 });
     }
+
+    const STATUS_ID_DA_DUYET = 1;
+    const hightlightAndADDProjects = props.projects.filter(project => project.status.id === STATUS_ID_DA_DUYET && project.isHighlight); 
 
     return (
         <>
@@ -109,7 +116,7 @@ const Home = (props) => {
                             props.projects.length        
                             ? (<CarouselCustom 
                                 // slides={this.props.projects.filter(project => project.statusId !== 2)} 
-                                slides={props.projects} 
+                                slides={ hightlightAndADDProjects ? _.orderBy(hightlightAndADDProjects, ['number'], ['asc']) : {} } 
                                 organizations={props.researchGroups}
                             />)
                             : null
@@ -138,12 +145,18 @@ const Home = (props) => {
                     : null
                 }
 
-                <div id="organizations" className={`${props.projects.length ? 'mt-4' : 'z-10 md:mt-24 xl:my-0 2xl:mt-0' }`}>
-                    <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
-                    <div className="projects_organizations">
-                        { renderOrganizations(props.researchGroups) }
-                    </div>
-                </div>
+                {
+                    props.researchGroups.length
+                    ? (
+                        <div id="organizations" className={`${props.projects.length ? 'mt-4' : 'z-10 md:mt-24 xl:my-0 2xl:mt-0' }`}>
+                            <h2 className="ml-4 text-3xl font-bold">Nhóm nghiên cứu</h2>
+                            <div className="projects_organizations">
+                                { renderOrganizations(props.researchGroups) }
+                            </div>
+                        </div>
+                    )
+                    : null
+                }
             </div>
 
          

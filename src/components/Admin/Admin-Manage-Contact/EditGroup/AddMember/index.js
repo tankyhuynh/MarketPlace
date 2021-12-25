@@ -11,7 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 import { fetchUser ,createUser } from '../../../../../actions/user'
-import { fetchRoles } from '../../../../../actions/role'
+import { fetchRoles } from '../../../../../actions/roleAdmin'
 import { fetchDomains } from '../../../../../actions/domain'
 
 import { columns } from '../table-definition'

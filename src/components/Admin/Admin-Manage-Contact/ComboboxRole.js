@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchRoles } from '../../../actions/role'
+import { fetchRoles } from '../../../actions/roleAdmin'
 
 import {
     Select,

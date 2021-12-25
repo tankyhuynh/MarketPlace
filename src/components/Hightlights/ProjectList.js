@@ -166,74 +166,81 @@ class ProjectList extends React.Component {
         const projects = this.props.projects.filter(project => project.status.id === this.STATUS_ID_DA_DUYET && project.isHighlight); 
         const query = new URLSearchParams(window.location.search).get('s');
         
-        return _.orderBy(this.filterProjects(projects, query), ['number'], ['asc'])
+        if(projects && projects.length){
+            return _.orderBy(this.filterProjects(projects, query), ['number'], ['asc'])
                     .map((project, index) => {
-                    return (
-                            <>
-                                <Link 
-                                    to={`/projects/show/${project.id}`} 
-                                    className="grid grid-cols-1 mx-6 border-gray-500 md:grid-cols-4"
-                                    key={index}
-                                >
-                                    <div className="items-center self-center col-span-1 my-4">
-                                        <img 
-                                            // src={this.renderImage(this.renderImageSrc(project))} 
-                                            src={project.productImage} 
-                                            alt="random imgee" 
-                                            className="object-cover object-center w-full my-2 rounded-lg max-h-64" 
-                                        />     
-                                    </div>  
-                                    
-                                    <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
-                                            <div>
-                                                <div className="grid grid-cols-5 xl:grid-flow-col">
-                                                    <div className="flex flex-col md:flex-row self-start items-center col-span-4 gap-2">
-                                                    { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
-                                                        ? (
-                                                            <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
-                                                                New
-                                                            </span>
-                                                        )
-                                                        : null
-                                                    }
-                                                        
-                                                        { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
-                                                    </div>
-                                                    <div className="mx-2 italic font-medium"> 
-                                                        { this.renderTypeOfProject(project.type) }
-                                                    </div>
-                                                </div>
-                                                
-                                                <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
-                                                    {project.name}
-                                                </h4>
-                                                    
-                                            </div>
+                        return (
+                                <>
+                                    <Link 
+                                        to={`/projects/show/${project.type}/${project.id}/${project.code}`} 
+                                        className="grid grid-cols-1 mx-6 border-gray-500 md:grid-cols-4"
+                                        key={index}
+                                    >
+                                        <div className="items-center self-center col-span-1 my-4">
+                                            <img 
+                                                // src={this.renderImage(this.renderImageSrc(project))} 
+                                                src={project.productImage} 
+                                                alt="random imgee" 
+                                                className="object-cover object-center w-full my-2 rounded-lg max-h-64" 
+                                            />     
+                                        </div>  
                                         
-                                            <div className="row-span-2 mt-1">
-                                                {/* <div dangerouslySetInnerHTML={{ __html: project.advantage }} /> */}
-                                                { project.shortDescription }
-                                            </div>
-                                            <div className="mt-4 b-0">
-                                                <span className="flex flex-col italic text-teal-600">
-                                                    <span className="font-semibold">
-                                                        {/* {this.renderAuthors(project.author)} */}
-                                                        {/* Huỳnh Tấn Kỷ */}
-                                                        {/* { project.user.fullName } */}
-                                                        { project.author }
-                                                    </span>
-                                                    <span className="self-end">
-                                                        { dateFormat(project.createdDate, "HH:MM, dddd, mmmm dS, yyyy") } <br />
+                                        <div className="grid grid-flow-row grid-cols-1 col-span-3 p-6 auto-rows-max">
+                                                <div>
+                                                    <div className="grid grid-cols-5 xl:grid-flow-col">
+                                                        <div className="flex flex-col md:flex-row self-start items-center col-span-4 gap-2">
+                                                        { this.isGreaterThanOneDayBetweenNowAnd(project.createdDate, 7) 
+                                                            ? (
+                                                                <span className={`inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full bg-${this.randomColors[this.state.randomNumber]}`}>
+                                                                    New
+                                                                </span>
+                                                            )
+                                                            : null
+                                                        }
+                                                            
+                                                            { this.renderLinhVuc(project.projectFieldList ? project.projectFieldList : '') } 
+                                                        </div>
+                                                        <div className="mx-2 italic font-medium"> 
+                                                            { this.renderTypeOfProject(project.type) }
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <h4 className="mt-1 text-xl font-semibold leading-tight uppercase truncate">
+                                                        {project.name}
+                                                    </h4>
                                                         
+                                                </div>
+                                            
+                                                <div className="row-span-2 mt-1">
+                                                    {/* <div dangerouslySetInnerHTML={{ __html: project.advantage }} /> */}
+                                                    { project.shortDescription }
+                                                </div>
+                                                <div className="mt-4 b-0">
+                                                    <span className="flex flex-col italic text-teal-600">
+                                                        <span className="font-semibold">
+                                                            {/* {this.renderAuthors(project.author)} */}
+                                                            {/* Huỳnh Tấn Kỷ */}
+                                                            {/* { project.user.fullName } */}
+                                                            { project.author }
+                                                        </span>
+                                                        <span className="self-end">
+                                                            { dateFormat(project.createdDate, "HH:MM, dddd, mmmm dS, yyyy") } <br />
+                                                            
+                                                        </span>
                                                     </span>
-                                                </span>
-                                            </div> 
-                                    </div>
-                                </Link>
-                                <hr />
-                            </>
-                    );
-        })
+                                                </div> 
+                                        </div>
+                                    </Link>
+                                    <hr />
+                                </>
+                        );
+            })
+        }
+        return (
+            <div>
+                Không có nổi bật
+            </div>
+        )
     }
 
     render() {

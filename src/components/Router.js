@@ -23,7 +23,7 @@ import ResearcherProject from './Researcher/Researcher_Project/ResearcherProject
 import ResearcherGroup from './Researcher/Researcher_Group';
 
 import ProjectCreate from './Projects/ProjectCreate';
-import ProjectList from './Projects/ProjectList';
+import ProjectList from './Projects/ProjectList/index';
 import ProjectShow from './Projects/ProjectShow';
 import ReactSlickIntegration from './ImageHoverZoom/ReactSlickIntegration';
 import ProjectEdit from './Projects/ProjectEdit';
@@ -68,7 +68,7 @@ const Router = () => {
 
             <Route path="/projects" exact component={ProjectList}></Route>
             {/* <Route path="/projects/show/:id" exact component={ProjectShow}></Route> */}
-            <Route path="/projects/show/:type/:id" exact component={ProjectShow}></Route>
+            <Route path="/projects/show/:type/:id/:code" exact component={ProjectShow}></Route>
             {/* <PrivateRoute path="/projects/edit/:id" exact component={ProjectEdit}></PrivateRoute> */}
             <PrivateRoute path="/projects/edit/:type/:id" exact component={ProjectEdit}></PrivateRoute>
             <PrivateRoute path="/projects/new" exact component={ProjectCreate}></PrivateRoute>

@@ -160,13 +160,13 @@ const Header = (props) => {
     return links.map((link, index) => {
       if(mode === 'web'){
         return (
-          <Link to={link.path} className={`header--link ${className}`} key={index}>
+          <Link to={link.path} className={`header--link_user ${className}`} key={index}>
             {link.name}
           </Link>
         )
       }
       return (
-        <Link to={link.path} className={`header--link ${className}`} key={index}>
+        <Link to={link.path} className={`header--link_user ${className}`} key={index}>
           {link.icon}
           {link.name}
         </Link>
@@ -314,14 +314,14 @@ const Header = (props) => {
           <div className="flex flex-col gap-4 p-2">
             { renderOptions('mobile', 'header--btn') }
             <button 
-                className="header--link header--btn"
+                className="header--link_user header--btn"
                 onClick={() => onLogOut()}  
               >
                 <ForwardIcon />
                 Đăng xuất
             </button>
             <button 
-                className="header--link header--btn"
+                className="header--link_user header--btn"
                 onClick={() => onLogOut()}  
               >
                 <AccountCircle />
@@ -371,7 +371,7 @@ const Header = (props) => {
   
 
   return (
-    <div className={`${classes.grow} debug-screens`}>
+    <div className={`${classes.grow}`}>
       <AppBar position="static" className={`${classes.headerBackground}`}>
         <Toolbar>
           <Link 

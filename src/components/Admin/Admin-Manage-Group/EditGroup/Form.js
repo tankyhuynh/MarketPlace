@@ -13,7 +13,7 @@ import { Container, TextField  } from '@mui/material';
 import { CKEditor } from 'ckeditor4-react';
 import { DropzoneArea } from 'material-ui-dropzone';
 
-import { editGroup } from '../../../../actions/researchGroup'
+import { editGroup } from '../../../../actions/researchGroup_Admin'
 
 import {
     STATUS_EDIT_SUCCESS
@@ -27,6 +27,7 @@ import logo from '../../../../assets/logo.png'
 // import user_avatar from '../../../../assets/ReseacherG/vietnamese-agriculture-strengthened-by-ma.jpg'
 
 const TYPE_TEXT = 'text'
+const TYPE_TEXTAREA = 'textarea'
 const TYPE_EDITOR = 'editor'
 // const TYPE_PASSWORD= 'password'
 const TYPE_COMBOBOX = 'combobox'
@@ -96,6 +97,27 @@ const UpdateUser = (props) => {
                 { usersFormat }
             </div>
         )
+    }
+
+    const renderTextAreaFields = () => {
+        return (
+            columns
+                .filter(field => field.editable && field.type === TYPE_TEXTAREA)            
+                .map(field => {
+                    return (
+                        <TextField 
+                            id="outlined-basic" 
+                            label={field ? field.headerName : ''} 
+                            variant="outlined"
+                            fullWidth
+                            multiline
+                            rows={6}
+                            rowsMax={10}
+                            defaultValue={props.group ? props.group[field.field] : ''}
+                            onChange={(e) => handleChange(field.field, e.target.value)} 
+                        />
+                    )
+        }))
     }
 
     const handleCKEditorChange = (event, editor) => {
@@ -396,8 +418,12 @@ const UpdateUser = (props) => {
                 <div className="mt-2">
                     { renderTextFields() }
                 </div>
+                
+                <div className="mt-2">
+                    { renderTextAreaFields() }
+                </div>
 
-                <div className="flex flex-col gap-4 mt-4">
+                <div className="flex flex-col gap-4">
                     { renderComboboxFields() }
                     { renderCheckboxFields() }
                 </div>

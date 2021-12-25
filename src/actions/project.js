@@ -14,9 +14,14 @@ import {
   FETCH_PROJECTS,
   FETCH_PROJECT,
   EDIT_PROJECT,
-  CREATE_PROJECT_TEMP
+  CREATE_PROJECT_TEMP,
+
+  LOADING,
+  LOADED
     
 } from './types';
+
+import authHeader from '../services/auth.header'
 
 const STATUS_DD_ID = 1 // Đã duyệt
 const STATUS_CD_ID = 2 // Chờ duyệt
@@ -53,12 +58,16 @@ export const fetchProjects_all_by_domainId = (domainId) => async dispatch => {
 
 
 
-export const fetchProjects_DaDuyet = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_DD_ID}`);
-  console.log('fetchProjects:', response.data);
+export const fetchProjects_DaDuyet = () => dispatch => {
+  dispatch({ type: LOADING });
+  projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_DD_ID}`)
+    .then(response => {
+      dispatch({ type: FETCH_PROJECTS, payload: response.data });
+      console.log('fetchProjects:', response.data);
+    });
 
   // sửa chỗ response.data => response.data.projects
-  dispatch({ type: FETCH_PROJECTS, payload: response.data });
+  dispatch({ type: LOADED });
 };
 export const fetchProjects_ChoDuyet = () => async dispatch => {
   const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_CD_ID}`);
@@ -109,6 +118,16 @@ export const editProject = (id, formValues) => async dispatch => {
   dispatch({ type: EDIT_PROJECT, payload: response.data });
   history.push('/');
 };
+
+export const fetchProject_Admin = (id) => async dispatch => {
+  const response = await projects.get(`${PROJECTS_COMMERCIAL_URL}/${id}`, { headers: authHeader() } );
+  console.log('fetchProject_Admin:', response.data);
+  console.log(response);
+
+  dispatch({ type: FETCH_PROJECT, payload: response.data });
+  // return response.data
+};
+
 
 export const createTempProject = (formValues) => async dispatch => {
   // const response = await projects.patch(`${PROJECTS_COMMERCIAL_URL}`, formValues);

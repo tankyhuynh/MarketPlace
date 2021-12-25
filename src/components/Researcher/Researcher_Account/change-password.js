@@ -6,7 +6,7 @@ const ChangePassword = (props) => {
 
     const { 
         isDisable,
-        password,
+        // password,
         handleChange
 
     } = props;
@@ -21,7 +21,7 @@ const ChangePassword = (props) => {
                 label={'Mật khẩu'}
                 variant="outlined"
                 disabled={isDisable}
-                defaultValue={password}
+                // defaultValue={password}
                 onChange={(e) => handleChange('password', e.target.value)}
             />
         </div>

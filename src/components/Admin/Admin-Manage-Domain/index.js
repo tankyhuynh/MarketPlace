@@ -17,7 +17,7 @@ import {
     editDomain,
     deleteDomain, 
 
-} from '../../../actions/domain';
+} from '../../../actions/domainAdmin';
 
 import FormEdit from './FormEdit'
 
@@ -164,7 +164,7 @@ const AdminField = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        domains:  Object.values(state.domains),
+        domains:  Object.values(state.adminDomains),
     };
 }
 

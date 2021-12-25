@@ -23,27 +23,15 @@ export default function SimpleAccordion(props) {
     return props.data.map((item, index) => {
       return (
         <div key={index}>
-          {/* <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                  <Typography className={classes.heading}>{ item.question }</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                  <Typography>
-                    { item.answer }
-                  </Typography>
-              </AccordionDetails>
-          </Accordion> */}
           <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography>{ item.question }</Typography>
+                <Typography variant="h5">
+                  { item.question }
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>

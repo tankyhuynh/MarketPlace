@@ -12,11 +12,23 @@ const FAQ = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-        <>
-           <Accordion data={props.faqs}/>
-        </>
-    )
+    const renderList = () => {
+        if(props.faqs && props.faqs.length){
+            return (
+                <>
+                    <Accordion data={props.faqs}/>
+                </>
+            )
+        }
+        return (
+            <div>
+                Không có FAQ
+            </div>
+        )
+    }
+
+    return renderList()
+    
 }
 
 const mapStateToProps = (state) => {

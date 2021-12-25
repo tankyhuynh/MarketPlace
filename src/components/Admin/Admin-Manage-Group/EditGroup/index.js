@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import { fetchGroup } from '../../../../actions/researchGroup'
+import { fetchGroup } from '../../../../actions/researchGroup_Admin'
 
 import FormGroup from './Form'
 import { columns as columnsNormalUser } from './table-definition'
@@ -35,7 +35,7 @@ const AdminEditGroup = (props) => {
   
 const mapStateToProps = (state, ownProps) => {
     return { 
-        group: state.researchGroups[ownProps.match.params.id],
+        group: state.adminResearchGroups[ownProps.match.params.id],
     };
 };
   

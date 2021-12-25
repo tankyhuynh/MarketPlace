@@ -1,34 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-
-import { red } from '@material-ui/core/colors';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: 380
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
 
 const renderUuDiem = (uuDiems) => {
   if(uuDiems){
@@ -48,21 +20,24 @@ const renderUuDiem = (uuDiems) => {
 };
 
 export default function RecipeReviewCard({ project }) {
-  const classes = useStyles();
 
   return (
-    // <div className={`${classes.root} flex justify-around`}>
     <Grid container spacing={3} >
       <CardContent className="flex flex-col justify-between gap-2 ">
         <div className="text-lg font-medium text-left text-green-500 ">
            { project.name }
         </div>
-        <div>
-            <CardMedia
+        <div className="items-center self-center col-span-1 my-4">
+            {/* <CardMedia
               className={classes.media}
               image={project.productImage}
               title="Paella dish"
-            />
+            /> */}
+            <img 
+                src={project.productImage} 
+                alt="random imgee" 
+                className="object-cover object-center w-full my-2 rounded-lg max-h-64" 
+            />   
         </div>
         <div className="hidden gap-4 text-xs text-left lg:flex">
             <div 

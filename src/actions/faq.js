@@ -1,30 +1,38 @@
 import faq from '../apis/faqs';
 import { FAQ_URL } from '../environments/constraints';
 
-
 import {
   FETCH_FAQS,
   FETCH_FAQ,
   CREATE_FAQ,
   EDIT_FAQ,
-  DELETE_FAQ
+  DELETE_FAQ,
+
+  LOADING,
+  LOADED
     
 } from './types';
 
 
 //------ Research group --------
-export const fetchFaqs = () => async dispatch => {
-  const response = await faq.get(FAQ_URL);
-  console.log('fetchFaqs:', response.data);
-
-  dispatch({ type: FETCH_FAQS, payload: response.data });
+export const fetchFaqs = () => dispatch => {
+  dispatch({ type: LOADING })
+  faq.get(FAQ_URL)
+    .then((response) => {
+        console.log('fetchFaqs:', response.data);
+        dispatch({ type: FETCH_FAQS, payload: response.data });
+    });
+  dispatch({ type: LOADED })
 };
 
-export const fetchFaq = (id) => async dispatch => {
-  const response = await faq.get(`${FAQ_URL}/${id}`);
-  console.log(response);
-
-  dispatch({ type: FETCH_FAQ, payload: response.data });
+export const fetchFaq = (id) => dispatch => {
+  dispatch({ type: LOADED })
+  faq.get(`${FAQ_URL}/${id}`)
+      .then(response => {
+          console.log(response);
+          dispatch({ type: FETCH_FAQ, payload: response.data });
+      })
+  dispatch({ type: LOADED })
 };
 
 export const createFaq = (value) => async dispatch => {

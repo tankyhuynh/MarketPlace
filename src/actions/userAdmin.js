@@ -13,6 +13,7 @@ import {
   CREATE_ADMIN_USER_ADMIN_URL
 
 } from '../environments/constraints';
+import authHeader from '../services/auth.header'
 
 import {
   FETCH_USERS,
@@ -26,40 +27,40 @@ import {
 
 //------ LevelDevelopments --------
 export const fetchUsers = () => async dispatch => {
-  const response = await userAdmin.get(USER_ADMIN_URL);
+  const response = await userAdmin.get(USER_ADMIN_URL, { headers: authHeader() } );
   console.log('fetchUsers:', response.data);
 
   dispatch({ type: FETCH_USERS, payload: response.data });
 };
 
 export const fetchUser = (id) => async dispatch => {
-  const response = await userAdmin.get(`${USER_ADMIN_URL}/${id}`);
+  const response = await userAdmin.get(`${USER_ADMIN_URL}/${id}`, { headers: authHeader() } );
   console.log(response);
 
   dispatch({ type: FETCH_USER, payload: response.data });
 };
 
 export const fetchUserProfileById = (id) => async dispatch => {
-  const response = await userAdmin.get(`${USER_ADMIN_URL}/id/${id}`);
+  const response = await userAdmin.get(`${USER_ADMIN_URL}/id/${id}`, { headers: authHeader() } );
   console.log(response);
 
   dispatch({ type: FETCH_USER, payload: response.data });
 };
 
 export const createUser_Admin = (value) => async dispatch => {
-  const response = await user.post(SIGNUP_NORMAL_USER_URL, value);
+  const response = await user.post(SIGNUP_NORMAL_USER_URL, value, { headers: authHeader() } );
   console.log('createUser_Admin:', response.data);
 
   dispatch({ type: CREATE_USER, payload: response.data });
 };
 export const createResearcherUser_Admin = (value) => async dispatch => {
-  const response = await userAdmin.post(CREATE_RESEARCHER_USER_ADMIN_URL, value);
+  const response = await userAdmin.post(CREATE_RESEARCHER_USER_ADMIN_URL, value, { headers: authHeader() } );
   console.log('createResearcherUser_Admin:', response.data);
 
   dispatch({ type: CREATE_USER, payload: response.data });
 };
 export const createAdminUser_Admin = (value) => async dispatch => {
-  const response = await userAdmin.post(CREATE_ADMIN_USER_ADMIN_URL, value);
+  const response = await userAdmin.post(CREATE_ADMIN_USER_ADMIN_URL, value, { headers: authHeader() } ) ;
   console.log('createAdminUser_Admin:', response.data);
 
   dispatch({ type: CREATE_USER, payload: response.data });
@@ -67,48 +68,48 @@ export const createAdminUser_Admin = (value) => async dispatch => {
 
 
 export const editUser = (value) => async dispatch => {
-  const response = await userAdmin.put(`${USER_ADMIN_URL}/${value.id}`, value);
+  const response = await userAdmin.put(`${USER_ADMIN_URL}/${value.id}`, value, { headers: authHeader() } ) ;
   console.log('editUser:', response.data);
 
   dispatch({ type: EDIT_USER, payload: response.data });
 };
 
 export const editResearcherUser = (value) => async dispatch => {
-  const response = await userAdmin.put(`${USER_RESEARCHER_URL}/${value.id}`, value);
+  const response = await userAdmin.put(`${USER_RESEARCHER_URL}/${value.id}`, value, { headers: authHeader() } );
   console.log('editResearcherUser:', response.data);
 
   dispatch({ type: EDIT_USER, payload: response.data });
 };
 
 export const editNormalUser_Admin = (value) => async dispatch => {
-  const response = await userAdmin.put(`${USER_NORMAL_ADMIN_URL}/${value.id}`, value);
+  const response = await userAdmin.put(`${USER_NORMAL_ADMIN_URL}/${value.id}`, value, { headers: authHeader() } );
   console.log('editNormalUser_Admin:', response.data);
 
   dispatch({ type: EDIT_USER, payload: response.data });
 };
 
 export const editResearcherUser_Admin = (value) => async dispatch => {
-  const response = await userAdmin.put(`${USER_RESEARCHER_ADMIN_URL}/${value.id}`, value);
+  const response = await userAdmin.put(`${USER_RESEARCHER_ADMIN_URL}/${value.id}`, value, { headers: authHeader() } );
   console.log('editResearcherUser_Admin:', response.data);
 
   dispatch({ type: EDIT_USER, payload: response.data });
 };
 
 export const editAdminUser_Admin = (value) => async dispatch => {
-  const response = await userAdmin.put(`${USER_ADMIN_ADMIN_URL}/${value.id}`, value);
+  const response = await userAdmin.put(`${USER_ADMIN_ADMIN_URL}/${value.id}`, value, { headers: authHeader() } );
   console.log('editAdminUser_Admin:', response.data);
 
   dispatch({ type: EDIT_USER, payload: response.data });
 };
 
 export const deleteUser = id => async dispatch => {
-  await userAdmin.delete(`${USER_ADMIN_URL}/${id}`);
+  await userAdmin.delete(`${USER_ADMIN_URL}/${id}`, { headers: authHeader() } );
 
   dispatch({ type: DELETE_USER, payload: id });
 };
 
 export const editUserFunction = (userId, functionId, checked) => async dispatch => {
-  const response = await userFunctionAdmin.put(`${USER_FUNCTION_ADMIN_URL}`, { userId, functionId, isEnable: checked });
+  const response = await userFunctionAdmin.put(`${USER_FUNCTION_ADMIN_URL}`, { userId, functionId, isEnable: checked }, { headers: authHeader() } );
   console.log('editUserFunction:', response.data);
 
   dispatch({ type: FETCH_USERS, payload: response.data });

@@ -1,21 +1,33 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import { loading, loaded } from '../../actions/load'
 import { fetchAbouts } from '../../actions/about'
-
 
 const About = (props) => {
 
     useEffect(() => {
-      props.fetchAbouts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        props.loading()
+        props.fetchAbouts();
+        props.loaded()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
+    const renderAbout = () => {
+        if(props.about && props.about.content){
+            return (
+                <div 
+                    dangerouslySetInnerHTML={{ __html: props.about ? props.about.content : '' }} 
+                />
+            )
+        }
+        return (
+            <div>Không có giới thiệu</div>
+        )
+    }
 
     return (
-      <div 
-          dangerouslySetInnerHTML={{ __html: props.about ? props.about.content : '' }} 
-      />
+        renderAbout()
     )
 }
 
@@ -28,6 +40,7 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
     mapStateToProps,
     { 
-        fetchAbouts
+        fetchAbouts,
+        loading, loaded
     }
 )(About);

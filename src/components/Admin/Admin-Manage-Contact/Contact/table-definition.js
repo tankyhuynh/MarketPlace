@@ -22,7 +22,7 @@ const actionFormatter = ({ value }) => {
 const statusFormatter = ({ value }) => { 
   return (
     <div className={`bg-${value ? (value === true ? 'green' : 'red') : 'yellow'}-500 rounded-2xl text-center w-full mx-4 text-white`}>
-        { value ? (value === true ? 'Đã phản hồi' : 'Chưa phản hồi') : '' }
+        { value ? (value === true ? 'Đã phản hồi' : 'Chưa phản hồi') : 'Chưa phản hồi' }
       </div>
   )
 };

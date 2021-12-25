@@ -34,6 +34,7 @@ const ComboboxCustom = (props) => {
             <FormControl>
                 <InputLabel id="select-category">{ props.label }</InputLabel>
                 <Select
+                    disabled={props.disabled ? props.disabled : false}
                     labelId="select-category"
                     id="demo-simple-select-standard"
                     // value={1}

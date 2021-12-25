@@ -1,0 +1,65 @@
+<mxfile host="65bd71144e">
+    <diagram id="Okt9k1RbCQpYxQh8sVjW" name="Page-1">
+        <mxGraphModel dx="782" dy="1044" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="8" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="2" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Bắt đầu" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="30" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Kết thúc" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="530" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="4" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Nhập thông tin&lt;br&gt;dự án" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="140" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="5" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="440" y="325" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=none;html=1;" edge="1" parent="1" source="5" target="31">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Kiểm tra thông tin&lt;br&gt;nhập hợp lệ ?" style="shape=rhombus;html=1;dashed=0;whitespace=wrap;perimeter=rhombusPerimeter;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="260" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="18" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="300" y="110" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="515" y="200"/>
+                            <mxPoint x="515" y="140"/>
+                            <mxPoint x="515" y="110"/>
+                        </Array>
+                        <mxPoint x="515" y="280" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="Không" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="300" width="50" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Hiển thị thông báo&lt;br&gt;thông tin không hợp lệ" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="285" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" target="3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="300" y="510" as="targetPoint"/>
+                        <mxPoint x="300" y="470" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="31" value="Gửi thông tin&lt;br&gt;dự án lên Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="430" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="Đúng" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="390" width="40" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

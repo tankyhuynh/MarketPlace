@@ -1,5 +1,6 @@
 import _ from 'lodash';
 // import history from '../history';
+import authHeader from '../services/auth.header'
 
 import users from '../apis/users';
 import { 
@@ -104,10 +105,13 @@ export const signupResearcherUser = (formValues, propsHistory) => async (dispatc
   export const login = (formValues, propsHistory) => async (dispatch, getState) => {
     dispatch({ type: LOADING });
     const response = await users.post(LOGIN_URL, { ...formValues });
+    console.log(response.data)
+    localStorage.setItem('token', JSON.stringify(response.data));
 
     try {
       if(response.status === 200){
-          await users.get(`${USER_ID_URL}/${response.data.id}`)
+          // await users.get(`${USER_ID_URL}/${response.data.id}`)
+          await users.get(`/users/username/${formValues.username}`, { headers: authHeader() })
           .then(res => {
               const roleCode = res.data.role.code;
               console.log(res)

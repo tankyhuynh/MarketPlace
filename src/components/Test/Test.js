@@ -15,6 +15,7 @@ import React from 'react';
 // import TestSearchBar from './TestSearchBar'
 // import TestImageEditor from './TestImageEditor'
 import TestImageCrop from './TestImageCrop'
+import TestHightlightText from './TestHightlightText'
 
 const Test = () => {
   return (
@@ -27,6 +28,7 @@ const Test = () => {
       {/* <Template /> */}
       {/* <TestResearcherAccount /> */}
       <TestImageCrop />
+      <TestHightlightText />
     </>
   )
 }

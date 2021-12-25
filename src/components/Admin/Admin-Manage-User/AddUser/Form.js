@@ -16,8 +16,8 @@ import {
     createAdminUser_Admin
 
  } from '../../../../actions/userAdmin'
-import { fetchRoles } from '../../../../actions/role'
-import { fetchDomains } from '../../../../actions/domain'
+import { fetchRoles } from '../../../../actions/roleAdmin'
+import { fetchDomains } from '../../../../actions/domainAdmin'
 
 import { TYPE_ADMIN, TYPE_NNC, TYPE_USER } from '../user.type'
 
@@ -388,8 +388,8 @@ const AddUser = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        roles: Object.values(state.roles),
-        domains: Object.values(state.domains),
+        roles: Object.values(state.adminRoles),
+        domains: Object.values(state.adminDomains),
     };
   };
   

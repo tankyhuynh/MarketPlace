@@ -553,31 +553,31 @@ const ProjectShow = ({ project , type, projectType, fields, levels, transmission
                 {type === TYPE_TEMPLATE_PREVIEW
                     ?(
                         <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">
-                        <div id="project_navbar" className="flex-col hidden col-span-1 rounded-lg lg:flex">
-                            { renderBody(
-                                project 
-                                ?(projectType === TYPE_COMMERCIAL 
-                                    ? templateViewProject.commercial.generalInfo 
-                                    : templateViewProject.researching.generalInfo) 
-                                : null) }
-                        </div>
-                        <div id="project_content" className="col-span-3 ml-6">
-                            { renderBody(
-                                project 
-                                ? (projectType === TYPE_COMMERCIAL 
-                                    ? templateViewProject.commercial.solutionInfo 
-                                    : templateViewProject.researching.solutionInfo) 
-                                : null) 
-                            }
-                            { renderBodyMobile(
-                                        project 
-                                        ? (project.type === TYPE_COMMERCIAL 
-                                            ? templateViewProject.commercial.generalInfo 
-                                            : templateViewProject.researching.generalInfo) 
-                                        : null
-                                    )  
-                            }
-                        </div>
+                            <div id="project_navbar" className="flex-col hidden col-span-1 rounded-lg lg:flex">
+                                { renderBody(
+                                    project 
+                                    ?(projectType === TYPE_COMMERCIAL 
+                                        ? templateViewProject.commercial.generalInfo 
+                                        : templateViewProject.researching.generalInfo) 
+                                    : null) }
+                            </div>
+                            <div id="project_content" className="col-span-3 ml-6">
+                                { renderBody(
+                                    project 
+                                    ? (projectType === TYPE_COMMERCIAL 
+                                        ? templateViewProject.commercial.solutionInfo 
+                                        : templateViewProject.researching.solutionInfo) 
+                                    : null) 
+                                }
+                                { renderBodyMobile(
+                                            project 
+                                            ? (project.type === TYPE_COMMERCIAL 
+                                                ? templateViewProject.commercial.generalInfo 
+                                                : templateViewProject.researching.generalInfo) 
+                                            : null
+                                        )  
+                                }
+                            </div>
                     </div>
                     ): (
                         <div className="grid grid-flow-col grid-cols-4 gap-4 p-4 auto-cols-max">

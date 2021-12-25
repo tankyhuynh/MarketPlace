@@ -56,7 +56,7 @@ export default withRouter(function App() {
   }
   const renderAppAdmin = () => {
     return (
-      <div className="container flex mx-auto debug-screens" id="layout">
+      <div className="flex 3xl:container mx-auto debug-screens" id="layout">
         <AdminNavbar />
         <div 
           className="w-full border-l-2 sm:w-3/4 lg:w-5/6 xl:w-full" 

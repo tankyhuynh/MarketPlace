@@ -95,7 +95,7 @@ class SignUp extends React.Component {
         console.log('Sign up this.props.history', this.props.history);
         this.props.signupNormalUser(updateFormValues, this.props.history)
             .then(response => {
-                this.props.alert.show('Đăng ký thành công !!!')  
+                this.props.alert.show('Đăng ký thành công')  
             })
             .catch(error => {
                 this.props.alert.error('Đăng ký thất bại, vui lòng kiểm tra lại thông tin nhập !!!')  
@@ -158,7 +158,7 @@ class SignUp extends React.Component {
                                 />
 
                                 <div className="flex gap-4">
-                                    <label>
+                                    <label className="flex items-center gap-2">
                                         <Field 
                                             name="gender" 
                                             component="input" 
@@ -168,7 +168,7 @@ class SignUp extends React.Component {
                                         /> 
                                             Nam
                                         </label>
-                                    <label>
+                                    <label className="flex items-center gap-2">
                                         <Field 
                                             name="gender" 
                                             component="input" 

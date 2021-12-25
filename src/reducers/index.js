@@ -15,16 +15,24 @@ import loadReducer from './loadReducer'
 import blockNavigationReducer from './blockNavigationReducer'
 import statusReducer from './statusReducer'
 import functionReducer from './functionReducer'
+import adminFunctionReducer from './adminFunctionReducer'
 import categoryReducer from './categoryReducer'
 import domainReducer from './domainReducer'
+import adminDomainReducer from './adminDomainReducer'
 import roleReducer from './roleReducer'
+import adminRoleReducer from './adminRoleReducer'
 import roleOfGroupReducer from './roleOfGroupReducer'
 import userReducer from './userReducer'
 import researchGroupReducer from './researchGroupReducer'
+import adminResearchGroupReducer from './adminResearchGroupReducer';
 import faqReducer from './faqReducer'
+import adminFaqReducer from './adminFaqReducer'
 import aboutReducer from './aboutReducer'
+import adminAboutReducer from './adminAboutReducer'
 import contactReducer from './contactReducer'
+import adminContactReducer from './adminContactReducer'
 import customerContactReducer from './customerContactReducer'
+import adminCustomerContactReducer from './adminCustomerContactReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -42,15 +50,23 @@ export default combineReducers({
     blockNavigation: blockNavigationReducer,
     status: statusReducer,
     functions: functionReducer,
+    adminFunctions: adminFunctionReducer,
     categories: categoryReducer,
     domains: domainReducer,
+    adminDomains: adminDomainReducer,
     roles: roleReducer,
+    adminRoles: adminRoleReducer,
     rolesOfGroup: roleOfGroupReducer,
     users: userReducer,
+    adminResearchGroups: adminResearchGroupReducer,
     researchGroups: researchGroupReducer,
     faqs: faqReducer,
+    adminFaqs: adminFaqReducer,
     abouts: aboutReducer,
+    adminAbouts: adminAboutReducer,
     contacts: contactReducer,
-    customerContacts: customerContactReducer
+    adminContacts: adminContactReducer,
+    customerContacts: customerContactReducer,
+    adminCustomerContacts: adminCustomerContactReducer
 });
 

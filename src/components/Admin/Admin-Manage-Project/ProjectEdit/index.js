@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
+
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { fetchProject } from '../../../../actions/project'
 import { 
@@ -56,6 +59,9 @@ const AdminProjectEdit = (props) => {
         // console.log('props project create: ', this.props);
     return (
         <>
+            <Link to={'/admin/projects'}>
+                <ArrowBackIcon />
+            </Link>
             {
                 projectDetail
                 ? (

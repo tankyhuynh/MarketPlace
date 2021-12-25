@@ -150,7 +150,7 @@ class SignUp extends React.Component {
                                 />
 
                                 <div className="flex gap-4">
-                                    <label>
+                                    <label className="flex items-center gap-2">
                                         <Field 
                                             name="gender" 
                                             component="input" 
@@ -160,7 +160,7 @@ class SignUp extends React.Component {
                                         /> 
                                             Nam
                                         </label>
-                                    <label>
+                                    <label className="flex items-center gap-2">
                                         <Field 
                                             name="gender" 
                                             component="input" 
@@ -176,6 +176,7 @@ class SignUp extends React.Component {
                                     name="domainId" 
                                     component={this.renderCombobox} 
                                     label="Tên miền" 
+                                    fullWidth={true}
                                     type="text"
                                 />
 

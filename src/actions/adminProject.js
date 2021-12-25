@@ -10,6 +10,7 @@ import {
   PROJECTS_RESEARCHING_URL 
 
 } from '../environments/constraints';
+import authHeader from '../services/auth.header'
 
 import {
   FETCH_PROJECTS,
@@ -28,14 +29,14 @@ const STATUS_TMP_ID = 4 // Nháp
 
 //------ Projects --------
 export const fetchProjects_Commercial = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_COMMERCIAL_URL}`);
+  const response = await projects.get(`${PROJECTS_COMMERCIAL_URL}`, { headers: authHeader() } );
   console.log('fetchProjects PROJECTS_COMMERCIAL_URL:', response.data);
 
   // sửa chỗ response.data => response.data.projects
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
 };
 export const fetchProjects_Researching = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_RESEARCHING_URL}`);
+  const response = await projects.get(`${PROJECTS_RESEARCHING_URL}`, { headers: authHeader() } );
   console.log('fetchProjects PROJECTS_RESEARCHING_URL:', response.data);
 
   // sửa chỗ response.data => response.data.projects
@@ -43,7 +44,7 @@ export const fetchProjects_Researching = () => async dispatch => {
 };
 
 export const fetchProjects = () => async dispatch => {
-  const response = await projectsAdmin.get(`${PROJECTS_ADMIN_URL}`);
+  const response = await projectsAdmin.get(`${PROJECTS_ADMIN_URL}`, { headers: authHeader() } );
   console.log('fetchProjects_all_by_domainId :', response.data);
 
   // sửa chỗ response.data => response.data.projects
@@ -52,7 +53,7 @@ export const fetchProjects = () => async dispatch => {
 
 // Fetch by Domain ID
 export const fetchProjects_all_by_domainId = (domainId) => async dispatch => {
-  const response = await projectsAdmin.get(`${PROJECTS_BY_DOMAIN_ID_URL}/${domainId}`);
+  const response = await projectsAdmin.get(`${PROJECTS_BY_DOMAIN_ID_URL}/${domainId}`, { headers: authHeader() });
   console.log('fetchProjects_all_by_domainId :', response.data);
 
   // sửa chỗ response.data => response.data.projects
@@ -64,28 +65,28 @@ export const fetchProjects_all_by_domainId = (domainId) => async dispatch => {
 
 
 export const fetchProjects_DaDuyet = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_DD_ID}`);
+  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_DD_ID}`, { headers: authHeader() } );
   console.log('fetchProjects:', response.data);
 
   // sửa chỗ response.data => response.data.projects
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
 };
 export const fetchProjects_ChoDuyet = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_CD_ID}`);
+  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_CD_ID}`, { headers: authHeader() } );
   console.log('fetchProjects:', response.data);
 
   // sửa chỗ response.data => response.data.projects
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
 };
 export const fetchProjects_TuChoi = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_TC_ID}`);
+  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_TC_ID}`, { headers: authHeader() } );
   console.log('fetchProjects:', response.data);
 
   // sửa chỗ response.data => response.data.projects
   dispatch({ type: FETCH_PROJECTS, payload: response.data });
 };
 export const fetchProjects_Nhap = () => async dispatch => {
-  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_TMP_ID}`);
+  const response = await projects.get(`${PROJECTS_BY_STATUS_URL}/${STATUS_TMP_ID}`, { headers: authHeader() } );
   console.log('fetchProjects:', response.data);
 
   // sửa chỗ response.data => response.data.projects
@@ -93,7 +94,7 @@ export const fetchProjects_Nhap = () => async dispatch => {
 };
 
 export const fetchProjectByUserIdAndStatusId = (userId, statusId) => async dispatch => {
-  const response = await projects.get(`${PROJECTS_URL}/user/${userId}/status/${statusId}`);
+  const response = await projects.get(`${PROJECTS_URL}/user/${userId}/status/${statusId}`, { headers: authHeader() } );
   console.log('fetchProjectByUserIdAndStatusId:', response.data);
   console.log(response);
 
@@ -105,7 +106,7 @@ export const fetchProjectByUserIdAndStatusId = (userId, statusId) => async dispa
 
 
 export const fetchProject = (id) => async dispatch => {
-  const response = await projects.get(`${PROJECTS_COMMERCIAL_URL}/${id}`);
+  const response = await projects.get(`${PROJECTS_COMMERCIAL_URL}/${id}`, { headers: authHeader() } );
   console.log('fetchProject:', response.data);
   console.log(response);
 
@@ -114,7 +115,7 @@ export const fetchProject = (id) => async dispatch => {
 };
 
 export const editProject = (id, formValues) => async dispatch => {
-  const response = await projects.patch(`${PROJECTS_COMMERCIAL_URL}/${id}`, formValues);
+  const response = await projects.patch(`${PROJECTS_COMMERCIAL_URL}/${id}`, formValues, { headers: authHeader() } );
 
   dispatch({ type: EDIT_PROJECT, payload: response.data });
   history.push('/');

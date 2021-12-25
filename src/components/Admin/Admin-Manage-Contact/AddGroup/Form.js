@@ -13,7 +13,7 @@ import { DropzoneArea } from 'material-ui-dropzone';
 
 
 import { createUser } from '../../../../actions/user'
-import { fetchRoles } from '../../../../actions/role'
+import { fetchRoles } from '../../../../actions/roleAdmin'
 import { fetchDomains } from '../../../../actions/domain'
 
 import Combobox from '../Combobox'

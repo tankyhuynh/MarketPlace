@@ -1,5 +1,6 @@
 import domain from '../apis/domain';
-import { DOMAINS_URL } from '../environments/constraints';
+import { DOMAINS_ADMIN_URL } from '../environments/constraints';
+import authHeader from '../services/auth.header'
 
 import {
   FETCH_DOMAINS,
@@ -12,7 +13,7 @@ import {
 
 //------ Start Functions --------
 export const fetchDomains = () => async dispatch => {
-  const response = await domain.get(DOMAINS_URL);
+  const response = await domain.get(DOMAINS_ADMIN_URL, { headers: authHeader() });
   console.log('fetch funtions:', response.data);
 
   // sửa chỗ response.data => response.data.projects
@@ -20,7 +21,7 @@ export const fetchDomains = () => async dispatch => {
 };
 
 export const createDomain = (value) => async dispatch => {
-  const response = await domain.post(DOMAINS_URL, value);
+  const response = await domain.post(DOMAINS_ADMIN_URL, value);
   console.log('createDomain client send:', value);
   console.log('createDomain server response:', response.data);
 
@@ -28,14 +29,14 @@ export const createDomain = (value) => async dispatch => {
 };
 
 export const editDomain = (value) => async dispatch => {
-  const response = await domain.put(`${DOMAINS_URL}/${value.id}`, value);
+  const response = await domain.put(`${DOMAINS_ADMIN_URL}/${value.id}`, value);
   console.log('editDomain:', response.data);
 
   dispatch({ type: EDIT_DOMAIN, payload: response.data });
 };
 
 export const deleteDomain = id => async dispatch => {
-  await domain.delete(`${DOMAINS_URL}/${id}`);
+  await domain.delete(`${DOMAINS_ADMIN_URL}/${id}`);
 
   dispatch({ type: DELETE_DOMAIN, payload: id });
 };

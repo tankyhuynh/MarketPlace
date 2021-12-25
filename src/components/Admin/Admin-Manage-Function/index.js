@@ -11,8 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../Table/Table-Admin';
 import { columns } from './table-definition';
 
-import { fetchFunctions, createFunction,  editFunction, deleteFunction } from '../../../actions/function';
-import { fetchRoles } from '../../../actions/role';
+import { fetchFunctions, createFunction,  editFunction, deleteFunction } from '../../../actions/functionAdmin';
+import { fetchRoles } from '../../../actions/roleAdmin';
 
 import FormEdit from './FormEdit'
 
@@ -165,8 +165,8 @@ const AdminFunction = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        functions:  Object.values(state.functions),
-        roles:  Object.values(state.roles),
+        functions:  Object.values(state.adminFunctions),
+        roles:  Object.values(state.adminRoles),
     };
 }
 

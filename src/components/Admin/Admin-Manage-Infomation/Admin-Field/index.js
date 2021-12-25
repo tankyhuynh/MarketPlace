@@ -74,10 +74,14 @@ const AdminField = (props) => {
     const onBtnDeleteClick = async (field) => {
         const CONSTFIRM_TITLE = 'Xác nhận' 
         const CONSTFIRM_TEXT = `Bạn muốn xóa ''${field.name}'' ? `
+        const CONSTFIRM_OK_BUTTON_TEXT = 'Đồng ý' 
+        const CONSTFIRM_OK_CANCEL_TEXT = 'Hủy' 
 
         const result = await Confirm(
             CONSTFIRM_TEXT, 
-            CONSTFIRM_TITLE
+            CONSTFIRM_TITLE,
+            CONSTFIRM_OK_BUTTON_TEXT,
+            CONSTFIRM_OK_CANCEL_TEXT
         );
         
         if (result) {

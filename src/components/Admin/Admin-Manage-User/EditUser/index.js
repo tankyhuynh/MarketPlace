@@ -23,7 +23,7 @@ import {
     editUserFunction 
 
 } from '../../../../actions/user'
-import { fetchRoles } from '../../../../actions/role'
+import { fetchRoles } from '../../../../actions/roleAdmin'
 import { fetchDomains } from '../../../../actions/domain'
 
 import { columns as normalUserColumn } from '../AddUser/table-definition-normalUser'
@@ -33,13 +33,11 @@ import { columns as adminColumn } from '../AddUser/table-definition-admin'
 import Combobox from '../Combobox'
 import Checkbox from '../Checkcbox'
 
-
 const TYPE_TEXT = 'text'
 const TYPE_DATE = 'date'
 const TYPE_PASSWORD = 'password'
 const TYPE_COMBOBOX = 'combobox'
 const TYPE_EDITOR = 'editor'
-// const TYPE_CHECKBOX = 'checkbox'
 
 const filebrowserUploadUrl = environment.url.java +  '/fileUploads/ckeditor';
 const removeButtons = 'PasteFromWord'
