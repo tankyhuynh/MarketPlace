@@ -20,6 +20,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import validator from 'validator' 
 
+import authHeader from '../../services/auth.header'
+
 import TinyMCEEditor from '../editor/TinyMCE-Editor'
 import { CKEditor } from 'ckeditor4-react';
 import Tab from '../Projects/Tab/Tab';
@@ -530,12 +532,12 @@ const HorizontalLinearStepper = (props) => {
     const onProjectImageChange = (files) => {
         console.log('onProjectImageChange', files)
             let formData = new FormData();
-            const config = {
-                header: { 'content-type': 'multipart/form-data' }
-            }
+            // const config = {
+            //     header: { 'content-type': 'multipart/form-data' }
+            // }
             formData.append("upload", files[0]);
 
-            axios.post(environment.url.java + '/fileUploads/ckeditor', formData, config)
+            axios.post(environment.url.java + '/fileUploads/ckeditor', formData, { headers: authHeader() } )
                 .then(response => {
                     console.log('upload iamge: ', response);
                     // console.log('reponse.data.location: ', response.data.location);
@@ -576,7 +578,7 @@ const HorizontalLinearStepper = (props) => {
         props.unblock_navigation();
 
         if(props.type === 'create'){
-            axios.post(environment.url.java + URL, submitProject)
+            axios.post(environment.url.java + URL, submitProject, { headers: authHeader() } )
             .then(response => {
                 if (response) {
                     dispatch({ type: LOADED})
@@ -592,7 +594,7 @@ const HorizontalLinearStepper = (props) => {
 
         // Làm sao để xác định được nó là project gì???????????
         if(props.type === 'edit'){
-            axios.put(environment.url.java + URL + `/${props.id}`, {...submitProject, userId: project.userId})
+            axios.put(environment.url.java + URL + `/${props.id}`, {...submitProject, userId: project.userId}, { headers: authHeader() } )
             .then(response => {
                 if (response) {
                     dispatch({ type: LOADED})

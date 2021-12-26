@@ -20,7 +20,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import validator from 'validator' 
 
-import ckeditorAuthHeader from '../../../../../services/ckeditor.auth.header'
 import authHeader from '../../../../../services/auth.header'
 
 import { CKEditor } from 'ckeditor4-react';
@@ -543,7 +542,7 @@ const HorizontalLinearStepper = (props) => {
     const onProjectImageChange = (files) => {
         console.log('onProjectImageChange', files)
             let formData = new FormData();
-            const config = ckeditorAuthHeader()
+            // const config = ckeditorAuthHeader()
             
             formData.append("upload", files[0]);
 
